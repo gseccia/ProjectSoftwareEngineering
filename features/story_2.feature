@@ -1,6 +1,6 @@
 Feature: changing character
 	As a user,
-	I want to choose the character to play with.
+	I want to choose the character to play with before the game starts.
 
 	Scenario: I want to change character
 		Given that I am on the main menu
