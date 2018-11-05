@@ -11,11 +11,12 @@ Feature: generating the map
 	Scenario: the game starts for the first time
 		Given that I am on the main menu
 		When I click on the "play" button
-		Then the map is generated
+		Then the game session starts 
+		And the map is generated
 		And the character is put in it
 
 	Scenario: I complete a level
-		Given that I am playing a level
-		When I complete all the objectives
+		Given that I am playing a game session
+		When I complete all the objectives of a level
 		Then a different map is generated
 		And the character is put in it

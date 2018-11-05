@@ -1,4 +1,4 @@
-Feature: levels can have different difficulties
+Feature: levels may have different difficulties
 	As a user,
 	In order to advance in the game
 	I want the levels to be more and more difficult
