@@ -13,9 +13,9 @@ Feature: main menu
 		When the game is opened
 		Then the main menu is displayed
 
-	Scenario: the PARTITA finishes
+	Scenario: the game session finishes
 		Given that I am playing
-		When the PARTITA finished
+		When the game session finished
 		Then the main menu is displayed
 
 	
