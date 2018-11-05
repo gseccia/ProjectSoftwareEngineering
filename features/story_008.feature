@@ -7,13 +7,13 @@ Feature: lives loss
 		Given that the game has been opened
 		When the user is playing
 		Then the character must provide an hp icon
-		Thus the user can recognise how much life it is losing or gaining
+		And the user can recognise how much life it is losing or gaining
 		
 	Scenario: HP loss / gained quantities
 		Given that the game has been opened and an hp icon is provided
 		When the user is playing
 		Then he must be able to discern hp quantities his character is losing or gaining
-		So that he can react properly
+		And he can react properly
 		
 	Scenario: HP fully loss
 		Given that the game has been opened
