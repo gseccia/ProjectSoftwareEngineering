@@ -16,7 +16,10 @@ Feature: character attacks
 		When it practises a heavy attack
 		Then the enemy suffers a high damage
 		
-	Scenario: the attack risk depends on the attack type
-		Given that the character has two types of attack
-		When it practises an attack
-		Then if the attack is light it is less risky, if heavy riskier
+	Scenario: the light attack is quick
+		Given the character performs a light attack
+		Then the animation to complete it is quick
+
+	Scenario: the heavy attack is slow
+		Given the character performs a heavy attack
+		Then the animation to complete it is slow
