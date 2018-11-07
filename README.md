@@ -1,6 +1,6 @@
 # UNI:ZA<br> *Undergraduate Nerds Infection: Zombie Apocalypse*
-### insert the game description....
-
+### insert the game description...
+game
 #Goal
 Develop a “retro” 2D computer game in Java following SCRUM method.
 # Follow the project:
