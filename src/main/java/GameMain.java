@@ -12,7 +12,6 @@ public class GameMain {
         System.setProperty("org.lwjgl.librarypath",System.getProperty("user.dir")+"/native/"+LWJGLUtil.getPlatformName());
         System.setProperty("net.java.games.input.librarypath",System.getProperty("user.dir")+"/native/"+LWJGLUtil.getPlatformName());
        
-        
 		try {
 			 AppGameContainer app = new AppGameContainer(new Game("UNI:ZA"));
 			 app.setDisplayMode(800, 600, false);
