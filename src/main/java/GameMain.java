@@ -1,5 +1,3 @@
-package main.java;
-
 import org.junit.*;
 
 import org.newdawn.slick.*;
