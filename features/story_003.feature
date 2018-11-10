@@ -1,12 +1,7 @@
-Feature: moving character
+Feature: interacting with objects
 	As a player,
 	in order to complete the level,
-	I want move my character and interact with the objects
-
-	Scenario: I want to move my character
-		Given that my character is on the map
-		When I click an arrow key
-		Then the character moves in the arrow direction
+	I want to interact with the objects
 
 	Scenario: I want my character to interact with an object
 		Given that my character is near an object

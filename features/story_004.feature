@@ -3,7 +3,6 @@ Feature: generating the map
 	When the game starts,
 	I want the map to be generated and the objects placed
 	The map generation includes:
-	- Putting together some blocks in a way that each block is reachable
 	- A list of objectives is defined
 	- The missions to complete the objectives are put randomly on the map
 	- Other random objects can be placed on the map
@@ -20,8 +19,3 @@ Feature: generating the map
 		When I complete all the objectives of a level
 		Then a different map is generated
 		And the character is put in it
-
-	Scenario: I walk from a block to another
-		Given that I am in a block
-		When I reach a door
-		Then I want to change the current block
