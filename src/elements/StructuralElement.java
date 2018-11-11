@@ -1,23 +1,9 @@
 /**
- * This class represent a structural element, that visually is an image
+ * This class represent a structural element, that visually is a static image
  */
-public class StructuralElement extends Shape{
+public class StructuralElement extends Element{
 
-    private Image texture = null;
-    private int height, width;
-
-    /**
-     * Constructor without an image, height and width must be specified
-     * @param height
-     * @param width
-     */
-    public StructuralElement(int height, int width){
-        super();
-        this.height = height;
-        this.width = width;
-        setMaxX(width);
-        setMaxY(height)
-    }
+    private Image texture;
 
     /**
      * The constructor receives as input the path of an image, height and width are
@@ -27,10 +13,8 @@ public class StructuralElement extends Shape{
     public StructuralElement(String path){
         super();
         texture = new Image(path);
-        height = texture.getHeight();
-        width = texture.getWidth();
-        setMaxX(width);
-        setMaxY(height)
+        setHeight(texture.getHeight())
+        setWidth(texture.getWidth())
     }
 
     /**
@@ -40,34 +24,20 @@ public class StructuralElement extends Shape{
     public void setImage(String path){
         super();
         texture = new Image(path);
-        height = texture.getHeight();
-        width = texture.getWidth();
-        setMaxX(this.getX() + width);
-        setMaxY(this.getY() + height)
+        setHeight(texture.getHeight());
+        setWidth(texture.getWidth());
     }
 
     /**
-     * Draw an image in a defined point
+     * Draw an image at a defined point.
      * @param x
      * @param y
      */
+    @Override
     public void draw(int x, int y){
         texture.draw(x, y);
         setX(x);
         setY(y);
-        setMaxX(x + width);
-        setMaxY(y + height);
     }
 
-    /**
-     * Changes the x and y of the image by an increment
-     * @param dx
-     * @param dy
-     */
-    public void move(int dx, int dy){
-        setX(getX()+dx);
-        setY(getY()+dy);
-        setMaxX(getX()+dx+width);
-        setMaxY(getY()+dy+height);
-    }
 }
