@@ -4,11 +4,19 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.tiled.TiledMap;
 
 public class Level extends BasicGameState{
 	private int state;
 	private float x,y;
 	private boolean down,right;
+	//private TiledMap back;
+	
+	/*
+	 * private GraphTransitionManager map;
+	 * private Set<InteractiveElement> element_set;
+	 * 
+	 * */
 	
 	public Level(int state) {
 		this.state = state;
@@ -18,11 +26,13 @@ public class Level extends BasicGameState{
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		x = y =0;
 		down = right = true;
+		//back = new TiledMap("resource/mapblock/Lab.tmx");
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.fillOval(x,y, 10,10);
+		//back.render(0, 0);
 	}
 
 	@Override
