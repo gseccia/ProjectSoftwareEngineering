@@ -4,12 +4,12 @@
 public class InteractiveElement extends Element{
     private Animation current;
 
-    public InteractiveElement(Animation a){
+    protected InteractiveElement(Animation a){
         super();
         this.current = a;
     }
 
-    public InteractiveElement(Animation a, int width, int height){
+    protected InteractiveElement(Animation a, int width, int height){
         super(height, width);
         this.current = a;
     }
