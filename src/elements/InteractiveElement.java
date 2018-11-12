@@ -1,16 +1,25 @@
+package elements;
+
+import org.newdawn.slick.*;
+
 /**
  * This class represent an element that is not visually static on the screen
  */
-public class InteractiveElement extends Element{
+public class InteractiveElement extends Element {
     private Animation current;
 
     protected InteractiveElement(Animation a){
-        super();
+        super(0, 0, 0, 0);
         this.current = a;
     }
 
     protected InteractiveElement(Animation a, int width, int height){
-        super(height, width);
+        super(0, 0, height, width);
+        this.current = a;
+    }
+
+    protected InteractiveElement(Animation a, int width, int height, int x, int y){
+        super(x, y, height, width);
         this.current = a;
     }
 
