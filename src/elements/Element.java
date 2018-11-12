@@ -30,11 +30,10 @@ public class Element extends Shape {
      * @param x
      * @param y
      */
-    public void draw(int x, int y){
+    public void draw(int x, int y) {
         setX(x);
         setY(y);
     }
-
 
     /**
      * Changes the x and y of the image by an increment
@@ -46,15 +45,6 @@ public class Element extends Shape {
         setY(getY() + dy);
     }
 
-    /**
-     * Repositions the element at the given coordinates
-     * @param x
-     * @param y
-     */
-    public void reposition(int x, int y){
-        setX(x);
-        setY(y);
-    }
 
     public int getHeight() {
         return height;
