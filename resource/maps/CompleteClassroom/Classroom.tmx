@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="20" nextobjectid="1">
+ <tileset firstgid="1" source="base_out_atlas.tsx"/>
+ <tileset firstgid="4097" source="house_inside.tsx"/>
+ <tileset firstgid="4993" source="zombie_tileb.tsx"/>
+ <tileset firstgid="6017" source="obj_misk_atlas.tsx"/>
+ <tileset firstgid="10113" source="terrain_atlas.tsx"/>
+ <layer id="1" name="Base" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu2U3XGDMBCEeVAFtIJ6cFKJk2foIXE9VmdQQHhgJ5v1YUv8TPRwO7ODbCSdvrsTTeNyuVwul8tVty5t07zNfm/t8UXGa8+jjXPk6jrP/Zj92drjq4zXnkcb5ziK4xnfGXN1nKuvee737FtbNj5rLsZ45urW1usSji7U5Z48hHyOPtTlOzkVcNxDXR7JUwHHGOrztPRYLOSYyIk8yG99V+q4mO8D/lOWUg6u5xQemfQ/izfX4MFd6FYcw7Z6ML8ydeGXtVviW8w5Bg9qYN3zPRzcj9qnODcYwNTTPI7PfaN7waiLdc+P5gAD6sPjLvz9tnB8nIHrpk+ti3Uv9nBwDifpMWboJTbHx33mtXx+ro3efz7/Vg70xijx9SxcF36HuLjP/L6jcQyPdXnGs6UevcTnuFaNlIPNa/jsymjxDDvroXmORlyrR7jfYF4zyLpo1Il50g4OZuD4fBcnicuxkQe29o+1L/Kv+27lsPKcjDja34iredCcaAzsm2ifaHgrh9UHmkvrm6N1tHJs7av7qEs5kuHcXJZYc/ZqfilHjtdyeaZdLpfL5XK5XC6X67/0A+h+4oAQJwAA
+  </data>
+ </layer>
+ <layer id="6" name="Wall" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3YuxGAIBBF0Y0whx60/yL8G2o/bmCsBDgscM/MizRgfRKACAAAgF0uiIxeZNLMmkWzajbNrjl8/udd+J6jj3gntyFija6SOUroI+a/qqmP3Ps4xT6vqQ/r6MMW+rCFPmyhD1vowxb6sKWlPkqYo6V7hvM5j+XO23nw8v9/KwAAAABp3VwTrTIQJwAA
+  </data>
+ </layer>
+ <layer id="3" name="DoorNWindows" width="50" height="50" offsetx="2" offsety="9">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3SNw7CQBRFUbeECoZFECpCQdgAoSIUhFUQCsLiuS0jF2OEqe6RXjHW+1+/cJZJkiTpXyohy6rh81uDd5ME0gr5c79QY3c92p93T4o2M51ors97QIZklLBzTGdCpmRW4IYu3V7Uz7snxZyZRTS35r0hW7JL2LmncyBHcipww5LuKurn3fOtM3su5EpuCTvvdB7kSV4l/oeSJEmSJEmSJElSmd51YCupECcAAA==
+  </data>
+ </layer>
+ <layer id="4" name="Furniture" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3VOw6DQAxFUW8kTCrIpgJ0yaby6WBT+XSwjLwyzQyCeKbJPdKrbMkeCQszAAAAAAD+y1SZzdX6mke/pyaYHcL6mke/p5PmniOzUzWPfk+DvoMx8i2kah79nkrcx7E2a5VO6ettey4pcR8X7X5Vbso90ztK3MdDuz+Vl/LO9I4S97FrzColKPtm255LityHdm+VTukzvYP/x+/9ngbNHSOzUzWPfk+T5s6R2amaRz8AAAAAAN8+3tHo/RAnAAA=
+  </data>
+ </layer>
+ <layer id="5" name="Dirt" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3XyQ2CQBQG4NFEK2AK0EQ7gAZc7i4duNxdGtBEL3jTqyaaaAPaBRTlfyMmJExmQcT/S94BmHm8F2AAIYiIiIioiGqeEHUvv3mutFBLW6Me3Xmu9FBLX6Me3XmuzFDLXKMe3XmqwkCIQ2CeZyCFGCJGiLHMHn/EmBOig+jKZFtXhB5iC30sUMMSsUKsFep5YswLMUFMZbJt0w759pZzfsMdPTwy+qjgeNWwVxs5TDVw/qZhDTZyEJVdEZ53G/i8F8cG12Gb07Vw+X6/Iu8tpz5U3u9llbYGqaxLZ3zbXyx939u4j9LWIJfrUujj/8P/3PeL91GEHmI/exwREREREdG/eQO96ERXECcAAA==
+  </data>
+ </layer>
+ <layer id="7" name="Bidons" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3Pyw2DQABDwS1iKT9AIwQagaQRPqYFLggxI727XQoAAAAAAPAWn1pKm7rU17vXXDdk+zeNaXrwjznbl/RL/wf/WLN9S/v5obl7DQAA8GYHiuWLkxAnAAA=
+  </data>
+ </layer>
+</map>
