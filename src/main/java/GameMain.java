@@ -1,3 +1,5 @@
+package main.java;
+
 import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -23,8 +25,8 @@ public class GameMain extends StateBasedGame{
 	
     public static void main(String args[]){
 
-        System.setProperty("org.lwjgl.librarypath",System.getProperty("user.dir")+"/native/"+LWJGLUtil.getPlatformName());
-        System.setProperty("net.java.games.input.librarypath",System.getProperty("user.dir")+"/native/"+LWJGLUtil.getPlatformName());
+        System.setProperty("org.lwjgl.librarypath",System.getProperty("user.dir")+"/lib/native/"+LWJGLUtil.getPlatformName());
+        System.setProperty("net.java.games.input.librarypath",System.getProperty("user.dir")+"/lib/native/"+LWJGLUtil.getPlatformName());
        
 		try {
 			 AppGameContainer app = new AppGameContainer(new GameMain("UNI:ZA"));

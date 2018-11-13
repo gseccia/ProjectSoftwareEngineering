@@ -1,3 +1,4 @@
+package main.java;
 
 import elements.Mob;
 import org.newdawn.slick.GameContainer;
