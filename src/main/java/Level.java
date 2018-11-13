@@ -1,4 +1,5 @@
 
+import elements.Mob;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -10,6 +11,7 @@ public class Level extends BasicGameState{
 	private int state;
 	private float x,y;
 	private boolean down,right;
+	private Mob tmp;
 	//private TiledMap back;
 	
 	/*
@@ -24,14 +26,13 @@ public class Level extends BasicGameState{
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		x = y =0;
-		down = right = true;
+		tmp = Mob.generate("guntan");
 		//back = new TiledMap("resource/mapblock/Lab.tmx");
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		g.fillOval(x,y, 10,10);
+		tmp.draw(400,300);
 		//back.render(0, 0);
 	}
 

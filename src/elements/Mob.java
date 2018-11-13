@@ -1,5 +1,7 @@
 package elements;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.newdawn.slick.*;
 import java.util.*;
 
@@ -14,9 +16,32 @@ public class Mob extends InteractiveElement {
      */
     private int hp, maxHp, attackDamage;
     private HashMap<String, Animation> faces;
+    private static MobConfiguration configuration = MobConfiguration.getInstance();
+
+    /**
+     * Probably it will be changed
+     * @param id the mob id
+     * @return
+     */
+    public static Mob generate(String id) throws SlickException{
+        JsonObject mobConf = configuration.getMobConfiguration(id);
+        JsonObject tmp = mobConf.getAsJsonObject("still");
+        Animation still = generateAnimation(mobConf.get("base_folder").getAsString()+"still/", tmp.getAsJsonArray("frames"), tmp.getAsJsonArray("duration"));
+        return new Mob(mobConf.get("hp").getAsInt(), mobConf.get("attack").getAsInt(), still, new Animation(), new Animation(), new Animation(), new Animation(), mobConf.get("width").getAsInt(), mobConf.get("height").getAsInt());
+    }
+
+    private static Animation generateAnimation(String basePath, JsonArray images, JsonArray duration) throws SlickException{
+        Image[] arr = new Image[images.size()];
+        int[] dur = new int[images.size()];
+        for(int i=0; i< images.size(); i++){
+            arr[i] = new Image(basePath+images.get(i).getAsString());
+            dur[i] = duration.get(i).getAsInt();
+        }
+        return new Animation(arr, dur);
+    }
 
     private Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown) {
-        super(faceUp);
+        super(standStill);
         this.hp = hp;
         this.maxHp = hp;
         this.attackDamage = attackDamage;
@@ -25,7 +50,7 @@ public class Mob extends InteractiveElement {
     }
 
     private Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, int width, int height) {
-        super(faceUp, width, height);
+        super(standStill, width, height);
         this.hp = hp;
         this.maxHp = hp;
         this.attackDamage = attackDamage;
@@ -34,7 +59,7 @@ public class Mob extends InteractiveElement {
     }
 
     private Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, int width, int height, int x, int y) {
-        super(faceUp, width, height, x, y);
+        super(standStill, width, height, x, y);
         this.hp = hp;
         this.maxHp = hp;
         this.attackDamage = attackDamage;
