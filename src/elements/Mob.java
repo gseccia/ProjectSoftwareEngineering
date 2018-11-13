@@ -15,7 +15,7 @@ public class Mob extends InteractiveElement {
     private int hp, maxHp, attackDamage;
     private HashMap<String, Animation> faces;
 
-    protected Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown) {
+    private Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown) {
         super(faceUp);
         this.hp = hp;
         this.maxHp = hp;
@@ -24,7 +24,7 @@ public class Mob extends InteractiveElement {
         generateMap(faceLeft, faceRight, faceUp, faceDown, standStill);
     }
 
-    protected Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, int width, int height) {
+    private Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, int width, int height) {
         super(faceUp, width, height);
         this.hp = hp;
         this.maxHp = hp;
@@ -33,7 +33,7 @@ public class Mob extends InteractiveElement {
         generateMap(faceLeft, faceRight, faceUp, faceDown, standStill);
     }
 
-    protected Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, int width, int height, int x, int y) {
+    private Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, int width, int height, int x, int y) {
         super(faceUp, width, height, x, y);
         this.hp = hp;
         this.maxHp = hp;
