@@ -45,7 +45,7 @@ public class MobConfiguration extends Configuration{
     }
 
     public Animation getFaceDown(String id) throws SlickException {
-        return generateAnimation(id,"still");
+        return generateAnimation(id,"down");
     }
 
     public Animation getFaceLeft(String id) throws SlickException {
@@ -75,11 +75,11 @@ public class MobConfiguration extends Configuration{
         // load frame for movement type
         JsonArray images = mov.getAsJsonArray("frames");
         // load duration for each frame
-        JsonArray duration = mov.getAsJsonArray();
+        JsonArray duration = mov.getAsJsonArray("duration");
         // setup an animation as a sequence of image and movements
         Image[] arr = new Image[images.size()];
         int[] dur = new int[images.size()];
-        String basePath = conf.get("base_folder").getAsString()+"/"+movement;
+        String basePath = conf.get("base_folder").getAsString()+"/"+movement+"/";
         for(int i = 0; i< images.size(); i++){
             arr[i] = new Image(basePath+images.get(i).getAsString());
             dur[i] = duration.get(i).getAsInt();

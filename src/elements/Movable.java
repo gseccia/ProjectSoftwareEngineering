@@ -14,5 +14,4 @@ public interface Movable {
      * @param dy the increment of the y position
      */
     public void moveY(int dy);
-
 }

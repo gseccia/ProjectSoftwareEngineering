@@ -40,8 +40,7 @@ public class Block extends BasicGameState
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) throws SlickException {
-		// Calculate initial position of map
-		// enemy...
+		player = Mob.generate("guntan", 0 ,0);
 	}
 
 	@Override

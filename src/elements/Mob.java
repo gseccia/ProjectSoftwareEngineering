@@ -1,7 +1,7 @@
 package elements;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import configuration.MobConfiguration;
 import org.newdawn.slick.*;
 import java.util.*;
 
@@ -19,13 +19,22 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     private static MobConfiguration configuration = MobConfiguration.getInstance();
 
     /**
-     * Probably it will be changed
+     * Probably it will be refactored
      * @param id the mob id
      * @return
      */
-    public static Mob generate(String id) throws SlickException{
-        Animation still = generateAnimation("resource/textures/sprites/guntan/still/", new String[]{"0.png", "1.png", "2.png", "3.png"}, new int[]{200, 13, 13, 13});
-        return new Mob(100, 100, still, new Animation(), new Animation(), new Animation(), new Animation(), 16, 33, 0, 0);
+    public static Mob generate(String id, int x, int y) throws SlickException{
+        return new Mob(
+                configuration.getHp(id),
+                configuration.getAttack(id),
+                configuration.getFaceStill(id),
+                configuration.getFaceLeft(id),
+                configuration.getFaceRight(id),
+                configuration.getFaceUp(id),
+                configuration.getFaceDown(id),
+                configuration.getWidth(id),
+                configuration.getHeight(id),
+                x, y);
     }
 
     /**
