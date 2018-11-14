@@ -53,6 +53,16 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
         generateMap(faceLeft, faceRight, faceUp, faceDown, standStill);
     }
 
+    private static Animation generateAnimation(String basePath, JsonArray images, JsonArray duration) throws SlickException {
+        Image[] arr = new Image[images.size()];
+        int[] dur = new int[images.size()];
+        for(int i=0; i< images.size(); i++){
+            arr[i] = new Image(basePath+images.get(i).getAsString());
+            dur[i] = duration.get(i).getAsInt();
+        }
+        return new Animation(arr, dur);
+    }
+
     /**
      * Creates a map with the animations. Subclasses can override to add more faces
      * @param faceLeft
