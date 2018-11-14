@@ -35,18 +35,18 @@ public class Block extends BasicGameState
 	{
 		map = new TiledMap(mapName);
 		enemy = population.get(this);
-		this.player = player;
-		player.setLocation(0, 0);// --> Need to set Location near a door
+		this.player = player; // --> Need to set Location near a door
 	}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) throws SlickException {
-		player = Mob.generate("guntan", 0 ,0);
+		//calculate init postion of enemies
+		player.setLocation(3*16, 10*16); //Set Position on "Base" 
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) throws SlickException {
-		map.render(0, 0, 3, 10,80,60);
+		map.render(0, 0, 3, 10,64,64);
 		for(Mob e : enemy)
 		{
 			e.draw();
