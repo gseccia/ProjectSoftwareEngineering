@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.SlickException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.io.InputStreamReader;
 
 abstract class Configuration {
 
-    public abstract Animation getFaceStill(String id);
+    public abstract Animation getFaceStill(String id) throws SlickException;
 
     protected abstract JsonObject getConfiguration(String id);
 

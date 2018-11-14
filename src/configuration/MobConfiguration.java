@@ -3,18 +3,15 @@ package configuration;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import java.io.*;
 
 public class MobConfiguration extends Configuration{
-    private final String filename = System.getProperty("user.dir") + "/resource/textures/sprites/mobs.conf";
+    private static final String filename = System.getProperty("user.dir") + "/resource/textures/sprites/mobs.conf";
     private static MobConfiguration instance = null;
-    private JsonObject configuration = null;
+    private JsonObject configuration;
 
     public static MobConfiguration getInstance(){
         if(instance == null){
@@ -24,18 +21,39 @@ public class MobConfiguration extends Configuration{
     }
 
     private MobConfiguration(){
-        this.configuration = super.uploadConfiguration(this.filename);
+        this.configuration = super.uploadConfiguration(filename);
     }
 
-    public Animation getFaceUp(){
-        return null;
-    }
-    public Animation getFaceDown(){
-        return null;
+    public int getHp(String id){
+        return this.getConfiguration(id).get("hp").getAsInt();
     }
 
-    public Animation getFaceLeft(){
-        return null;
+    public int getHeight(String id){
+        return this.getConfiguration(id).get("height").getAsInt();
+    }
+
+    public int getWidth(String id){
+        return this.getConfiguration(id).get("width").getAsInt();
+    }
+
+    public int getAttack(String id){
+        return this.getConfiguration(id).get("attack").getAsInt();
+    }
+
+    public Animation getFaceUp(String id) throws SlickException {
+        return generateAnimation(id,"up");
+    }
+
+    public Animation getFaceDown(String id) throws SlickException {
+        return generateAnimation(id,"still");
+    }
+
+    public Animation getFaceLeft(String id) throws SlickException {
+        return generateAnimation(id,"left");
+    }
+
+    public Animation getFaceRight(String id) throws SlickException {
+        return generateAnimation(id,"right");
     }
 
 
@@ -45,15 +63,24 @@ public class MobConfiguration extends Configuration{
     }
 
     @Override
-    public Animation getFaceStill(String id) {
-        return null;
+    public Animation getFaceStill(String id) throws SlickException {
+        return generateAnimation(id,"still");
     }
 
     private Animation generateAnimation(String id, String movement) throws SlickException {
-        JsonArray images = this.configuration.getAsJsonObject(id).getAsJsonObject("still").getAsJsonArray("frames");
+        // load configuration from id
+        JsonObject conf = this.getConfiguration(id);
+        // load configuration for movement type
+        JsonObject mov= conf.getAsJsonObject(movement);
+        // load frame for movement type
+        JsonArray images = mov.getAsJsonArray("frames");
+        // load duration for each frame
+        JsonArray duration = mov.getAsJsonArray();
+        // setup an animation as a sequence of image and movements
         Image[] arr = new Image[images.size()];
         int[] dur = new int[images.size()];
-        for(int i=0; i< images.size(); i++){
+        String basePath = conf.get("base_folder").getAsString()+"/"+movement;
+        for(int i = 0; i< images.size(); i++){
             arr[i] = new Image(basePath+images.get(i).getAsString());
             dur[i] = duration.get(i).getAsInt();
         }
