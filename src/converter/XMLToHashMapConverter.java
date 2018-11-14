@@ -14,7 +14,7 @@ public class XMLToHashMapConverter {
 		// output list to feed the json
 		HashMap<String, ArrayList<String>> data = new HashMap<>();
 		
-		File[] list = new File(System.getProperty("user.dir") + "/data/").listFiles();
+		File[] list = new File(System.getProperty("user.dir") + "/resource/maps/").listFiles();
 		ArrayList<String> map_files = new ArrayList<String>();
 		String pattern = ".*\\.tmx";
         if(list!=null)

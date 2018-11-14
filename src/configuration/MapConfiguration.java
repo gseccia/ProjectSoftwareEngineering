@@ -16,7 +16,7 @@ import org.xml.sax.SAXException;
 import converter.XMLToHashMapConverter;
 
 public class MapConfiguration {
-	private static final String filename = System.getProperty("user.dir") + "/data/Map.conf";
+	private static final String filename = System.getProperty("user.dir") + "/resource/maps/maps.conf";
     private static MapConfiguration instance = null;
     private JsonObject configuration = null;
 
@@ -31,7 +31,7 @@ public class MapConfiguration {
     {
     	// instance configuration
     	// try to open the file if it does not exist create it using createConfigurationFile()
-    	// the methods assumes the maps are in "/data/" directory
+    	// the methods assumes the maps are in "/resource/maps/" directory
     	// TODO otherwise change createConfigurationFile() to save the json also inside the class
     }
 
