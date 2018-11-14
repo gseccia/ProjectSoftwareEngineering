@@ -40,12 +40,8 @@ public class Block extends BasicGameState
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) throws SlickException {
-<<<<<<< HEAD
 		//calculate init postion of enemies
-		player.setLocation(3*16, 10*16); //Set Position on "Base" 
-=======
-		player.setPosition(150,130);
->>>>>>> db6a904ee4f78a9bd71a6413dfa9009ac587789e
+		player.setPosition(3*16, 10*16); //Set Position on "Base" 
 	}
 
 	@Override
