@@ -3,6 +3,7 @@ package main.java;
 import elements.Mob;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -10,11 +11,10 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class Level extends BasicGameState{
 	private int state;
-	private float x,y;
-	private boolean down,right;
-	private Mob tmp;
-	//private TiledMap back;
-	
+	private Mob player;
+	private TiledMap back;
+	private int floor_index,floor_id;
+	private Input player_input;
 	/*
 	 * private GraphTransitionManager map;
 	 * private Set<AnimatedElement> element_set;
@@ -27,28 +27,39 @@ public class Level extends BasicGameState{
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		tmp = Mob.generate("guntan");
-		//back = new TiledMap("resource/mapblock/Lab.tmx");
+		player = Mob.generate("guntan");
+		back = new TiledMap("resource/maps/CompleteLab/Lab.tmx");
+		floor_index = back.getLayerIndex("Base");
+		floor_id = back.getTileId(0, 0, floor_index);
+		player.setLocation(back.getWidth()/2,back.getHeight()/2);
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		tmp.draw();
-		//back.render(0, 0);
+		back.render(0, 0);
+		player.draw();
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		if(y > container.getHeight() || y < 0) 
+		player_input = container.getInput();
+		
+		if(player_input.isKeyDown(Input.KEY_DOWN) && player.getY()<container.getHeight())
 		{
-			down = !down;
+			if (back.getTileId((int)player.getX() , (int)player.getY() + 1, floor_index) == 0) player.moveY(1);
 		}
-		if(x < 0 || x > container.getWidth())
+		else if(player_input.isKeyDown(Input.KEY_UP)  && player.getY()>0)
 		{
-			right = !right;
+			if (back.getTileId((int)player.getX() , (int)player.getY() - 1, floor_index) == floor_id) player.moveY(-1);
 		}
-		x = (right)? x+1 : x-1;
-		y = (down)? y+1 : y-1;
+		else if(player_input.isKeyDown(Input.KEY_LEFT) && player.getX()>0)
+		{
+			if (back.getTileId((int)player.getX() - 1, (int)player.getY(), floor_index) == floor_id) player.moveX(-1);
+		}
+		else if(player_input.isKeyDown(Input.KEY_RIGHT) && player.getX()<container.getWidth())
+		{
+			if (back.getTileId((int)player.getX() + 1, (int)player.getY(), floor_index) == floor_id) player.moveX(1);
+		}
 	}
 
 	@Override
