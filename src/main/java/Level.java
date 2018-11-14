@@ -17,7 +17,7 @@ public class Level extends BasicGameState{
 	private Input player_input;
 	/*
 	 * private GraphTransitionManager map;
-	 * private Set<InteractiveElement> element_set;
+	 * private Set<AnimatedElement> element_set;
 	 * 
 	 * */
 	
