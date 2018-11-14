@@ -1,24 +1,15 @@
 package elements;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
 
 /**
  * This class represent an element that is not visually static on the screen
  */
-public class InteractiveElement extends Element {
+public abstract class AnimatedElement extends Rectangle implements Movable{
     private Animation current;
 
-    protected InteractiveElement(Animation a){
-        super(0, 0, 0, 0);
-        this.current = a;
-    }
-
-    protected InteractiveElement(Animation a, int width, int height){
-        super(0, 0, height, width);
-        this.current = a;
-    }
-
-    protected InteractiveElement(Animation a, int width, int height, int x, int y){
+    protected AnimatedElement(Animation a, int width, int height, int x, int y){
         super(x, y, height, width);
         this.current = a;
     }
