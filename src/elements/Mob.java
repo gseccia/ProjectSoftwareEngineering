@@ -37,6 +37,26 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
                 x, y);
     }
 
+
+    /**
+     * Probably it will be refactored
+     * @param id the mob id
+     * @return
+     */
+    public static Mob generate(String id) throws SlickException{
+        return new Mob(
+                configuration.getHp(id),
+                configuration.getAttack(id),
+                configuration.getFaceStill(id),
+                configuration.getFaceLeft(id),
+                configuration.getFaceRight(id),
+                configuration.getFaceUp(id),
+                configuration.getFaceDown(id),
+                configuration.getWidth(id),
+                configuration.getHeight(id),
+                0, 0);
+    }
+
     /**
      * To be deleted
      * @param basePath
@@ -182,5 +202,17 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     @Override
     public void moveY(int dy) {
         setY(getY() + dy);
+    }
+
+    /**
+     * Set the absolute position of a charachter
+     *
+     * @param x
+     * @param y
+     */
+    @Override
+    public void setPosition(int x, int y) {
+        setX(x);
+        setY(y);
     }
 }

@@ -63,18 +63,22 @@ public class Block extends BasicGameState
 		
 		if(player_input.isKeyDown(Input.KEY_DOWN) && player.getY()<gc.getHeight()-player.getWidth())
 		{
+			player.faceDown();
 			if (map.getTileId(((int)(player.getX())/16), ((int)(player.getY()+1)/16), floor_index) == 0) player.moveY(1);
 		}
 		else if(player_input.isKeyDown(Input.KEY_UP)  && player.getY()>0)
 		{
+			player.faceUp();
 			if (map.getTileId(((int)(player.getX())/16), ((int)(player.getY()-1)/16), floor_index) == 0) player.moveY(-1);
 		}
 		else if(player_input.isKeyDown(Input.KEY_LEFT) && player.getX()>0)
 		{
+			player.faceLeft();
 			if (map.getTileId(((int)(player.getX()-1)/16), ((int)(player.getY())/16), floor_index) == 0) player.moveX(-1);
 		}
 		else if(player_input.isKeyDown(Input.KEY_RIGHT) && player.getX()<gc.getWidth()-player.getHeight())
 		{
+			player.faceRight();
 			if (map.getTileId(((int)(player.getX()+1)/16), ((int)(player.getY())/16), floor_index) == 0) player.moveX(1);
 		}
 		

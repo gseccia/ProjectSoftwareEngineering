@@ -14,4 +14,11 @@ public interface Movable {
      * @param dy the increment of the y position
      */
     public void moveY(int dy);
+
+    /**
+     * Set the absolute position of a charachter
+     * @param x
+     * @param y
+     */
+    public void setPosition(int x, int y);
 }
