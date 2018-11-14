@@ -1,5 +1,4 @@
 package main.java;
-import java.util.function.Supplier;
 
 public class Vertex{
     private int el;
