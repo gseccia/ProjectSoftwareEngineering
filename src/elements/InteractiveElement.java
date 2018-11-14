@@ -32,10 +32,7 @@ public class InteractiveElement extends Element {
      * @param x
      * @param y
      */
-    @Override
-    public void draw(int x, int y){
-        current.draw(x, y);
-        setX(x);
-        setY(y);
+    public void draw(){
+        current.draw(getX(), getY());
     }
 }

@@ -21,7 +21,7 @@ public class Element extends Rectangle {
      * @param x
      * @param y
      */
-    public void draw(int x, int y) {
+    public void init(int x, int y) {
         setX(x);
         setY(y);
     }
@@ -36,4 +36,11 @@ public class Element extends Rectangle {
         setY(getY() + dy);
     }
 
+    public void moveX(int dx){
+        move(dx, 0);
+    }
+
+    public void moveY(int dy){
+        move(0, dy);
+    }
 }
