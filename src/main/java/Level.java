@@ -11,6 +11,9 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Level extends StateBasedGame{
 	private Mob player;
 	private Block current_block; //Only to TEST
+	private String charname;
+	private int level_difficulty;
+	
 	
 	private Set<Block> map; //DO substitution with graph
 	private Map<Block,Set<Mob>> population;
@@ -23,18 +26,20 @@ public class Level extends StateBasedGame{
 	 * This class is the manager of a level
 	 * @throws SlickException 
 	*/
-	public Level(String gamename,String charname,int difficulty) throws SlickException {
+	public Level(String gamename,String charname,int level_difficulty) throws SlickException {
 		super(gamename);
 		
 		population = new HashMap<Block,Set<Mob>>();
+		
 		///ONLY TO TEST
 		map = new HashSet<Block>();
 		current_block = new Block(1,"resource/maps/CompleteLab/Lab.tmx");
 		map.add(current_block);
-		////
-		player = Mob.generate(charname);
+		//ONLY TEST END
+		
+		this.charname = charname;
+		this.level_difficulty =level_difficulty;
 		//player.setLocation(0,0);
-		generatePopulation(difficulty);
 	}
 	
 	
@@ -72,6 +77,8 @@ public class Level extends StateBasedGame{
 
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException {
+		player = Mob.generate(charname);
+		generatePopulation(level_difficulty);
 		for(Block block: map)
 		{
 			this.addState(block);
