@@ -2,72 +2,82 @@ package main.java;
 
 import elements.Mob;
 import map.Block;
+import java.util.*;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.tiled.TiledMap;
 
-public class Level extends BasicGameState{
-	private int state;
+public class Level extends StateBasedGame{
 	private Mob player;
-	private Block back;
-	private int floor_index,floor_id;
-	private Input player_input;
+	private Block current_block; //Only to TEST
+	
+	private Set<Block> map; //DO substitution with graph
+	private Map<Block,Set<Mob>> population;
 	/*
-	 * private GraphTransitionManager map;
-	 * private Set<AnimatedElement> element_set;
-	 * 
-	 * */
+	private GraphTransitionManager map;
+	private Set<Mob> element_set;
+	*/
 	
-	public Level(int state) {
-		this.state = state;
-	}
-	
-	@Override
-	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		player = Mob.generate("guntan");
-		back = new Block("resource/maps/CompleteLab/Lab.tmx");
-		floor_index = back.getLayerIndex("Obstacle1");
-		floor_id = back.getTileId(0, 0, floor_index);
-		player.setLocation((back.getWidth()/2)*16,(back.getHeight()/2)*16);
-	}
-
-	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		//back.render(0,0,floor_index);
-		back.render(0, 0);
-		player.draw();
-	}
-
-	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		player_input = container.getInput();
+	/**
+	 * This class is the manager of a level
+	 * @throws SlickException 
+	*/
+	public Level(String gamename,String charname,int difficulty) throws SlickException {
+		super(gamename);
 		
-		if(player_input.isKeyDown(Input.KEY_DOWN) && player.getY()<container.getHeight())
+		population = new HashMap<Block,Set<Mob>>();
+		///ONLY TO TEST
+		map = new HashSet<Block>();
+		current_block = new Block(1,"resource/maps/CompleteLab/Lab.tmx");
+		map.add(current_block);
+		////
+		player = Mob.generate(charname);
+		//player.setLocation(0,0);
+		generatePopulation(difficulty);
+	}
+	
+	
+	/**
+	 * This function automatically generate Mobs and put them into blocks
+	 * @param difficulty parameter to define the hardness of the level
+	 * @throws SlickException 
+	 */
+	private void generatePopulation(int difficulty) throws SlickException
+	{
+		for(Block block: map)
 		{
-			if (back.getTileId(((int)(player.getX())/16), ((int)(player.getY()+1)/16), floor_index) == floor_id) player.moveY(1);
-		}
-		else if(player_input.isKeyDown(Input.KEY_UP)  && player.getY()>0)
-		{
-			if (back.getTileId(((int)(player.getX())/16), ((int)(player.getY()-1)/16), floor_index) == floor_id) player.moveY(-1);
-		}
-		else if(player_input.isKeyDown(Input.KEY_LEFT) && player.getX()>0)
-		{
-			if (back.getTileId(((int)(player.getX()-1)/16), ((int)(player.getY())/16), floor_index) == floor_id) player.moveX(-1*delta);
-		}
-		else if(player_input.isKeyDown(Input.KEY_RIGHT) && player.getX()<container.getWidth())
-		{
-			if (back.getTileId(((int)(player.getX()+1)/16), ((int)(player.getY())/16), floor_index) == floor_id) player.moveX(1*delta);
+			population.put(block, generateMob(difficulty));
 		}
 	}
+	
+	/**
+	 * This function automatically generate a set of Mobs
+	 * @param difficulty parameter to define the hardness of the level
+	 * @return A set of Mob that are randomically generated
+	 */
+	private Set<Mob> generateMob(int difficulty) throws SlickException
+	{
+		Set<Mob> mobs=new HashSet<Mob>();
+		Mob mob;
+		for(int i=0;i<difficulty;i++)
+		{
+			mob = Mob.generate("guntan");  //Retrive other String id
+			mobs.add(mob);
+		}
+		return mobs;
+	}
+
+
 
 	@Override
-	public int getID() {
-		return state;
+	public void initStatesList(GameContainer arg0) throws SlickException {
+		for(Block block: map)
+		{
+			this.addState(block);
+		}
+		
+		this.enterState(1); //always enter in first block
 	}
 
 

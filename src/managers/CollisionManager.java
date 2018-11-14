@@ -16,6 +16,12 @@ public class CollisionManager implements CollisionManagerInterface {
 		
 //		Leggere i nomi dei layer della mappa dal .tmx
 //		layers = getLayers(new MapConfiguration(getJSONIndex(mapName)));
+		layers = new ArrayList<String>();
+		layers.add("Wall");
+		layers.add("Base");
+		layers.add("Obstacle1");
+		layers.add("Obstacle2");
+		
 		for (String s: layers) { 
 			if (s.matches("Wall*|Obstacle*"))
 			{
