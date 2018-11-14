@@ -41,7 +41,7 @@ public class Block extends BasicGameState
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) throws SlickException {
-		player = Mob.generate("guntan", 0 ,0);
+		player.setPosition(150,130);
 	}
 
 	@Override
@@ -80,6 +80,10 @@ public class Block extends BasicGameState
 		{
 			player.faceRight();
 			if (map.getTileId(((int)(player.getX()+1)/16), ((int)(player.getY())/16), floor_index) == 0) player.moveX(1);
+		}
+		else
+		{
+			player.faceStill();
 		}
 		
 		for(Mob e : enemy)
