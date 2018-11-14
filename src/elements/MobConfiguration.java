@@ -12,6 +12,8 @@ public class MobConfiguration {
     private static MobConfiguration instance = null;
     private JsonObject configuration;
 
+
+
     public static MobConfiguration getInstance(){
         if(instance == null){
             instance = new MobConfiguration();

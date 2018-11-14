@@ -30,15 +30,7 @@ public class Mob extends InteractiveElement {
         return new Mob(mobConf.get("hp").getAsInt(), mobConf.get("attack").getAsInt(), still, new Animation(), new Animation(), new Animation(), new Animation(), mobConf.get("width").getAsInt(), mobConf.get("height").getAsInt());
     }
 
-    private static Animation generateAnimation(String basePath, JsonArray images, JsonArray duration) throws SlickException{
-        Image[] arr = new Image[images.size()];
-        int[] dur = new int[images.size()];
-        for(int i=0; i< images.size(); i++){
-            arr[i] = new Image(basePath+images.get(i).getAsString());
-            dur[i] = duration.get(i).getAsInt();
-        }
-        return new Animation(arr, dur);
-    }
+
 
     private Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown) {
         super(standStill);
@@ -65,6 +57,16 @@ public class Mob extends InteractiveElement {
         this.attackDamage = attackDamage;
         faces = new HashMap<String, Animation>();
         generateMap(faceLeft, faceRight, faceUp, faceDown, standStill);
+    }
+
+    private static Animation generateAnimation(String basePath, JsonArray images, JsonArray duration) throws SlickException {
+        Image[] arr = new Image[images.size()];
+        int[] dur = new int[images.size()];
+        for(int i=0; i< images.size(); i++){
+            arr[i] = new Image(basePath+images.get(i).getAsString());
+            dur[i] = duration.get(i).getAsInt();
+        }
+        return new Animation(arr, dur);
     }
 
     /**
