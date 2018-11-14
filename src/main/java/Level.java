@@ -81,6 +81,7 @@ public class Level extends StateBasedGame{
 		generatePopulation(level_difficulty);
 		for(Block block: map)
 		{
+			block.initBlock(player, population);
 			this.addState(block);
 		}
 		
