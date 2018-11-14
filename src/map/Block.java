@@ -35,7 +35,8 @@ public class Block extends BasicGameState
 	{
 		map = new TiledMap(mapName);
 		enemy = population.get(this);
-		// player.setLocation(x, y); --> Need to set Location near a door
+		this.player = player;
+		player.setLocation(0, 0);// --> Need to set Location near a door
 	}
 
 	@Override
@@ -55,26 +56,26 @@ public class Block extends BasicGameState
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame arg1, int arg2) throws SlickException {
-		collision.checkCollision(map, mapName, 0, 0, gc); // substitute 0,0 with player
+		//collision.checkCollision(map, mapName, 0, 0, gc); // substitute 0,0 with player
 		
-		/*
-		player_input = container.getInput();
+		int floor_index = map.getLayerIndex("Wall");
+		Input player_input = gc.getInput();
 		
-		if(player_input.isKeyDown(Input.KEY_DOWN) && player.getY()<container.getHeight()-player.getWidth())
+		if(player_input.isKeyDown(Input.KEY_DOWN) && player.getY()<gc.getHeight()-player.getWidth())
 		{
-			if (current_block.getTileId(((int)(player.getX())/16), ((int)(player.getY()+1)/16), floor_index) == 0) player.moveY(1);
+			if (map.getTileId(((int)(player.getX())/16), ((int)(player.getY()+1)/16), floor_index) == 0) player.moveY(1);
 		}
 		else if(player_input.isKeyDown(Input.KEY_UP)  && player.getY()>0)
 		{
-			if (current_block.getTileId(((int)(player.getX())/16), ((int)(player.getY()-1)/16), floor_index) == 0) player.moveY(-1);
+			if (map.getTileId(((int)(player.getX())/16), ((int)(player.getY()-1)/16), floor_index) == 0) player.moveY(-1);
 		}
 		else if(player_input.isKeyDown(Input.KEY_LEFT) && player.getX()>0)
 		{
-			if (current_block.getTileId(((int)(player.getX()-1)/16), ((int)(player.getY())/16), floor_index) == 0) player.moveX(-1);
+			if (map.getTileId(((int)(player.getX()-1)/16), ((int)(player.getY())/16), floor_index) == 0) player.moveX(-1);
 		}
-		else if(player_input.isKeyDown(Input.KEY_RIGHT) && player.getX()<container.getWidth()-player.getHeight())
+		else if(player_input.isKeyDown(Input.KEY_RIGHT) && player.getX()<gc.getWidth()-player.getHeight())
 		{
-			if (current_block.getTileId(((int)(player.getX()+1)/16), ((int)(player.getY())/16), floor_index) == 0) player.moveX(1);
+			if (map.getTileId(((int)(player.getX()+1)/16), ((int)(player.getY())/16), floor_index) == 0) player.moveX(1);
 		}
 		
 		for(Mob e : enemy)
@@ -84,7 +85,7 @@ public class Block extends BasicGameState
 			e.moveX(random_x);
 			e.moveY(random_y);
 			// manage the collision
-		}*/
+		}
 	}
 
 	@Override
