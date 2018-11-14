@@ -17,7 +17,7 @@ public class Level extends BasicGameState{
 	
 	/*
 	 * private GraphTransitionManager map;
-	 * private Set<InteractiveElement> element_set;
+	 * private Set<AnimatedElement> element_set;
 	 * 
 	 * */
 	
@@ -33,7 +33,7 @@ public class Level extends BasicGameState{
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		tmp.draw(400,300);
+		tmp.draw();
 		//back.render(0, 0);
 	}
 

@@ -24,19 +24,8 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * @return
      */
     public static Mob generate(String id) throws SlickException{
-        JsonObject mobConf = configuration.getMobConfiguration(id);
-        String baseFolder = mobConf.get("base_folder").getAsString();
-        JsonObject tmp = mobConf.getAsJsonObject("still");
-        Animation still = generateAnimation(baseFolder+"still/", tmp.getAsJsonArray("frames"), tmp.getAsJsonArray("duration"));
-        tmp = mobConf.getAsJsonObject("up");
-        Animation up = generateAnimation(baseFolder+"up/", tmp.getAsJsonArray("frames"), tmp.getAsJsonArray("duration"));
-        tmp = mobConf.getAsJsonObject("down");
-        Animation down = generateAnimation(baseFolder+"down/", tmp.getAsJsonArray("frames"), tmp.getAsJsonArray("duration"));
-        tmp = mobConf.getAsJsonObject("left");
-        Animation left = generateAnimation(baseFolder+"left/", tmp.getAsJsonArray("frames"), tmp.getAsJsonArray("duration"));
-        tmp = mobConf.getAsJsonObject("right");
-        Animation right = generateAnimation(baseFolder+"right/", tmp.getAsJsonArray("frames"), tmp.getAsJsonArray("duration"));
-        return new Mob(mobConf.get("hp").getAsInt(), mobConf.get("attack").getAsInt(), still, left, right, up, down, mobConf.get("width").getAsInt(), mobConf.get("height").getAsInt(), 0, 0);
+        Animation still = generateAnimation("resource/textures/sprites/guntan/still/", new String[]{"0.png", "1.png", "2.png", "3.png"}, new int[]{200, 13, 13, 13});
+        return new Mob(100, 100, still, new Animation(), new Animation(), new Animation(), new Animation(), 16, 33, 0, 0);
     }
 
     /**
@@ -47,14 +36,12 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * @return
      * @throws SlickException
      */
-    private static Animation generateAnimation(String basePath, JsonArray images, JsonArray duration) throws SlickException{
-        Image[] arr = new Image[images.size()];
-        int[] dur = new int[images.size()];
-        for(int i=0; i< images.size(); i++){
-            arr[i] = new Image(basePath+images.get(i).getAsString());
-            dur[i] = duration.get(i).getAsInt();
+    private static Animation generateAnimation(String basePath, String[] images, int[] duration) throws SlickException{
+        Image[] arr = new Image[images.length];
+        for(int i=0; i< images.length; i++){
+            arr[i] = new Image(basePath+images[i]);
         }
-        return new Animation(arr, dur);
+        return new Animation(arr, duration);
     }
 
     private Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, int width, int height, int x, int y) {
