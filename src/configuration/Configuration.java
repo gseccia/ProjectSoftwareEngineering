@@ -13,8 +13,6 @@ import java.io.InputStreamReader;
 
 abstract class Configuration {
 
-    public abstract Animation getFaceStill(String id) throws SlickException;
-
     protected abstract JsonObject getConfiguration(String id);
 
     protected JsonObject uploadConfiguration(String filename){

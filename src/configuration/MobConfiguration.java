@@ -62,7 +62,6 @@ public class MobConfiguration extends Configuration{
         return this.configuration.getAsJsonObject(id);
     }
 
-    @Override
     public Animation getFaceStill(String id) throws SlickException {
         return generateAnimation(id,"still");
     }

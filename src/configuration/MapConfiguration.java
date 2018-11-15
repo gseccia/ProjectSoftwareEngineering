@@ -15,7 +15,7 @@ import org.xml.sax.SAXException;
 
 import converter.XMLToHashMapConverter;
 
-public class MapConfiguration {
+public class MapConfiguration extends Configuration {
 	private static final String filename = System.getProperty("user.dir") + "/resource/maps/maps.conf";
     private static MapConfiguration instance = null;
     private JsonObject configuration = null;
@@ -33,6 +33,13 @@ public class MapConfiguration {
     	// try to open the file if it does not exist create it using createConfigurationFile()
     	// the methods assumes the maps are in "/resource/maps/" directory
     	// TODO otherwise change createConfigurationFile() to save the json also inside the class
+    	try {
+			createConfigurationFile();
+			this.configuration = super.uploadConfiguration(filename);
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			e.printStackTrace();
+		}
+    	
     }
 
     public void createConfigurationFile() throws ParserConfigurationException, SAXException, IOException {
@@ -49,7 +56,7 @@ public class MapConfiguration {
         }
     }
     
-    private static HashMap<String,ArrayList<String>> prepareJsonObject() throws ParserConfigurationException, SAXException, IOException {
+    private HashMap<String,ArrayList<String>> prepareJsonObject() throws ParserConfigurationException, SAXException, IOException {
     	HashMap<String,ArrayList<String>> new_data = new HashMap<>();
     	
     	HashMap<String,ArrayList<String>> data = XMLToHashMapConverter.getLayersFromXml();
@@ -70,5 +77,10 @@ public class MapConfiguration {
 		System.out.println(new_data);
     	return new_data;
     }
+
+	@Override
+	protected JsonObject getConfiguration(String id) {
+		return this.configuration.getAsJsonObject(id);
+	}
 
 }
