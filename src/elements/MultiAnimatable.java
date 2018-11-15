@@ -5,26 +5,26 @@ public interface MultiAnimatable {
     /**
      * Shows the up animation of the character
      */
-    public void faceUp();
+    void faceUp() throws NullAnimationException;
 
     /**
      * Shows the down animation of the character
      */
-    public void faceDown();
+    void faceDown() throws NullAnimationException;
 
     /**
      * Shows the left animation of the character
      */
-    public void faceLeft();
+    void faceLeft() throws NullAnimationException;
 
     /**
      * Shows the right animation of the character
      */
-    public void faceRight();
+    void faceRight() throws NullAnimationException;
 
     /**
      * Shows the still animation of the character
      */
-    public void faceStill();
+    void faceStill() throws NullAnimationException;
 
 }

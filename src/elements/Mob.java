@@ -1,6 +1,5 @@
 package elements;
 
-import com.google.gson.JsonArray;
 import configuration.MobConfiguration;
 import org.newdawn.slick.*;
 import java.util.*;
@@ -23,7 +22,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * @param id the mob id
      * @return
      */
-    public static Mob generate(String id, int x, int y) throws SlickException{
+    public static Mob generate(String id, int x, int y) throws SlickException, NullAnimationException{
         return new Mob(
                 configuration.getHp(id),
                 configuration.getAttack(id),
@@ -43,53 +42,27 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * @param id the mob id
      * @return
      */
-    public static Mob generate(String id) throws SlickException{
-        return new Mob(
-                configuration.getHp(id),
-                configuration.getAttack(id),
-                configuration.getFaceStill(id),
-                configuration.getFaceLeft(id),
-                configuration.getFaceRight(id),
-                configuration.getFaceUp(id),
-                configuration.getFaceDown(id),
-                configuration.getWidth(id),
-                configuration.getHeight(id),
-                0, 0);
+    public static Mob generate(String id) throws SlickException, NullAnimationException{
+            return new Mob(
+                    configuration.getHp(id),
+                    configuration.getAttack(id),
+                    configuration.getFaceStill(id),
+                    configuration.getFaceLeft(id),
+                    configuration.getFaceRight(id),
+                    configuration.getFaceUp(id),
+                    configuration.getFaceDown(id),
+                    configuration.getWidth(id),
+                    configuration.getHeight(id),
+                    0, 0);
     }
 
-    /**
-     * To be deleted
-     * @param basePath
-     * @param images
-     * @param duration
-     * @return
-     * @throws SlickException
-     */
-    private static Animation generateAnimation(String basePath, String[] images, int[] duration) throws SlickException{
-        Image[] arr = new Image[images.length];
-        for(int i=0; i< images.length; i++){
-            arr[i] = new Image(basePath+images[i]);
-        }
-        return new Animation(arr, duration);
-    }
-
-    private Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, int width, int height, int x, int y) {
+    private Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, int width, int height, int x, int y) throws NullAnimationException {
         super(standStill, width, height, x, y);
         this.hp = hp;
         this.maxHp = hp;
         this.attackDamage = attackDamage;
         faces = new HashMap<String, Animation>();
         generateMap(faceLeft, faceRight, faceUp, faceDown, standStill);
-    }
-
-    private static Animation generateAnimation(String basePath, JsonArray images, JsonArray duration) throws SlickException {
-        Image[] arr = new Image[images.size()];
-        int[] dur = new int[images.size()];
-        for(int i=0; i< images.size(); i++){
-            arr[i] = new Image(basePath+images.get(i).getAsString());
-            dur[i] = duration.get(i).getAsInt();
-        }
-        return new Animation(arr, dur);
     }
 
     /**
@@ -105,11 +78,6 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
         faces.put("up", faceUp);
         faces.put("down", faceDown);
         faces.put("still", standStill);
-    }
-
-    //Getter and setter
-    protected HashMap<String, Animation> getFaces() {
-        return faces;
     }
 
     public int getHp() {
@@ -148,7 +116,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * Changes the current animation with the up one
      */
     @Override
-    public void faceUp(){
+    public void faceUp() throws NullAnimationException{
         setCurrent(faces.get("up"));
     }
 
@@ -156,7 +124,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * Changes the current animation with the down one
      */
     @Override
-    public void faceDown(){
+    public void faceDown() throws NullAnimationException{
         setCurrent(faces.get("down"));
     }
 
@@ -164,7 +132,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * Changes the current animation with the right one
      */
     @Override
-    public void faceRight(){
+    public void faceRight() throws NullAnimationException{
         setCurrent(faces.get("right"));
     }
 
@@ -172,7 +140,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * Changes the current animation with the left one
      */
     @Override
-    public void faceLeft(){
+    public void faceLeft() throws NullAnimationException{
         setCurrent(faces.get("left"));
     }
 
@@ -180,7 +148,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * Changes the current animation with the still one
      */
     @Override
-    public void faceStill(){
+    public void faceStill() throws NullAnimationException{
         setCurrent(faces.get("still"));
     }
 

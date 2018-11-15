@@ -1,6 +1,7 @@
 package main.java;
 
 import elements.Mob;
+import elements.NullAnimationException;
 import map.Block;
 import java.util.*;
 
@@ -67,8 +68,13 @@ public class Level extends StateBasedGame{
 		Mob mob;
 		for(int i=0;i<difficulty;i++)
 		{
-			mob = Mob.generate("zombo");  //Retrive other String id
-			mobs.add(mob);
+			try {
+				mob = Mob.generate("zombo");  //Retrive other String id
+				mobs.add(mob);
+			} catch (NullAnimationException e) {
+				e.printStackTrace();
+				System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
+			}
 		}
 		return mobs;
 	}
@@ -77,15 +83,20 @@ public class Level extends StateBasedGame{
 
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException {
-		player = Mob.generate(charname);
-		generatePopulation(level_difficulty);
-		for(Block block: map)
-		{
-			block.initBlock(player, population);
-			this.addState(block);
+		try {
+			player = Mob.generate(charname);
+			generatePopulation(level_difficulty);
+			for(Block block: map)
+			{
+				block.initBlock(player, population);
+				this.addState(block);
+			}
+
+			this.enterState(1); //always enter in first block
+		} catch (NullAnimationException e) {
+			e.printStackTrace();
+			System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
 		}
-		
-		this.enterState(1); //always enter in first block
 	}
 
 
