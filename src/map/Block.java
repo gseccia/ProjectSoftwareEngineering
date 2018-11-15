@@ -30,7 +30,7 @@ public class Block extends BasicGameState
 	{
 		this.state=state;
 		collision = new CollisionManager();
-		this.mapName = mapName;//"resource/maps/CompleteHall/Hall.tmx"; //MapName
+		this.mapName = mapName; //MapName
 	}
 	
 	public void initBlock(Mob player,Map<Block,Set<Mob>> population) throws SlickException
@@ -69,11 +69,12 @@ public class Block extends BasicGameState
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame arg1, int arg2) throws SlickException {
+	public void update(GameContainer gc, StateBasedGame arg1, int delta) throws SlickException {
 		try {
 			collision.checkCollision(map,mapName,map_x,map_y, player, gc);
 			map_x = (int)player.getX()/map.getTileWidth();
 			map_y = (int)player.getY()/map.getTileHeight();
+			player.setX(player.getX() + delta/10f);
 		} catch (NullAnimationException e1) {
 			e1.printStackTrace();
 		}
