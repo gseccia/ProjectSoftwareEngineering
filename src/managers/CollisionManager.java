@@ -20,21 +20,12 @@ public class CollisionManager implements CollisionManagerInterface {
 	public void checkCollision(String mapName, int shift_x,int shift_y,Mob player, GameContainer gc) throws NullAnimationException {
 		Input in = gc.getInput();
 		
-<<<<<<< HEAD
 //		Leggere i nomi dei layer della mappa dal .conf
 		MapConfiguration mp = MapConfiguration.getInstance();
 		TiledMap m = mp.getMapTiled(mapName);
 		layers = mp.getLayers(mapName);
 		System.out.println(layers);
-=======
-//		Leggere i nomi dei layer della mappa dal .tmx
-		//layers = getLayers(new MapConfiguration(getJSONIndex(mapName)));
-		layers = new ArrayList<String>();
-		layers.add("Wall");
-		layers.add("Base");
-		layers.add("Obstacle1");
-		layers.add("Wall1");
->>>>>>> 70207647d9f8774bc55fa0ccf796a957fa6fa641
+
 		
 		System.out.println(((int)player.getX()/m.getTileWidth())+" ,"+(int)player.getY()/m.getTileHeight());
 		
