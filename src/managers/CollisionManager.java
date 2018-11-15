@@ -6,12 +6,15 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.tiled.TiledMap;
 
+import elements.Mob;
+import elements.NullAnimationException;
+
 public class CollisionManager implements CollisionManagerInterface {
 	private ArrayList<String> layers;
 	// private MapConfiguration configuration;
 
 	@Override
-	public void checkCollision(TiledMap m, String mapName, int charX, int charY, GameContainer gc) {
+	public void checkCollision(TiledMap m, String mapName, int shift_x,int shift_y,Mob player, GameContainer gc) throws NullAnimationException {
 		Input in = gc.getInput();
 		
 //		Leggere i nomi dei layer della mappa dal .tmx
@@ -20,38 +23,55 @@ public class CollisionManager implements CollisionManagerInterface {
 		layers.add("Wall");
 		layers.add("Base");
 		layers.add("Obstacle1");
-		layers.add("Obstacle2");
+		layers.add("Wall1");
+		
+		System.out.println(((int)player.getX()/m.getTileWidth())+" ,"+(int)player.getY()/m.getTileHeight());
+		
+		int px_position = (int)(player.getX()/m.getTileWidth()) + shift_x;
+		int py_position = (int)(player.getY()/m.getTileHeight()) + shift_y;
 		
 		for (String s: layers) { 
-			if (s.matches("Wall*|Obstacle*"))
+			if (s.matches("(Wall*)|(Obstacle*)"))
 			{
 				if(in.isKeyDown(Input.KEY_D))
 				{
-					if(m.getTileId(charX+1, charY, m.getLayerIndex(s))==0)
+					if(px_position+1<m.getWidth() && m.getTileId(px_position+1, py_position, m.getLayerIndex(s))==0)
 					{
-						charX += 1;
+						player.moveX(1);
+						//player.moveX(m.getTileWidth());
+						player.faceRight();
 					}
 				}
-				if(in.isKeyDown(Input.KEY_A))
+				else if(in.isKeyDown(Input.KEY_A))
 				{
-					if(m.getTileId(charX-1, charY, m.getLayerIndex(s))==0)
+					if(px_position-1 > -1 && m.getTileId(px_position-1, py_position, m.getLayerIndex(s))==0)
 					{
-						charX -= 1;
+						player.moveX(-1);
+						//player.moveX(-m.getTileWidth());
+						player.faceLeft();
 					}
 				}
-				if(in.isKeyDown(Input.KEY_W))
+				else if(in.isKeyDown(Input.KEY_W))
 				{
-					if(m.getTileId(charX, charY-1, m.getLayerIndex(s))==0)
+					if(py_position-1 > 0 && m.getTileId(px_position, py_position-1, m.getLayerIndex(s))==0)
 					{
-						charY -= 1;
+						player.moveY(-1);
+						//player.moveY(-m.getTileHeight());
+						player.faceUp();
 					}
 				}
-				if(in.isKeyDown(Input.KEY_S))
+				else if(in.isKeyDown(Input.KEY_S))
 				{
-					if(m.getTileId(charX, charY+1, m.getLayerIndex(s))==0)
+					if(py_position+1 < m.getHeight() && m.getTileId(px_position, py_position+1, m.getLayerIndex(s))==0)
 					{
-						charY += 1;
+						player.moveY(1);
+						//player.moveY(m.getTileHeight());
+						player.faceDown();
 					}
+				}
+				else
+				{
+					player.faceStill();
 				}
 				
 			}

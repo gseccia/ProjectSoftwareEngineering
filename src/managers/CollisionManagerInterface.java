@@ -3,6 +3,9 @@ package managers;
 import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
 
+import elements.Mob;
+import elements.NullAnimationException;
+
 public interface CollisionManagerInterface {
 	// Il CollisionManager presa una mappa in input deve gestire i seguenti casi di collisione sui layer:
 	//		- muro
@@ -14,6 +17,6 @@ public interface CollisionManagerInterface {
 	// 		- Obstaclei i=0...n
 	// 		- Doori		i=0...n
 	
-	public void checkCollision(TiledMap m, String mapName, int charX, int charY, GameContainer gc);
+	public void checkCollision(TiledMap m, String mapName,int shift_x,int shift_y, Mob player, GameContainer gc) throws NullAnimationException;
 	
 }

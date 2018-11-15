@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
 import elements.Mob;
+import elements.NullAnimationException;
 import managers.CollisionManager;
 
 public class Block extends BasicGameState
@@ -21,6 +22,7 @@ public class Block extends BasicGameState
 	private Mob player;
 	private Set<Mob> enemy;
 	private int state;
+	private int x,y,map_x,map_y;
 	private CollisionManager collision;
 	private String mapName;
 	
@@ -28,7 +30,7 @@ public class Block extends BasicGameState
 	{
 		this.state=state;
 		collision = new CollisionManager();
-		this.mapName = "resource/maps/CompleteClassroom/Classroom.tmx"; //MapName
+		this.mapName = mapName;//"resource/maps/CompleteHall/Hall.tmx"; //MapName
 	}
 	
 	public void initBlock(Mob player,Map<Block,Set<Mob>> population) throws SlickException
@@ -41,12 +43,26 @@ public class Block extends BasicGameState
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) throws SlickException {
 		//calculate init postion of enemies
-		player.setPosition(3*16, 10*16); //Set Position on "Base"
+		Random rand = new Random();
+		player.setPosition(10*16, 10*16); //Set Position on "Base"
+		for(Mob e : enemy)
+		{
+			e.setPosition(rand.nextInt(5)*16, rand.nextInt(5)*16);
+		}
+		map_x = (int)player.getX()/map.getTileWidth();
+		map_y = (int)player.getY()/map.getTileHeight();
+		x = (int)player.getX() - map.getWidth()/2;
+		y = (int)player.getY() - map.getHeight()/2;
+		x = (x < 0)? 0:x;
+		y = (y < 0)? 0:y;
 	 }
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) throws SlickException {
-		map.render(0, 0, 3, 10,64,64);
+		g.scale(2, 2);
+		map.render(0,0,map_x,map_y,map_x+50,map_y+50);
+		// map.getWidth()-(int)player.getX()/16,map.getHeight()-(int)player.getY()/16
+		//(int)player.getX()/map.getTileWidth(),(int)player.getY()/map.getTileHeight()
 		for(Mob e : enemy)
 		{
 			e.draw();
@@ -56,36 +72,13 @@ public class Block extends BasicGameState
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame arg1, int arg2) throws SlickException {
-		//collision.checkCollision(map, mapName, 0, 0, gc); // substitute 0,0 with player
-		
-		int floor_index = map.getLayerIndex("Wall");
-		Input player_input = gc.getInput();
-		
-		if(player_input.isKeyDown(Input.KEY_DOWN) && player.getY()<gc.getHeight()-player.getWidth())
-		{
-			player.faceDown();
-			if (map.getTileId(((int)(player.getX())/16), ((int)(player.getY()+1)/16), floor_index) == 0) player.moveY(1);
+		try {
+			collision.checkCollision(map,mapName,map_x,map_y, player, gc);
+			map_x = (int)player.getX()/map.getTileWidth();
+			map_y = (int)player.getY()/map.getTileHeight();
+		} catch (NullAnimationException e1) {
+			e1.printStackTrace();
 		}
-		else if(player_input.isKeyDown(Input.KEY_UP)  && player.getY()>0)
-		{
-			player.faceUp();
-			if (map.getTileId(((int)(player.getX())/16), ((int)(player.getY()-1)/16), floor_index) == 0) player.moveY(-1);
-		}
-		else if(player_input.isKeyDown(Input.KEY_LEFT) && player.getX()>0)
-		{
-			player.faceLeft();
-			if (map.getTileId(((int)(player.getX()-1)/16), ((int)(player.getY())/16), floor_index) == 0) player.moveX(-1);
-		}
-		else if(player_input.isKeyDown(Input.KEY_RIGHT) && player.getX()<gc.getWidth()-player.getHeight())
-		{
-			player.faceRight();
-			if (map.getTileId(((int)(player.getX()+1)/16), ((int)(player.getY())/16), floor_index) == 0) player.moveX(1);
-		}
-		else
-		{
-			player.faceStill();
-		}
-		
 		for(Mob e : enemy)
 		{
 			int random_x = new Random().nextInt(2);
@@ -94,8 +87,21 @@ public class Block extends BasicGameState
 			e.moveY(random_y);
 			// manage the collision
 		}
+		
+		x = (int)player.getX() - map.getWidth();
+		y = (int)player.getY() - map.getHeight();
+		x = (x < 0)? 0:x;
+		y = (y < 0)? 0:y;
+		
+		
 	}
-
+	
+	public TiledMap getMap()
+	{
+		return map;
+	}
+	
+	
 	@Override
 	public int getID() {
 		return state;

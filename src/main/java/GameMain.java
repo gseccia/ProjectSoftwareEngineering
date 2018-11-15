@@ -17,7 +17,7 @@ public class GameMain{
        
 		try {
 			 AppGameContainer app = new AppGameContainer(new Level("UNI:ZA","guntan",5));
-			 app.setDisplayMode(800, 600, false);
+			 app.setDisplayMode(800, 700, false);
 		     app.start();
 		} catch (SlickException e) {
 			e.printStackTrace();

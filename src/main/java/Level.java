@@ -34,7 +34,7 @@ public class Level extends StateBasedGame{
 		
 		///ONLY TO TEST
 		map = new HashSet<Block>();
-		current_block = new Block(1,"resource/maps/CompleteLab/Lab.tmx");
+		current_block = new Block(1,"resource/maps/CompleteHall/Hall.tmx");
 		map.add(current_block);
 		//ONLY TEST END
 		
