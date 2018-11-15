@@ -2,7 +2,11 @@ package configuration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.TiledMap;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,7 +36,7 @@ public class MapConfiguration extends Configuration {
     	// instance configuration
     	// try to open the file if it does not exist create it using createConfigurationFile()
     	// the methods assumes the maps are in "/resource/maps/" directory
-    	// TODO otherwise change createConfigurationFile() to save the json also inside the class
+    	
     	try {
 			createConfigurationFile();
 			this.configuration = super.uploadConfiguration(filename);
@@ -83,4 +87,26 @@ public class MapConfiguration extends Configuration {
 		return this.configuration.getAsJsonObject(id);
 	}
 
+	public TiledMap getMapTiled(String id) {
+		/* Get MapTiled object from file name
+		 @param id is the name of the file without extension 
+		 */
+		TiledMap tm = null;
+        try {
+			tm = new TiledMap(id);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		return tm;
+	}
+	
+	public ArrayList<String> getLayers(String id){
+        JsonArray ja = this.getConfiguration(id).getAsJsonArray();
+        ArrayList<String> listLayers = new ArrayList<>();
+        for (int i=0; i < ja.size(); i++)
+        {
+        	listLayers.add(ja.get(i).getAsString());
+        }
+        return listLayers;
+    }
 }
