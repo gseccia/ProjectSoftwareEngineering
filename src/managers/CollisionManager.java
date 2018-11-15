@@ -6,6 +6,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.tiled.TiledMap;
 
+import configuration.MapConfiguration;
 import elements.Mob;
 import elements.NullAnimationException;
 
@@ -18,7 +19,7 @@ public class CollisionManager implements CollisionManagerInterface {
 		Input in = gc.getInput();
 		
 //		Leggere i nomi dei layer della mappa dal .tmx
-//		layers = getLayers(new MapConfiguration(getJSONIndex(mapName)));
+		//layers = getLayers(new MapConfiguration(getJSONIndex(mapName)));
 		layers = new ArrayList<String>();
 		layers.add("Wall");
 		layers.add("Base");
