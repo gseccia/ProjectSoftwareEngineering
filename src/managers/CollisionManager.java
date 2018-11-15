@@ -9,21 +9,21 @@ import org.newdawn.slick.tiled.TiledMap;
 import elements.Mob;
 import elements.NullAnimationException;
 
+import configuration.MapConfiguration;
+
 public class CollisionManager implements CollisionManagerInterface {
 	private ArrayList<String> layers;
 	// private MapConfiguration configuration;
 
 	@Override
-	public void checkCollision(TiledMap m, String mapName, int shift_x,int shift_y,Mob player, GameContainer gc) throws NullAnimationException {
+	public void checkCollision(String mapName, int shift_x,int shift_y,Mob player, GameContainer gc) throws NullAnimationException {
 		Input in = gc.getInput();
 		
-//		Leggere i nomi dei layer della mappa dal .tmx
-//		layers = getLayers(new MapConfiguration(getJSONIndex(mapName)));
-		layers = new ArrayList<String>();
-		layers.add("Wall");
-		layers.add("Base");
-		layers.add("Obstacle1");
-		layers.add("Wall1");
+//		Leggere i nomi dei layer della mappa dal .conf
+		MapConfiguration mp = MapConfiguration.getInstance();
+		TiledMap m = mp.getMapTiled(mapName);
+		layers = mp.getLayers(mapName);
+		System.out.println(layers);
 		
 		System.out.println(((int)player.getX()/m.getTileWidth())+" ,"+(int)player.getY()/m.getTileHeight());
 		

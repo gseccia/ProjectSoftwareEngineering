@@ -73,7 +73,7 @@ public class Block extends BasicGameState
 	@Override
 	public void update(GameContainer gc, StateBasedGame arg1, int arg2) throws SlickException {
 		try {
-			collision.checkCollision(map,mapName,map_x,map_y, player, gc);
+			collision.checkCollision(mapName,map_x,map_y, player, gc);
 			map_x = (int)player.getX()/map.getTileWidth();
 			map_y = (int)player.getY()/map.getTileHeight();
 		} catch (NullAnimationException e1) {

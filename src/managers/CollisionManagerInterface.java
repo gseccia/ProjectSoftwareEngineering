@@ -1,7 +1,6 @@
 package managers;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.tiled.TiledMap;
 
 import elements.Mob;
 import elements.NullAnimationException;
@@ -17,6 +16,6 @@ public interface CollisionManagerInterface {
 	// 		- Obstaclei i=0...n
 	// 		- Doori		i=0...n
 	
-	public void checkCollision(TiledMap m, String mapName,int shift_x,int shift_y, Mob player, GameContainer gc) throws NullAnimationException;
+	public void checkCollision(String mapName,int shift_x,int shift_y, Mob player, GameContainer gc) throws NullAnimationException;
 	
 }
