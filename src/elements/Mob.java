@@ -66,13 +66,13 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     }
 
     /**
-     * Creates a map with the animations. Subclasses can override to add more faces
+     * Creates a map with the animations
      * @param faceLeft
      * @param faceRight
      * @param faceUp
      * @param faceDown
      */
-    protected void generateMap(Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, Animation standStill){
+    private void generateMap(Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, Animation standStill){
         faces.put("left", faceLeft);
         faces.put("right", faceRight);
         faces.put("up", faceUp);
