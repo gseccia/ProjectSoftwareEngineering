@@ -61,8 +61,6 @@ public class Block extends BasicGameState
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) throws SlickException {
 		g.scale(2, 2);
 		map.render(0,0,map_x,map_y,map_x+50,map_y+50);
-		// map.getWidth()-(int)player.getX()/16,map.getHeight()-(int)player.getY()/16
-		//(int)player.getX()/map.getTileWidth(),(int)player.getY()/map.getTileHeight()
 		for(Mob e : enemy)
 		{
 			e.draw();
