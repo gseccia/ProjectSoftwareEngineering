@@ -67,7 +67,7 @@ public class Level extends StateBasedGame{
 		Mob mob;
 		for(int i=0;i<difficulty;i++)
 		{
-			mob = Mob.generate("guntan");  //Retrive other String id
+			mob = Mob.generate("zombo");  //Retrive other String id
 			mobs.add(mob);
 		}
 		return mobs;

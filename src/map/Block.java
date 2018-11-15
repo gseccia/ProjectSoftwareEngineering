@@ -28,7 +28,7 @@ public class Block extends BasicGameState
 	{
 		this.state=state;
 		collision = new CollisionManager();
-		this.mapName = "resource/maps/CompleteLab/Lab.tmx"; //MapName
+		this.mapName = "resource/maps/CompleteClassroom/Classroom.tmx"; //MapName
 	}
 	
 	public void initBlock(Mob player,Map<Block,Set<Mob>> population) throws SlickException
@@ -41,8 +41,8 @@ public class Block extends BasicGameState
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) throws SlickException {
 		//calculate init postion of enemies
-		player.setPosition(3*16, 10*16); //Set Position on "Base" 
-	}
+		player.setPosition(3*16, 10*16); //Set Position on "Base"
+	 }
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) throws SlickException {
