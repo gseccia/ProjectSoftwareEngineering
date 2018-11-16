@@ -3,6 +3,7 @@ package configuration;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import org.newdawn.slick.SlickException;
@@ -84,6 +85,7 @@ public class MapConfiguration extends Configuration {
 
 	@Override
 	protected JsonObject getConfiguration(String id) {
+		// carica il conf file da nome mappa=id
 		return this.configuration.getAsJsonObject(id);
 	}
 
@@ -101,11 +103,11 @@ public class MapConfiguration extends Configuration {
 	}
 	
 	public ArrayList<String> getLayers(String id){
-        JsonArray ja = this.getConfiguration(id).getAsJsonArray();
+        JsonArray ja = this.configuration.getAsJsonArray();
         ArrayList<String> listLayers = new ArrayList<>();
-        for (int i=0; i < ja.size(); i++)
+        for (JsonElement e : ja)
         {
-        	listLayers.add(ja.get(i).getAsString());
+        	listLayers.add(e.getAsString());
         }
         return listLayers;
     }

@@ -35,7 +35,7 @@ public class Block extends BasicGameState
 	
 	public void initBlock(Mob player,Map<Block,Set<Mob>> population) throws SlickException
 	{
-		map = new TiledMap(mapName);
+		map = new TiledMap("resource/maps/Complete"+mapName+"/"+mapName+".tmx");
 		enemy = population.get(this);
 		this.player = player; // --> Need to set Location near a door
 	}
@@ -74,7 +74,6 @@ public class Block extends BasicGameState
 			collision.checkCollision(mapName,map_x,map_y, player, gc);
 			map_x = (int)player.getX()/map.getTileWidth();
 			map_y = (int)player.getY()/map.getTileHeight();
-			player.setX(player.getX() + delta/10f);
 		} catch (NullAnimationException e1) {
 			e1.printStackTrace();
 		}

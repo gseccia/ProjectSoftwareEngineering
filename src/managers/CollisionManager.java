@@ -22,9 +22,9 @@ public class CollisionManager implements CollisionManagerInterface {
 		
 //		Leggere i nomi dei layer della mappa dal .conf
 		MapConfiguration mp = MapConfiguration.getInstance();
-		TiledMap m = mp.getMapTiled(mapName);
-		layers = mp.getLayers(mapName);
-		System.out.println(layers);
+		TiledMap m = mp.getMapTiled("resource/maps/Complete"+mapName+"/"+mapName+".tmx");
+//		layers = mp.getLayers(mapName);
+//		System.out.println(layers);
 
 		
 		System.out.println(((int)player.getX()/m.getTileWidth())+" ,"+(int)player.getY()/m.getTileHeight());
@@ -32,57 +32,57 @@ public class CollisionManager implements CollisionManagerInterface {
 		int px_position = (int)(player.getX()/m.getTileWidth()) + shift_x;
 		int py_position = (int)(player.getY()/m.getTileHeight()) + shift_y;
 		
-		for (String s: layers) { 
-			if (s.matches("(Wall*)|(Obstacle*)"))
+		System.out.println(px_position+","+py_position);
+		/*px_position = 10;
+		py_position = 10;*/
+
+		if(in.isKeyDown(Input.KEY_D))
+		{
+			if(px_position+1<m.getWidth() && m.getTileId(px_position+1, py_position, m.getLayerIndex("Mask"))==0)
 			{
-				if(in.isKeyDown(Input.KEY_D))
-				{
-					if(px_position+1<m.getWidth() && m.getTileId(px_position+1, py_position, m.getLayerIndex(s))==0)
-					{
-						player.moveX(1);
-						//player.moveX(m.getTileWidth());
-						player.faceRight();
-					}
-				}
-				else if(in.isKeyDown(Input.KEY_A))
-				{
-					if(px_position-1 > -1 && m.getTileId(px_position-1, py_position, m.getLayerIndex(s))==0)
-					{
-						player.moveX(-1);
-						//player.moveX(-m.getTileWidth());
-						player.faceLeft();
-					}
-				}
-				else if(in.isKeyDown(Input.KEY_W))
-				{
-					if(py_position-1 > 0 && m.getTileId(px_position, py_position-1, m.getLayerIndex(s))==0)
-					{
-						player.moveY(-1);
-						//player.moveY(-m.getTileHeight());
-						player.faceUp();
-					}
-				}
-				else if(in.isKeyDown(Input.KEY_S))
-				{
-					if(py_position+1 < m.getHeight() && m.getTileId(px_position, py_position+1, m.getLayerIndex(s))==0)
-					{
-						player.moveY(1);
-						//player.moveY(m.getTileHeight());
-						player.faceDown();
-					}
-				}
-				else
-				{
-					player.faceStill();
-				}
-				
+				player.moveX(1);
+				//player.moveX(m.getTileWidth());
+				player.faceRight();
 			}
-			else if(s.matches("Door*"))
+		}
+		else if(in.isKeyDown(Input.KEY_A))
+		{
+			if(px_position-1 > 0 && m.getTileId(px_position-1, py_position, m.getLayerIndex("Mask"))==0)
 			{
-				// Transizione al prossimo blocco
+				player.moveX(-1);
+				//player.moveX(-m.getTileWidth());
+				player.faceLeft();
 			}
+		}
+		else if(in.isKeyDown(Input.KEY_W))
+		{
+			if(py_position-1 > 0 && m.getTileId(px_position, py_position-1, m.getLayerIndex("Mask"))==0)
+			{
+				player.moveY(-1);
+				//player.moveY(-m.getTileHeight());
+				player.faceUp();
+			}
+		}
+		else if(in.isKeyDown(Input.KEY_S))
+		{
+			if(py_position+1 < m.getHeight() && m.getTileId(px_position, py_position+1, m.getLayerIndex("Mask"))==0)
+			{
+				player.moveY(1);
+				//player.moveY(m.getTileHeight());
+				player.faceDown();
+			}
+		}
+		else
+		{
+			player.faceStill();
 		}
 		
 	}
+//			else if(s.matches("Door*"))
+//			{
+//				// Transizione al prossimo blocco
+//			}
+		
+	
 
 }

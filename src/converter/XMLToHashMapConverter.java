@@ -41,7 +41,7 @@ public class XMLToHashMapConverter {
 		
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			File f =  new File(System.getProperty("user.dir") + "/data/" + map_files.get(i));
+			File f =  new File(System.getProperty("user.dir") + "/resource/maps/"+ map_files.get(i));
 			Document doc = builder.parse(f);
 			doc.getDocumentElement().normalize();
 			
