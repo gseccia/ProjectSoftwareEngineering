@@ -22,7 +22,7 @@ public class Block extends BasicGameState
 	private Mob player;
 	private Set<Mob> enemy;
 	private int state;
-	private int x,y,map_x,map_y;
+	private int map_x,map_y;
 	private CollisionManager collision;
 	private String mapName;
 	
@@ -33,28 +33,45 @@ public class Block extends BasicGameState
 		this.mapName = mapName; //MapName
 	}
 	
+	// This function initializes the block
 	public void initBlock(Mob player,Map<Block,Set<Mob>> population) throws SlickException
 	{
 		map = new TiledMap("resource/maps/Complete"+mapName+"/"+mapName+".tmx");
 		enemy = population.get(this);
-		this.player = player; // --> Need to set Location near a door
+		this.player = player; 
 	}
+	
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) throws SlickException {
-		//calculate init postion of enemies
+		int x,y;
 		Random rand = new Random();
-		player.setPosition(10*16, 10*16); //Set Position on "Base"
+		x = Integer.parseInt(map.getMapProperty("charXDoor1","0"));
+		y = Integer.parseInt(map.getMapProperty("charYDoor1","0"));
+		
+		map_x = x;
+		map_y = y;
+		
+		// Player spawns in front of Door1
+		player.setPosition(x*map.getTileWidth() -map_x*map.getTileWidth()/2, y*map.getTileHeight()-map_y*map.getTileWidth()/2); //WARNING --> substract shifting 
+		
+		// Enemies spawn from a set of a random spawn points
 		for(Mob e : enemy)
 		{
-			e.setPosition(rand.nextInt(5)*16, rand.nextInt(5)*16);
+			if (rand.nextInt(3) > 1) {
+				x = Integer.parseInt(map.getMapProperty("spawnX1","0"));
+				y = Integer.parseInt(map.getMapProperty("spawnY1","0"));
+			}
+			else {
+				x = Integer.parseInt(map.getMapProperty("spawnX3","0"));
+				y = Integer.parseInt(map.getMapProperty("spawnY3","0"));
+			}
+			e.setPosition(x*map.getTileWidth() -map_x*map.getTileWidth()/2, y*map.getTileHeight()-map_y*map.getTileWidth()/2);
 		}
+		
+		// Shift of the map
 		map_x = (int)player.getX()/map.getTileWidth();
 		map_y = (int)player.getY()/map.getTileHeight();
-		x = (int)player.getX() - map.getWidth()/2;
-		y = (int)player.getY() - map.getHeight()/2;
-		x = (x < 0)? 0:x;
-		y = (y < 0)? 0:y;
 	 }
 
 	@Override
@@ -85,20 +102,7 @@ public class Block extends BasicGameState
 			e.moveY(random_y);
 			// manage the collision
 		}
-		
-		x = (int)player.getX() - map.getWidth();
-		y = (int)player.getY() - map.getHeight();
-		x = (x < 0)? 0:x;
-		y = (y < 0)? 0:y;
-		
-		
 	}
-	
-	public TiledMap getMap()
-	{
-		return map;
-	}
-	
 	
 	@Override
 	public int getID() {

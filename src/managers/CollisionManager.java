@@ -33,8 +33,6 @@ public class CollisionManager implements CollisionManagerInterface {
 		int py_position = (int)(player.getY()/m.getTileHeight()) + shift_y;
 		
 		System.out.println(px_position+","+py_position);
-		/*px_position = 10;
-		py_position = 10;*/
 
 		if(in.isKeyDown(Input.KEY_D))
 		{
@@ -65,7 +63,7 @@ public class CollisionManager implements CollisionManagerInterface {
 		}
 		else if(in.isKeyDown(Input.KEY_S))
 		{
-			if(py_position+1 < m.getHeight() && m.getTileId(px_position, py_position+1, m.getLayerIndex("Mask"))==0)
+			if(py_position+(int)(player.getHeight()/16) < m.getHeight() && m.getTileId(px_position, py_position+(int)(player.getHeight()/16), m.getLayerIndex("Mask"))==0)
 			{
 				player.moveY(1);
 				//player.moveY(m.getTileHeight());
