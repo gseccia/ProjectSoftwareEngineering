@@ -85,14 +85,22 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     }
 
     public void setHp(int hp) {
-        this.hp = hp;
+        if(hp < 0){
+            this.hp = 0;
+        }
+        else {
+            this.hp = hp;
+        }
     }
 
     public int getMaxHp() {
         return maxHp;
     }
 
-    public void setMaxHp(int maxHp) {
+    public void setMaxHp(int maxHp) throws NotPositiveValueException {
+        if(maxHp <= 0){
+            throw new NotPositiveValueException("MaxHP value cannot be less or equal than 0!");
+        }
         this.maxHp = maxHp;
     }
 
@@ -100,7 +108,10 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
         return attackDamage;
     }
 
-    public void setAttackDamage(int attackDamage) {
+    public void setAttackDamage(int attackDamage) throws NotPositiveValueException {
+        if(attackDamage <= 0){
+            throw new NotPositiveValueException("Attack Damage value cannot be less or equal than 0!");
+        }
         this.attackDamage = attackDamage;
     }
 
@@ -110,6 +121,9 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      */
     public void damage(int amount){
         this.hp -= amount;
+        if(this.hp < 0){
+            this.hp = 0;
+        }
     }
 
     /**
