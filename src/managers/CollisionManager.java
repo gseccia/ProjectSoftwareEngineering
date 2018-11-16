@@ -10,8 +10,6 @@ import configuration.MapConfiguration;
 import elements.Mob;
 import elements.NullAnimationException;
 
-import configuration.MapConfiguration;
-
 public class CollisionManager implements CollisionManagerInterface {
 	private ArrayList<String> layers;
 	// private MapConfiguration configuration;
