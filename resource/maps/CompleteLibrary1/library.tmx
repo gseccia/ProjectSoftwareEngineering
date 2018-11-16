@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="33" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="35" nextobjectid="1">
+ <properties>
+  <property name="charXDoor1" type="int" value="17"/>
+  <property name="charYDoor1" type="int" value="5"/>
+  <property name="spawnX1" type="int" value="12"/>
+  <property name="spawnX2" type="int" value="20"/>
+  <property name="spawnX3" type="int" value="5"/>
+  <property name="spawnY1" type="int" value="16"/>
+  <property name="spawnY3" type="int" value="10"/>
+ </properties>
+ <tileset firstgid="1" source="obj_misk_atlas.tsx"/>
+ <tileset firstgid="4097" source="house_inside.tsx"/>
+ <tileset firstgid="4993" source="preview.tsx"/>
+ <tileset firstgid="7853" source="build_atlas.tsx"/>
+ <tileset firstgid="11949" source="interior.tsx"/>
+ <tileset firstgid="12973" source="zombie_tileb.tsx"/>
+ <tileset firstgid="13997" source="apocalypse.tsx"/>
+ <layer id="27" name="Mask" width="33" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACltnxsCwbhSP4mGC0QG97CEHjLph1A3kuoGegJ5u2GuGwMS4YTDExagbRt0wFNxADwwAyyrkOlAKAAA=
+  </data>
+ </layer>
+ <layer id="28" name="Door1" width="33" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAWjYHiBa2YQPApGwSgYBaNgFIwC+gAAbrxFz1AKAAA=
+  </data>
+ </layer>
+ <layer id="29" name="Base" width="33" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACquQZmCoBOIKKtIVZKinthvIcTMlZpgKMzCYCQ+sG0KB9ocNsBtKgfaXUeiGh2IIvEZ8YPCoG0bdMOqGwe+Gl2h4pIbDYHDDW6jYW3EEGxmji2FTQw03EIuR3UGuW2B6B1tcDJQbACTzhoRQCgAA
+  </data>
+ </layer>
+ <layer id="30" name="Edge" width="33" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACnMSYGBQHkDsCsROQDyQYNQNo24YdcOoG0bdMOqGUTeMumEou0FlADHIDQCYhAXbUAoAAA==
+  </data>
+ </layer>
+ <layer id="31" name="Dirt" width="33" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAWjYBSMAvqC/SYMDAdMSNenC9SjR4Y+bOA+0JwHZJjlC9Tjh0PfXqD4PgrcRw3/3QXqv0eBGfj8NwpGAS6wEZhmNlGYbijNPxeBei8NcP4ZyQAAu2a76FAKAAA=
+  </data>
+ </layer>
+ <layer id="32" name="Obstacle1" width="33" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu2TRwoCQRBF+wjTGDaGixguYtgbbmDYGy5iuIhhN17CsDNsDPhh6M3vamFgBhXmwaOoTzEF3dNK/RZPT6mXZ9c7fAg9Y3LXPOcSBa1UUds1B/NCz5jcNc+5RAV5Vdu1BMtCz5jcNc+5RAN5U9u1ButCz5jcNc+5xAD5UNu1B/tCz5jcNc8500LWhh3YhVf8MzfHfxOWM75z8ewdzAjZGE7gFGZg1nFeYUnhO2lt72BmyOZwAZcR7Q67Y4VsDTdwG9Nd8A5mj+wAj/AU013wjn/DxznuPtyLH9GdJW8zIHmbAcnb/D5v5eYT5FAKAAA=
+  </data>
+ </layer>
+ <layer id="33" name="Obstacle2" width="33" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAWjYBTgA/b6DAwO+gNrTzxQPIEObqCXPaQCa0UGBhvFgbWzGsiuobMb0O3cDWTvobMb0O38DWT/obMbcNlJr7yJDwzWPENNMBrOo4AYAAA4j5vqUAoAAA==
+  </data>
+ </layer>
+</map>
