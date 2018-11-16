@@ -135,8 +135,8 @@ public class MobTest {
     @Test
     public void testMobIsPositionedAtOrigin() throws SlickException, NullAnimationException {
         Mob dummy = Mob.generate("test");
-        assertEquals(dummy.getX(), 0.0);
-        assertEquals(dummy.getY(), 0.0);
+        assertEquals((int)dummy.getX(), 0);
+        assertEquals((int)dummy.getY(), 0);
     }
 
     @Test
@@ -144,8 +144,8 @@ public class MobTest {
         int x = 10;
         int y = 20;
         Mob dummy = Mob.generate("test", x, y);
-        assertEquals(dummy.getX(), x);
-        assertEquals(dummy.getY(), y);
+        assertEquals((int)dummy.getX(), x);
+        assertEquals((int)dummy.getY(), y);
     }
 
     @Test
@@ -153,8 +153,8 @@ public class MobTest {
         int x = -10;
         int y = -20;
         Mob dummy = Mob.generate("test", x, y);
-        assertEquals(dummy.getX(), x);
-        assertEquals(dummy.getY(), y);
+        assertEquals((int)dummy.getX(), x);
+        assertEquals((int)dummy.getY(), y);
     }
 
     //HEIGHT TESTS
@@ -162,7 +162,7 @@ public class MobTest {
     @Test
     public void testHeightIsReadCorrectly() throws SlickException, NullAnimationException {
         Mob dummy = Mob.generate("test");
-        assertEquals(dummy.getHeight(), 42);
+        assertEquals((int)dummy.getHeight(), 42);
     }
 
     //WIDTH TEST
@@ -170,7 +170,7 @@ public class MobTest {
     @Test
     public void testWidthIsReadCorrectly() throws SlickException, NullAnimationException {
         Mob dummy = Mob.generate("test");
-        assertEquals(dummy.getWidth(), 17);
+        assertEquals((int)dummy.getWidth(), 17);
     }
 
     //REPOSITIONING TESTS
@@ -181,8 +181,8 @@ public class MobTest {
         int y = 33;
         Mob dummy = Mob.generate("test");
         dummy.setPosition(x, y);
-        assertEquals(dummy.getX(), x);
-        assertEquals(dummy.getY(), y);
+        assertEquals((int)dummy.getX(), x);
+        assertEquals((int)dummy.getY(), y);
     }
 
     @Test
@@ -191,8 +191,8 @@ public class MobTest {
         int y = -33;
         Mob dummy = Mob.generate("test");
         dummy.setPosition(x, y);
-        assertEquals(dummy.getX(), x);
-        assertEquals(dummy.getY(), y);
+        assertEquals((int)dummy.getX(), x);
+        assertEquals((int)dummy.getY(), y);
     }
 
     @Test
@@ -201,8 +201,8 @@ public class MobTest {
         int y = -33;
         Mob dummy = Mob.generate("test");
         dummy.setPosition(x, y);
-        assertEquals(dummy.getX(), x);
-        assertEquals(dummy.getY(), y);
+        assertEquals((int)dummy.getX(), x);
+        assertEquals((int)dummy.getY(), y);
     }
 
     @Test
@@ -211,8 +211,8 @@ public class MobTest {
         int y = 33;
         Mob dummy = Mob.generate("test");
         dummy.setPosition(x, y);
-        assertEquals(dummy.getX(), x);
-        assertEquals(dummy.getY(), y);
+        assertEquals((int)dummy.getX(), x);
+        assertEquals((int)dummy.getY(), y);
     }
 
     @Test
@@ -221,8 +221,8 @@ public class MobTest {
         int y = 0;
         Mob dummy = Mob.generate("test");
         dummy.setPosition(x, y);
-        assertEquals(dummy.getX(), x);
-        assertEquals(dummy.getY(), y);
+        assertEquals((int)dummy.getX(), x);
+        assertEquals((int)dummy.getY(), y);
     }
 
 
@@ -235,7 +235,7 @@ public class MobTest {
         int dx = 22;
         Mob dummy = Mob.generate("test", x, y);
         dummy.moveX(dx);
-        assertEquals(dummy.getX(), x + dx);
+        assertEquals((int)dummy.getX(), x + dx);
     }
 
     @Test
@@ -245,7 +245,7 @@ public class MobTest {
         int dx = -22;
         Mob dummy = Mob.generate("test", x, y);
         dummy.moveX(dx);
-        assertEquals(dummy.getX(), x + dx);
+        assertEquals((int)dummy.getX(), x + dx);
     }
 
     @Test
@@ -255,7 +255,7 @@ public class MobTest {
         int dx = 0;
         Mob dummy = Mob.generate("test", x, y);
         dummy.moveX(dx);
-        assertEquals(dummy.getX(), x + dx);
+        assertEquals((int)dummy.getX(), x + dx);
     }
 
     //Y-AXIS MOVEMENT TESTING
@@ -267,7 +267,7 @@ public class MobTest {
         int dy = 22;
         Mob dummy = Mob.generate("test", x, y);
         dummy.moveY(dy);
-        assertEquals(dummy.getY(), x + dy);
+        assertEquals((int)dummy.getY(), x + dy);
     }
 
     @Test
@@ -277,7 +277,7 @@ public class MobTest {
         int dy = -22;
         Mob dummy = Mob.generate("test", x, y);
         dummy.moveY(dy);
-        assertEquals(dummy.getY(), x + dy);
+        assertEquals((int)dummy.getY(), x + dy);
     }
 
     @Test
@@ -287,7 +287,7 @@ public class MobTest {
         int dy = 0;
         Mob dummy = Mob.generate("test", x, y);
         dummy.moveY(dy);
-        assertEquals(dummy.getY(), x + dy);
+        assertEquals((int)dummy.getY(), x + dy);
     }
-    
+
 }
