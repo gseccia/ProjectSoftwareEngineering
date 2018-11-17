@@ -86,6 +86,9 @@ public class MobConfiguration extends Configuration{
         JsonObject conf = this.getConfiguration(id);
         // load configuration for movement type
         JsonObject mov = conf.getAsJsonObject(movement);
+        if(mov == null){
+            throw new NoSuchElementInConfigurationException();
+        }
         // load frame for movement type
         JsonArray images = mov.getAsJsonArray("frames");
         // load duration for each frame
@@ -93,7 +96,7 @@ public class MobConfiguration extends Configuration{
         // setup an animation as a sequence of image and movements
         Image[] arr = new Image[images.size()];
         int[] dur = new int[images.size()];
-        String basePath = conf.get("base_folder").getAsString()+"/"+movement+"/";
+        String basePath = conf.get("base_folder").getAsString()+movement+"/";
         for(int i = 0; i< images.size(); i++){
             arr[i] = new Image(basePath+images.get(i).getAsString());
             dur[i] = duration.get(i).getAsInt();

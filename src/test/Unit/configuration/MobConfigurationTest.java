@@ -3,6 +3,7 @@ package Unit.configuration;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import org.junit.Test;
+import org.newdawn.slick.SlickException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -43,7 +44,7 @@ public class MobConfigurationTest {
     @Test
     public void testWidthIsReadCorrectly() throws NoSuchElementInConfigurationException {
         MobConfiguration conf = MobConfiguration.getInstance();
-        int width = 42;
+        int width = 17;
         assertEquals(conf.getWidth("test"), width);
     }
 
@@ -61,8 +62,53 @@ public class MobConfigurationTest {
     }
 
     @Test(expected = NoSuchElementInConfigurationException.class)
-    public void testAttacThrowsException() throws NoSuchElementInConfigurationException {
+    public void testAttackThrowsException() throws NoSuchElementInConfigurationException {
         MobConfiguration.getInstance().getAttack("test_error");
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testFaceDownThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        MobConfiguration.getInstance().getFaceDown("test_error");
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testFaceUpThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        MobConfiguration.getInstance().getFaceUp("test_error");
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testFaceLeftThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        MobConfiguration.getInstance().getFaceLeft("test_error");
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testFaceRightThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        MobConfiguration.getInstance().getFaceRight("test_error");
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testFaceStillThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        MobConfiguration.getInstance().getFaceStill("test_error");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testFaceUpThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        MobConfiguration.getInstance().getFaceUp("test_not_found");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testFaceRightThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        MobConfiguration.getInstance().getFaceRight("test_not_found");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testFaceLeftThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        MobConfiguration.getInstance().getFaceLeft("test_not_found");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testFaceDownThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        MobConfiguration.getInstance().getFaceDown("test_not_found");
     }
 
 
