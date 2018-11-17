@@ -4,6 +4,7 @@ package configuration;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import elements.NotPositiveValueException;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 
@@ -13,7 +14,7 @@ import java.io.InputStreamReader;
 
 abstract class Configuration {
 
-    protected abstract JsonObject getConfiguration(String id);
+    protected abstract JsonObject getConfiguration(String id) throws NoSuchElementInConfigurationException;
 
     protected JsonObject uploadConfiguration(String filename){
         try(JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(filename)))){

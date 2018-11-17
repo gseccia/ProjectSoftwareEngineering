@@ -1,5 +1,6 @@
 package test.Unit.elements;
 
+import configuration.NoSuchElementInConfigurationException;
 import elements.Mob;
 import elements.NotPositiveValueException;
 import elements.NullAnimationException;
@@ -12,13 +13,13 @@ public class MobTest {
     //HP TEST
 
     @Test
-    public void testHpIsReadCorrectly() throws NullAnimationException{
+    public void testHpIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         assertEquals(dummy.getHp(), 100);
     }
 
     @Test
-    public void testHpIsSetCorrectly() throws NullAnimationException{
+    public void testHpIsSetCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         int change = 10;
         dummy.setHp(change);
@@ -26,7 +27,7 @@ public class MobTest {
     }
 
     @Test
-    public void testHpValueCannotBeLessThanZero() throws NullAnimationException{
+    public void testHpValueCannotBeLessThanZero() throws NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         int change = -1;
         dummy.setHp(change);
@@ -34,7 +35,7 @@ public class MobTest {
     }
 
     @Test
-    public void testHpValueCanBeZero() throws NullAnimationException{
+    public void testHpValueCanBeZero() throws NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         int change = 0;
         dummy.setHp(change);
@@ -44,13 +45,13 @@ public class MobTest {
     //MAX HP TESTS
 
     @Test
-    public void testMaxHpIsReadCorrectly() throws NullAnimationException{
+    public void testMaxHpIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         assertEquals(dummy.getMaxHp(), 100);
     }
 
     @Test
-    public void testMaxHpIsSetCorrectly() throws NotPositiveValueException, NullAnimationException {
+    public void testMaxHpIsSetCorrectly() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         int change = 10;
         dummy.setMaxHp(change);
@@ -58,14 +59,14 @@ public class MobTest {
     }
 
     @Test(expected = NotPositiveValueException.class)
-    public void testMaxHpCannotBeLessThanZero() throws NotPositiveValueException, NullAnimationException {
+    public void testMaxHpCannotBeLessThanZero() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         int change = -1;
         dummy.setMaxHp(change);
     }
 
     @Test(expected = NotPositiveValueException.class)
-    public void testMaxHpCannotBeEqualToZero() throws NotPositiveValueException, NullAnimationException {
+    public void testMaxHpCannotBeEqualToZero() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         int change = 0;
         dummy.setMaxHp(change);
@@ -74,13 +75,13 @@ public class MobTest {
     //ATTACK DAMAGE TESTS
 
     @Test
-    public void testAttackDamageIsReadCorrectly() throws NullAnimationException{
+    public void testAttackDamageIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         assertEquals(dummy.getAttackDamage(), 100);
     }
 
     @Test
-    public void testAttackDamageIsSetCorrectly() throws NullAnimationException, NotPositiveValueException {
+    public void testAttackDamageIsSetCorrectly() throws NullAnimationException, NotPositiveValueException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         int change = 10;
         dummy.setAttackDamage(change);
@@ -88,14 +89,14 @@ public class MobTest {
     }
 
     @Test(expected = NotPositiveValueException.class)
-    public void testAttackDamageCannotBeLessThanZero() throws NotPositiveValueException, NullAnimationException {
+    public void testAttackDamageCannotBeLessThanZero() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         int change = -1;
         dummy.setAttackDamage(change);
     }
 
     @Test
-    public void testAttackDamageCanBeZero() throws NotPositiveValueException, NullAnimationException {
+    public void testAttackDamageCanBeZero() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         int change = 0;
         dummy.setAttackDamage(change);
@@ -105,7 +106,7 @@ public class MobTest {
     //DAMAGE CALCULATION TESTS
 
     @Test
-    public void testDamageIsCalculatedCorrectly() throws NullAnimationException{
+    public void testDamageIsCalculatedCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         int life = dummy.getHp();
         int damage = 10;
@@ -114,7 +115,7 @@ public class MobTest {
     }
 
     @Test
-    public void testDamageDoesNotAffectMaxHp() throws NullAnimationException{
+    public void testDamageDoesNotAffectMaxHp() throws NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         int startingLife = dummy.getMaxHp();
         dummy.damage(10);
@@ -122,7 +123,7 @@ public class MobTest {
     }
 
     @Test
-    public void testIfDamageExceedsHpThenHpEqualsZero() throws NullAnimationException{
+    public void testIfDamageExceedsHpThenHpEqualsZero() throws NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         int damage = dummy.getMaxHp() + 10;
         dummy.damage(damage);
@@ -132,14 +133,14 @@ public class MobTest {
     //POSITIONING TESTS
 
     @Test
-    public void testMobIsPositionedAtOrigin() throws NullAnimationException{
+    public void testMobIsPositionedAtOrigin() throws NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         assertEquals((int)dummy.getX(), 0);
         assertEquals((int)dummy.getY(), 0);
     }
 
     @Test
-    public void testMobIsPositionedCorrectly() throws NullAnimationException{
+    public void testMobIsPositionedCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = 10;
         int y = 20;
         Mob dummy = Mob.mockGenerate("test", x, y);
@@ -148,7 +149,7 @@ public class MobTest {
     }
 
     @Test
-    public void testMobCanBePositionedAtNegativeCoordinates() throws NullAnimationException{
+    public void testMobCanBePositionedAtNegativeCoordinates() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = -10;
         int y = -20;
         Mob dummy = Mob.mockGenerate("test", x, y);
@@ -159,7 +160,7 @@ public class MobTest {
     //HEIGHT TESTS
 
     @Test
-    public void testHeightIsReadCorrectly() throws NullAnimationException{
+    public void testHeightIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         assertEquals((int)dummy.getHeight(), 42);
     }
@@ -167,7 +168,7 @@ public class MobTest {
     //WIDTH TEST
 
     @Test
-    public void testWidthIsReadCorrectly() throws NullAnimationException{
+    public void testWidthIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
         Mob dummy = Mob.mockGenerate("test");
         assertEquals((int)dummy.getWidth(), 17);
     }
@@ -175,7 +176,7 @@ public class MobTest {
     //REPOSITIONING TESTS
 
     @Test
-    public void testMobIsRepositionedCorrectlyWithPositiveXAndPositiveY() throws NullAnimationException{
+    public void testMobIsRepositionedCorrectlyWithPositiveXAndPositiveY() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = 22;
         int y = 33;
         Mob dummy = Mob.mockGenerate("test");
@@ -185,7 +186,7 @@ public class MobTest {
     }
 
     @Test
-    public void testMobIsRepositionedCorrectlyWithPositiveXAndNegativeY() throws NullAnimationException{
+    public void testMobIsRepositionedCorrectlyWithPositiveXAndNegativeY() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = 22;
         int y = -33;
         Mob dummy = Mob.mockGenerate("test");
@@ -195,7 +196,7 @@ public class MobTest {
     }
 
     @Test
-    public void testMobIsRepositionedCorrectlyWithNegativeXAndNegativeY() throws NullAnimationException{
+    public void testMobIsRepositionedCorrectlyWithNegativeXAndNegativeY() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = -22;
         int y = -33;
         Mob dummy = Mob.mockGenerate("test");
@@ -205,7 +206,7 @@ public class MobTest {
     }
 
     @Test
-    public void testMobIsRepositionedCorrectlyWithNegativeXAndPositiveY() throws NullAnimationException{
+    public void testMobIsRepositionedCorrectlyWithNegativeXAndPositiveY() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = -22;
         int y = 33;
         Mob dummy = Mob.mockGenerate("test");
@@ -215,7 +216,7 @@ public class MobTest {
     }
 
     @Test
-    public void testMobIsRepositionedCorrectlyAtOrigin() throws NullAnimationException{
+    public void testMobIsRepositionedCorrectlyAtOrigin() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = 0;
         int y = 0;
         Mob dummy = Mob.mockGenerate("test");
@@ -228,7 +229,7 @@ public class MobTest {
     //X MOVEMENT TESTING
 
     @Test
-    public void testMobCanMoveOnXAxisWithPositiveDelta() throws NullAnimationException{
+    public void testMobCanMoveOnXAxisWithPositiveDelta() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = 0;
         int y = 0;
         int dx = 22;
@@ -238,7 +239,7 @@ public class MobTest {
     }
 
     @Test
-    public void testMobCanMoveOnXAxisWithNegativeDelta() throws NullAnimationException{
+    public void testMobCanMoveOnXAxisWithNegativeDelta() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = 0;
         int y = 0;
         int dx = -22;
@@ -248,7 +249,7 @@ public class MobTest {
     }
 
     @Test
-    public void testMobCanMoveOnXAxisWithZeroDelta() throws NullAnimationException{
+    public void testMobCanMoveOnXAxisWithZeroDelta() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = 0;
         int y = 0;
         int dx = 0;
@@ -260,7 +261,7 @@ public class MobTest {
     //Y-AXIS MOVEMENT TESTING
 
     @Test
-    public void testMobCanMoveOnYAxisWithPositiveDelta() throws NullAnimationException{
+    public void testMobCanMoveOnYAxisWithPositiveDelta() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = 0;
         int y = 0;
         int dy = 22;
@@ -270,7 +271,7 @@ public class MobTest {
     }
 
     @Test
-    public void testMobCanMoveOnYAxisWithNegativeDelta() throws NullAnimationException{
+    public void testMobCanMoveOnYAxisWithNegativeDelta() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = 0;
         int y = 0;
         int dy = -22;
@@ -280,7 +281,7 @@ public class MobTest {
     }
 
     @Test
-    public void testMobCanMoveOnYAxisWithZeroDelta() throws NullAnimationException{
+    public void testMobCanMoveOnYAxisWithZeroDelta() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = 0;
         int y = 0;
         int dy = 0;

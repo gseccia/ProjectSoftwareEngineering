@@ -1,6 +1,7 @@
 package elements;
 
 import configuration.MobConfiguration;
+import configuration.NoSuchElementInConfigurationException;
 import org.newdawn.slick.*;
 import java.util.*;
 
@@ -20,7 +21,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     /**
      * JUST FOR TESTING! DON'T USE IT!
      */
-    public static Mob mockGenerate(String id, int x, int y) throws NullAnimationException {
+    public static Mob mockGenerate(String id, int x, int y) throws NullAnimationException, NoSuchElementInConfigurationException {
         return new Mob(
                 configuration.getHp(id),
                 configuration.getAttack(id),
@@ -37,7 +38,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     /**
      * JUST FOR TESTING! DON'T USE IT!
      */
-    public static Mob mockGenerate(String id) throws NullAnimationException {
+    public static Mob mockGenerate(String id) throws NullAnimationException, NoSuchElementInConfigurationException {
         return new Mob(
                 configuration.getHp(id),
                 configuration.getAttack(id),
@@ -54,9 +55,9 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     /**
      * Probably it will be refactored
      * @param id the mob id
-     * @return
+     * @return the mob
      */
-    public static Mob generate(String id, int x, int y) throws SlickException, NullAnimationException{
+    public static Mob generate(String id, int x, int y) throws SlickException, NullAnimationException, NoSuchElementInConfigurationException {
         return new Mob(
                 configuration.getHp(id),
                 configuration.getAttack(id),
@@ -74,9 +75,9 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     /**
      * Probably it will be refactored
      * @param id the mob id
-     * @return
+     * @return the mob
      */
-    public static Mob generate(String id) throws SlickException, NullAnimationException{
+    public static Mob generate(String id) throws SlickException, NullAnimationException, NoSuchElementInConfigurationException {
             return new Mob(
                     configuration.getHp(id),
                     configuration.getAttack(id),
@@ -95,16 +96,17 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
         this.hp = hp;
         this.maxHp = hp;
         this.attackDamage = attackDamage;
-        faces = new HashMap<String, Animation>();
+        faces = new HashMap<>();
         generateMap(faceLeft, faceRight, faceUp, faceDown, standStill);
     }
 
     /**
      * Creates a map with the animations
-     * @param faceLeft
-     * @param faceRight
-     * @param faceUp
-     * @param faceDown
+     * @param faceLeft the left animation
+     * @param faceRight the right animation
+     * @param faceUp the up animation
+     * @param faceDown the down animation
+     * @param standStill the still animation
      */
     private void generateMap(Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, Animation standStill){
         faces.put("left", faceLeft);
@@ -151,7 +153,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
 
     /**
      * Reduces the current hp value of the client by an amount
-     * @param amount
+     * @param amount the damage amount
      */
     public void damage(int amount){
         this.hp -= amount;
@@ -221,10 +223,10 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     }
 
     /**
-     * Set the absolute position of a charachter
+     * Set the absolute position of a character
      *
-     * @param x
-     * @param y
+     * @param x the x coordinate
+     * @param y the y coordinate
      */
     @Override
     public void setPosition(int x, int y) {

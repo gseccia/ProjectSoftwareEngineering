@@ -1,5 +1,6 @@
 package main.java;
 
+import configuration.NoSuchElementInConfigurationException;
 import elements.Mob;
 import elements.NullAnimationException;
 import map.Block;
@@ -27,13 +28,13 @@ public class Level extends StateBasedGame{
 	 * This class is the manager of a level
 	 * @throws SlickException 
 	*/
-	public Level(String gamename,String charname,int level_difficulty) throws SlickException {
+	public Level(String gamename,String charname,int level_difficulty) {
 		super(gamename);
 		
-		population = new HashMap<Block,Set<Mob>>();
+		population = new HashMap<>();
 		
 		///ONLY TO TEST
-		map = new HashSet<Block>();
+		map = new HashSet<>();
 		current_block = new Block(1,"Library2");
 		map.add(current_block);
 		//ONLY TEST END
@@ -60,18 +61,18 @@ public class Level extends StateBasedGame{
 	/**
 	 * This function automatically generate a set of Mobs
 	 * @param difficulty parameter to define the hardness of the level
-	 * @return A set of Mob that are randomically generated
+	 * @return A set of Mob that are generated at random
 	 */
 	private Set<Mob> generateMob(int difficulty) throws SlickException
 	{
-		Set<Mob> mobs=new HashSet<Mob>();
+		Set<Mob> mobs=new HashSet<>();
 		Mob mob;
 		for(int i=0;i<difficulty;i++)
 		{
 			try {
-				mob = Mob.generate("zombo");  //Retrive other String id
+				mob = Mob.generate("zombo");  //Retrieve other String id
 				mobs.add(mob);
-			} catch (NullAnimationException e) {
+			} catch (NullAnimationException | NoSuchElementInConfigurationException e) {
 				e.printStackTrace();
 				System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
 			}
@@ -93,7 +94,7 @@ public class Level extends StateBasedGame{
 			}
 
 			this.enterState(1); //always enter in first block
-		} catch (NullAnimationException e) {
+		} catch (NullAnimationException | NoSuchElementInConfigurationException e) {
 			e.printStackTrace();
 			System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
 		}
