@@ -54,7 +54,7 @@
  </layer>
  <layer id="37" name="Obstacle1" width="50" height="35">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu2WxwnDQBREfwvCoSCFChx6cGjE4SY14dCIbd0kuweHIjwX3XZBXvTXWpgHcxkW5n8+AytCCCGEEBI+VSxSx/59G/dU5JG2f98wSESGiX/fxigTGWft3zdMkDE15Gj7NmbYYe6wR46bF4a7a/mLSGQJraB19Pu8Nnz3Y4PZt9AO2ne4h+9+aO3hux9ae/juh9Ye7Iebf8DsR+gEnQPuxwWzX6EbVAbcjydmf0Fv6BNwP7To2//Klb79r1zJkVEYcrT9rqmQURtytH1CCCH/5wtfMoyHWBsAAA==
+   H4sIAAAAAAAACu2WxwnDQBBFpwXhcFIvBoUKHHpwOLkBnx1uUhMORfjqcJPsHhyK8L8IhFiBvOyOJJgH/zIszP8sn10iQRAEQRCE9pN4RKnHPy/jERA9g+rnMzo+Udfnn5fRC4n6YfXzGUPsGCn22J6XMUaGiUaOCHceK+7d1nzqEM2gObRw/vdbBnc/1vC+gbbQzmAO7n4Uc6xcOmubz8Hdj2KOgaEc3P2wlaPufixdfe95uPuxh/cDdIROBnvO3Y8LvF+hG3Q3mIO7Hy94f0Mf6Nvi98MWTftf6dK0/5UuEXbEij2256ZJsCNV7LE9FwRBEOrnBxcFBJhYGwAA
   </data>
  </layer>
 </map>
