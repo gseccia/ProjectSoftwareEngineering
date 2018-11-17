@@ -18,6 +18,40 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     private static MobConfiguration configuration = MobConfiguration.getInstance();
 
     /**
+     * JUST FOR TESTING! DON'T USE IT!
+     */
+    public static Mob mockGenerate(String id, int x, int y) throws NullAnimationException {
+        return new Mob(
+                configuration.getHp(id),
+                configuration.getAttack(id),
+                new Animation(),
+                new Animation(),
+                new Animation(),
+                new Animation(),
+                new Animation(),
+                configuration.getWidth(id),
+                configuration.getHeight(id),
+                x, y);
+    }
+
+    /**
+     * JUST FOR TESTING! DON'T USE IT!
+     */
+    public static Mob mockGenerate(String id) throws NullAnimationException {
+        return new Mob(
+                configuration.getHp(id),
+                configuration.getAttack(id),
+                new Animation(),
+                new Animation(),
+                new Animation(),
+                new Animation(),
+                new Animation(),
+                configuration.getWidth(id),
+                configuration.getHeight(id),
+                0, 0);
+    }
+
+    /**
      * Probably it will be refactored
      * @param id the mob id
      * @return
@@ -109,7 +143,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     }
 
     public void setAttackDamage(int attackDamage) throws NotPositiveValueException {
-        if(attackDamage <= 0){
+        if(attackDamage < 0){
             throw new NotPositiveValueException("Attack Damage value cannot be less or equal than 0!");
         }
         this.attackDamage = attackDamage;

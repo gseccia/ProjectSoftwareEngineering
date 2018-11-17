@@ -74,10 +74,7 @@ public class CollisionManager implements CollisionManagerInterface {
 		}
 		
 	}
-//			else if(s.matches("Door*"))
-//			{
-//				// Transizione al prossimo blocco
-//			}
+
 		
 	
 

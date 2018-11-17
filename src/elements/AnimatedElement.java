@@ -10,7 +10,7 @@ public abstract class AnimatedElement extends Rectangle implements Movable{
     private Animation current;
 
     protected AnimatedElement(Animation a, int width, int height, int x, int y) throws NullAnimationException{
-        super(x, y, height, width);
+        super(x, y, width, height);
         if(a == null){
             throw new NullAnimationException("Animation can't be null!");
         }
