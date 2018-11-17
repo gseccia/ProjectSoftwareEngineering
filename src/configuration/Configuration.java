@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 
 abstract class Configuration {
 
-    protected abstract JsonObject getConfiguration(String id);
+    protected abstract JsonObject getConfiguration(String id) throws NoSuchElementInConfigurationException;
 
     protected JsonObject uploadConfiguration(String filename){
         try(JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(filename)))){

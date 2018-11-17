@@ -24,53 +24,68 @@ public class MobConfiguration extends Configuration{
         this.configuration = super.uploadConfiguration(filename);
     }
 
-    public int getHp(String id){
+    public int getHp(String id) throws NoSuchElementInConfigurationException {
+        if(getConfiguration(id).get("hp") == null) {
+            throw new NoSuchElementInConfigurationException();
+        }
         return this.getConfiguration(id).get("hp").getAsInt();
     }
 
-    public int getHeight(String id){
+    public int getHeight(String id) throws NoSuchElementInConfigurationException {
+        if(getConfiguration(id).get("height") == null) {
+            throw new NoSuchElementInConfigurationException();
+        }
         return this.getConfiguration(id).get("height").getAsInt();
     }
 
-    public int getWidth(String id){
+    public int getWidth(String id) throws NoSuchElementInConfigurationException {
+        if(getConfiguration(id).get("width") == null) {
+            throw new NoSuchElementInConfigurationException();
+        }
         return this.getConfiguration(id).get("width").getAsInt();
     }
 
-    public int getAttack(String id){
+    public int getAttack(String id) throws NoSuchElementInConfigurationException {
+        if(getConfiguration(id).get("attack") == null) {
+            throw new NoSuchElementInConfigurationException();
+        }
         return this.getConfiguration(id).get("attack").getAsInt();
     }
 
-    public Animation getFaceUp(String id) throws SlickException {
+    public Animation getFaceUp(String id) throws SlickException, NoSuchElementInConfigurationException {
         return generateAnimation(id,"up");
     }
 
-    public Animation getFaceDown(String id) throws SlickException {
+    public Animation getFaceDown(String id) throws SlickException, NoSuchElementInConfigurationException {
         return generateAnimation(id,"down");
     }
 
-    public Animation getFaceLeft(String id) throws SlickException {
+    public Animation getFaceLeft(String id) throws SlickException, NoSuchElementInConfigurationException {
         return generateAnimation(id,"left");
     }
 
-    public Animation getFaceRight(String id) throws SlickException {
+    public Animation getFaceRight(String id) throws SlickException, NoSuchElementInConfigurationException {
         return generateAnimation(id,"right");
     }
 
 
     @Override
-    protected JsonObject getConfiguration(String id) {
+    protected JsonObject getConfiguration(String id) throws NoSuchElementInConfigurationException {
+        if(configuration.get(id) == null){
+            throw new NoSuchElementInConfigurationException();
+        }
         return this.configuration.getAsJsonObject(id);
     }
 
-    public Animation getFaceStill(String id) throws SlickException {
+    public Animation getFaceStill(String id) throws SlickException, NoSuchElementInConfigurationException {
         return generateAnimation(id,"still");
     }
 
-    private Animation generateAnimation(String id, String movement) throws SlickException {
+    private Animation generateAnimation(String id, String movement) throws SlickException, NoSuchElementInConfigurationException {
         // load configuration from id
         JsonObject conf = this.getConfiguration(id);
         // load configuration for movement type
-        JsonObject mov= conf.getAsJsonObject(movement);
+        JsonObject mov = conf.getAsJsonObject(movement);
         // load frame for movement type
         JsonArray images = mov.getAsJsonArray("frames");
         // load duration for each frame
