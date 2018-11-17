@@ -30,10 +30,15 @@ public class Block extends BasicGameState
 	{
 		this.state=state;
 		collision = new CollisionManager();
-		this.mapName = mapName; //MapName
+		this.mapName = mapName;
 	}
 	
-	// This function initializes the block
+	/**
+	 *  This function initializes the block
+	 * @param player is the user charachter
+	 * @param population Map that contains information about enemies in the blocks
+	 * @throws SlickException
+	 */
 	public void initBlock(Mob player,Map<Block,Set<Mob>> population) throws SlickException
 	{
 		map = new TiledMap("resource/maps/Complete"+mapName+"/"+mapName+".tmx");
@@ -68,6 +73,7 @@ public class Block extends BasicGameState
 			}
 			e.setPosition(x*map.getTileWidth() -map_x*map.getTileWidth()/2, y*map.getTileHeight()-map_y*map.getTileWidth()/2);
 		}
+		
 		
 		// Shift of the map
 		map_x = (int)player.getX()/map.getTileWidth();
