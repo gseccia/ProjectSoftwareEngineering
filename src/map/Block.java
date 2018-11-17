@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -43,7 +42,7 @@ public class Block extends BasicGameState
 	
 
 	@Override
-	public void init(GameContainer gc, StateBasedGame arg1) throws SlickException {
+	public void init(GameContainer gc, StateBasedGame arg1) {
 		int x,y;
 		Random rand = new Random();
 		x = Integer.parseInt(map.getMapProperty("charXDoor1","0"));
@@ -53,7 +52,7 @@ public class Block extends BasicGameState
 		map_y = y;
 		
 		// Player spawns in front of Door1
-		player.setPosition(x*map.getTileWidth() -map_x*map.getTileWidth()/2, y*map.getTileHeight()-map_y*map.getTileWidth()/2); //WARNING --> substract shifting 
+		player.setPosition(x*map.getTileWidth() -map_x*map.getTileWidth()/2, y*map.getTileHeight()-map_y*map.getTileWidth()/2); //WARNING --> subtract shifting
 		
 		// Enemies spawn from a set of a random spawn points
 		for(Mob e : enemy)
@@ -75,7 +74,7 @@ public class Block extends BasicGameState
 	 }
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) throws SlickException {
+	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) {
 		g.scale(1.5f, 1.5f);
 		map.render(0,0,map_x,map_y,map_x+50,map_y+50);
 		for(Mob e : enemy)
@@ -86,7 +85,7 @@ public class Block extends BasicGameState
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame arg1, int delta) throws SlickException {
+	public void update(GameContainer gc, StateBasedGame arg1, int delta) {
 		try {
 			collision.checkCollision(mapName,map_x,map_y, player, gc);
 			map_x = (int)player.getX()/map.getTileWidth();
