@@ -76,7 +76,7 @@ public class Block extends BasicGameState
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) throws SlickException {
-		g.scale(2, 2);
+		g.scale(1.5f, 1.5f);
 		map.render(0,0,map_x,map_y,map_x+50,map_y+50);
 		for(Mob e : enemy)
 		{
