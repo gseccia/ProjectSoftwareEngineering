@@ -103,18 +103,11 @@ public class MapConfiguration extends Configuration {
 	}
 	
 	public ArrayList<String> getLayers(String id){
-<<<<<<< Updated upstream
         JsonArray ja = this.configuration.getAsJsonArray();
         ArrayList<String> listLayers = new ArrayList<>();
         for (JsonElement e : ja)
         {
         	listLayers.add(e.getAsString());
-=======
-        JsonArray ja = this.configuration.getAsJsonArray(id);
-        ArrayList<String> listLayers = new ArrayList<>();
-        for(JsonElement je : ja) {
-        	listLayers.add(je.getAsString());
->>>>>>> Stashed changes
         }
         return listLayers;
     }
