@@ -1,11 +1,10 @@
-package test.Unit.configuration;
+package Unit.configuration;
 
 import configuration.MobConfiguration;
 import elements.Mob;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertSame;
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class MobConfigurationTest {
 
@@ -13,7 +12,7 @@ public class MobConfigurationTest {
     public void testMobConfigurationIsASingleton(){
         MobConfiguration conf1 = MobConfiguration.getInstance();
         MobConfiguration conf2 = MobConfiguration.getInstance();
-        assertSame(conf1, conf2);
+        assertEquals(conf1, conf2);
     }
 
     @Test
