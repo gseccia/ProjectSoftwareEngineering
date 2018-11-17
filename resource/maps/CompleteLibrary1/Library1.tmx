@@ -31,7 +31,7 @@
    H4sIAAAAAAAACquQZmCoBOIKKtIVZKinthvIcTMlZpgKMzCYCQ+sG0KB9ocNsBtKgfaXUeiGh2IIvEZ8YPCoG0bdMOqGwe+Gl2h4pIbDYHDDW6jYW3EEGxmji2FTQw03EIuR3UGuW2B6B1tcDJQbACTzhoRQCgAA
   </data>
  </layer>
- <layer id="30" name="Edge" width="33" height="20">
+ <layer id="30" name="Wall" width="33" height="20">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACnMSYGBQHkDsCsROQDyQYNQNo24YdcOoG0bdMOqGUTeMumEou0FlADHIDQCYhAXbUAoAAA==
   </data>
