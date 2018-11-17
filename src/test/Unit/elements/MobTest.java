@@ -1,4 +1,4 @@
-package test.Unit.elements;
+package Unit.elements;
 
 import configuration.NoSuchElementInConfigurationException;
 import elements.Mob;
