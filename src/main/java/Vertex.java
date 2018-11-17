@@ -58,9 +58,9 @@ public class Vertex implements Comparable<Vertex>{
     @Override
     public int compareTo(Vertex v) {
         if ( this.getDoorNumber() > v.getDoorNumber() )
-            return 1;
-        if ( this.getDoorNumber() < v.getDoorNumber() )
             return -1;
+        if ( this.getDoorNumber() < v.getDoorNumber() )
+            return 1;
         else return 0;
     }
 }
