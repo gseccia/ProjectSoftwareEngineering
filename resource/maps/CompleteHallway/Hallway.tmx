@@ -20,7 +20,7 @@
  <tileset firstgid="14313" source="interior.tsx"/>
  <layer id="25" name="Mask" width="54" height="13">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACrNhYGCwGaaYyYQwpqZZtMaDyS2j/hr1FzUAzExsYshy2MSoDajpr8EERv01tMCov4YWGO7+Go4YAEcFGLT4CgAA
+   H4sIAAAAAAAACrNhYGCwGaaYyYQwpqZZtMaDyS2j/hr1F60AMW6gBaC1vwYKjPpraIFRfw0tMNz9NRwxAL2MKOb4CgAA
   </data>
  </layer>
  <layer id="26" name="Door1" width="54" height="13">
@@ -28,7 +28,7 @@
    H4sIAAAAAAAACmNgGAWjYBSMAtKBpOlAu4A2YNRfQwuM+mtogVF/jYKBBgClWpU2+AoAAA==
   </data>
  </layer>
- <layer id="27" name="Door2" width="54" height="13">
+ <layer id="27" name="Door2" width="54" height="13" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgGAWjYBSMgpENJE0H2gW0AaP+Glpg1F9DC4z6a2gCAL+P/9f4CgAA
   </data>
