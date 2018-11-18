@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="54" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="33" nextobjectid="1">
  <properties>
-  <property name="charXDoor1" type="int" value="1"/>
+  <property name="charXDoor1" type="int" value="2"/>
   <property name="charXDoor2" type="int" value="52"/>
   <property name="charXDoor3" type="int" value="35"/>
   <property name="charYDoor1" type="int" value="8"/>
@@ -28,7 +28,7 @@
    H4sIAAAAAAAACmNgGAWjYBSMAtKBpOlAu4A2YNRfQwuM+mtogVF/jYKBBgClWpU2+AoAAA==
   </data>
  </layer>
- <layer id="27" name="Door2" width="54" height="13" visible="0">
+ <layer id="27" name="Door2" width="54" height="13">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgGAWjYBSMgpENJE0H2gW0AaP+Glpg1F9DC4z6a2gCAL+P/9f4CgAA
   </data>
