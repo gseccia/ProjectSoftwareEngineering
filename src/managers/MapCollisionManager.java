@@ -14,33 +14,22 @@ import elements.Mob;
  * This class manages collisions of the character with map elements.
  */
 public class MapCollisionManager implements MapCollisionInterface {
-	//int shiftX, shiftY;
-	//private String mapName;
 	private TiledMap map;
-	private boolean collisionArray[][];
 	private List<Rectangle> collidingBlocks;
-	//private MapConfiguration mapConf;
 	
 	public MapCollisionManager(TiledMap map) {
 		this.map = map;
-		//this.shiftX = shiftX;
-		//this.shiftY = shiftY;
-		collisionArray = new boolean[map.getWidth()][map.getHeight()];
 		collidingBlocks = new ArrayList<Rectangle>();
 		int mask = map.getLayerIndex("Mask");
 		int i, j;
 		int tileID;
-		String value;
 		for(i = 0; i < map.getWidth(); i++) {
 			for(j = 0; j < map.getHeight(); j++) {
 				tileID = map.getTileId(i, j, mask);
-				//value = map.getTileProperty(tileID, "blocked", "false");
-				if(tileID != 0/*value.equals("true")*/) {
-					collisionArray[i][j] = true;
+				if(tileID != 0) {
 					collidingBlocks.add(new Rectangle(i*map.getTileWidth(), j*map.getTileHeight(),
 							map.getTileWidth(), map.getTileHeight()));
 				}
-				else collisionArray[i][j] = false;
 			}
 		}
 	}
@@ -57,52 +46,48 @@ public class MapCollisionManager implements MapCollisionInterface {
 	@Override
 	public boolean wallCollision(int shiftX, int shiftY, Mob player, int key) {
 		// TODO Auto-generated method stub
-		//Input in = gc.getInput();
-		//System.out.println(player.getX());
-		//System.out.println(map);
 
-		//System.out.println(((int)player.getX()/map.getTileWidth())+" ,"+(int)player.getY()/map.getTileHeight());
-
-		// DA DOVE PRENDERE shift_x e shift_y?
 		float px =player.getX();
 		float py =player.getY();
 		
-		int pXPosition = (int)(player.getX()); //+ shiftX*map.getTileWidth();
-		int pYPosition = (int)(player.getY()); //+ shiftY*map.getTileHeight();
-		//System.out.println(pXPosition+","+pYPosition);
+		int pXPosition = (int)(player.getX());
+		int pYPosition = (int)(player.getY());
+		
 		boolean collides = false;
 
+		// Position updating to check
 		if (key == RIGHT) {
-			//Blocked tile
 			pXPosition+=2;
-			//return (!collisionArray[pXPosition + 1][pYPosition]);
 		}
 		else if (key ==  LEFT) {
 			pXPosition-=2;
-			//return (!collisionArray[pXPosition - 1][pYPosition]);
 		}
 		else if (key == DOWN) {
 			pYPosition+=2;
-			//return (!collisionArray[pXPosition][pYPosition + 1]);
 		}
 		else if (key == UP) {
 			pYPosition-=2;
-			//return (!collisionArray[pXPosition][pYPosition - 1]);
 		}
 		else
 			return false;
 		
+		// Alignment to the map
+		pXPosition += shiftX*map.getTileWidth();
+		pYPosition += shiftY*map.getTileHeight();
+		
+		// check collision
 		player.setLocation(pXPosition, pYPosition);
 		for(Rectangle block : collidingBlocks) {
-			Rectangle shifted_block = new Rectangle(block.getX()-shiftX*map.getTileWidth(),block.getY()-shiftY*map.getTileHeight(),block.getWidth(),block.getHeight());
-			if(shifted_block.intersects(player)) {
+			if(block.intersects(player)) {
 				collides = true;
 				System.out.println("COLLIDES! ");
 				System.out.println("PLAYER: "+pXPosition +";"+ pYPosition+"; "+(pXPosition+player.getWidth())+";"+ (pYPosition+player.getWidth()));
-				System.out.println("BLOCK: "+shifted_block.getX() +";"+ shifted_block.getY()+"; "+(shifted_block.getX()+shifted_block.getWidth())+";"+ (shifted_block.getY()+shifted_block.getWidth()));
+				System.out.println("BLOCK: "+block.getX() +";"+ block.getY()+"; "+(block.getX()+block.getWidth())+";"+ (block.getY()+block.getWidth()));
 				break;
 			}	
 		}
+		
+		// Set player Position to his place 
 		player.setLocation(px, py);
 		return !collides;
 	}
