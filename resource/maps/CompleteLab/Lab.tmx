@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="46" height="27" tilewidth="16" tileheight="16" infinite="0" nextlayerid="24" nextobjectid="1">
+ <properties>
+  <property name="charXDoor" type="int" value="23"/>
+  <property name="charYDoor" type="int" value="3"/>
+  <property name="spawnX1" type="int" value="6"/>
+  <property name="spawnX2" type="int" value="40"/>
+  <property name="spawnY1" type="int" value="5"/>
+  <property name="spawnY2" type="int" value="5"/>
+ </properties>
+ <tileset firstgid="1" source="factory_tileset.tsx"/>
+ <tileset firstgid="1665" source="Sci-fi Obj Set 1.tsx"/>
+ <tileset firstgid="1749" source="scifitiles-sheet.tsx"/>
+ <tileset firstgid="2085" source="zombie_tileb.tsx"/>
+ <layer id="18" name="Mask" width="46" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3YPQqAMAwG0G49jeD9T+ckOKT5T0gkH2SpNT6lBelafXNv/8rq3SXjzg3XfW28uPOtfT3d0H0nYyU3ZvxeH3fcvuS6tYl2U2Pa/M1NrTtOQW6vnl7u078DZH/nZLklz8Lc2d+7g7t6xp2bCLd27UuidWMertvyTpTbuv+9SuqumnHnJvqMI7I65wF/To7taBMAAA==
+  </data>
+ </layer>
+ <layer id="19" name="Door1" width="46" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3DQQkAAAgEsPvZP4JNfRhCkA2W8EHXBgAAAODGAE357jxoEwAA
+  </data>
+ </layer>
+ <layer id="20" name="Base" width="46" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACrvPxsDwkAZYnJ2BQYadNmY/gZovSQN8HWj2DTbamA0KD38gfgo0X4iduvgz0MwvNDAX5FZkdwuzDw086u5Rd4+6e/DhUXePunuouHsTI26MLD9U3D2Yw5tQWNPC3YTMptQPgzm8ycXo7tYfBG4aCe4G9XcCB4F7iMWw/g693E2tvIzeTxtq6WS0PBkNb2Lc/ZONdNzMThomxw5qu2GwYAAy+dXhaBMAAA==
+  </data>
+ </layer>
+ <layer id="21" name="Obstacle1" width="46" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu2URwpCQRBEZ6MewIOoZzJsDFcwXMPs1rg1bo07PZC1sGBoR1RaTPSDR+nnUzR8KOcMw/g1mlHnWrANO152YS96/X4+4lwRlrwsRG73ymS/lj46BnAIR16O4STQ3w7c2Ak8Y69M9muZomMG53Dh5RKuFHezVyb7tazRsYFbuPNyDw+Ku9krk/3v5tG7vw27+znkhnHv5P7xv3z/GLjxFNhG7h775A7K95+Feyf3T7tX3D32vXoHuXdy/7R7xd1jn3YHE/gmSZi6fBvundw/7V5x99gX2kF5i2F8knTMuQzMwpyXfP5O4rH7kjJ+V2AV1rzk82+ljtsasAlbXvK5YRj/zRlJBuMuaBMAAA==
+  </data>
+ </layer>
+ <layer id="22" name="Obstacle2" width="46" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAWjYBSMgsENvnMxMPzgGmhXkA7EuRkYJLgH2hWkA3Ogmy2GoLvDgW6OGILuLge6uWIIuns60M0z6Oju+azUMWc7sCzZQaXyZAERbrpMJXdfB7r5BpXcfYUIN11lhtA3mIk314mNgcEZiF3YEGLo4Y1NDSFgxwKh7VkIq+WEquEB0ueINL8M6JZyIK5AchN6eGNTgw+A7C6CuqWYCHdTC5QC3Vw2BOvLqUA3TxuC7h4F1AGGQHyYGRWTCtD1G1LRfWnAMjMdiDNYUdkgO74zo2JTVggmBGDq0PUb4rFvFIyCUTB0AAAubjgEaBMAAA==
+  </data>
+ </layer>
+ <layer id="23" name="Obstacle3" width="46" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3TsQmAMBBG4Ys2WUc30UVEN9FabbKoZ5U0wikJRHhflcAfeE1E8uq8SO/jfdbz4p/3tRi0cUw6Vz1vP+gGAABAdDbv3zhn21h2qeNDCwCRqS2zLS1oy2749/cmVNQNIK8LuY/w8GgTAAA=
+  </data>
+ </layer>
+</map>
