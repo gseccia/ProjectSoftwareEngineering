@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="32" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="32" nextobjectid="1">
  <properties>
-  <property name="charXDoor1" type="int" value="1"/>
-  <property name="charYDoor1" type="int" value="10"/>
+  <property name="charXDoor1" type="int" value="2"/>
+  <property name="charYDoor1" type="int" value="11"/>
   <property name="spawnX1" type="int" value="16"/>
   <property name="spawnX2" type="int" value="21"/>
   <property name="spawnY1" type="int" value="5"/>

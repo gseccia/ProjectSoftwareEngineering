@@ -9,6 +9,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
@@ -84,6 +85,12 @@ public class Block extends BasicGameState
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) {
 		g.scale(1.5f, 1.5f);
 		map.render(0,0,map_x,map_y,map_x+50,map_y+50);
+		//TESTING ZONE
+		for(Rectangle b: mapCollision.getCollidingBlocks())
+		{
+			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getWidth());
+		}
+		//TESTING ZONE
 		for(Mob e : enemy)
 		{
 			e.draw();

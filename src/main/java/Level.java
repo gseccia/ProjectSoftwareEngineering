@@ -18,7 +18,7 @@ public class Level extends StateBasedGame{
 	
 	
 	private Set<Block> map; //DO substitution with graph
-	private Map<Block,Set<Mob>> population;
+	private java.util.Map<Block,Set<Mob>> population;
 	/*
 	private GraphTransitionManager map;
 	private Set<Mob> element_set;
