@@ -109,13 +109,13 @@ public class Block extends BasicGameState
 			if(gc.getInput().isKeyDown(Input.KEY_S)){
 				player.faceDown();
 				if(mapCollision.wallCollision(map_x, map_y, player, Input.KEY_S)){
-					player.moveY(-1);
+					player.moveY(1);
 				}
 			}
 			if(gc.getInput().isKeyDown(Input.KEY_W)){
 				player.faceUp();
 				if(mapCollision.wallCollision(map_x, map_y, player, Input.KEY_W)){
-					player.moveY(1);
+					player.moveY(-1);
 				}
 			}
 			else{
