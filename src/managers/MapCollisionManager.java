@@ -59,17 +59,17 @@ public class MapCollisionManager implements MapCollisionInterface {
 		int pYPosition = (int)(player.getY()/map.getTileHeight()) + shiftY;
 		//System.out.println(pXPosition+","+pYPosition);
 
-		if (key == Directions.RIGHT) {
+		if (key == RIGHT) {
 			//Blocked tile
 			return (!collisionArray[pXPosition + 1][pYPosition]);
 		}
-		else if (key == Directions.LEFT) {
+		else if (key ==  LEFT) {
 			return (!collisionArray[pXPosition - 1][pYPosition]);
 		}
-		else if (key == Directions.DOWN) {
+		else if (key == DOWN) {
 			return (!collisionArray[pXPosition][pYPosition + 1]);
 		}
-		else if (key == Directions.UP) {
+		else if (key == UP) {
 			return (!collisionArray[pXPosition][pYPosition - 1]);
 		}
 		else

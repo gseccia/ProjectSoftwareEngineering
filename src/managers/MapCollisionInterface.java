@@ -2,7 +2,7 @@ package managers;
 
 import elements.Mob;
 
-public interface MapCollisionInterface {
+public interface MapCollisionInterface extends Directions{
 
     /**
      * Checks if a mob collides with a wall
