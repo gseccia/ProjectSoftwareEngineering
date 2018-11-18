@@ -20,9 +20,9 @@ public class CollisionManagerFactory {
 		this.gc = gc;
 	}
 	
-	public CollisionManagerMKII getFactory() {
+	public CollisionManager getFactory() {
 		if(mapName == null) {
-			return new CollisionManagerMap(player, mapName, gc);
+			return new MapCollisionManager(player, mapName, gc);
 		} else {
 			return new CollisionManagerMob(player, otherMob, gc);
 		}

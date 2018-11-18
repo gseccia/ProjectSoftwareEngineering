@@ -8,7 +8,7 @@ import elements.Mob;
  * @author marco
  * This class manages the collision of the character with the AI mobs.
  */
-public class CollisionManagerMob implements CollisionManagerMKII {
+public class CollisionManagerMob implements CollisionManager {
 	private Mob player, otherMob;
 	private GameContainer gc;
 	

@@ -4,8 +4,10 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import managers.MapCollisionManager;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -13,7 +15,6 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import elements.Mob;
 import elements.NullAnimationException;
-import managers.CollisionManager;
 
 public class Block extends BasicGameState
 {
@@ -22,25 +23,25 @@ public class Block extends BasicGameState
 	private Set<Mob> enemy;
 	private int state;
 	private int map_x,map_y;
-	private CollisionManager collision;
+	private MapCollisionManager mapCollision;
 	private String mapName;
 	
 	public Block(int state,String mapName)
 	{
 		this.state=state;
-		collision = new CollisionManager();
 		this.mapName = mapName;
 	}
 	
 	/**
 	 *  This function initializes the block
-	 * @param player is the user charachter
-	 * @param population Map that contains information about enemies in the blocks
-	 * @throws SlickException
+	 * @param player is the user character
+	 * @param population map that contains information about enemies in the blocks
+	 * @throws SlickException if the map is not loaded correctly
 	 */
 	public void initBlock(Mob player,Map<Block,Set<Mob>> population) throws SlickException
 	{
 		map = new TiledMap("resource/maps/Complete"+mapName+"/"+mapName+".tmx");
+		mapCollision = new MapCollisionManager(map);
 		enemy = population.get(this);
 		this.player = player; 
 	}
@@ -93,7 +94,33 @@ public class Block extends BasicGameState
 	@Override
 	public void update(GameContainer gc, StateBasedGame arg1, int delta) {
 		try {
-			collision.checkCollision(mapName,map_x,map_y, player, gc);
+			if(gc.getInput().isKeyDown(Input.KEY_D)){
+				player.faceRight();
+				if(mapCollision.wallCollision(map_x, map_y, player, Input.KEY_D)){
+					player.moveX(1);
+				}
+			}
+			else if(gc.getInput().isKeyDown(Input.KEY_A)){
+				player.faceLeft();
+				if(mapCollision.wallCollision(map_x, map_y, player, Input.KEY_A)){
+					player.moveX(-1);
+				}
+			}
+			if(gc.getInput().isKeyDown(Input.KEY_S)){
+				player.faceDown();
+				if(mapCollision.wallCollision(map_x, map_y, player, Input.KEY_S)){
+					player.moveY(-1);
+				}
+			}
+			if(gc.getInput().isKeyDown(Input.KEY_W)){
+				player.faceUp();
+				if(mapCollision.wallCollision(map_x, map_y, player, Input.KEY_W)){
+					player.moveY(1);
+				}
+			}
+			else{
+				player.faceStill();
+			}
 			map_x = (int)player.getX()/map.getTileWidth();
 			map_y = (int)player.getY()/map.getTileHeight();
 		} catch (NullAnimationException e1) {
