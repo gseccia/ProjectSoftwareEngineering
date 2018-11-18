@@ -14,8 +14,8 @@ public class Map {
         this.graph = graph;
     }
 
-    public List<String> mapSubSet(){
-       String [] tiledMaps = {"parcheggio","bagno","giardino","cucina","salotto","corridoio","negozio"};
+    public List<String> mapSubSet(){   //metodo che genera un sottoinsieme di mappe tra tutte quelle disponibili
+       String [] tiledMaps = {"parcheggio","bagno","giardino","cucina","salotto","corridoio","negozio","palestra","piscina","scuola","universita"};
        int i=0;
        Random random = new Random();
        int numeroCasuale = random.nextInt(tiledMaps.length)+2; // seleziona un sottoinsieme casuale di tiledMaps contenente almeno 2 elemento
@@ -31,7 +31,7 @@ public class Map {
         return listTiledMaps;
     }
 
-    public List<Vertex> generateVertex(DefaultUndirectedGraph graph){
+    public List<Vertex> generateVertex(DefaultUndirectedGraph graph){  //metodo che genera un numero di archi tali da rispettare i constrain detti in classe e li aggiunge al grafo
         boolean condition = false;
         int min = 2;
         int max;
@@ -64,25 +64,13 @@ public class Map {
             return listVertex;
         }
 
-    public void generateGraph(DefaultUndirectedGraph graph, List listVertex){
+    public void generateGraph(DefaultUndirectedGraph graph, List listVertex){          //metodo che genera casualmente un grafo connesso
         listVertex.sort(null);
         int i = 0;
-        int j = 1;
-        int appoggioj;
+        int j;
         int totalDoor = 0;
         int viNumeroPorte, vjNumeroPorte;
-        /*List<Vertex> listVertex = new ArrayList<>();
-        Vertex v1 = new Vertex("corridoio", false , 3); graph.addVertex(v1);
-        Vertex v2 = new Vertex("salotto",false, 3); graph.addVertex(v2);
-        Vertex v3 = new Vertex("bagno", false ,2); graph.addVertex(v3);
-        Vertex v4 = new Vertex("cucina", false ,2); graph.addVertex(v4);
-        Vertex v5 = new Vertex("stanza", false ,2); graph.addVertex(v5);
-
-        listVertex.add(v1); listVertex.add(v2); listVertex.add(v3); listVertex.add(v4); listVertex.add(v5);*/
-
-
-        appoggioj = i+1;
-
+        j = i+1;
         Vertex v,vi,vj;
         for (int k=0; k<listVertex.size();k++) {
             v = (Vertex) listVertex.get(k);
@@ -91,8 +79,8 @@ public class Map {
         while(totalDoor > 0){
             vi = (Vertex) listVertex.get(i);
             viNumeroPorte = vi.getDoorNumber();
-            while (viNumeroPorte >0 && i < listVertex.size()-1 && appoggioj < listVertex.size()){
-                vj = (Vertex) listVertex.get(appoggioj);
+            while (viNumeroPorte > 0 && i < listVertex.size()-1 && j < listVertex.size()){
+                vj = (Vertex) listVertex.get(j);
                 vjNumeroPorte = vj.getDoorNumber();
                 if (vjNumeroPorte > 0 ){
                     graph.addEdge(vi,vj);
@@ -100,15 +88,20 @@ public class Map {
                     vjNumeroPorte--;
                     totalDoor -= 2;
                 }
-                appoggioj++;
+                j++;
             }
             i++;
-            if (appoggioj >= listVertex.size())
-                appoggioj = i;
+            if (j >= listVertex.size())
+                j = i;
         }
     }
 
+    public Set<DefaultEdge> getEdges(DefaultUndirectedGraph graph,Vertex v){  //ritorna tutti gli archi del vertice v appartenenti al grafo graph
+        return graph.edgesOf(v);
+    }
+
     public Set<Vertex> vertex(){
+
         return graph.vertexSet();
     }
 }
