@@ -24,7 +24,7 @@ public class Block extends BasicGameState
 	private Mob player;
 	private Set<Mob> enemy;
 	private int state;
-	private int map_x,map_y;
+	private int map_x,map_y, prev_map_x, prev_map_y;
 	private MapCollisionManager mapCollision;
 	private String mapName;
 	
@@ -60,7 +60,7 @@ public class Block extends BasicGameState
 		map_y = y;
 		
 		// Player spawns in front of Door1
-		player.setPosition(x*map.getTileWidth() -map_x*map.getTileWidth()/2, y*map.getTileHeight()-map_y*map.getTileWidth()/2); //WARNING --> subtract shifting
+		player.setPosition(x*map.getTileWidth()-map_x*map.getTileWidth()/2+30, y*map.getTileHeight()-map_y*map.getTileWidth()/2+30); //WARNING --> subtract shifting
 		
 		// Enemies spawn from a set of a random spawn points
 		for(Mob e : enemy)
@@ -80,6 +80,8 @@ public class Block extends BasicGameState
 		// Shift of the map
 		map_x = (int)player.getX()/map.getTileWidth();
 		map_y = (int)player.getY()/map.getTileHeight();
+		prev_map_x = map_x;
+		prev_map_y = map_y;
 	 }
 
 	@Override
@@ -136,6 +138,10 @@ public class Block extends BasicGameState
 		}
 		for(Mob e : enemy)
 		{
+
+			e.moveX((prev_map_x-map_x)*map.getTileWidth());
+			e.moveY((prev_map_y-map_y)*map.getTileHeight());
+
 			int random_x = new Random().nextInt(2);
 			int random_y = new Random().nextInt(2);
 			
@@ -146,6 +152,8 @@ public class Block extends BasicGameState
 			}
 			
 		}
+		prev_map_x = map_x;
+		prev_map_y = map_y;
 	}
 	
 	@Override
