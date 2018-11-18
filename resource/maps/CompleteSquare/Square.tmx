@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="45" height="31" tilewidth="16" tileheight="16" infinite="0" nextlayerid="33" nextobjectid="1">
  <properties>
-  <property name="charXDoor1" type="int" value="1"/>
+  <property name="charXDoor1" type="int" value="2"/>
   <property name="charXDoor2" type="int" value="23"/>
-  <property name="charYDoor1" type="int" value="17"/>
+  <property name="charYDoor1" type="int" value="16"/>
   <property name="charYDoor2" type="int" value="31"/>
   <property name="spawnX1" type="int" value="15"/>
   <property name="spawnX2" type="int" value="34"/>
@@ -31,7 +31,7 @@
    H4sIAAAAAAAACu3OIQEAAAgDsAv6S/KSAXWzJVgCAAAdO+3BnzMAAC0HaYS9j8wVAAA=
   </data>
  </layer>
- <layer id="26" name="Base" width="45" height="31">
+ <layer id="26" name="Base" width="45" height="31" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACtVXCW7DMAzLC7qfN+9IHtN8aSuGAAJBUlS6bpgBwznqhqJpylqW/9fut2VZb/n4V1ju5f7x1Y/BuH98923Q97C7bz/KPca0kniebStYd8Ayxc/mPq9PrpHfDt8RYt4b7Ow33X88W+UTrxFfHXENFOZNYEXcLk7ErDTN+MVR8cw6W3eHmc2vPB8FZ+UXucRY0CsUBsXphGvkGXWAnNf3Kq4Os8J6BTNy6fxCeaHD3PHrPK/D7LB3Xqi0oXBMNeT2IPpBx7Pbg27PdXp2a4Q8I7fON/BZ8n2lic4rkn7+V5LjEmzTeeqZypm4Zmd7J+Yun0x4PjFf5W0Sm/KWlOvfxKzwOu/odP9OzAqHe5fEkuj5in6nveO23iPmTnfu/SuY3Xym57RmmvCU+ATjoGuYU1xuXEleSb3JaRnHrhbFnOjOIDUXXuHb7Yl6rb6vYnB168kz+9ZkDynP2AKOJ7HgmcNxm2qbje6cmWiFjYxftq9TvTs9s7Oz4xnPo+eY+FuHrcPMOHVawJpKaaPzK/Ys4VtxWrlk/Ls65pW8lniJq6lqvVp9udYxqm75ibym9OLWfQVsrIZRdUvSGMakdR5QcXwC8fBvhcwVAAA=
   </data>
