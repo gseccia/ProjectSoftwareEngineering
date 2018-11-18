@@ -24,7 +24,7 @@ public class CollisionManagerFactory {
 		if(mapName == null) {
 			return new MapCollisionManager(player, mapName, gc);
 		} else {
-			return new CollisionManagerMob(player, otherMob, gc);
+			return new MobCollisionManager(player, otherMob, gc);
 		}
 	}
 }
