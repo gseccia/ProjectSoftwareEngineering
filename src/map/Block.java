@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import managers.Directions;
 import managers.MapCollisionManager;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -101,27 +102,27 @@ public class Block extends BasicGameState
 	@Override
 	public void update(GameContainer gc, StateBasedGame arg1, int delta) {
 		try {
-			if(gc.getInput().isKeyDown(Input.KEY_D)){
+			if(gc.getInput().isKeyDown(Directions.RIGHT)){
 				player.faceRight();
-				if(mapCollision.wallCollision(map_x, map_y, player, Input.KEY_D)){
+				if(mapCollision.wallCollision(map_x, map_y, player, Directions.RIGHT)){
 					player.moveX(1);
 				}
 			}
-			else if(gc.getInput().isKeyDown(Input.KEY_A)){
+			else if(gc.getInput().isKeyDown(Directions.LEFT)){
 				player.faceLeft();
-				if(mapCollision.wallCollision(map_x, map_y, player, Input.KEY_A)){
+				if(mapCollision.wallCollision(map_x, map_y, player, Directions.LEFT)){
 					player.moveX(-1);
 				}
 			}
-			if(gc.getInput().isKeyDown(Input.KEY_S)){
+			else if(gc.getInput().isKeyDown(Directions.DOWN)){
 				player.faceDown();
-				if(mapCollision.wallCollision(map_x, map_y, player, Input.KEY_S)){
+				if(mapCollision.wallCollision(map_x, map_y, player, Directions.DOWN)){
 					player.moveY(1);
 				}
 			}
-			if(gc.getInput().isKeyDown(Input.KEY_W)){
+			else if(gc.getInput().isKeyDown(Directions.UP)){
 				player.faceUp();
-				if(mapCollision.wallCollision(map_x, map_y, player, Input.KEY_W)){
+				if(mapCollision.wallCollision(map_x, map_y, player, Directions.UP)){
 					player.moveY(-1);
 				}
 			}
@@ -137,9 +138,13 @@ public class Block extends BasicGameState
 		{
 			int random_x = new Random().nextInt(2);
 			int random_y = new Random().nextInt(2);
-			e.moveX(random_x);
-			e.moveY(random_y);
-			// manage the collision
+			
+			if(mapCollision.wallCollision(map_x,map_y, e, Directions.RIGHT))
+			{
+				e.moveX(random_x);
+				e.moveY(random_y);
+			}
+			
 		}
 	}
 	
