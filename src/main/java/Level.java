@@ -1,59 +1,103 @@
 package main.java;
 
+import configuration.NoSuchElementInConfigurationException;
 import elements.Mob;
+import elements.NullAnimationException;
+import map.Block;
+import java.util.*;
+
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.tiled.TiledMap;
 
-public class Level extends BasicGameState{
-	private int state;
-	private float x,y;
-	private boolean down,right;
-	private Mob tmp;
-	//private TiledMap back;
+public class Level extends StateBasedGame{
+	private Mob player;
+	private Block current_block; //Only to TEST
+	private String charname;
+	private int level_difficulty;
 	
+	
+	private Set<Block> map; //DO substitution with graph
+	private java.util.Map<Block,Set<Mob>> population;
 	/*
-	 * private GraphTransitionManager map;
-	 * private Set<InteractiveElement> element_set;
-	 * 
-	 * */
+	private GraphTransitionManager map;
+	private Set<Mob> element_set;
+	*/
 	
-	public Level(int state) {
-		this.state = state;
+	/**
+	 * This class is the manager of a level
+	 * @throws SlickException 
+	*/
+	public Level(String gamename,String charname,int level_difficulty) {
+		super(gamename);
+		
+		population = new HashMap<>();
+		
+		///ONLY TO TEST
+		map = new HashSet<>();
+		current_block = new Block(1,"Library2");
+		map.add(current_block);
+		//ONLY TEST END
+		
+		this.charname = charname;
+		this.level_difficulty =level_difficulty;
+		//player.setLocation(0,0);
 	}
 	
-	@Override
-	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		tmp = Mob.generate("guntan");
-		//back = new TiledMap("resource/mapblock/Lab.tmx");
-	}
-
-	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		tmp.draw(400,300);
-		//back.render(0, 0);
-	}
-
-	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		if(y > container.getHeight() || y < 0) 
+	
+	/**
+	 * This function automatically generate Mobs and put them into blocks
+	 * @param difficulty parameter to define the hardness of the level
+	 * @throws SlickException 
+	 */
+	private void generatePopulation(int difficulty) throws SlickException
+	{
+		for(Block block: map)
 		{
-			down = !down;
+			population.put(block, generateMob(difficulty));
 		}
-		if(x < 0 || x > container.getWidth())
+	}
+	
+	/**
+	 * This function automatically generate a set of Mobs
+	 * @param difficulty parameter to define the hardness of the level
+	 * @return A set of Mob that are generated at random
+	 */
+	private Set<Mob> generateMob(int difficulty) throws SlickException
+	{
+		Set<Mob> mobs=new HashSet<>();
+		Mob mob;
+		for(int i=0;i<difficulty;i++)
 		{
-			right = !right;
+			try {
+				mob = Mob.generate("zombo");  //Retrieve other String id
+				mobs.add(mob);
+			} catch (NullAnimationException | NoSuchElementInConfigurationException e) {
+				e.printStackTrace();
+				System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
+			}
 		}
-		x = (right)? x+1 : x-1;
-		y = (down)? y+1 : y-1;
+		return mobs;
 	}
 
+
+
 	@Override
-	public int getID() {
-		return state;
+	public void initStatesList(GameContainer arg0) throws SlickException {
+		try {
+			player = Mob.generate(charname);
+			generatePopulation(level_difficulty);
+			for(Block block: map)
+			{
+				block.initBlock(player, population);
+				this.addState(block);
+			}
+
+			this.enterState(1); //always enter in first block
+		} catch (NullAnimationException | NoSuchElementInConfigurationException e) {
+			e.printStackTrace();
+			System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
+		}
 	}
 
 
