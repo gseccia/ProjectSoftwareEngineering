@@ -2,7 +2,7 @@
 <map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="63" nextobjectid="1">
  <properties>
   <property name="charXDoor1" type="int" value="2"/>
-  <property name="charYDoor1" type="int" value="11"/>
+  <property name="charYDoor1" type="int" value="6"/>
   <property name="spawnX1" type="int" value="16"/>
   <property name="spawnX2" type="int" value="21"/>
   <property name="spawnY1" type="int" value="5"/>
@@ -21,7 +21,7 @@
  </tileset>
  <layer id="53" name="Mask" width="50" height="14">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACutjZGDoGxi8gMp41B+j/hj1x6g/BtIfpKiHqyUH4HMrATULKDEbi/8o8gctAalxPFjBcPEHMWA4+mMo+2UAy1tSyl1c5SuGOAA/PXXW8AoAAA==
+   H4sIAAAAAAAACnNnY2BwR8J9jHTDC6iF3dH8QGf/jPpjBPqDEr8QaQ7d/EGuf0B6kMFg8Qep/kT3By41JJpNtD/IAbjsJ1UNLrOJyWfU8ActAbFperC6HwZITd9DGQxHfwxlv1CrzB0sGADSJ62m8AoAAA==
   </data>
  </layer>
  <layer id="54" name="Door1" width="50" height="14">
@@ -29,27 +29,27 @@
    H4sIAAAAAAAACmNgGAWjYBSMglEwCsgD95kG2gXUAdsYB9oF1AGj/hgFowA7AACsr/pG8AoAAA==
   </data>
  </layer>
- <layer id="55" name="Base" width="50" height="14">
+ <layer id="55" name="Base" width="50" height="14" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgYGC4zwTBQx2M+mPwgeHij1EwuMBEOuNJVDJnMZo/FtMZLyFDD7LbkTEDUrhQK3yoFR/k+IPc8KF3fODCAx0f1PbHcIgPerqdVng4AQCnC2zp8AoAAA==
   </data>
  </layer>
- <layer id="56" name="Wall1" width="50" height="14">
+ <layer id="56" name="Wall1" width="50" height="14" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3P2w0BURSFYddpgEEDDBpwbcC1AdcGGJSgQqUowZ84520ldszhaVbyvfzZc5IpFN4rooQyKqgicj0E9balqZuyaH411BGjgSZaroeg3rY0dROL5tdGBwm66KHvegjqbUtTN4lofgMMMcIYE0xdD0G9bWnqZiSa3wxzLLDECmvXQ1BvW5q6WYjmt8EWO+xxwNH1ENTblqZudqL5nXBGiguuuLkegnrb0tRNKtq/94g+32TZPSPrntF331mX9T9++e/58uXLthcGcyRv8AoAAA==
+   H4sIAAAAAAAACu3P0Q3BUBSHcZQuQLEAxQIUC1AsQLEAxQgmNIoRfIn7cHNzHk70Nl76T34vX25P0lrtuzoaCNBEC6HpPki3NU16EzjNXhsdROiih77pPki3NU16EznN3gBDxBhhjInpPki3NU16EzvN3hQzJJhjgaXpPki3NU16kzjN3gprpNhgi53pPki3NU16kzrN3h4HZDjihLPpPki3NU16kznN3gVX5LjhjofpPki3NU16kzvtH3uF5d5/FqTdO/ztO+2K/keZ/16tWrVi+wDQmVJv8AoAAA==
   </data>
  </layer>
- <layer id="57" name="Rubbish" width="50" height="14">
+ <layer id="57" name="Rubbish" width="50" height="14" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgGAWjYBSMFNApycDQJTnQrqAcrAT6YdUw8McoGDhgKsXAYCY10K6gHIQC/RA2DPwxCkYBrQEA/BEDLfAKAAA=
   </data>
  </layer>
- <layer id="60" name="Blood from toilets" width="50" height="14">
+ <layer id="60" name="Blood from toilets" width="50" height="14" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgGAWjYGQAVnYGBjYgZmcfaJdQBlSB7lcDYvUh7A9XqPuHsj9g6QkUH25A7A71jxod/XOGjYHhLBCfA+LzbMTLIQNVJHejY3qBN0D3vQXid0D8no14OWQAjI8EtwFwOy2AKzQ9eQxxf6QC4yQd6IeMIe6PUTA8AABUGGPQ8AoAAA==
+   H4sIAAAAAAAACu2SywmAMBBE9+JuJcZKTCpRm/XTiJ8WnIDgHgNCZDUPHjnsZYYJUaHwDyohYijydpJn1MjvYGO4R3vlt9xD76Bfl7HPyEQTnOHC6TdN3MLDoN7cu6zIt8EdHpx+03Ryb+KVweD/ag1n18RNejgY71H4Bif3elGC8AoAAA==
   </data>
  </layer>
- <layer id="58" name="Wall2" width="50" height="14">
+ <layer id="58" name="Wall2" width="50" height="14" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNggABOhuEBpAfaARQCNijWHWiHUAgkoNh+oB1CIdCC4sCBdgiFwAaKkwfaIRQCPyguHWiHUAgSoLidQnPmMqJiegBTKQYGMykIuwiKF9LHaqqCUKAfwqQQ/GYoHupgOPijmWF4+AMEhos/hgMAAFVDZojwCgAA
   </data>
@@ -66,7 +66,7 @@
  </layer>
  <layer id="62" name="Dirt" width="50" height="14">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgGAWjgHxwjJ0h4Sg7w4KBdgelQI2DYcFToF9oaUcjKwNDEystbaAPWAj0wyIkf1SyMzBUsQ+ce6gFZgL9MGsY+INS8FyageEFEL+EYhj7ExB/BuIv0tS1j52DNPXOQPtd8LhhJlBuFhCzyzAwcAAxJxTD2EJALAzEIjK4zTgOTAcn8KQFbPLqQH9okOCXZKAbU4gIS3WgOzWAWBOKYWwjIDYGYhM8/ngOdOMLJHeiuxtZnpCfBxNA9xexcqNgZAMAEIjdVfAKAAA=
+   H4sIAAAAAAAACmNgGAWjgHxwlJ2B4Rj7QLuCcvAU6IdnNPZHIysDQxMrbe2gB1gI9MMiJH9UAsOtahikgZlAP8waBv6gFDyXZmB4AcQvoRjG/gTEn4H4izR17WPnIE29M9B+FzxumAmUmwXE7DIMDBxAzAnFMLYQEAsDsYgMbjOOA9PBCTxpAZu8OtAfGiT4JRnoxhQiwlId6E4NINaEYhjbCIiNgdgEjz+eA934Asmd6O5Glifk58EE0P1FrNwoGNkAAB/X4ozwCgAA
   </data>
  </layer>
 </map>
