@@ -4,6 +4,7 @@ public class Vertex implements Comparable<Vertex>{
     private String el;
     private boolean token;
     private int doorNumber;
+    private int numeroPorteRimanenti;
     private final int id;
     private static int sequentialNumber = 0;
 
@@ -11,7 +12,16 @@ public class Vertex implements Comparable<Vertex>{
         this.el = el;
         this.token = token;
         this.doorNumber = doorNumber;
+        this.numeroPorteRimanenti = this.doorNumber;
         this.id = sequentialNumber++;
+    }
+
+    public int getNumeroPorteRimanenti() {
+        return numeroPorteRimanenti;
+    }
+
+    public void setNumeroPorteRimanenti(int numeroPorteRimanenti) {
+        this.numeroPorteRimanenti = numeroPorteRimanenti;
     }
 
     public String getEl() {
@@ -52,6 +62,7 @@ public class Vertex implements Comparable<Vertex>{
                 "el=" + el +
                 ", token=" + token +
                 ", doorNumber=" + doorNumber +
+                ", numeroPorteRimanenti="+ numeroPorteRimanenti+
                 '}';
     }
 

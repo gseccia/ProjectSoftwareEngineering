@@ -69,7 +69,6 @@ public class Map {
         int i = 0;
         int j;
         int totalDoor = 0;
-        int viNumeroPorte, vjNumeroPorte;
         j = i+1;
         Vertex v,vi,vj;
         for (int k=0; k<listVertex.size();k++) {
@@ -78,14 +77,12 @@ public class Map {
         }
         while(totalDoor > 0){
             vi = (Vertex) listVertex.get(i);
-            viNumeroPorte = vi.getDoorNumber();
-            while (viNumeroPorte > 0 && i < listVertex.size()-1 && j < listVertex.size()){
+            while (vi.getNumeroPorteRimanenti() > 0 && i < listVertex.size()-1 && j < listVertex.size()){
                 vj = (Vertex) listVertex.get(j);
-                vjNumeroPorte = vj.getDoorNumber();
-                if (vjNumeroPorte > 0 ){
+                if (vj.getNumeroPorteRimanenti() > 0 ){
                     graph.addEdge(vi,vj);
-                    viNumeroPorte--;
-                    vjNumeroPorte--;
+                    vi.setNumeroPorteRimanenti(vi.getNumeroPorteRimanenti()-1);
+                    vj.setNumeroPorteRimanenti(vj.getNumeroPorteRimanenti()-1);
                     totalDoor -= 2;
                 }
                 j++;
