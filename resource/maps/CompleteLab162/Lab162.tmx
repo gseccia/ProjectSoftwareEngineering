@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="55" height="36" tilewidth="16" tileheight="16" infinite="0" nextlayerid="41" nextobjectid="1">
  <properties>
-  <property name="charXDoor1" type="int" value="43"/>
-  <property name="charYDoor1" type="int" value="32"/>
+  <property name="charXDoor1" type="int" value="42"/>
+  <property name="charYDoor1" type="int" value="30"/>
  </properties>
  <tileset firstgid="1" name="hotlinemiami-tileset" tilewidth="16" tileheight="16" tilecount="2028" columns="52">
   <image source="hotlinemiami-tileset.png" width="844" height="627"/>
