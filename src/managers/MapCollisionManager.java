@@ -15,11 +15,11 @@ import elements.Mob;
  */
 public class MapCollisionManager implements MapCollisionInterface {
 	private TiledMap map;
-	private List<Rectangle> collidingBlocks;
+	private List<Wall> collidingBlocks;
 	
 	public MapCollisionManager(TiledMap map) {
 		this.map = map;
-		collidingBlocks = new ArrayList<Rectangle>();
+		collidingBlocks = new ArrayList<>();
 		int mask = map.getLayerIndex("Mask");
 		int i, j;
 		int tileID;
@@ -27,7 +27,7 @@ public class MapCollisionManager implements MapCollisionInterface {
 			for(j = 0; j < map.getHeight(); j++) {
 				tileID = map.getTileId(i, j, mask);
 				if(tileID != 0) {
-					collidingBlocks.add(new Rectangle(i*map.getTileWidth(), j*map.getTileHeight(),
+					collidingBlocks.add(new Wall(i*map.getTileWidth(), j*map.getTileHeight(),
 							map.getTileWidth(), map.getTileHeight()));
 				}
 			}
@@ -57,16 +57,16 @@ public class MapCollisionManager implements MapCollisionInterface {
 
 		// Position updating to check
 		if (key == RIGHT) {
-			pXPosition+=2;
+			pXPosition+=16;
 		}
 		else if (key ==  LEFT) {
-			pXPosition-=2;
+			pXPosition-=16;
 		}
 		else if (key == DOWN) {
-			pYPosition+=2;
+			pYPosition+=16;
 		}
 		else if (key == UP) {
-			pYPosition-=2;
+			pYPosition-=16;
 		}
 		else
 			return false;
@@ -77,12 +77,12 @@ public class MapCollisionManager implements MapCollisionInterface {
 		
 		// check collision
 		player.setLocation(pXPosition, pYPosition);
-		for(Rectangle block : collidingBlocks) {
+		for(Wall block : collidingBlocks) {
 			if(block.intersects(player)) {
 				collides = true;
-				System.out.println("COLLIDES! ");
-				System.out.println("PLAYER: "+pXPosition +";"+ pYPosition+"; "+(pXPosition+player.getWidth())+";"+ (pYPosition+player.getWidth()));
-				System.out.println("BLOCK: "+block.getX() +";"+ block.getY()+"; "+(block.getX()+block.getWidth())+";"+ (block.getY()+block.getWidth()));
+//				System.out.println("COLLIDES! ");
+//				System.out.println("PLAYER: "+pXPosition +";"+ pYPosition+"; "+(pXPosition+player.getWidth())+";"+ (pYPosition+player.getWidth()));
+//				System.out.println("BLOCK: "+block.getX() +";"+ block.getY()+"; "+(block.getX()+block.getWidth())+";"+ (block.getY()+block.getWidth()));
 				break;
 			}	
 		}
@@ -106,7 +106,7 @@ public class MapCollisionManager implements MapCollisionInterface {
 		return false;
 	}
 	
-	public List<Rectangle> getCollidingBlocks()
+	public List<Wall> getCollidingBlocks()
 	{
 		return collidingBlocks;
 	}

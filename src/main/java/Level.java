@@ -86,7 +86,7 @@ public class Level extends StateBasedGame{
 	public void initStatesList(GameContainer arg0) throws SlickException {
 		try {
 			player = Mob.generate(charname);
-			generatePopulation(level_difficulty);
+			generatePopulation(1);
 			for(Block block: map)
 			{
 				block.initBlock(player, population);

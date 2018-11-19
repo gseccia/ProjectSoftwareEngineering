@@ -8,7 +8,6 @@ import managers.Directions;
 import managers.MapCollisionManager;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
@@ -24,7 +23,7 @@ public class Block extends BasicGameState
 	private Mob player;
 	private Set<Mob> enemy;
 	private int state;
-	private int map_x,map_y, prev_map_x, prev_map_y;
+	private int map_x, map_y, prev_map_x, prev_map_y;
 	private MapCollisionManager mapCollision;
 	private String mapName;
 	
@@ -52,7 +51,6 @@ public class Block extends BasicGameState
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		int x,y;
-		Random rand = new Random();
 		x = Integer.parseInt(map.getMapProperty("charXDoor1","0"));
 		y = Integer.parseInt(map.getMapProperty("charYDoor1","0"));
 		
@@ -60,20 +58,21 @@ public class Block extends BasicGameState
 		map_y = y;
 		
 		// Player spawns in front of Door1
-		player.setPosition(x*map.getTileWidth()-map_x*map.getTileWidth()/2+30, y*map.getTileHeight()-map_y*map.getTileWidth()/2+30); //WARNING --> subtract shifting
+		player.setPosition(144, 64); //WARNING --> subtract shifting
 		
 		// Enemies spawn from a set of a random spawn points
 		for(Mob e : enemy)
 		{
-			if (rand.nextInt(3) > 1) {
-				x = Integer.parseInt(map.getMapProperty("spawnX1","0"));
-				y = Integer.parseInt(map.getMapProperty("spawnY1","0"));
-			}
-			else {
-				x = Integer.parseInt(map.getMapProperty("spawnX3","0"));
-				y = Integer.parseInt(map.getMapProperty("spawnY3","0"));
-			}
-			e.setPosition(x*map.getTileWidth() -map_x*map.getTileWidth()/2, y*map.getTileHeight()-map_y*map.getTileWidth()/2);
+//			if (rand.nextInt(3) > 1) {
+//				x = Integer.parseInt(map.getMapProperty("spawnX1","0"));
+//				y = Integer.parseInt(map.getMapProperty("spawnY1","0"));
+//			}
+//			else {
+//				x = Integer.parseInt(map.getMapProperty("spawnX3","0"));
+//				y = Integer.parseInt(map.getMapProperty("spawnY3","0"));
+//			}
+//			e.setPosition(x*map.getTileWidth() -map_x*map.getTileWidth()/2, y*map.getTileHeight()-map_y*map.getTileWidth()/2);
+			e.setPosition(160,80);
 		}
 		
 		
@@ -87,7 +86,7 @@ public class Block extends BasicGameState
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) {
 		g.scale(1.5f, 1.5f);
-		map.render(0,0,map_x,map_y,map_x+50,map_y+50);
+		map.render(0,0, map_x,map_y,map_x+50,map_y+50);
 		//TESTING ZONE
 		for(Rectangle b: mapCollision.getCollidingBlocks())
 		{
@@ -107,55 +106,59 @@ public class Block extends BasicGameState
 			if(gc.getInput().isKeyDown(Directions.RIGHT)){
 				player.faceRight();
 				if(mapCollision.wallCollision(map_x, map_y, player, Directions.RIGHT)){
-					player.moveX(1);
+					map_x += 1;
 				}
 			}
 			else if(gc.getInput().isKeyDown(Directions.LEFT)){
 				player.faceLeft();
 				if(mapCollision.wallCollision(map_x, map_y, player, Directions.LEFT)){
-					player.moveX(-1);
+					map_x -= 1;
 				}
 			}
 			else if(gc.getInput().isKeyDown(Directions.DOWN)){
 				player.faceDown();
 				if(mapCollision.wallCollision(map_x, map_y, player, Directions.DOWN)){
-					player.moveY(1);
+					map_y += 1;
 				}
 			}
 			else if(gc.getInput().isKeyDown(Directions.UP)){
 				player.faceUp();
 				if(mapCollision.wallCollision(map_x, map_y, player, Directions.UP)){
-					player.moveY(-1);
+					map_y -= 1;
 				}
 			}
 			else{
 				player.faceStill();
 			}
-			map_x = (int)player.getX()/map.getTileWidth();
-			map_y = (int)player.getY()/map.getTileHeight();
+//			map_x = (int)player.getX()/map.getTileWidth();
+//			map_y = (int)player.getY()/map.getTileHeight();
+
 		} catch (NullAnimationException e1) {
 			e1.printStackTrace();
 		}
 		for(Mob e : enemy)
 		{
-
+			try {
+				e.faceRight();
+			} catch (NullAnimationException e1) {
+				e1.printStackTrace();
+			}
 			e.moveX((prev_map_x-map_x)*map.getTileWidth());
 			e.moveY((prev_map_y-map_y)*map.getTileHeight());
 
 			int random_x = new Random().nextInt(2);
 			int random_y = new Random().nextInt(2);
-			
-			if(mapCollision.wallCollision(map_x,map_y, e, Directions.RIGHT))
-			{
+
+			if(mapCollision.wallCollision(map_x,map_y, e, Directions.RIGHT)){
 				e.moveX(random_x);
 				e.moveY(random_y);
 			}
-			
+
 		}
 		prev_map_x = map_x;
 		prev_map_y = map_y;
 	}
-	
+
 	@Override
 	public int getID() {
 		return state;
