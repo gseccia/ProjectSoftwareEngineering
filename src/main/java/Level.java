@@ -1,5 +1,6 @@
 package main.java;
 
+import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import elements.Mob;
 import elements.NullAnimationException;
@@ -68,7 +69,7 @@ public class Level extends StateBasedGame{
 		for(int i=0;i<difficulty;i++)
 		{
 			try {
-				mob = Mob.generate("zombo");  //Retrieve other String id
+				mob = Mob.generate(MobConfiguration.getInstance(),"zombo");  //Retrieve other String id
 				mobs.add(mob);
 			} catch (NullAnimationException | NoSuchElementInConfigurationException e) {
 				e.printStackTrace();
@@ -83,7 +84,7 @@ public class Level extends StateBasedGame{
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException {
 		try {
-			player = Mob.generate(charname);
+			player = Mob.generate(MobConfiguration.getInstance(),charname);
 			generatePopulation(1); // level_difficulty
 			for(Block block: block_list)
 			{
