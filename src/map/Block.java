@@ -163,7 +163,5 @@ public class Block extends BasicGameState
 	public int getID() {
 		return state;
 	}
-	
-	
-	
+
 }

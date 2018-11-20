@@ -2,6 +2,7 @@ package main.java;
 
 import configuration.DoorsConfiguration;
 import configuration.NoSuchElementInConfigurationException;
+import map.Block;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.lwjgl.Sys;
@@ -55,7 +56,7 @@ public class Map {
             for (int i = 0; i < vertexNumber; i++) {
                 //doorNumber = random.nextInt(3) + 1;  //genera un numero di porte compreso tra 1 e 3
                 doorNumber = conf.getDoors(tiledMaps.get(i));
-                v = new Vertex(tiledMaps.get(i), false, doorNumber);  //crea un nuovo vertice e aggiungilo al grafico e alla lista dei vertici
+                v = new Vertex(i, tiledMaps.get(i), false, doorNumber);  //crea un nuovo vertice e aggiungilo al grafico e alla lista dei vertici
                 listVertex.add(v);
                 graph.addVertex(v);
                 totalDoor += doorNumber;
@@ -101,6 +102,15 @@ public class Map {
 
     public Set<DefaultEdge> getEdges(DefaultUndirectedGraph graph,Vertex v){  //ritorna tutti gli archi del vertice v appartenenti al grafo graph
         return graph.edgesOf(v);
+    }
+
+    public List<Block> generateBlock(){
+        Set<Vertex> set = vertex();
+        List<Block> block = new ArrayList<>();
+        for (Vertex v: set){
+            block.add(new Block(v.getId(),v.getEl()));
+        }
+        return block;
     }
 
     public Set<Vertex> vertex(){

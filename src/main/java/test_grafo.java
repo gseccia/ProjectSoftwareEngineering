@@ -32,7 +32,5 @@ public class test_grafo {
             System.out.println(edge.toString());
         }
         System.out.println("E un grafo connesso ? "+GraphTests.isConnected(graph));
-
-
     }
 }
