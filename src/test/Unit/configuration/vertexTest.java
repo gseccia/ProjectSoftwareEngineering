@@ -1,7 +1,9 @@
 package Unit.configuration;
 
-import main.java.Vertex;
 import org.junit.Test;
+
+import map.Vertex;
+
 import static org.junit.Assert.assertEquals;
 
 public class vertexTest {

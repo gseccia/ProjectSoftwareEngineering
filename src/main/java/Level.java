@@ -3,7 +3,8 @@ package main.java;
 import configuration.NoSuchElementInConfigurationException;
 import elements.Mob;
 import elements.NullAnimationException;
-import map.Block;
+import map.MapGraph;
+
 import java.util.*;
 
 import org.newdawn.slick.GameContainer;
@@ -12,17 +13,13 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Level extends StateBasedGame{
 	private Mob player;
-	private Block current_block; //Only to TEST
 	private String charname;
 	private int level_difficulty;
 	
 	
-	private Set<Block> map; //DO substitution with graph
-	private java.util.Map<Block,Set<Mob>> population;
-	/*
-	private GraphTransitionManager map;
-	private Set<Mob> element_set;
-	*/
+	private List<Block> block_list;
+	private MapGraph map;
+	private Map<Block,Set<Mob>> population;
 	
 	/**
 	 * This class is the manager of a level
@@ -33,15 +30,16 @@ public class Level extends StateBasedGame{
 		
 		population = new HashMap<>();
 		
-		///ONLY TO TEST
-		map = new HashSet<>();
-		current_block = new Block(1,"Lab");
-		map.add(current_block);
-		//ONLY TEST END
+		map = new MapGraph();
+		try {
+			map.generateGraph(map.generateVertex());
+		} catch (NoSuchElementInConfigurationException e) {
+			e.printStackTrace();
+		}
+		block_list = map.generateBlock();
 		
 		this.charname = charname;
 		this.level_difficulty =level_difficulty;
-		//player.setLocation(0,0);
 	}
 	
 	
@@ -52,7 +50,7 @@ public class Level extends StateBasedGame{
 	 */
 	private void generatePopulation(int difficulty) throws SlickException
 	{
-		for(Block block: map)
+		for(Block block: block_list)
 		{
 			population.put(block, generateMob(difficulty));
 		}
@@ -86,10 +84,10 @@ public class Level extends StateBasedGame{
 	public void initStatesList(GameContainer arg0) throws SlickException {
 		try {
 			player = Mob.generate(charname);
-			generatePopulation(1);
-			for(Block block: map)
+			generatePopulation(1); // level_difficulty
+			for(Block block: block_list)
 			{
-				block.initBlock(player, population);
+				block.initBlock(player, population, map);
 				this.addState(block);
 			}
 

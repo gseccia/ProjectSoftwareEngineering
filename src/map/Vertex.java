@@ -1,4 +1,6 @@
-package main.java;
+package map;
+
+import main.java.Block;
 
 public class Vertex implements Comparable<Vertex>{
     private String el;
@@ -6,7 +8,7 @@ public class Vertex implements Comparable<Vertex>{
     private int doorNumber;
     private int numeroPorteRimanenti;
     private final int id;
-    private int sequentialNumber = 0;
+    private Block block;
 
     public Vertex(int id, String el, boolean token, int doorNumber) {
         this.id = id;
@@ -46,11 +48,6 @@ public class Vertex implements Comparable<Vertex>{
         return id;
     }
 
-    public void setSequentialNumber(int sequentialNumber) {
-
-        this.sequentialNumber = sequentialNumber;
-    }
-
     public void setToken(boolean token) {
 
         this.token = token;
@@ -64,6 +61,14 @@ public class Vertex implements Comparable<Vertex>{
     public void setDoorNumber(int doorNumber) {
 
         this.doorNumber = doorNumber;
+    }
+    
+    public void setBlock(Block block) {
+    	this.block= block;
+    }
+    
+    public Block getBlock() {
+    	return block;
     }
 
     @Override

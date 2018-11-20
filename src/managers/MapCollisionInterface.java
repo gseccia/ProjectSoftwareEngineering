@@ -19,7 +19,7 @@ public interface MapCollisionInterface extends Directions{
      * @param shiftX the x shift of the map
      * @param shiftY the y shift of the map
      * @param player the player object that collides
-     * @return true if collide, false otherwise
+     * @return port identifier if collide, -1 otherwise
      */
-    boolean doorCollision(int shiftX, int shiftY, Mob player);
+    int doorCollision(int shiftX, int shiftY, Mob player);
 }

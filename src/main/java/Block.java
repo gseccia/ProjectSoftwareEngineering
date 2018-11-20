@@ -1,4 +1,4 @@
-package map;
+package main.java;
 
 import java.util.Map;
 import java.util.Random;
@@ -6,6 +6,11 @@ import java.util.Set;
 
 import managers.Directions;
 import managers.MapCollisionManager;
+import map.Edge;
+import map.MapGraph;
+import map.Vertex;
+
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -26,6 +31,8 @@ public class Block extends BasicGameState
 	private int map_x, map_y, prev_map_x, prev_map_y;
 	private MapCollisionManager mapCollision;
 	private String mapName;
+	private MapGraph graph;
+	private Vertex vertex;
 	
 	public Block(int state,String mapName)
 	{
@@ -39,9 +46,11 @@ public class Block extends BasicGameState
 	 * @param population map that contains information about enemies in the blocks
 	 * @throws SlickException if the map is not loaded correctly
 	 */
-	public void initBlock(Mob player,Map<Block,Set<Mob>> population) throws SlickException
+	public void initBlock(Mob player,Map<Block,Set<Mob>> population,MapGraph graph) throws SlickException
 	{
 		map = new TiledMap("resource/maps/Complete"+mapName+"/"+mapName+".tmx");
+		this.vertex = graph.getVertex(this);
+		this.graph=graph;
 		mapCollision = new MapCollisionManager(map);
 		enemy = population.get(this);
 		this.player = player; 
@@ -92,6 +101,11 @@ public class Block extends BasicGameState
 		{
 			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getWidth());
 		}
+		for(Rectangle b: mapCollision.getDoors()) {
+			g.setColor(Color.blue);
+			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getWidth());
+		}
+		g.setColor(Color.white);
 		//TESTING ZONE
 		for(Mob e : enemy)
 		{
@@ -101,12 +115,20 @@ public class Block extends BasicGameState
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame arg1, int delta) {
+	public void update(GameContainer gc, StateBasedGame gs, int delta) {
 		try {
+			int door = mapCollision.doorCollision(map_x, map_y, player);
 			if(gc.getInput().isKeyDown(Directions.RIGHT)){
 				player.faceRight();
 				if(mapCollision.wallCollision(map_x, map_y, player, Directions.RIGHT)){
 					map_x += 1;
+				}
+				if(door != -1) {
+					for(Edge e:graph.getEdges(this)) {
+						if(e.getPortSource(vertex)==door) {
+							gs.enterState(e.opposite(vertex).getId());
+						}
+					}
 				}
 			}
 			else if(gc.getInput().isKeyDown(Directions.LEFT)){
@@ -114,17 +136,38 @@ public class Block extends BasicGameState
 				if(mapCollision.wallCollision(map_x, map_y, player, Directions.LEFT)){
 					map_x -= 1;
 				}
+				if(door != -1) {
+					for(Edge e:graph.getEdges(this)) {
+						if(e.getPortSource(vertex)==door) {
+							gs.enterState(e.opposite(vertex).getId());
+						}
+					}
+				}
 			}
 			else if(gc.getInput().isKeyDown(Directions.DOWN)){
 				player.faceDown();
 				if(mapCollision.wallCollision(map_x, map_y, player, Directions.DOWN)){
 					map_y += 1;
 				}
+				if(door != -1) {
+					for(Edge e:graph.getEdges(this)) {
+						if(e.getPortSource(vertex)==door) {
+							gs.enterState(e.opposite(vertex).getId());
+						}
+					}
+				}
 			}
 			else if(gc.getInput().isKeyDown(Directions.UP)){
 				player.faceUp();
 				if(mapCollision.wallCollision(map_x, map_y, player, Directions.UP)){
 					map_y -= 1;
+				}
+				if(door != -1) {
+					for(Edge e:graph.getEdges(this)) {
+						if(e.getPortSource(vertex)==door) {
+							gs.enterState(e.opposite(vertex).getId());
+						}
+					}
 				}
 			}
 			else{

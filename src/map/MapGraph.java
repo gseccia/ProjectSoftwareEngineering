@@ -1,20 +1,20 @@
-package main.java;
+package map;
 
 import configuration.DoorsConfiguration;
 import configuration.NoSuchElementInConfigurationException;
-import map.Block;
+import main.java.Block;
+
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.lwjgl.Sys;
 
 import java.util.*;
 
-public class Map {
-    private DefaultUndirectedGraph<Vertex, DefaultEdge> graph;
+public class MapGraph {
+    private DefaultUndirectedGraph<Vertex, Edge> graph;
 
-    public Map(DefaultUndirectedGraph<Vertex, DefaultEdge> graph){
-
-        this.graph = graph;
+    public MapGraph(){
+        this.graph = new DefaultUndirectedGraph<Vertex, Edge>(Edge.class);
     }
 
     private List<String> mapSubSet(){   //metodo che genera un sottoinsieme di mappe tra tutte quelle disponibili
@@ -36,7 +36,7 @@ public class Map {
         return listTiledMaps;
     }
 
-    public List<Vertex> generateVertex(DefaultUndirectedGraph graph) throws NoSuchElementInConfigurationException {  //metodo che genera un numero di archi tali da rispettare i constrain detti in classe e li aggiunge al grafo
+    public List<Vertex> generateVertex() throws NoSuchElementInConfigurationException {  //metodo che genera un numero di archi tali da rispettare i constrain detti in classe e li aggiunge al grafo
         boolean condition = false;
         int min = 2;
         int max;
@@ -71,7 +71,7 @@ public class Map {
             return listVertex;
         }
 
-    public void generateGraph(DefaultUndirectedGraph graph, List listVertex){          //metodo che genera casualmente un grafo connesso
+    public void generateGraph(List listVertex){          //metodo che genera casualmente un grafo connesso
         listVertex.sort(null);
         int i = 0;
         int j;
@@ -87,7 +87,8 @@ public class Map {
             while (vi.getNumeroPorteRimanenti() > 0 && i < listVertex.size()-1 && j < listVertex.size()){
                 vj = (Vertex) listVertex.get(j);
                 if (vj.getNumeroPorteRimanenti() > 0 ){
-                    graph.addEdge(vi,vj);
+                	graph.addEdge(vi, vj, new Edge(vi.getNumeroPorteRimanenti()-1,vj.getNumeroPorteRimanenti()-1));
+                    //graph.addEdge(vi,vj);
                     vi.setNumeroPorteRimanenti(vi.getNumeroPorteRimanenti()-1);
                     vj.setNumeroPorteRimanenti(vj.getNumeroPorteRimanenti()-1);
                     totalDoor -= 2;
@@ -99,22 +100,34 @@ public class Map {
                 j = i;
         }
     }
+    
+    public Vertex getVertex(Block b) {
+    	Vertex found_v=null;
+    	for(Vertex v:vertex()) {
+    		if(v.getId()==b.getID()) {
+    			found_v=v;
+    			break;
+    		}
+    	}
+    	return found_v;
+    }
 
-    public Set<DefaultEdge> getEdges(DefaultUndirectedGraph graph,Vertex v){  //ritorna tutti gli archi del vertice v appartenenti al grafo graph
-        return graph.edgesOf(v);
+    public Set<Edge> getEdges(Block b){  //ritorna tutti gli archi del vertice v appartenenti al grafo graph
+        return graph.edgesOf(getVertex(b));
     }
 
     public List<Block> generateBlock(){
-        Set<Vertex> set = vertex();
         List<Block> block = new ArrayList<>();
-        for (Vertex v: set){
-            block.add(new Block(v.getId(),v.getEl()));
+        Block tmp;
+        for (Vertex v: vertex()){
+        	tmp = new Block(v.getId(),v.getEl());
+            block.add(tmp);
+            v.setBlock(tmp);
         }
         return block;
     }
 
     public Set<Vertex> vertex(){
-
         return graph.vertexSet();
     }
 }
