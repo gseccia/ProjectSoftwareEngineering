@@ -17,7 +17,7 @@ public class Map {
         this.graph = graph;
     }
 
-    public List<String> mapSubSet(){   //metodo che genera un sottoinsieme di mappe tra tutte quelle disponibili
+    private List<String> mapSubSet(){   //metodo che genera un sottoinsieme di mappe tra tutte quelle disponibili
        DoorsConfiguration conf = new DoorsConfiguration();
        Set<String> mapNames = conf.getMapNames();
        String[] tiledMaps = mapNames.toArray(new String[0]);
