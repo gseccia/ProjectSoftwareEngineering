@@ -1,6 +1,7 @@
 package main.java;
 
 
+import configuration.NoSuchElementInConfigurationException;
 import org.jgrapht.GraphTests;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
@@ -12,7 +13,7 @@ import java.util.Set;
 
 
 public class test_grafo {
-    public static void main(String args[]) {
+    public static void main(String args[]) throws NoSuchElementInConfigurationException {
         DefaultUndirectedGraph<Vertex, DefaultEdge> graph = new DefaultUndirectedGraph<>(DefaultEdge.class);
         Map map = new Map (graph);
         Set<String> subSet= new LinkedHashSet<>();
