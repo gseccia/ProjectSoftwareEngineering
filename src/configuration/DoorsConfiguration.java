@@ -2,7 +2,7 @@ package configuration;
 
 import com.google.gson.JsonObject;
 
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
@@ -50,12 +50,12 @@ public class DoorsConfiguration extends Configuration {
      * @return the map name
      */
     public String getRandomGivenDoors(int doors){
-        HashMap<Integer, String> tmp = new HashMap<>();
+        LinkedList<String> tmp = new LinkedList<>();
         int index = 0;
         try{
             for(String name : getMapNames()){
                 if(getDoors(name) == doors){
-                    tmp.put(index, name);
+                    tmp.add(name);
                     index++;
                 }
             }
