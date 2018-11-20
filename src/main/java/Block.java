@@ -63,12 +63,7 @@ public class Block extends BasicGameState
 		x = Integer.parseInt(map.getMapProperty("charXDoor1","0"));
 		y = Integer.parseInt(map.getMapProperty("charYDoor1","0"));
 		
-		map_x = x;
-		map_y = y;
-		
-		// Player spawns in front of Door1
-		player.setPosition(144, 64); //WARNING --> subtract shifting
-		
+		System.out.println("INIT");		
 		// Enemies spawn from a set of a random spawn points
 		for(Mob e : enemy)
 		{
@@ -84,10 +79,14 @@ public class Block extends BasicGameState
 			e.setPosition(160,80);
 		}
 		
-		
+		player.setPosition(160,80);
 		// Shift of the map
 		map_x = (int)player.getX()/map.getTileWidth();
 		map_y = (int)player.getY()/map.getTileHeight();
+		
+		// Player spawns in front of Door1
+		//player.setPosition((x-map_x+1)*map.getTileWidth(),(y-map_y+1)*map.getTileHeight());
+		
 		prev_map_x = map_x;
 		prev_map_y = map_y;
 	 }
@@ -117,64 +116,51 @@ public class Block extends BasicGameState
 	@Override
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
 		try {
-			int door = mapCollision.doorCollision(map_x, map_y, player);
+			boolean pressed =false;
 			if(gc.getInput().isKeyDown(Directions.RIGHT)){
 				player.faceRight();
 				if(mapCollision.wallCollision(map_x, map_y, player, Directions.RIGHT)){
 					map_x += 1;
-				}
-				if(door != -1) {
-					for(Edge e:graph.getEdges(this)) {
-						if(e.getPortSource(vertex)==door) {
-							gs.enterState(e.opposite(vertex).getId());
-						}
-					}
+					pressed =true;
 				}
 			}
 			else if(gc.getInput().isKeyDown(Directions.LEFT)){
 				player.faceLeft();
 				if(mapCollision.wallCollision(map_x, map_y, player, Directions.LEFT)){
 					map_x -= 1;
-				}
-				if(door != -1) {
-					for(Edge e:graph.getEdges(this)) {
-						if(e.getPortSource(vertex)==door) {
-							gs.enterState(e.opposite(vertex).getId());
-						}
-					}
+					pressed =true;
 				}
 			}
 			else if(gc.getInput().isKeyDown(Directions.DOWN)){
 				player.faceDown();
 				if(mapCollision.wallCollision(map_x, map_y, player, Directions.DOWN)){
 					map_y += 1;
-				}
-				if(door != -1) {
-					for(Edge e:graph.getEdges(this)) {
-						if(e.getPortSource(vertex)==door) {
-							gs.enterState(e.opposite(vertex).getId());
-						}
-					}
+					pressed =true;
 				}
 			}
 			else if(gc.getInput().isKeyDown(Directions.UP)){
 				player.faceUp();
 				if(mapCollision.wallCollision(map_x, map_y, player, Directions.UP)){
 					map_y -= 1;
+					pressed =true;
 				}
-				if(door != -1) {
-					for(Edge e:graph.getEdges(this)) {
-						if(e.getPortSource(vertex)==door) {
-							gs.enterState(e.opposite(vertex).getId());
-						}
-					}
-				}
+				
 			}
 			else{
 				player.faceStill();
 			}
-//			map_x = (int)player.getX()/map.getTileWidth();
-//			map_y = (int)player.getY()/map.getTileHeight();
+			int door = mapCollision.doorCollision(map_x, map_y, player);
+			if(door != -1 && pressed) {
+				System.out.println("COLLIDE with port "+door);
+				for(Edge e:graph.getEdges(this)) {
+					System.out.println("SOURCE  "+e.getPortSource(vertex));
+					if(e.getPortSource(vertex)==door) {
+						System.out.println("COLLIDE with port "+door+" to "+e.getPortDestination(vertex));
+						e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));
+						gs.enterState(e.opposite(vertex).getId());
+					}
+				}
+			}
 
 		} catch (NullAnimationException e1) {
 			e1.printStackTrace();
@@ -205,6 +191,19 @@ public class Block extends BasicGameState
 	@Override
 	public int getID() {
 		return state;
+	}
+	
+	public void setCharacterSpawn(int d) {
+		int x,y;
+		x = Integer.parseInt(map.getMapProperty("charXDoor"+d,"0"));
+		y = Integer.parseInt(map.getMapProperty("charYDoor"+d,"0"));
+		player.setPosition(160,80);
+		map_x = (int)player.getX()/map.getTileWidth();
+		map_y = (int)player.getY()/map.getTileHeight();
+		/*map_x = x -15;
+		map_y = y -15;
+		player.setPosition((x-map_x)*map.getTileWidth(),(y-map_y+2)*map.getTileHeight());*/
+		
 	}
 
 }
