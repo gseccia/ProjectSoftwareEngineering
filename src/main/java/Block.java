@@ -96,6 +96,7 @@ public class Block extends BasicGameState
 		g.scale(1.5f, 1.5f);
 		map.render(0,0, map_x,map_y,map_x+50,map_y+50);
 		//TESTING ZONE
+		/*
 		for(Rectangle b: mapCollision.getCollidingBlocks())
 		{
 			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getWidth());
@@ -105,6 +106,7 @@ public class Block extends BasicGameState
 			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getWidth());
 		}
 		g.setColor(Color.white);
+		*/
 		//TESTING ZONE
 		for(Mob e : enemy)
 		{
