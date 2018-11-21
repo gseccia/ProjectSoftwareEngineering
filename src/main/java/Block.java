@@ -59,13 +59,12 @@ public class Block extends BasicGameState
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
-		int x,y;
 		setCharacterSpawn(1);
+//		int x, y;
 //		x = Integer.parseInt(map.getMapProperty("charXDoor1","0"));
 //		y = Integer.parseInt(map.getMapProperty("charYDoor1","0"));
-		Random rand = new Random();
+//		Random rand = new Random();
 
-		System.out.println("INIT");		
 		// Enemies spawn from a set of a random spawn points
 		for(Mob e : enemy)
 		{
@@ -80,14 +79,6 @@ public class Block extends BasicGameState
 //			e.setPosition(x*map.getTileWidth()-map_x*map.getTileWidth()/2, y*map.getTileHeight()-map_y*map.getTileHeight()/2);
 			e.setPosition((int)player.getX(), (int)player.getY());
 		}
-
-
-		// Shift of the map
-		//map_x = (int)player.getX()/map.getTileWidth();
-		//map_y = (int)player.getY()/map.getTileHeight();
-		
-		// Player spawns in front of Door1
-		//player.setPosition((x-map_x+1)*map.getTileWidth(),(y-map_y+1)*map.getTileHeight());
 		
 		prev_map_x = map_x;
 		prev_map_y = map_y;
@@ -97,7 +88,7 @@ public class Block extends BasicGameState
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) {
 		g.scale(1.5f, 1.5f);
 		map.render(0,0, map_x,map_y,map_x+50,map_y+50);
-		//TESTING ZONE
+		//TESTING ZONE BEGIN
 		/*
 		for(Rectangle b: mapCollision.getCollidingBlocks())
 		{
@@ -108,8 +99,8 @@ public class Block extends BasicGameState
 			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getHeight());
 		}
 		g.setColor(Color.white);
+		//TESTING ZONE END
 
-		//TESTING ZONE
 		for(Mob e : enemy)
 		{
 			e.draw();
@@ -155,11 +146,8 @@ public class Block extends BasicGameState
 			}
 			int door = mapCollision.doorCollision(map_x, map_y, player);
 			if(door != -1 && pressed) {
-				System.out.println("COLLIDE with port "+door);
 				for(Edge e:graph.getEdges(this)) {
-					System.out.println("SOURCE  "+e.getPortSource(vertex));
 					if(e.getPortSource(vertex)==door) {
-						System.out.println("COLLIDE with port "+door+" to "+e.getPortDestination(vertex));
 						e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));
 						gs.enterState(e.opposite(vertex).getId());
 					}
