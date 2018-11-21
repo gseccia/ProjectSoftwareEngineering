@@ -2,7 +2,7 @@ package Unit.src.map;
 
 import org.junit.Test;
 
-public class graphTest {
+public class MapGraphTest {
     /*
     @Test
     public void testMapSubSet(){

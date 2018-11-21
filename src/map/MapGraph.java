@@ -89,7 +89,6 @@ public class MapGraph {
                 vj = (Vertex) listVertex.get(j);
                 if (vj.getNumeroPorteRimanenti() > 0 ){
                 	graph.addEdge(vi, vj, new Edge(vi.getNumeroPorteRimanenti()-1,vj.getNumeroPorteRimanenti()-1));
-                    //graph.addEdge(vi,vj);
                     vi.setNumeroPorteRimanenti(vi.getNumeroPorteRimanenti()-1);
                     vj.setNumeroPorteRimanenti(vj.getNumeroPorteRimanenti()-1);
                     totalDoor -= 2;
