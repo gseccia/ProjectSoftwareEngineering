@@ -36,14 +36,16 @@ public class MapCollisionManager implements MapCollisionInterface {
 			}
 		}
 		
-		int n=1;
+		int n=1,w,h;
 		i=0;
 		while(i!=-1) {
 			i = Integer.parseInt(map.getMapProperty("charXDoor"+n, "-1"));
 			j = Integer.parseInt(map.getMapProperty("charYDoor"+n, "-1"));
+			w = Integer.parseInt(map.getMapProperty("charWidthDoor"+n, "1"));
+			h = Integer.parseInt(map.getMapProperty("charHeightDoor"+n, "1"));
 			n++;
 			if(i!=-1) {
-				doors.add(new Rectangle(i*map.getTileWidth(), j*map.getTileHeight(),map.getTileWidth(), map.getTileHeight()));
+				doors.add(new Rectangle(i*map.getTileWidth(), j*map.getTileHeight(),w*map.getTileWidth(), h*map.getTileHeight()));
 			}
 		}
 			
