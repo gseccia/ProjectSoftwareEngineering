@@ -4,44 +4,43 @@ import configuration.DoorsConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import main.java.Block;
 
-import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.GraphTests;
 import org.jgrapht.graph.DefaultUndirectedGraph;
-import org.lwjgl.Sys;
 
 import java.util.*;
 
 public class MapGraph {
     private DefaultUndirectedGraph<Vertex, Edge> graph;
+    private DoorsConfiguration conf;
+    private int mapChosen;
 
-    public MapGraph(){
+    public MapGraph(int mapChosen, DoorsConfiguration conf){
+
+        this.mapChosen = mapChosen;
+        this.conf = conf;
         this.graph = new DefaultUndirectedGraph<Vertex, Edge>(Edge.class);
     }
 
     private List<String> mapSubSet(){   //metodo che genera un sottoinsieme di mappe tra tutte quelle disponibili
-       DoorsConfiguration conf = new DoorsConfiguration();
        Set<String> mapNames = conf.getMapNames();
        String[] tiledMaps = mapNames.toArray(new String[0]);
        int i=0;
        Random random = new Random();
-       int numeroCasuale = random.nextInt(tiledMaps.length)+2; // seleziona un sottoinsieme casuale di tiledMaps contenente almeno 2 elemento
-       List<String> listTiledMaps = new ArrayList<>();
-        while (i < numeroCasuale && listTiledMaps.size() != tiledMaps.length) {
+       int numeroCasuale = random.nextInt(mapChosen-4)+4; // seleziona un sottoinsieme casuale di tiledMaps contenente almeno 2 elemento
+        List<String> listTiledMaps = new ArrayList<>();
+       while (i < numeroCasuale) {
             int rand = random.nextInt(tiledMaps.length); // seleziona un elemento casuale tra tutte le tiledMaps
-            while (listTiledMaps.contains(tiledMaps[rand])) {
-                rand = random.nextInt(tiledMaps.length);  //se l'elemento esiste già genera un altro numero casuale fin quando non si inserisce correttamente l'elemento
-            }
             listTiledMaps.add(tiledMaps[rand]);
             i++;
-        }
-        return listTiledMaps;
+       }
+       return listTiledMaps;
     }
 
-    public List<Vertex> generateVertex() throws NoSuchElementInConfigurationException {  //metodo che genera un numero di archi tali da rispettare i constrain detti in classe e li aggiunge al grafo
+    private List<Vertex> generateVertex() throws NoSuchElementInConfigurationException {  //metodo che genera un numero di archi tali da rispettare i constrain detti in classe e li aggiunge al grafo
         boolean condition = false;
-        int min = 2;
-        int max;
         int doorNumber;             //numero di porta per ogni tiledMap
-        int totalDoor;             //numero totale di porte
+        int totalDoor; //numero totale di porte
+        int max, min;
         Vertex v;
         DoorsConfiguration conf = new DoorsConfiguration();
         List<Vertex> listVertex= new ArrayList<>();
@@ -52,7 +51,8 @@ public class MapGraph {
             totalDoor=0;    //reset ogni ciclo del numero totale di porte
             tiledMaps = mapSubSet();  //genera una sottoinsieme casuale di tiledMaps
             max = tiledMaps.size()-1;
-            vertexNumber = random.nextInt(max)+min;  //genera un numero di vertici compreso tra min e max
+            min = tiledMaps.size()-4;
+            vertexNumber = random.nextInt((max-min+1))+min;  //genera un numero di vertici compreso tra min e max
             for (int i = 0; i < vertexNumber; i++) {
                 //doorNumber = random.nextInt(3) + 1;  //genera un numero di porte compreso tra 1 e 3
                 doorNumber = conf.getDoors(tiledMaps.get(i));
@@ -71,7 +71,8 @@ public class MapGraph {
             return listVertex;
         }
 
-    public void generateGraph(List listVertex){          //metodo che genera casualmente un grafo connesso
+    public void generateGraph() throws NoSuchElementInConfigurationException {          //metodo che genera casualmente un grafo connesso
+        List listVertex = generateVertex();
         listVertex.sort(null);
         int i = 0;
         int j;
