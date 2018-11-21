@@ -60,9 +60,11 @@ public class Block extends BasicGameState
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		int x,y;
-		x = Integer.parseInt(map.getMapProperty("charXDoor1","0"));
-		y = Integer.parseInt(map.getMapProperty("charYDoor1","0"));
-		
+		setCharacterSpawn(1);
+//		x = Integer.parseInt(map.getMapProperty("charXDoor1","0"));
+//		y = Integer.parseInt(map.getMapProperty("charYDoor1","0"));
+		Random rand = new Random();
+
 		System.out.println("INIT");		
 		// Enemies spawn from a set of a random spawn points
 		for(Mob e : enemy)
@@ -75,12 +77,11 @@ public class Block extends BasicGameState
 //				x = Integer.parseInt(map.getMapProperty("spawnX3","0"));
 //				y = Integer.parseInt(map.getMapProperty("spawnY3","0"));
 //			}
-//			e.setPosition(x*map.getTileWidth() -map_x*map.getTileWidth()/2, y*map.getTileHeight()-map_y*map.getTileWidth()/2);
-			e.setPosition(160,80);
+//			e.setPosition(x*map.getTileWidth()-map_x*map.getTileWidth()/2, y*map.getTileHeight()-map_y*map.getTileHeight()/2);
+			e.setPosition((int)player.getX(), (int)player.getY());
 		}
-		
-		//player.setPosition(160,80);
-		setCharacterSpawn(1);
+
+
 		// Shift of the map
 		//map_x = (int)player.getX()/map.getTileWidth();
 		//map_y = (int)player.getY()/map.getTileHeight();
