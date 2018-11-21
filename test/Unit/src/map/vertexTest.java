@@ -1,4 +1,4 @@
-package Unit.src.configuration;
+package Unit.src.map;
 
 import map.Vertex;
 import org.junit.Test;
