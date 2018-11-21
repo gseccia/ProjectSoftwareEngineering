@@ -132,7 +132,7 @@ public class MapCollisionManager implements MapCollisionInterface {
 		for(int i=0;i<doors.size();i++) {
 			if(doors.get(i).intersects(player)) {
 				player.setLocation(px, py);
-				return i;
+				return i+1;
 			}
 		}
 		player.setLocation(px, py);

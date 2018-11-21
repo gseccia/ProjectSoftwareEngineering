@@ -79,10 +79,11 @@ public class Block extends BasicGameState
 			e.setPosition(160,80);
 		}
 		
-		player.setPosition(160,80);
+		//player.setPosition(160,80);
+		setCharacterSpawn(1);
 		// Shift of the map
-		map_x = (int)player.getX()/map.getTileWidth();
-		map_y = (int)player.getY()/map.getTileHeight();
+		//map_x = (int)player.getX()/map.getTileWidth();
+		//map_y = (int)player.getY()/map.getTileHeight();
 		
 		// Player spawns in front of Door1
 		//player.setPosition((x-map_x+1)*map.getTileWidth(),(y-map_y+1)*map.getTileHeight());
@@ -100,13 +101,13 @@ public class Block extends BasicGameState
 		for(Rectangle b: mapCollision.getCollidingBlocks())
 		{
 			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getWidth());
-		}
+		}*/
 		for(Rectangle b: mapCollision.getDoors()) {
 			g.setColor(Color.blue);
-			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getWidth());
+			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getHeight());
 		}
 		g.setColor(Color.white);
-		*/
+
 		//TESTING ZONE
 		for(Mob e : enemy)
 		{
@@ -196,15 +197,30 @@ public class Block extends BasicGameState
 	}
 	
 	public void setCharacterSpawn(int d) {
-		int x,y;
+		int x,y,width,height;
 		x = Integer.parseInt(map.getMapProperty("charXDoor"+d,"0"));
 		y = Integer.parseInt(map.getMapProperty("charYDoor"+d,"0"));
-		player.setPosition(160,80);
-		map_x = (int)player.getX()/map.getTileWidth();
-		map_y = (int)player.getY()/map.getTileHeight();
-		/*map_x = x -15;
-		map_y = y -15;
-		player.setPosition((x-map_x)*map.getTileWidth(),(y-map_y+2)*map.getTileHeight());*/
+		width = Integer.parseInt(map.getMapProperty("charWidthDoor"+d,"0"));
+		height = Integer.parseInt(map.getMapProperty("charHeightDoor"+d,"0"));
+		player.setPosition(256,208);
+		map_x = x - (int)player.getX()/map.getTileWidth();
+		map_y = y - (int)player.getY()/map.getTileHeight();
+		if(width > height){
+			if(y < map.getHeight()/2){
+				map_y += 2;
+			}
+			else{
+				map_y -= 2;
+			}
+		}
+		else{
+			if(x < map.getWidth()/2){
+				map_x += 2;
+			}
+			else{
+				map_x -= 2;
+			}
+		}
 		
 	}
 
