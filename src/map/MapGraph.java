@@ -15,7 +15,10 @@ public class MapGraph {
 
     public MapGraph(int mapChosen, DoorsConfiguration conf){
 
-        this.mapChosen = mapChosen;
+        if (mapChosen <= 4)
+            this.mapChosen = 4;
+        else
+            this.mapChosen = mapChosen;
         this.conf = conf;
         this.graph = new DefaultUndirectedGraph<>(Edge.class);
     }
@@ -25,7 +28,7 @@ public class MapGraph {
        String[] tiledMaps = mapNames.toArray(new String[0]);
        int i=0;
        Random random = new Random();
-       int numeroCasuale = random.nextInt(mapChosen-4)+4; // seleziona un sottoinsieme casuale di tiledMaps contenente almeno 2 elemento
+       int numeroCasuale = random.nextInt(5)+mapChosen-2; // seleziona un sottoinsieme casuale di tiledMaps contenente almeno 2 elemento
         List<String> listTiledMaps = new ArrayList<>();
        while (i < numeroCasuale) {
             int rand = random.nextInt(tiledMaps.length); // seleziona un elemento casuale tra tutte le tiledMaps
@@ -128,5 +131,9 @@ public class MapGraph {
 
     public Set<Vertex> vertex(){
         return graph.vertexSet();
+    }
+
+    public DefaultUndirectedGraph<Vertex, Edge> getGraph() {
+        return graph;
     }
 }
