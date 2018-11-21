@@ -6,6 +6,7 @@ import java.util.List;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
+import configuration.DoorsConfiguration;
 import elements.Mob;
 
 /**
@@ -16,10 +17,12 @@ import elements.Mob;
 public class MapCollisionManager implements MapCollisionInterface {
 	private TiledMap map;
 	private List<Wall> collidingBlocks;
+	private List<Rectangle> doors;
 	
 	public MapCollisionManager(TiledMap map) {
 		this.map = map;
 		collidingBlocks = new ArrayList<>();
+		doors = new ArrayList<>();
 		int mask = map.getLayerIndex("Mask");
 		int i, j;
 		int tileID;
@@ -32,6 +35,20 @@ public class MapCollisionManager implements MapCollisionInterface {
 				}
 			}
 		}
+		
+		int n=1,w,h;
+		i=0;
+		while(i!=-1) {
+			i = Integer.parseInt(map.getMapProperty("charXDoor"+n, "-1"));
+			j = Integer.parseInt(map.getMapProperty("charYDoor"+n, "-1"));
+			w = Integer.parseInt(map.getMapProperty("charWidthDoor"+n, "1"));
+			h = Integer.parseInt(map.getMapProperty("charHeightDoor"+n, "1"));
+			n++;
+			if(i!=-1) {
+				doors.add(new Rectangle(i*map.getTileWidth(), j*map.getTileHeight(),w*map.getTileWidth(), h*map.getTileHeight()));
+			}
+		}
+			
 	}
 
 	/**
@@ -101,13 +118,35 @@ public class MapCollisionManager implements MapCollisionInterface {
 	 * @return true if collide, false otherwise
 	 */
 	@Override
-	public boolean doorCollision(int shiftX, int shiftY, Mob player) {
-		//TO BE IMPLEMENTED
-		return false;
+	public int doorCollision(int shiftX, int shiftY, Mob player) {
+		float px =player.getX();
+		float py =player.getY();
+		
+		int pXPosition = (int)(player.getX());
+		int pYPosition = (int)(player.getY());
+		
+		pXPosition += shiftX*map.getTileWidth();
+		pYPosition += shiftY*map.getTileHeight();
+		
+		player.setLocation(pXPosition, pYPosition);
+		for(int i=0;i<doors.size();i++) {
+			if(doors.get(i).intersects(player)) {
+				player.setLocation(px, py);
+				return i;
+			}
+		}
+		player.setLocation(px, py);
+		
+		return -1;
 	}
 	
 	public List<Wall> getCollidingBlocks()
 	{
 		return collidingBlocks;
+	}
+	
+	public List<Rectangle> getDoors()
+	{
+		return doors;
 	}
 }

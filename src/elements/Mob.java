@@ -16,48 +16,13 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      */
     private int hp, maxHp, attackDamage;
     private HashMap<String, Animation> faces;
-    private static MobConfiguration configuration = MobConfiguration.getInstance();
-
-    /**
-     * JUST FOR TESTING! DON'T USE IT!
-     */
-    public static Mob mockGenerate(String id, int x, int y) throws NullAnimationException, NoSuchElementInConfigurationException {
-        return new Mob(
-                configuration.getHp(id),
-                configuration.getAttack(id),
-                new Animation(),
-                new Animation(),
-                new Animation(),
-                new Animation(),
-                new Animation(),
-                configuration.getWidth(id),
-                configuration.getHeight(id),
-                x, y);
-    }
-
-    /**
-     * JUST FOR TESTING! DON'T USE IT!
-     */
-    public static Mob mockGenerate(String id) throws NullAnimationException, NoSuchElementInConfigurationException {
-        return new Mob(
-                configuration.getHp(id),
-                configuration.getAttack(id),
-                new Animation(),
-                new Animation(),
-                new Animation(),
-                new Animation(),
-                new Animation(),
-                configuration.getWidth(id),
-                configuration.getHeight(id),
-                0, 0);
-    }
 
     /**
      * Probably it will be refactored
      * @param id the mob id
      * @return the mob
      */
-    public static Mob generate(String id, int x, int y) throws SlickException, NullAnimationException, NoSuchElementInConfigurationException {
+    public static Mob generate(MobConfiguration configuration, String id, int x, int y) throws SlickException, NullAnimationException, NoSuchElementInConfigurationException {
         return new Mob(
                 configuration.getHp(id),
                 configuration.getAttack(id),
@@ -77,7 +42,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * @param id the mob id
      * @return the mob
      */
-    public static Mob generate(String id) throws SlickException, NullAnimationException, NoSuchElementInConfigurationException {
+    public static Mob generate(MobConfiguration configuration, String id) throws SlickException, NullAnimationException, NoSuchElementInConfigurationException {
             return new Mob(
                     configuration.getHp(id),
                     configuration.getAttack(id),
