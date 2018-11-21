@@ -18,7 +18,7 @@ public class GameMain{
 		try {
 			 AppGameContainer app = new AppGameContainer(new Level("UNI:ZA","guntan",8));
 			 app.setDisplayMode(800, 700, false);
-			 app.setTargetFrameRate(29);
+			 app.setTargetFrameRate(19);
 		     app.start();
 		} catch (SlickException e) {
 			e.printStackTrace();

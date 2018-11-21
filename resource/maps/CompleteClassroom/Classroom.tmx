@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="50" height="35" tilewidth="16" tileheight="16" infinite="0" nextlayerid="40" nextobjectid="1">
  <properties>
-  <property name="charXDoor1" type="int" value="9"/>
-  <property name="charXDoor2" type="int" value="21"/>
-  <property name="charYDoor1" type="int" value="6"/>
-  <property name="charYDoor2" type="int" value="6"/>
+  <property name="charWidthDoor1" type="int" value="4"/>
+  <property name="charWidthDoor2" type="int" value="4"/>
+  <property name="charXDoor1" type="int" value="7"/>
+  <property name="charXDoor2" type="int" value="19"/>
+  <property name="charYDoor1" type="int" value="5"/>
+  <property name="charYDoor2" type="int" value="5"/>
   <property name="spawnX1" type="int" value="5"/>
   <property name="spawnX2" type="int" value="22"/>
   <property name="spawnY1" type="int" value="12"/>
@@ -16,6 +18,8 @@
  <tileset firstgid="9089" source="terrain_atlas.tsx"/>
  <tileset firstgid="13185" source="hotlinemiami-tileset.tsx"/>
  <tileset firstgid="15213" source="zombie_tileb.tsx"/>
+ <tileset firstgid="16237" source="../CompleteLibrary2/obj_misk_atlas.tsx"/>
+ <tileset firstgid="20333" source="../CompleteLibrary2/zombie_tileb.tsx"/>
  <layer id="32" name="Mask" width="50" height="35">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu3UQQqAIBBGYS/kLi/dKVsFMTCEONn4+x7MxsL4IK2tlCoy57H24Mg1uzhsb/v1vh/t8L4b3ej+Kg4v61g1HLmy91VP3n/+9ToOHNHr3r09cs5xxDnuZzhw4NA95zj+dXjh0HE8vzV73YYjVzhyhSNXag6FuQD0nnAtWBsAAA==
@@ -43,12 +47,12 @@
  </layer>
  <layer id="38" name="Dirt" width="50" height="35">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu2XSVLCQBiF3wV0o0sSvQAga9OGiyi5QAKy1Rs4cw+HvS4dFnoMhxVole5wepahKkKplXTTnaT6q/oqq8B79P8HACwWy188e8CLN3ktGnMCmBeT17Scs/sFvaRXBj8Hr45gk57RV5r2/ltmv6P39MFgj2Vm36CndJihhyxVF6i5ut9VPSE7RCXoYYIDgWaPms4hyzo7dFP0eOPev9OPWGR4HuYBh7ndhE2BIBD6nyWyiESHBeqzQ0txjz7PeTDl5/0qs6/E+nGXRcWzNcPXm9UwryLRw/+erULydSZrtBUbGO6hYw51oGsOVdFm1s5Y3tFZmO6RZib2mHV/LO/oLFTMlcx8qpgJVXNVtPm0/OSwAhzRY3pSMZ3mf37bmz6zD+gjfZpiD/4GRrcEe8P/JOiVaG/t931+qTpAjdbpkmM6TXZCZo9om3YK3EMnWw1gu5H9/pC7EOVgH67Z4Uaixw477OagRxn4BPEWRkNYGwAA
+   H4sIAAAAAAAACu2XS07CUBiFzwZ04mNEqxsAZc61LKFdgNINtCDbUFDZh49F+BjoMnyMQBOVmY9jLKGSqCn39t626Zd86ajNObn/3wJQUlLyF88u8OJOr6907JpOlZwlD1j2ptcVuuolf855A7igl/SqoT6nLm6Z/Y7e04cc95ClagM123QKeQJ2CAvQwwRHAs0BNZ1Dll126Cbo8ca9f6cfkRDpZUsTi7ntmE0B36emcyVFxDqsUYcdWop7DHnOo5Tf99vMvhXpRF3WFc/WAp+3qGFeRayH8z1bueTrTHZoK9I33EPHHOpA1xyqos2snZm8k7Mw3SPJTBww6+FM3slZqJgrmflUMROq5ipv81nyk+MKcEJP6VnFdJr/+W1vhsw+oo/0KcUe/A2MbgH2hv9JMCjQ3pbf++xStYAa3aCbluk08xMwe0jbtJPjHjrZqwP79fnvD7gLYQb24ZodbiR69Nihn4EeReAT9juYW1gbAAA=
   </data>
  </layer>
  <layer id="39" name="Obstacle2" width="50" height="35">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu2UOw6CQBCG5x5AY4evRGs8gJ7CFnwkcg29iIIm3oBeL8JDE2sb/15BFxfHwHzJ10zY7PwZZokEodlsDaIdDGAI9/Bg8PWzdog2jvq5GD0nMIUZvMArY44AGcISOWyTqA07sAt7sG/q7+8d4xHRBJ6Q4Vwih4uePTiDc7iAS4YcLjJ4MEWGrEQOQeAgxq4kivtya9GUo16EbeE9s9TO/GMOFxk8yfHTum6OOfdUXdcN9zx8k6KVRVHRN5/APY8B3teh4i68gnseunJwzwP/FPk1mIcuuOehi7rMQ3J8V9fNPeeequuCIAiCIDzzAM/2h+xYGwAA
+   H4sIAAAAAAAACu2Uyw2CQBRFXx9AAfhLdI0F6MI+wE8ibWgbLhS0Bvbahgs+WoN340qFDIyO0XuSs3lhMnMSZkQI+W+2lsgORjCGe3iwzJ1n5YmsPfV1Kc6cwRwW8AKvBjsiNMQ1OlxbpAXbsAO7sGfrP18Vo6HIGB7RcKrR4ePMAZzCGZzDhYEOHw0BzNFQ1OggxAQp7kqmeF82EzPzMlwH75mjtuYbO3w0BOz46Fw37Gg2vxPakiwdScq/qsZ0Rx/v60DxLujYnx3PwT8l4Q906IIdzea6YUezuW7OL/Z595wQQgghj9wAMXgtH1gbAAA=
   </data>
  </layer>
  <layer id="37" name="Obstacle1" width="50" height="35">
