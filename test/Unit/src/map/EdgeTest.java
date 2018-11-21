@@ -1,4 +1,4 @@
-package Unit.src.configuration;
+package Unit.src.map;
 
 import map.Edge;
 import map.Vertex;

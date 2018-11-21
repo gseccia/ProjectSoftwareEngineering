@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="45" height="31" tilewidth="16" tileheight="16" infinite="0" nextlayerid="33" nextobjectid="1">
  <properties>
-  <property name="charXDoor1" type="int" value="2"/>
-  <property name="charXDoor2" type="int" value="23"/>
-  <property name="charYDoor1" type="int" value="16"/>
-  <property name="charYDoor2" type="int" value="31"/>
+  <property name="charHeightDoor1" type="int" value="3"/>
+  <property name="charWidthDoor2" type="int" value="3"/>
+  <property name="charXDoor1" type="int" value="0"/>
+  <property name="charXDoor2" type="int" value="21"/>
+  <property name="charYDoor1" type="int" value="15"/>
+  <property name="charYDoor2" type="int" value="30"/>
   <property name="spawnX1" type="int" value="15"/>
   <property name="spawnX2" type="int" value="34"/>
   <property name="spawnX3" type="int" value="23"/>

@@ -1,5 +1,6 @@
 package main.java;
 
+import configuration.DoorsConfiguration;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import elements.Mob;
@@ -31,9 +32,9 @@ public class Level extends StateBasedGame{
 		
 		population = new HashMap<>();
 		
-		map = new MapGraph();
+		map = new MapGraph(level_difficulty, new DoorsConfiguration());
 		try {
-			map.generateGraph(map.generateVertex());
+			map.generateGraph();
 		} catch (NoSuchElementInConfigurationException e) {
 			e.printStackTrace();
 		}
