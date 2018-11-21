@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="31" nextobjectid="1">
+ <properties>
+  <property name="charWidthDoor1" type="int" value="2"/>
+  <property name="charWidthDoor2" type="int" value="0"/>
+  <property name="charXDoor1" type="int" value="19"/>
+  <property name="charXDoor2" type="int" value="19"/>
+  <property name="charYDoor1" type="int" value="5"/>
+  <property name="charYDoor2" type="int" value="38"/>
+  <property name="spawnX1" type="int" value="27"/>
+  <property name="spawnX2" type="int" value="24"/>
+  <property name="spawnY1" type="int" value="14"/>
+  <property name="spawnY2" type="int" value="31"/>
+ </properties>
+ <tileset firstgid="1" name="house_inside" tilewidth="16" tileheight="16" tilecount="896" columns="32">
+  <image source="house_inside.png" width="512" height="448"/>
+ </tileset>
+ <tileset firstgid="897" name="interior" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
+  <image source="interior.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="1921" name="base_out_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="base_out_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="6017" name="obj_misk_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="obj_misk_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="10113" name="terrain_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="terrain_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="14209" name="zombie_tileb" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
+  <image source="zombie_tileb.png" width="512" height="512"/>
+ </tileset>
+ <layer id="24" name="Mask" width="40" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3UMQrAMAxD0cw9Ue5/sk4dC46lGhW+QKPjt8T7WmtTSl/7pDtXTbqv608JPi1/9TlvAD58+GZ9jre+9HX24MOHb9ZX8Sb6lFl82iy+2n7Xv3f5EoJPCz4t+LRM+E7v6NRtdfqSewN1J85EABkAAA==
+  </data>
+ </layer>
+ <layer id="25" name="Base" width="40" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3WQQoDIQwFUHsFuxuP5inG67jssbxMCxImDdE6FJMsInyEcTGPRMUQfPw7Xg+bcZ/73Oc+99kMjByvpE/OI4Ry9JmmMPNuX409ifGtzLt9LfZwvlndpHwpfseaD++9POlvUfLB/sM26hh9l9x/NfL9pEbx/ffsaUZ9UDtwrvjwmkT9oMdt8f47BeuXUe24+mn74PxWdEYs+XBvaX9n94r0+cX9pTXS9P16r1jwrbyjtOs3ymhdo7/UsOvfd3yaBve5T9vhPvdZzB3fbOz0vQHGe7TIABkAAA==
+  </data>
+ </layer>
+ <layer id="26" name="Wall" width="40" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu2ZDQ6CMAyF539iQlBvpOA9vIqycS+QeS6fwQayMH+yzoy4l3wB2gbKW0NQ5FYIlQpRggLItDs+g8sP4ra8Qm8N0Ni/gSto0u64AvUP4ra8Rm8SLDZCLMEMzMG5xwUUQAIFSiP/qo7OOwHT3vnNuC1P/pnXqp4M9dHPm3W2e3kXt9WQf+b1anAd6GOoprHENLh9GLfVkH8cKlYtnCL/OMTd20Oc/vkQp38kWmcOP//RP06Rf3kixAFkSbt/TL6LYXvy0R+Xf7mn/rjmLwvcv0Pg/sX5c1Po8+drfbn887W+XP75Wl8u/3w9X+L8uSnOn5vi/LlpzPO3/+792YvG8vsjVKnA/dPRPydF/9wUny9uevi33vF9N6D/1bi+P6zQ2x2h9CtIABkAAA==
+  </data>
+ </layer>
+ <layer id="27" name="Door1" width="40" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3OLQqAQABE4THLruDF/LmYYNG+BxIsehwHLAaLsKLhfTB1eFIeTZBar/P6kOk0o8FNUynN3kjfY8ulb/1hXxWlzW27V8eva+6l4hwAAAAAAAAA4H0HOc0bKQAZAAA=
+  </data>
+ </layer>
+ <layer id="28" name="Door2" width="40" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3OsQkAIRBFQY22cM2uDBs1MLAA5VhhBh5ssvBLAf7QYnfyn5l9Z7LvAwAAAOBdo64y+mLVY983TGs6y+QAGQAA
+  </data>
+ </layer>
+ <layer id="29" name="Obstacle1" width="40" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3Wa0sUURzH8WOmq6YpKHSxVtS8rFoKBc221TMrg1Iw0PLyzNtqKRSUlb4Au1gvI7X0deQlfRmppT2yi0bfgx06rMnO5DnuBvODD7v/GWfnh+yfWSH8/C95ExRiApOYwlu8wzRmgvGvDyADmchyMXvNRzosYwWr+ITPWMO6i34VqEQIVS5mrwkVcR2qUYPTOINa1BXFv/4qrqEB113MXtNHhyj6MYC7uIdBDKEhzOciPyJEQWTn9T3olZ+DqIvZdProFsVZup37S79EJ41u6Wim260k7FdGt3Lcp9uDJOxXT7cryEVeONFtdqaLTt2oRV0S9lNppFuT1m8DX/EDm9jCT3zDd21W521F7ccghrR+R1KEOIpCnMBJBHEMx7VZnZfJKRbicLHZfmo/xvFK63eeezqI4CIu4TLCuKDN6rzMDbrdNNxP7ce4Qz+8draPt3DPVrShHR3oxG3c0WZ1XuYF3V4a7qf2Y5peM86f4w+55yM8wVOMYBTDeKzN6rzMPN0WDPdT+UC3RSw58f92t+SU8P0rMddJRu3HGr3W8eV3vyj/k34MpHjoZ3E/DiFb248xej3Dcw/9bO5HNWr22M/mfsTmX/rZ2I8A3TKQiSyt5wS9JjHl5ftnYT8q6FSJEKq0fu/pNYu5BO/Hblmm1wpWE7wfJmNjP0zG5vPDRGzshx8/fvz48aMif3IcQCoOaq/qWOws36chfZ/6yUe0fAyW4pT2qo7FzvJ9Gcr3qd9e8wvjGPKnABkAAA==
+  </data>
+ </layer>
+ <layer id="30" name="Dirt" width="40" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAUjCTBaMjAwWQ60K3ADRaDblAaZ+3ytGBj8rEjTMxHoh0l08kcu0G15JLpvI9Btm8hw32KgniVQfTcsGBiMLCH4tgXpZtESFALdFATFQpYMB34PMveBgAjUbQPtjlEw9IHIICsz0YHJIHdfyCB3X8kgcR8z0B0sg8Qt2IAy0G0qg9h9owA7OG/OwHDBfKBdgRu8B7rtwyB23yigDLQCy4w2CsoNWte/S4HmLyPBDnT/DLb6F90/o/XvKBgFo2AUUB8IAcsuYSAWtESwQXiw9BlhY0gwbAx132AZU4KNI8EwzI2DZUwJ5KZgSwT9A+iunwPgNkrbUAMBACffZUgAGQAA
+  </data>
+ </layer>
+</map>
