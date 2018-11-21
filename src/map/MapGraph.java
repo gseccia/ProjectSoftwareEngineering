@@ -4,7 +4,6 @@ import configuration.DoorsConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import main.java.Block;
 
-import org.jgrapht.GraphTests;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 
 import java.util.*;
@@ -18,7 +17,7 @@ public class MapGraph {
 
         this.mapChosen = mapChosen;
         this.conf = conf;
-        this.graph = new DefaultUndirectedGraph<Vertex, Edge>(Edge.class);
+        this.graph = new DefaultUndirectedGraph<>(Edge.class);
     }
 
     private List<String> mapSubSet(){   //metodo che genera un sottoinsieme di mappe tra tutte quelle disponibili
@@ -44,7 +43,7 @@ public class MapGraph {
         Vertex v;
         DoorsConfiguration conf = new DoorsConfiguration();
         List<Vertex> listVertex= new ArrayList<>();
-        List<String> tiledMaps = new ArrayList<>();
+        List<String> tiledMaps ;
         Random random = new Random();
         int vertexNumber;
         while (!condition){
