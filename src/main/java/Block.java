@@ -196,18 +196,18 @@ public class Block extends BasicGameState
 		map_y = y - (int)player.getY()/map.getTileHeight();
 		if(width > height){
 			if(y < map.getHeight()/2){
-				map_y += 2;
+				map_y += 1;
 			}
 			else{
-				map_y -= 2;
+				map_y -= 1;
 			}
 		}
 		else{
 			if(x < map.getWidth()/2){
-				map_x += 2;
+				map_x += 1;
 			}
 			else{
-				map_x -= 2;
+				map_x -= 1;
 			}
 		}
 		
