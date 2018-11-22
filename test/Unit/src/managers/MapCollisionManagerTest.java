@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import managers.Wall;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -99,9 +98,9 @@ public class MapCollisionManagerTest {
 
 	@Test
 	public void getDoorsTest() {
-		List<Wall> lista = new ArrayList<>();
-		lista.add(new Wall(160,160,16,16));
-		List<Wall> doors=mapcollision.getDoors();
+		List<Rectangle> lista = new ArrayList<>();
+		lista.add(new Rectangle(160,160,16,16));
+		List<Rectangle> doors=mapcollision.getDoors();
 		for(int i=0;i<lista.size();i++) {
 			assertEquals((int)doors.get(i).getX(),(int)lista.get(i).getX());
 			assertEquals((int)doors.get(i).getY(),(int)lista.get(i).getY());

@@ -17,7 +17,7 @@ import elements.Mob;
 public class MapCollisionManager implements MapCollisionInterface {
 	private TiledMap map;
 	private List<Wall> collidingBlocks;
-	private List<Wall> doors;
+	private List<Rectangle> doors;
 	
 	public MapCollisionManager(TiledMap map) {
 		this.map = map;
@@ -45,7 +45,7 @@ public class MapCollisionManager implements MapCollisionInterface {
 			h = Integer.parseInt(map.getMapProperty("charHeightDoor"+n, "1"));
 			n++;
 			if(i!=-1) {
-				doors.add(new Wall(i*map.getTileWidth(), j*map.getTileHeight(),w*map.getTileWidth(), h*map.getTileHeight()));
+				doors.add(new Rectangle(i*map.getTileWidth(), j*map.getTileHeight(),w*map.getTileWidth(), h*map.getTileHeight()));
 			}
 		}
 			
@@ -145,7 +145,7 @@ public class MapCollisionManager implements MapCollisionInterface {
 		return collidingBlocks;
 	}
 	
-	public List<Wall> getDoors()
+	public List<Rectangle> getDoors()
 	{
 		return doors;
 	}
