@@ -29,7 +29,7 @@
  <tileset firstgid="11477" source="../CompleteHallway/build_atlas.tsx"/>
  <layer id="70" name="Mask" width="65" height="55">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3VSQ6AIAxAUfT+h/CobiRxgaQDQ5HfpJvGlPISakrEeSyV15Oz58CAJDfLkfu3R8/IBpKaticGGIw28PbAwG7VcqaZ70ATGgNrfwww8BiMelMRDNiJfQ0stUgG3sAAg9LdpDUMbAbauaQ9vI4Y/MPAGxhgkM+y1DDA4D3jV08MxhpI/oe1HhhgIL1vqRbJwBsYYJDPstQwiGXATsSgRWCAQT7LUotkwD7AoPbtTgbekBpoe2KAwUoG2t3h7dtyNuvum50YYDDDIGJigIHW4AaMCXM03DcAAA==
+   H4sIAAAAAAAACu3USw6AIAxAQfT+h/CobjRxgaQfLEVek24aUspEWwqxb1PlceXoOTAgycUycv9+0TOzgaSm7YkBBtEG3h4Y2K16zhT1zXtDY/DXwCC3QdR/Fm3ATow3sNQyGXgDAwxqb5PWMLAZaOeS9vA6YoCB9L21GgYYPO/1zv8WGPTpobnLUsMglwH/AgatsysZeAMDDO67LDUMchmwEzHoERhgcN9lqWUyYB9g0Dq7koE3pAbanhhgMJOBdnd4+/aczbr7RicGGGCAAQY2gxMJhGMN3DcAAA==
   </data>
  </layer>
  <layer id="71" name="Door1" width="65" height="55">

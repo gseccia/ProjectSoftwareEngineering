@@ -34,7 +34,7 @@
  <tileset firstgid="15467" source="../CompleteLibrary2/interior.tsx"/>
  <layer id="26" name="Mask" width="55" height="36">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3YXQrDMAgA4Nxi9CiDbWfZlXejJQ+CBG1+iNVYBWFlsPjFxEGPR0qfZ/o6y2JKR7a987OnxDYD+xx9i76J2LT7dbe+wZ3Dn3fO2obTSuQ6yWxF2HTDs202atvvtbcNPDg92oplhc3KfrRs4OsJ6p5qGak66lkiZePmXe/c66ml7pc3G9e3mTOJ76i27exMjs4SizZcT9jo3xmxSQeuh5olV9ik9kHiTI7+v5Xv4RxK2FbOkhmbZN/uaBtdU9sG70a4OsJmz8atHTYZ26qoZ583W8u0q+2sFmnb1V7KxNksZu/etu6bl/wD0NlfFvAeAAA=
+   H4sIAAAAAAAACu3YXQ7CMAgA4N7C7Cgm6ll2ZW9k+0BCCKzUFfpLQqIPdf0GZYvHI4TPM5yTZTKFI9re8ftMiW0d3Oddt103E1vreq1WNzhz+PPISW04e4m4TzZzsW1tw8KWetZ844ZBbd/X2Dbw4JzRliw1bL2c0ZwNfJrgzmkrI7cPOkusbNK80869q4B3DlovyabpScnGrfWySXXDPam14TPa2nbVk3ifmpBswvVdbHg/M9hgLzVs3PnsZU5Ks0T7fLtjs7gPpT1Ze07iNdCHFjbNLLG0WfTvyrbSa7a2wX8j0j4sbCVrRrN51E269uq2O7PEI+jsq2mTnimetpzp355sbaNR00Z/j6719nImydZjau9t7rzNkj/nzoyo8B4AAA==
   </data>
  </layer>
  <layer id="27" name="Door1" width="55" height="36">
@@ -47,7 +47,7 @@
    H4sIAAAAAAAACu3DoQ0AAAgDsCn+/xaLhgsQbdIEALi6dgAAAAAA4J8BCffGLfAeAAA=
   </data>
  </layer>
- <layer id="29" name="Base" width="55" height="36">
+ <layer id="29" name="Base" width="55" height="36" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2UUQqAMAxDiz87it5Jr+D9f/WzjM5t3YRUUyiRItH0QUVYketcvtPMFrOZLWb/KduWRNbk19KzpS0eI5rXcc/25Fftb831+yWPke9rnc0t99fzGi80brWcea4nXmjcevIfjZ4RuGlt4RWBm5XLe2uR7qS1d48HAjdr5633MDK3EQ9Ubggeb3FD8CA3ciM3ciO3fm6zdobIbdbOyI3cyI3cyC0eN/SK/v+z6wKOf28X8B4AAA==
   </data>
@@ -57,7 +57,7 @@
    H4sIAAAAAAAACu3ZMQqAMBBE0U3hLdQU3v+Omk4kKhFBZ/IfLGqRBfl2RnibU8S0zdh4LefyxfNX+8q5/bs5yal+74BumnrqNiztc+bJrjenp25O6KaJbpropolumuimiW6a6KaJbpropolumuimiW6ajt3+/G+x9l3d7XK3AlQZKm/wHgAA
   </data>
  </layer>
- <layer id="40" name="Dirt" width="55" height="36">
+ <layer id="40" name="Dirt" width="55" height="36" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu3Uyw0CMQwEUPcBu33EARrh08jSCXQKu2Iuke/xRnHQPMnyKcrH0YgQERERERER7WtVkU17n6KNKYvMufcp2uDcxlQ7t08S+SbrK2pL+5/Po3ZuB7zHUa1PqDnY366dW8aak1o/oy7B7lY7tyvucVPrd9Qj2N2Yk2Py5mTEfCy8ORkxHwtvTkbMx8Kbk958XLD22ehteufkC3u/G+3PnBzTP8+NzA/XSXU18B4AAA==
   </data>
