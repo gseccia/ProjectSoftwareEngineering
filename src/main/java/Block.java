@@ -77,7 +77,7 @@ public class Block extends BasicGameState
 //				y = Integer.parseInt(map.getMapProperty("spawnY3","0"));
 //			}
 //			e.setPosition(x*map.getTileWidth()-map_x*map.getTileWidth()/2, y*map.getTileHeight()-map_y*map.getTileHeight()/2);
-			e.setPosition((int)player.getX(), (int)player.getY());
+			e.setLocation((int)player.getX(), (int)player.getY());
 		}
 		
 		prev_map_x = map_x;
@@ -191,7 +191,7 @@ public class Block extends BasicGameState
 		y = Integer.parseInt(map.getMapProperty("charYDoor"+d,"0"));
 		width = Integer.parseInt(map.getMapProperty("charWidthDoor"+d,"0"));
 		height = Integer.parseInt(map.getMapProperty("charHeightDoor"+d,"0"));
-		player.setPosition(256,208);
+		player.setLocation(256,208);
 		map_x = x - (int)player.getX()/map.getTileWidth();
 		map_y = y - (int)player.getY()/map.getTileHeight();
 		if(width > height){

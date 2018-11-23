@@ -6,7 +6,7 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * This class represent an element that is not visually static on the screen
  */
-public abstract class AnimatedElement extends Rectangle implements Movable{
+public abstract class AnimatedElement extends Rectangle{
     private Animation current;
 
     protected AnimatedElement(Animation a, int width, int height, int x, int y) throws NullAnimationException{

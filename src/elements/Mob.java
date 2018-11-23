@@ -9,7 +9,7 @@ import java.util.*;
  * This class represent all the mobile objects in the game, that have at least four different animations
  * (for the four directions) a HP value and an attack value. Probably this will become abstract
  */
-public class Mob extends AnimatedElement implements MultiAnimatable{
+public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
 
     /**
      * hp are the current hp, maxHP the total hp
@@ -17,63 +17,44 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     private int hp, maxHp, attackDamage;
     private HashMap<String, Animation> faces;
 
-    /**
-     * Probably it will be refactored
-     * @param id the mob id
-     * @return the mob
-     */
-    public static Mob generate(MobConfiguration configuration, String id, int x, int y) throws SlickException, NullAnimationException, NoSuchElementInConfigurationException {
-        return new Mob(
-                configuration.getHp(id),
-                configuration.getAttack(id),
-                configuration.getFaceStill(id),
-                configuration.getFaceLeft(id),
-                configuration.getFaceRight(id),
-                configuration.getFaceUp(id),
-                configuration.getFaceDown(id),
-                configuration.getWidth(id),
-                configuration.getHeight(id),
-                x, y);
-    }
-
-
-    /**
-     * Probably it will be refactored
-     * @param id the mob id
-     * @return the mob
-     */
-    public static Mob generate(MobConfiguration configuration, String id) throws SlickException, NullAnimationException, NoSuchElementInConfigurationException {
-            return new Mob(
-                    configuration.getHp(id),
-                    configuration.getAttack(id),
-                    configuration.getFaceStill(id),
-                    configuration.getFaceLeft(id),
-                    configuration.getFaceRight(id),
-                    configuration.getFaceUp(id),
-                    configuration.getFaceDown(id),
-                    configuration.getWidth(id),
-                    configuration.getHeight(id),
-                    0, 0);
-    }
-
-    private Mob(int hp, int attackDamage, Animation standStill, Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, int width, int height, int x, int y) throws NullAnimationException {
-        super(standStill, width, height, x, y);
-        this.hp = hp;
+    public Mob(MobConfiguration configuration, String id, int x, int y) throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
+        super(configuration.getFaceStill(id), configuration.getWidth(id), configuration.getHeight(id), x, y);
+        this.hp = configuration.getHp(id);
         this.maxHp = hp;
-        this.attackDamage = attackDamage;
+        this.attackDamage = configuration.getAttack(id);
         faces = new HashMap<>();
+        Animation faceLeft = configuration.getFaceLeft(id);
+        Animation faceRight = configuration.getFaceRight(id);
+        Animation faceUp = configuration.getFaceUp(id);
+        Animation faceDown = configuration.getFaceDown(id);
+        Animation standStill = configuration.getFaceStill(id);
+        generateMap(faceLeft, faceRight, faceUp, faceDown, standStill);
+    }
+
+    public Mob(MobConfiguration configuration, String id) throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
+        super(configuration.getFaceStill(id), configuration.getWidth(id), configuration.getHeight(id), 0, 0);
+        this.hp = configuration.getHp(id);
+        this.maxHp = hp;
+        this.attackDamage = configuration.getAttack(id);
+        faces = new HashMap<>();
+        Animation faceLeft = configuration.getFaceLeft(id);
+        Animation faceRight = configuration.getFaceRight(id);
+        Animation faceUp = configuration.getFaceUp(id);
+        Animation faceDown = configuration.getFaceDown(id);
+        Animation standStill = configuration.getFaceStill(id);
         generateMap(faceLeft, faceRight, faceUp, faceDown, standStill);
     }
 
     /**
      * Creates a map with the animations
-     * @param faceLeft the left animation
-     * @param faceRight the right animation
-     * @param faceUp the up animation
-     * @param faceDown the down animation
+     *
+     * @param faceLeft   the left animation
+     * @param faceRight  the right animation
+     * @param faceUp     the up animation
+     * @param faceDown   the down animation
      * @param standStill the still animation
      */
-    private void generateMap(Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, Animation standStill){
+    private void generateMap(Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, Animation standStill) {
         faces.put("left", faceLeft);
         faces.put("right", faceRight);
         faces.put("up", faceUp);
@@ -86,10 +67,9 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     }
 
     public void setHp(int hp) {
-        if(hp < 0){
+        if (hp < 0) {
             this.hp = 0;
-        }
-        else {
+        } else {
             this.hp = hp;
         }
     }
@@ -99,7 +79,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     }
 
     public void setMaxHp(int maxHp) throws NotPositiveValueException {
-        if(maxHp <= 0){
+        if (maxHp <= 0) {
             throw new NotPositiveValueException("MaxHP value cannot be less or equal than 0!");
         }
         this.maxHp = maxHp;
@@ -110,7 +90,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     }
 
     public void setAttackDamage(int attackDamage) throws NotPositiveValueException {
-        if(attackDamage < 0){
+        if (attackDamage < 0) {
             throw new NotPositiveValueException("Attack Damage value cannot be less or equal than 0!");
         }
         this.attackDamage = attackDamage;
@@ -118,11 +98,12 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
 
     /**
      * Reduces the current hp value of the client by an amount
+     *
      * @param amount the damage amount
      */
-    public void damage(int amount){
+    public void damage(int amount) {
         this.hp -= amount;
-        if(this.hp < 0){
+        if (this.hp < 0) {
             this.hp = 0;
         }
     }
@@ -131,7 +112,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * Changes the current animation with the up one
      */
     @Override
-    public void faceUp() throws NullAnimationException{
+    public void faceUp() throws NullAnimationException {
         setCurrent(faces.get("up"));
     }
 
@@ -139,7 +120,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * Changes the current animation with the down one
      */
     @Override
-    public void faceDown() throws NullAnimationException{
+    public void faceDown() throws NullAnimationException {
         setCurrent(faces.get("down"));
     }
 
@@ -147,7 +128,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * Changes the current animation with the right one
      */
     @Override
-    public void faceRight() throws NullAnimationException{
+    public void faceRight() throws NullAnimationException {
         setCurrent(faces.get("right"));
     }
 
@@ -155,7 +136,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * Changes the current animation with the left one
      */
     @Override
-    public void faceLeft() throws NullAnimationException{
+    public void faceLeft() throws NullAnimationException {
         setCurrent(faces.get("left"));
     }
 
@@ -163,7 +144,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
      * Changes the current animation with the still one
      */
     @Override
-    public void faceStill() throws NullAnimationException{
+    public void faceStill() throws NullAnimationException {
         setCurrent(faces.get("still"));
     }
 
@@ -185,17 +166,5 @@ public class Mob extends AnimatedElement implements MultiAnimatable{
     @Override
     public void moveY(int dy) {
         setY(getY() + dy);
-    }
-
-    /**
-     * Set the absolute position of a character
-     *
-     * @param x the x coordinate
-     * @param y the y coordinate
-     */
-    @Override
-    public void setPosition(int x, int y) {
-        setX(x);
-        setY(y);
     }
 }

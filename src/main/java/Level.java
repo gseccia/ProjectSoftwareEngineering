@@ -3,8 +3,10 @@ package main.java;
 import configuration.DoorsConfiguration;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
+import elements.Enemy;
 import elements.Mob;
 import elements.NullAnimationException;
+import elements.Player;
 import map.MapGraph;
 
 import java.util.*;
@@ -14,7 +16,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Level extends StateBasedGame{
-	private Mob player;
 	private String charname;
 	private int level_difficulty;
 	
@@ -25,7 +26,7 @@ public class Level extends StateBasedGame{
 	
 	/**
 	 * This class is the manager of a level
-	 * @throws SlickException 
+	 * @throws SlickException slick exception
 	*/
 	public Level(String gamename,String charname,int level_difficulty) {
 		super(gamename);
@@ -48,7 +49,7 @@ public class Level extends StateBasedGame{
 	/**
 	 * This function automatically generate Mobs and put them into blocks
 	 * @param difficulty parameter to define the hardness of the level
-	 * @throws SlickException 
+	 * @throws SlickException slick exception
 	 */
 	private void generatePopulation(int difficulty) throws SlickException
 	{
@@ -70,7 +71,7 @@ public class Level extends StateBasedGame{
 		for(int i=0;i<difficulty;i++)
 		{
 			try {
-				mob = Mob.generate(MobConfiguration.getInstance(),"zombo");  //Retrieve other String id
+				mob = new Enemy(MobConfiguration.getInstance(),"zombo");  //Retrieve other String id
 				mobs.add(mob);
 			} catch (NullAnimationException | NoSuchElementInConfigurationException e) {
 				e.printStackTrace();
@@ -85,7 +86,7 @@ public class Level extends StateBasedGame{
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException {
 		try {
-			player = Mob.generate(MobConfiguration.getInstance(),charname);
+			Mob player = new Player(MobConfiguration.getInstance(), charname);
 			generatePopulation(1); // level_difficulty
 			for(Block block: block_list)
 			{

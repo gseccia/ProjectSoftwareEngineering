@@ -38,7 +38,7 @@ public class MobTest {
             Mockito.when(this.mobconf.getFaceUp(this.id)).thenReturn(new Animation());
             Mockito.when(this.mobconf.getFaceLeft(this.id)).thenReturn(new Animation());
             Mockito.when(this.mobconf.getFaceRight(this.id)).thenReturn(new Animation());
-            this.mob = Mob.generate(this.mobconf,this.id);
+            this.mob = new Mob(this.mobconf,this.id);
         } catch (NoSuchElementInConfigurationException | SlickException | NullAnimationException e) {
             e.printStackTrace();
         }
@@ -160,7 +160,7 @@ public class MobTest {
     public void testMobIsPositionedCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
         int x = 10;
         int y = 20;
-        this.mob = Mob.generate(this.mobconf,this.id, x, y);
+        this.mob = new Mob(this.mobconf,this.id, x, y);
         Assert.assertEquals((int) this.mob.getX(), x);
         Assert.assertEquals((int) this.mob.getY(), y);
     }
@@ -170,7 +170,7 @@ public class MobTest {
         int x = -10;
         int y = -20;
 
-        this.mob = Mob.generate(this.mobconf,this.id, x, y);
+        this.mob = new Mob(this.mobconf,this.id, x, y);
         Assert.assertEquals((int) this.mob.getX(), x);
         Assert.assertEquals((int) this.mob.getY(), y);
     }
@@ -195,16 +195,16 @@ public class MobTest {
     public void testMobIsRepositionedCorrectlyWithPositiveXAndPositiveY() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = 22;
         int y = 33;
-        this.mob.setPosition(x, y);
-        Assert.assertEquals((int) this.mob.getX(), x);
-        Assert.assertEquals((int) this.mob.getY(), y);
+        this.mob.setLocation(x, y);
+        assertEquals((int) this.mob.getX(), x);
+        assertEquals((int) this.mob.getY(), y);
     }
 
     @Test
     public void testMobIsRepositionedCorrectlyWithPositiveXAndNegativeY() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = 22;
         int y = -33;
-        this.mob.setPosition(x, y);
+        this.mob.setLocation(x, y);
         Assert.assertEquals((int) this.mob.getX(), x);
         Assert.assertEquals((int) this.mob.getY(), y);
     }
@@ -213,7 +213,7 @@ public class MobTest {
     public void testMobIsRepositionedCorrectlyWithNegativeXAndNegativeY() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = -22;
         int y = -33;
-        this.mob.setPosition(x, y);
+        this.mob.setLocation(x, y);
         Assert.assertEquals((int) this.mob.getX(), x);
         Assert.assertEquals((int) this.mob.getY(), y);
     }
@@ -222,7 +222,7 @@ public class MobTest {
     public void testMobIsRepositionedCorrectlyWithNegativeXAndPositiveY() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = -22;
         int y = 33;
-        this.mob.setPosition(x, y);
+        this.mob.setLocation(x, y);
         Assert.assertEquals((int) this.mob.getX(), x);
         Assert.assertEquals((int) this.mob.getY(), y);
     }
@@ -231,7 +231,7 @@ public class MobTest {
     public void testMobIsRepositionedCorrectlyAtOrigin() throws NullAnimationException, NoSuchElementInConfigurationException {
         int x = 0;
         int y = 0;
-        this.mob.setPosition(x, y);
+        this.mob.setLocation(x, y);
         Assert.assertEquals((int) this.mob.getX(), x);
         Assert.assertEquals((int) this.mob.getY(), y);
     }
@@ -244,7 +244,7 @@ public class MobTest {
         int x = 0;
         int y = 0;
         int dx = 22;
-        this.mob = Mob.generate(this.mobconf,this.id, x, y);
+        this.mob = new Mob(this.mobconf,this.id, x, y);
         this.mob.moveX(dx);
         Assert.assertEquals((int) this.mob.getX(), x + dx);
     }
@@ -254,7 +254,7 @@ public class MobTest {
         int x = 0;
         int y = 0;
         int dx = -22;
-        this.mob = Mob.generate(this.mobconf,this.id, x, y);
+        this.mob = new Mob(this.mobconf,this.id, x, y);
         this.mob.moveX(dx);
         Assert.assertEquals((int) this.mob.getX(), x + dx);
     }
@@ -264,7 +264,7 @@ public class MobTest {
         int x = 0;
         int y = 0;
         int dx = 0;
-        this.mob = Mob.generate(this.mobconf,this.id, x, y);
+        this.mob = new Mob(this.mobconf,this.id, x, y);
         this.mob.moveX(dx);
         Assert.assertEquals((int) this.mob.getX(), x + dx);
     }
@@ -276,7 +276,7 @@ public class MobTest {
         int x = 0;
         int y = 0;
         int dy = 22;
-        this.mob = Mob.generate(this.mobconf,this.id, x, y);
+        this.mob = new Mob(this.mobconf,this.id, x, y);
         this.mob.moveY(dy);
         Assert.assertEquals((int) this.mob.getY(), y + dy);
     }
@@ -286,7 +286,7 @@ public class MobTest {
         int x = 0;
         int y = 0;
         int dy = -22;
-        this.mob = Mob.generate(this.mobconf,this.id, x, y);
+        this.mob = new Mob(this.mobconf,this.id, x, y);
         this.mob.moveY(dy);
         Assert.assertEquals((int) this.mob.getY(), y + dy);
     }
@@ -296,7 +296,7 @@ public class MobTest {
         int x = 0;
         int y = 0;
         int dy = 0;
-        this.mob = Mob.generate(this.mobconf,this.id, x, y);
+        this.mob = new Mob(this.mobconf,this.id, x, y);
         this.mob.moveY(dy);
         Assert.assertEquals((int) this.mob.getY(), y + dy);
     }

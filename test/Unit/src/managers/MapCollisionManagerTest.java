@@ -46,7 +46,7 @@ public class MapCollisionManagerTest {
             Mockito.when(this.mobconf.getFaceUp(this.id)).thenReturn(new Animation());
             Mockito.when(this.mobconf.getFaceLeft(this.id)).thenReturn(new Animation());
             Mockito.when(this.mobconf.getFaceRight(this.id)).thenReturn(new Animation());
-            this.player = Mob.generate(this.mobconf,this.id);
+            this.player = new Mob(this.mobconf,this.id);
         } catch (NoSuchElementInConfigurationException | SlickException | NullAnimationException e) {
             e.printStackTrace();
         }
