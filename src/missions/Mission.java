@@ -16,7 +16,9 @@ public abstract class Mission {
         return targetId;
     }
 
-    public void setTargetId(String targetId) {
+    public Mission(){}
+
+    public Mission(String targetId){
         this.targetId = targetId;
     }
 
