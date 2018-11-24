@@ -22,7 +22,7 @@ public class Level extends StateBasedGame{
 	
 	private List<Block> block_list;
 	private MapGraph map;
-	private Map<Block,Set<Mob>> population;
+	private Map<Block,Set<Enemy>> population;
 	
 	/**
 	 * This class is the manager of a level
@@ -51,11 +51,11 @@ public class Level extends StateBasedGame{
 	 * @param difficulty parameter to define the hardness of the level
 	 * @throws SlickException slick exception
 	 */
-	private void generatePopulation(int difficulty) throws SlickException
+	private void generatePopulation(int difficulty,Player player) throws SlickException
 	{
 		for(Block block: block_list)
 		{
-			population.put(block, generateMob(difficulty));
+			population.put(block, generateMob(difficulty,block,player));
 		}
 	}
 	
@@ -64,14 +64,14 @@ public class Level extends StateBasedGame{
 	 * @param difficulty parameter to define the hardness of the level
 	 * @return A set of Mob that are generated at random
 	 */
-	private Set<Mob> generateMob(int difficulty) throws SlickException
+	private Set<Enemy> generateMob(int difficulty,Block b,Player player) throws SlickException
 	{
-		Set<Mob> mobs=new HashSet<>();
-		Mob mob;
+		Set<Enemy> mobs=new HashSet<>();
+		Enemy mob;
 		for(int i=0;i<difficulty;i++)
 		{
 			try {
-				mob = new Enemy(MobConfiguration.getInstance(),"zombo");  //Retrieve other String id
+				mob = new Enemy(MobConfiguration.getInstance(),"zombo",b,player);  //Retrieve other String id
 				mobs.add(mob);
 			} catch (NullAnimationException | NoSuchElementInConfigurationException e) {
 				e.printStackTrace();
@@ -86,8 +86,8 @@ public class Level extends StateBasedGame{
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException {
 		try {
-			Mob player = new Player(MobConfiguration.getInstance(), charname);
-			generatePopulation(1); // level_difficulty
+			Player player = new Player(MobConfiguration.getInstance(), charname);
+			generatePopulation(1,player); // level_difficulty
 			for(Block block: block_list)
 			{
 				block.initBlock(player, population, map);

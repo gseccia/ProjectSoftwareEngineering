@@ -19,6 +19,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
+import elements.Enemy;
 import elements.Mob;
 import elements.NullAnimationException;
 
@@ -26,13 +27,14 @@ public class Block extends BasicGameState
 {
 	private TiledMap map;
 	private Mob player;
-	private Set<Mob> enemy;
+	private Set<Enemy> enemy;
 	private int state;
 	private int map_x, map_y, prev_map_x, prev_map_y;
 	private MapCollisionManager mapCollision;
 	private String mapName;
 	private MapGraph graph;
 	private Vertex vertex;
+	private Thread[] enemy_ai;
 	
 	public Block(int state,String mapName)
 	{
@@ -46,38 +48,39 @@ public class Block extends BasicGameState
 	 * @param population map that contains information about enemies in the blocks
 	 * @throws SlickException if the map is not loaded correctly
 	 */
-	public void initBlock(Mob player,Map<Block,Set<Mob>> population,MapGraph graph) throws SlickException
+	public void initBlock(Mob player,Map<Block,Set<Enemy>> population,MapGraph graph) throws SlickException
 	{
 		map = new TiledMap("resource/maps/Complete"+mapName+"/"+mapName+".tmx");
 		this.vertex = graph.getVertex(this);
 		this.graph=graph;
 		mapCollision = new MapCollisionManager(map);
 		enemy = population.get(this);
-		this.player = player; 
+		this.player = player;
+		
+		enemy_ai = new Thread[enemy.size()];
+		int i = 0;
+		for(Enemy e: enemy) {
+			enemy_ai[i] = new Thread(e);
+			i++;
+		}
 	}
 	
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		setCharacterSpawn(1);
-//		int x, y;
-//		x = Integer.parseInt(map.getMapProperty("charXDoor1","0"));
-//		y = Integer.parseInt(map.getMapProperty("charYDoor1","0"));
-//		Random rand = new Random();
+		int x, y;
 
 		// Enemies spawn from a set of a random spawn points
-		for(Mob e : enemy)
+		for(Enemy e : enemy)
 		{
-//			if (rand.nextInt(3) > 1) {
-//				x = Integer.parseInt(map.getMapProperty("spawnX1","0"));
-//				y = Integer.parseInt(map.getMapProperty("spawnY1","0"));
-//			}
-//			else {
-//				x = Integer.parseInt(map.getMapProperty("spawnX3","0"));
-//				y = Integer.parseInt(map.getMapProperty("spawnY3","0"));
-//			}
-//			e.setPosition(x*map.getTileWidth()-map_x*map.getTileWidth()/2, y*map.getTileHeight()-map_y*map.getTileHeight()/2);
-			e.setLocation((int)player.getX(), (int)player.getY());
+			x = Integer.parseInt(map.getMapProperty("spawnX1","0"));
+			y = Integer.parseInt(map.getMapProperty("spawnY1","0"));
+			e.init(x,y);
+		}
+		
+		for(Thread t:enemy_ai) {
+			t.start();
 		}
 		
 		prev_map_x = map_x;
@@ -101,7 +104,7 @@ public class Block extends BasicGameState
 		g.setColor(Color.white);
 		//TESTING ZONE END
 
-		for(Mob e : enemy)
+		for(Enemy e : enemy)
 		{
 			e.draw();
 		}
@@ -149,6 +152,14 @@ public class Block extends BasicGameState
 				for(Edge e:graph.getEdges(this)) {
 					if(e.getPortSource(vertex)==door) {
 						e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));
+						
+						for(Thread t:enemy_ai) {
+							t.suspend();
+						}
+						for(Thread t: e.opposite(vertex).getBlock().getEnemies()) {
+							t.resume();
+						}
+						
 						gs.enterState(e.opposite(vertex).getId());
 					}
 				}
@@ -157,25 +168,7 @@ public class Block extends BasicGameState
 		} catch (NullAnimationException e1) {
 			e1.printStackTrace();
 		}
-		for(Mob e : enemy)
-		{
-			try {
-				e.faceRight();
-			} catch (NullAnimationException e1) {
-				e1.printStackTrace();
-			}
-			e.moveX((prev_map_x-map_x)*map.getTileWidth());
-			e.moveY((prev_map_y-map_y)*map.getTileHeight());
-
-			int random_x = new Random().nextInt(2);
-			int random_y = new Random().nextInt(2);
-
-			if(mapCollision.wallCollision(map_x,map_y, e, Directions.RIGHT)){
-				e.moveX(random_x);
-				e.moveY(random_y);
-			}
-
-		}
+		
 		prev_map_x = map_x;
 		prev_map_y = map_y;
 	}
@@ -212,5 +205,24 @@ public class Block extends BasicGameState
 		}
 		
 	}
-
+	
+	public MapCollisionManager getCollisionManager() {
+		return mapCollision;
+	}
+	
+	public int getShiftY() {
+		return map_y;
+	}
+	
+	public int getShiftX() {
+		return map_x;
+	}
+	
+	public TiledMap getMap() {
+		return map;
+	}
+	
+	public Thread[] getEnemies() {
+		return enemy_ai;
+	}
 }
