@@ -2,9 +2,10 @@ package elements;
 
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
+import missions.MissionItem;
 import org.newdawn.slick.SlickException;
 
-public class Enemy extends Mob{
+public class Enemy extends Mob implements MissionItem {
 
     private String id;
 
@@ -13,7 +14,8 @@ public class Enemy extends Mob{
         this.id = id;
     }
 
-    public String getId() {
+    @Override
+    public String getID() {
         return id;
     }
 }

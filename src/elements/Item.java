@@ -1,8 +1,9 @@
 package elements;
 
+import missions.MissionItem;
 import org.newdawn.slick.Animation;
 
-public class Item extends AnimatedElement {
+public class Item extends AnimatedElement implements MissionItem {
 
     private String id;
 
@@ -12,7 +13,8 @@ public class Item extends AnimatedElement {
         this.id = id;
     }
 
-    public String getId() {
+    @Override
+    public String getID() {
         return id;
     }
 }
