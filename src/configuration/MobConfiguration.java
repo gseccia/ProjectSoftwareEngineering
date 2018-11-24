@@ -7,6 +7,8 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import java.util.Set;
+
 
 public class MobConfiguration extends Configuration{
     private static final String filename = System.getProperty("user.dir") + "/resource/textures/sprites/mobs.conf";
@@ -102,5 +104,9 @@ public class MobConfiguration extends Configuration{
             dur[i] = duration.get(i).getAsInt();
         }
         return new Animation(arr, dur);
+    }
+
+    public Set<String> getMobNames(){
+        return configuration.keySet();
     }
 }

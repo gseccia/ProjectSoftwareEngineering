@@ -1,8 +1,12 @@
 package missions;
 
+import configuration.ItemConfiguration;
+import configuration.MobConfiguration;
+import configuration.NoSuchElementInConfigurationException;
 import elements.Enemy;
 import elements.Item;
 import elements.NullAnimationException;
+import org.newdawn.slick.SlickException;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,8 +18,12 @@ public class MissionManager extends Mission {
     private Set<Enemy> enemies;
     private Set<Item> items;
     private Set<Mission> missions;
+    private MobConfiguration mobConf;
+    private ItemConfiguration itemConf;
 
-    public MissionManager(){
+    public MissionManager(MobConfiguration mobConf, ItemConfiguration itemConf){
+        this.mobConf = mobConf;
+        this.itemConf = itemConf;
         this.missions = new HashSet<>();
     }
 
@@ -82,7 +90,14 @@ public class MissionManager extends Mission {
      */
     @Override
     public Set<Enemy> getEnemySet() {
-        return null;
+        if(enemies == null){
+            try {
+                buildEnemySet();
+            } catch (NullAnimationException | NoSuchElementInConfigurationException | SlickException e) {
+                e.printStackTrace();
+            }
+        }
+        return enemies;
     }
 
     /**
@@ -107,20 +122,13 @@ public class MissionManager extends Mission {
         Map<String, Integer> generals = new HashMap<>();
         for(Mission m : missions){
             for(Map.Entry<String, Integer> e : m.getItemPopulation().entrySet()){
-                Integer qty = generals.get(e.getKey());
-                if(qty == null || qty < e.getValue()){
-                    generals.put(e.getKey(), e.getValue());
-                }
+                addToGeneralMap(generals, e);
             }
         }
 
         //If there are some specific items that can be used also as general, remove one of them from the generals
         for(Item i : primer){
-            String ID = i.getID();
-            Integer value = generals.get(ID);
-            if(value != null){
-                generals.put(ID, value-1);
-            }
+            removeFromGeneralMap(generals, i);
         }
 
         //Generate the remaining items
@@ -131,6 +139,63 @@ public class MissionManager extends Mission {
         }
 
         this.items = primer;
+    }
+
+    /**
+     * Build the minimal item set for this set of missions
+     */
+    private void buildEnemySet() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
+        //Gets all the mission specific items
+        Set<Enemy> primer = new HashSet<>();
+        for(Mission m : missions){
+            primer.addAll(m.getEnemySet());
+        }
+
+        //Gets all the general items
+        Map<String, Integer> generals = new HashMap<>();
+        for(Mission m : missions){
+            for(Map.Entry<String, Integer> e : m.getEnemyPopulation().entrySet()){
+                addToGeneralMap(generals, e);
+            }
+        }
+
+        //If there are some specific items that can be used also as general, remove one of them from the generals
+        for(Enemy i : primer){
+            removeFromGeneralMap(generals, i);
+        }
+
+        //Generate the remaining items
+        for(Map.Entry<String, Integer> e : generals.entrySet()){
+            for(int i=0; i<e.getValue(); i++){
+                primer.add(new Enemy(mobConf, e.getKey()));
+            }
+        }
+
+        this.enemies = primer;
+    }
+
+    private void addToGeneralMap(Map<String, Integer> generals, Map.Entry<String, Integer> e){
+        Integer qty = generals.get(e.getKey());
+        if(qty == null || qty < e.getValue()){
+            generals.put(e.getKey(), e.getValue());
+        }
+    }
+
+    private void removeFromGeneralMap(Map<String, Integer> generals, MissionItem i){
+        String ID = i.getID();
+        Integer value = generals.get(ID);
+        if(value != null){
+            generals.put(ID, value-1);
+        }
+    }
+
+    @Override
+    public String toString(){
+        String ret = "";
+        for(Mission m : missions){
+            ret += m.toString() + "\n";
+        }
+        return ret;
     }
 
 }
