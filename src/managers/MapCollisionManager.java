@@ -7,6 +7,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
 import configuration.DoorsConfiguration;
+import elements.Item;
 import elements.Mob;
 
 /**
@@ -18,6 +19,7 @@ public class MapCollisionManager implements MapCollisionInterface {
 	private TiledMap map;
 	private List<Wall> collidingBlocks;
 	private List<Wall> doors;
+	private List<Item> items;
 	
 	public MapCollisionManager(TiledMap map) {
 		this.map = map;
@@ -138,6 +140,35 @@ public class MapCollisionManager implements MapCollisionInterface {
 		player.setLocation(px, py);
 		
 		return -1;
+	}
+	
+	/**
+	 * Checks if the player collides with an item of the map
+	 * 
+	 * @param shiftX the x shift of the map
+	 * @param shiftY the y shift of the map
+	 * @param player the player object that collides
+	 * @return type of the item hit by the palyer, empty String in none
+	 */
+	public String itemCollision(int shiftX, int shiftY, Mob player) {
+		float px =player.getX();
+		float py =player.getY();
+		
+		int pXPosition = (int)(player.getX());
+		int pYPosition = (int)(player.getY());
+		
+		pXPosition += shiftX*map.getTileWidth();
+		pYPosition += shiftY*map.getTileHeight();
+		
+		player.setLocation(pXPosition, pYPosition);
+		String collidingItem = "";
+		for(Item i : items) {
+			if(i.intersects(player)) {
+				collidingItem = i.getID();
+				break;
+			}
+		}
+		return collidingItem;
 	}
 	
 	public List<Wall> getCollidingBlocks()
