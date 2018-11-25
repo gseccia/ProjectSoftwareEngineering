@@ -167,7 +167,7 @@ public class MissionManager extends Mission {
         //Generate the remaining items
         for(Map.Entry<String, Integer> e : generals.entrySet()){
             for(int i=0; i<e.getValue(); i++){
-                primer.add(new Enemy(mobConf, e.getKey()));
+                //primer.add(new Enemy(mobConf, e.getKey()));
             }
         }
 

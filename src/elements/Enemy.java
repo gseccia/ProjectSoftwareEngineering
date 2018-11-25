@@ -4,13 +4,10 @@ import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import main.java.Block;
 import managers.Directions;
-import managers.MapCollisionManager;
 import missions.MissionItem;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.tiled.TiledMap;
 
-import com.sun.javafx.scene.traversal.Direction;
 
 public class Enemy extends Mob implements MissionItem,Runnable {
 

@@ -2,6 +2,7 @@ package missions;
 
 import configuration.ItemConfiguration;
 import configuration.MobConfiguration;
+import utils.RandomHashSet;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -59,10 +60,10 @@ public class MissionsFactory {
     private Set<String> getMissionIDs(int mID){
         switch (mID){
             case 0:
-                return mobConf.getMobNames();
+                return new RandomHashSet<>(mobConf.getMobNames());
 
             case 1:
-                return itemConf.getItemNames();
+                return new RandomHashSet<>(itemConf.getItemNames());
 
             default:
                 return null;
