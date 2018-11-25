@@ -11,10 +11,12 @@
   <property name="charYDoor1" type="int" value="5"/>
   <property name="charYDoor2" type="int" value="5"/>
   <property name="charYDoor3" type="int" value="5"/>
+  <property name="itemCapacity" type="int" value="12"/>
+  <property name="mobCapacity" type="int" value="6"/>
   <property name="spawnX1" type="int" value="18"/>
   <property name="spawnX2" type="int" value="42"/>
-  <property name="spawnY1" type="int" value="4"/>
-  <property name="spawnY2" type="int" value="4"/>
+  <property name="spawnY1" type="int" value="8"/>
+  <property name="spawnY2" type="int" value="8"/>
  </properties>
  <tileset firstgid="1" source="terrain_atlas.tsx"/>
  <tileset firstgid="4097" source="obj_misk_atlas.tsx"/>

@@ -7,6 +7,8 @@
   <property name="charXDoor2" type="int" value="21"/>
   <property name="charYDoor1" type="int" value="15"/>
   <property name="charYDoor2" type="int" value="30"/>
+  <property name="itemCapacity" type="int" value="14"/>
+  <property name="mobCapacity" type="int" value="12"/>
   <property name="spawnX1" type="int" value="15"/>
   <property name="spawnX2" type="int" value="34"/>
   <property name="spawnX3" type="int" value="23"/>

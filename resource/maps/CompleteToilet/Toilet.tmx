@@ -4,10 +4,12 @@
   <property name="charHeightDoor1" type="int" value="3"/>
   <property name="charXDoor1" type="int" value="1"/>
   <property name="charYDoor1" type="int" value="9"/>
+  <property name="itemCapacity" type="int" value="7"/>
+  <property name="mobCapacity" type="int" value="4"/>
   <property name="spawnX1" type="int" value="16"/>
-  <property name="spawnX2" type="int" value="21"/>
-  <property name="spawnY1" type="int" value="5"/>
-  <property name="spawnY2" type="int" value="4"/>
+  <property name="spawnX2" type="int" value="27"/>
+  <property name="spawnY1" type="int" value="10"/>
+  <property name="spawnY2" type="int" value="11"/>
  </properties>
  <tileset firstgid="1" name="toilets" tilewidth="16" tileheight="16" tilecount="396" columns="18">
   <image source="toilets.png" width="288" height="352"/>
@@ -30,42 +32,42 @@
    H4sIAAAAAAAACmNgGAWjYBSMglEwCsgD95kG2gXUAdsYB9oF1AGj/hgFowA7AACsr/pG8AoAAA==
   </data>
  </layer>
- <layer id="55" name="Base" width="50" height="14" visible="0">
+ <layer id="55" name="Base" width="50" height="14">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgYGC4zwTBQx2M+mPwgeHij1EwuMBEOuNJVDJnMZo/FtMZLyFDD7LbkTEDUrhQK3yoFR/k+IPc8KF3fODCAx0f1PbHcIgPerqdVng4AQCnC2zp8AoAAA==
   </data>
  </layer>
- <layer id="56" name="Wall1" width="50" height="14" visible="0">
+ <layer id="56" name="Wall1" width="50" height="14">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu3P0Q3BUBSHcZQuQLEAxQIUC1AsQLEAxQgmNIoRfIn7cHNzHk70Nl76T34vX25P0lrtuzoaCNBEC6HpPki3NU16EzjNXhsdROiih77pPki3NU16EznN3gBDxBhhjInpPki3NU16EzvN3hQzJJhjgaXpPki3NU16kzjN3gprpNhgi53pPki3NU16kzrN3h4HZDjihLPpPki3NU16kznN3gVX5LjhjofpPki3NU16kzvtH3uF5d5/FqTdO/ztO+2K/keZ/16tWrVi+wDQmVJv8AoAAA==
   </data>
  </layer>
- <layer id="57" name="Rubbish" width="50" height="14" visible="0">
+ <layer id="57" name="Rubbish" width="50" height="14">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgGAWjYBSMFNApycDQJTnQrqAcrAT6YdUw8McoGDhgKsXAYCY10K6gHIQC/RA2DPwxCkYBrQEA/BEDLfAKAAA=
   </data>
  </layer>
- <layer id="60" name="Blood from toilets" width="50" height="14" visible="0">
+ <layer id="60" name="Blood from toilets" width="50" height="14">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2SywmAMBBE9+JuJcZKTCpRm/XTiJ8WnIDgHgNCZDUPHjnsZYYJUaHwDyohYijydpJn1MjvYGO4R3vlt9xD76Bfl7HPyEQTnOHC6TdN3MLDoN7cu6zIt8EdHpx+03Ryb+KVweD/ag1n18RNejgY71H4Bif3elGC8AoAAA==
   </data>
  </layer>
- <layer id="58" name="Wall2" width="50" height="14" visible="0">
+ <layer id="58" name="Wall2" width="50" height="14">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNggABOhuEBpAfaARQCNijWHWiHUAgkoNh+oB1CIdCC4sCBdgiFwAaKkwfaIRQCPyguHWiHUAgSoLidQnPmMqJiegBTKQYGMykIuwiKF9LHaqqCUKAfwqQQ/GYoHupgOPijmWF4+AMEhos/hgMAAFVDZojwCgAA
   </data>
  </layer>
- <layer id="59" name="Obstacle1" width="50" height="14" visible="0">
+ <layer id="59" name="Obstacle1" width="50" height="14">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu3UTU7CQBjG8bdeQBE1aSveor1JexMBuYHsFfAGuEeBC6jIBfiQC6DiRhPBFv4k3dk0ZDJpWMyT/tI0bSbvk5lUxGTf08EDHtFFD/3kXcUWqeIKNVtt/W9H5MfRMWl2nvCMFwzwimHyrsHsTbRwp9jj1BU5c3VMmp0RxphgijfMNK7v0cHPoccc7/jAJxb4Svnumv2oK+xJQIcw6fHL+VpihT9EiDWduQgx1tsHiwsH1v/v2nS4V+hxSYdy0sPm7sDFOUq42HGvPPr6GZ0PmfkIBRyjiJOUHqq5Yc5bDecqoEOYw//CxMTERGc2ZZT+5fAKAAA=
   </data>
  </layer>
- <layer id="61" name="Obstacle2" width="50" height="14" visible="0">
+ <layer id="61" name="Obstacle2" width="50" height="14">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACsXUSyuEURzH8XMUJnkDnmxci+xcM9PsXDZkN2MI2blsSJEZsyHvwCWj2bJRdoRMzTtQihAL5R0oS182Tj1Hc87MqfOrT7+FeZ75/UsjRGXJl/FMrsLvVFPv6D3nZTxz5ui7f1LqjuqIEDWR0u8pokUK0SrD3YFONKFZ6YLFzv5AiAEMIooY4sHf34P/H/1NGze0G9xxj1629clwRxFDN3qUvrO4I8HQJFKYwjRmDO/Yw76mdfnACNtGZbjHMI4hDCv9bnHHOkM3sIk0Msga3nGCU03r8oVJtqVkuGcxhwSSSn9a3HHA0EMcIYdj5C3+r0xTx64lLGt6BatYwKLStdL8/RcMvcQVrnGDW2W8q9+rRjZtIavpbewgjYzSDRZ3PLD5EU94xgtelTu6lM++VTk6ykPivgc4yoTvAY4y73uAo6z5HuAou74HOM43ngoEkvAKAAA=
   </data>
  </layer>
- <layer id="62" name="Dirt" width="50" height="14" visible="0">
+ <layer id="62" name="Dirt" width="50" height="14">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgGAWjgHxwlJ2B4Rj7QLuCcvAU6IdnNPZHIysDQxMrbe2gB1gI9MMiJH9UAsOtahikgZlAP8waBv6gFDyXZmB4AcQvoRjG/gTEn4H4izR17WPnIE29M9B+FzxumAmUmwXE7DIMDBxAzAnFMLYQEAsDsYgMbjOOA9PBCTxpAZu8OtAfGiT4JRnoxhQiwlId6E4NINaEYhjbCIiNgdgEjz+eA934Asmd6O5Glifk58EE0P1FrNwoGNkAAB/X4ozwCgAA
   </data>

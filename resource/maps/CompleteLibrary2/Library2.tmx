@@ -7,10 +7,13 @@
   <property name="charXDoor2" type="int" value="41"/>
   <property name="charYDoor1" type="int" value="6"/>
   <property name="charYDoor2" type="int" value="43"/>
+  <property name="itemCapacity" type="int" value="15"/>
+  <property name="mobCapacity" type="int" value="12"/>
   <property name="spawnX1" type="int" value="12"/>
   <property name="spawnX2" type="int" value="24"/>
   <property name="spawnX3" type="int" value="44"/>
-  <property name="spawnY1" type="int" value="13"/>
+  <property name="spawnY1" type="int" value="17"/>
+  <property name="spawnY2" type="int" value="10"/>
   <property name="spawnY3" type="int" value="37"/>
  </properties>
  <tileset firstgid="1" source="obj_misk_atlas.tsx"/>
@@ -33,12 +36,12 @@
    H4sIAAAAAAAACu3RSw3AMBBDwaVSDL0GR/lDqXLNB8BaM5IBPLkKIMszzusqoSPhk1tDp46EhimlY0rpAAAAAAAAevvefasfVFGDm2AiAAA=
   </data>
  </layer>
- <layer id="37" name="Door1" width="50" height="44" visible="0">
+ <layer id="37" name="Door1" width="50" height="44">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu3KoQ0AIBAEwe/oBb1QLgmdIV6gEFiYSTY5cRG8YuTeM88/+FVvFQAAAAAAAAB3FtO5/SBgIgAA
   </data>
  </layer>
- <layer id="38" name="Base" width="50" height="44" visible="0">
+ <layer id="38" name="Base" width="50" height="44">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2XT04bMRTGvUHqshKRpj5AJSTSgkrbe7DJvksWU1pKIVdAXXWTTf9wg0AFnZJDVKpoOQISB6AQsuqzxta8frETO2OIhcbSp5nncSbvN36fx/NrWYjfpD+kM9Ipi08nXKsTY/9PUt22Q/e4yYQYZvGOw8Dx6xE4erfAEXp8G4GjqMlxviLExUo9jo8JzMfCqhAPVutxfEtgPh4Tw1JNjhh1pXz+arFUuzUfxaqreXPEqqt5czR1VbWmrpq6aurK3XhdbYDuiiPGPrGTwHw0/qga90eu75u3qnMu7LONScEfectfnGVWHvPbpq6qdl/W3Td0jzXSc9ILdjR9L0l7D4X4TJxfSF9JH6bE++qZZP76tDj+e9s9TR9e81m3Vd1tPhLiu6RazuJKMTwhPdV6L0sVU6TG7JB2SV3p56+e5riS4/8bqj4Tv5c5NzlegzDvLsQ+/ioYB8+J57HpKRefmpvXWZmz7XljPIDYx18dzbEtq3zawHHI1J5w3cWn5udAj/F5/iOIQ/1h8sszt2ddtc+F3JzDxoDPHzlm8UfO6tvmXVv982fv4jcsthoa6XPOweMQf2zL8Tz7Dh1Y8jRMrrXLxTHSGkAfj0P8oeoK8+T1gHKtry52F8cNY+lCn4lD/HEl/8972rsN11gf9bPqHWJjGTjiUH/w+fd91/UDx9rWXZwTjH38gfuWZ7cQ8z61D0KOIcwBxjH2Z7Gb8uMW5fZOlmuLeQ9OmqMY38Wxm/LjEeV2rDnMfouzzLK/uuvWAw7FcA0s6vwH6UTXVYzvl9itAA6+XywYF/dIinXVAQ6eL2fi/SnWlc0f3Bc2z6dYVzZ/4PcVcqS67qI/MG/0eYr+wLrahbxtdZWiP1RdXVJuf2W5Nz0BXxeW+UjRH7Z9EH6vK/ExOekflFOPHmAiAAA=
   </data>
