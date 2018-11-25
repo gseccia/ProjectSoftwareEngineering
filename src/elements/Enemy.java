@@ -21,6 +21,7 @@ public class Enemy extends Mob implements MissionItem,Runnable {
     private int directVision = 10;
     private int lateralVision = 1;
     private Player player;
+    private boolean attack;
     
     public Enemy(MobConfiguration configuration, String id, Block map, Player p) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
         super(configuration, id);
@@ -39,7 +40,8 @@ public class Enemy extends Mob implements MissionItem,Runnable {
     	setLocation(x+map.getShiftX()*map.getMap().getTileWidth(),y-map.getShiftY()*map.getMap().getTileHeight());
     	directVision *= map.getMap().getTileWidth();
     	lateralVision *= map.getMap().getTileHeight();
-    	vision = new Rectangle(getX(), getY(),directVision,lateralVision);  // Vision 
+    	vision = new Rectangle(getX(), getY(),directVision,lateralVision);  // Vision
+    	attack = false;
     }
     
     public void draw() {
@@ -57,7 +59,6 @@ public class Enemy extends Mob implements MissionItem,Runnable {
     
     public void update() throws NullAnimationException {
     	float x,y;
-    	boolean attack;
 		 // Until I'm alive
 		if(getHp()>0) {
 			x = getX();
@@ -86,34 +87,59 @@ public class Enemy extends Mob implements MissionItem,Runnable {
 				attack = true;
 				System.out.println(id+" "+map.getID()+" ATTACK!");
 			}
-			else attack = false;
 			
+			
+			if(attack) {
+				System.out.println(id+" "+map.getID()+" ATTACK MODE ");
+				float px,py,dirX,dirY;
+				px = player.getX();
+				py = player.getY();
+				dirX = (px - getX());
+				dirY = (py - getY());
+				if(dirX < -8 || dirX > 8) {
+					System.out.println(id+" "+map.getID()+" MOVE X");
+					direction = (dirX > 0)?  Directions.RIGHT: Directions.LEFT;
+				}
+				else if(dirY < -8 || dirY > 8) {
+					System.out.println(id+" "+map.getID()+" MOVE Y");
+					direction = (dirY > 0)?  Directions.DOWN: Directions.UP;
+				}
+				else {
+					System.out.println(id+" "+map.getID()+" ON PLAYER");
+					direction = -1;
+				}
+			}
 			
 			if(!map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, direction)) {
 					System.out.println(id+" "+map.getID()+" COLLIDE");
 					
-					//  Choose a random free direction
 					int choosen = direction;
-					Random r = new Random();
-					while(choosen == direction) {
-						switch(r.nextInt(4)) {
-							case 0:
-								choosen = Directions.UP;
-								break;
-							case 1:
-								choosen = Directions.RIGHT;
-								break;
-							case 2:
-								choosen = Directions.DOWN;
-								break;
-							case 3:
-								choosen = Directions.LEFT;
-								break;
+					if(attack) {
+						// Ignore all walls!  Attack him! Destroy him!
+					}
+					//  Choose a random free direction
+					else {
+						Random r = new Random();
+						while(choosen == direction) {
+							switch(r.nextInt(4)) {
+								case 0:
+									choosen = Directions.UP;
+									break;
+								case 1:
+									choosen = Directions.RIGHT;
+									break;
+								case 2:
+									choosen = Directions.DOWN;
+									break;
+								case 3:
+									choosen = Directions.LEFT;
+									break;
+							}
 						}
 					}
-					
-					direction = choosen;	
-				}
+					direction = choosen;
+			}
+			
 				
 				setLocation(x,y);
 				switch(direction) {
@@ -137,6 +163,8 @@ public class Enemy extends Mob implements MissionItem,Runnable {
 						System.out.println(id+" "+map.getID()+" DOWN");
 						faceDown();
 						break;
+					default:
+						faceStill();
 				}
 			setLocation(x,y);
 		}
