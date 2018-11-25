@@ -22,6 +22,12 @@ public class Enemy extends Mob implements MissionItem,Runnable {
     private int lateralVision = 1;
     private Player player;
     private boolean attack;
+
+    public Enemy(MobConfiguration configuration, String id) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
+    	super(configuration, id);
+    	this.id = id;
+    	direction = Directions.LEFT;
+	}
     
     public Enemy(MobConfiguration configuration, String id, Block map, Player p) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
         super(configuration, id);
