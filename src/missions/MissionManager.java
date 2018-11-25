@@ -39,6 +39,14 @@ public class MissionManager extends Mission {
     }
 
     /**
+     * @return the number of missions in the component
+     */
+    @Override
+    public int numMissions() {
+        return missions.size();
+    }
+
+    /**
      * @return true if the mission was completed, false otherwise
      */
     @Override
@@ -114,8 +122,10 @@ public class MissionManager extends Mission {
     private void buildItemSet() throws NullAnimationException {
         //Gets all the mission specific items
         Set<Item> primer = new HashSet<>();
-        for(Mission m : missions){
-            primer.addAll(m.getItemSet());
+        for(Mission m : missions) {
+            if (m.getItemSet() != null) {
+                primer.addAll(m.getItemSet());
+            }
         }
 
         //Gets all the general items
@@ -148,7 +158,9 @@ public class MissionManager extends Mission {
         //Gets all the mission specific items
         Set<Enemy> primer = new HashSet<>();
         for(Mission m : missions){
-            primer.addAll(m.getEnemySet());
+            if(m.getEnemySet() != null) {
+                primer.addAll(m.getEnemySet());
+            }
         }
 
         //Gets all the general items
@@ -167,7 +179,7 @@ public class MissionManager extends Mission {
         //Generate the remaining items
         for(Map.Entry<String, Integer> e : generals.entrySet()){
             for(int i=0; i<e.getValue(); i++){
-                //primer.add(new Enemy(mobConf, e.getKey()));
+                primer.add(new Enemy(mobConf, e.getKey()));
             }
         }
 
@@ -198,4 +210,15 @@ public class MissionManager extends Mission {
         return ret;
     }
 
+    /**
+     * @return the number of interactions needed to complete the mission
+     */
+    @Override
+    public int getNumInteractions() {
+        int sum = 0;
+        for(Mission m : missions){
+            sum += m.getNumInteractions();
+        }
+        return sum;
+    }
 }
