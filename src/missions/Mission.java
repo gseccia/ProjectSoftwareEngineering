@@ -3,7 +3,9 @@ package missions;
 import elements.Enemy;
 import elements.Item;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -25,6 +27,12 @@ public abstract class Mission {
     @Override
     public boolean equals(Object obj) {
         return this.getClass() == obj.getClass() && targetId == ((Mission) obj).getTargetId();
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(targetId);
     }
 
     /**
