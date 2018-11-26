@@ -21,7 +21,7 @@ import org.xml.sax.SAXException;
 import converter.XMLToHashMapConverter;
 
 public class MapConfiguration extends Configuration {
-	private static final String filename = System.getProperty("user.dir") + "/resource/maps/maps.conf";
+	private static final String filename = System.getProperty("user.dir") + "/resource/configurations/maps.conf";
     private static MapConfiguration instance = null;
     private JsonObject configuration = null;
 

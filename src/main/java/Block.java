@@ -34,7 +34,7 @@ public class Block extends BasicGameState
 	private String mapName;
 	private MapGraph graph;
 	private Vertex vertex;
-	private Thread[] enemy_ai;
+	//private Thread[] enemy_ai;
 	
 	public Block(int state,String mapName)
 	{
@@ -57,12 +57,12 @@ public class Block extends BasicGameState
 		enemy = population.get(this);
 		this.player = player;
 		
-		enemy_ai = new Thread[enemy.size()];
+		/*enemy_ai = new Thread[enemy.size()];
 		int i = 0;
 		for(Enemy e: enemy) {
 			enemy_ai[i] = new Thread(e);
 			i++;
-		}
+		}*/
 	}
 	
 
@@ -78,10 +78,10 @@ public class Block extends BasicGameState
 			y = Integer.parseInt(map.getMapProperty("spawnY1","0"));
 			e.init(x,y);
 		}
-		
+		/*
 		for(Thread t:enemy_ai) {
 			t.start();
-		}
+		}*/
 		
 		prev_map_x = map_x;
 		prev_map_y = map_y;
@@ -153,16 +153,21 @@ public class Block extends BasicGameState
 					if(e.getPortSource(vertex)==door) {
 						e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));
 						
-						for(Thread t:enemy_ai) {
+						/*for(Thread t:enemy_ai) {
 							t.suspend();
 						}
 						for(Thread t: e.opposite(vertex).getBlock().getEnemies()) {
 							t.resume();
-						}
+						}*/
 						
 						gs.enterState(e.opposite(vertex).getId());
 					}
 				}
+			}
+			
+			// Enemy updating
+			for(Enemy e:enemy) {
+				e.update();
 			}
 
 		} catch (NullAnimationException e1) {
@@ -222,7 +227,7 @@ public class Block extends BasicGameState
 		return map;
 	}
 	
-	public Thread[] getEnemies() {
+	/*public Thread[] getEnemies() {
 		return enemy_ai;
-	}
+	}*/
 }

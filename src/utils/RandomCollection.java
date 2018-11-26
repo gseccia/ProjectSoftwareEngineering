@@ -3,45 +3,32 @@ package utils;
 import java.time.Instant;
 import java.util.*;
 
-public class RandomHashSet<E> extends HashSet<E> {
+public class RandomCollection<E> extends LinkedList<E> {
 
-    private LinkedList<E> toIter;
     private long seed;
 
-    public RandomHashSet() {
+    public RandomCollection() {
         super();
         this.seed = Instant.now().toEpochMilli();
     }
 
-    public RandomHashSet(long seed){
+    public RandomCollection(long seed){
         super();
         this.seed = seed;
     }
 
-    public RandomHashSet(Collection<? extends E> c) {
+    public RandomCollection(Collection<? extends E> c) {
         super(c);
     }
 
-    public RandomHashSet(Collection<? extends E> c, long seed) {
+    public RandomCollection(Collection<? extends E> c, long seed) {
         super(c);
         this.seed = seed;
     }
 
     @Override
-    public boolean add(E e) {
-        if(toIter == null){
-            toIter = new LinkedList<>();
-        }
-        if(super.add(e)){
-            toIter.add(e);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public Iterator<E> iterator(){
-        return new RandomIterator<>(toIter, seed);
+        return new RandomIterator<>(new LinkedList<>(this), seed);
     }
 
     private class RandomIterator<T> implements Iterator<T>{

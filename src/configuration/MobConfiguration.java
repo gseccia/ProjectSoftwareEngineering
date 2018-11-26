@@ -11,7 +11,7 @@ import java.util.Set;
 
 
 public class MobConfiguration extends Configuration{
-    private static final String filename = System.getProperty("user.dir") + "/resource/textures/sprites/mobs.conf";
+    private static final String filename = System.getProperty("user.dir") + "/resource/configurations/mobs.conf";
     private static MobConfiguration instance = null;
     private JsonObject configuration;
 

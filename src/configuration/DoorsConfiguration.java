@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class DoorsConfiguration extends Configuration {
 
-    private static final String filename = System.getProperty("user.dir") + "/resource/maps/doors.conf";
+    private static final String filename = System.getProperty("user.dir") + "/resource/configurations/doors.conf";
     private JsonObject configuration;
 
     public DoorsConfiguration(){

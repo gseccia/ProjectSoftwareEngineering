@@ -1,6 +1,6 @@
 package Unit.src.missions;
 
-import missions.CollectNItemsMission;
+import missions.KillNEnemiesMission;
 import missions.Mission;
 import missions.MissionItem;
 import org.junit.Before;
@@ -12,28 +12,29 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 
-public class CollectNItemsMissionTest {
+public class KillNEnemiesMissionTest {
 
-    @Mock private MissionItem correctitem;
-    @Mock private MissionItem wrongitem;
+    @Mock private MissionItem correctmob;
+    @Mock private MissionItem wrongmob;
     @Mock private Mission samplemission;
 
-    private static final String correctItemID = "correct";
-    private static final String wrongItemID = "wrong";
+    private static final String correctMobID = "correct";
+    private static final String wrongMobID = "wrong";
     private static final int numInteractions = 3;
-    private CollectNItemsMission mission;
+    private KillNEnemiesMission mission;
 
     @Before
     public void setUp(){
-        mission = new CollectNItemsMission(correctItemID, numInteractions);
+        mission = new KillNEnemiesMission(correctMobID, numInteractions);
 
         samplemission = Mockito.mock(Mission.class);
 
-        correctitem = Mockito.mock(MissionItem.class);
-        wrongitem = Mockito.mock(MissionItem.class);
-        Mockito.when(correctitem.getID()).thenReturn(correctItemID);
-        Mockito.when(wrongitem.getID()).thenReturn(wrongItemID);
+        correctmob = Mockito.mock(MissionItem.class);
+        wrongmob = Mockito.mock(MissionItem.class);
+        Mockito.when(correctmob.getID()).thenReturn(correctMobID);
+        Mockito.when(wrongmob.getID()).thenReturn(wrongMobID);
     }
 
     @Test
@@ -54,7 +55,7 @@ public class CollectNItemsMissionTest {
     @Test
     public void testMissionIsCompletedPassingTheCorrectNumberOfCorrectItems() {
         for(int i=0; i<numInteractions; i++){
-            mission.check(correctitem);
+            mission.check(correctmob);
         }
         assertTrue(mission.completed());
     }
@@ -62,7 +63,7 @@ public class CollectNItemsMissionTest {
     @Test
     public void testMissionIsNotCompletedPassingTheCorrectNumberOfIncorrectItems() {
         for(int i=0; i<numInteractions; i++){
-            mission.check(wrongitem);
+            mission.check(wrongmob);
         }
         assertFalse(mission.completed());
     }
@@ -70,7 +71,7 @@ public class CollectNItemsMissionTest {
     @Test
     public void testMissionIsNotCompletedPassingTheIncorrectNumberOfIncorrectItems() {
         for(int i=0; i<numInteractions-1; i++){
-            mission.check(wrongitem);
+            mission.check(wrongmob);
         }
         assertFalse(mission.completed());
     }
@@ -82,31 +83,31 @@ public class CollectNItemsMissionTest {
 
     @Test
     public void testGetNumInteractionsIsNotUpdatedWithIncorrectItems() {
-        mission.check(wrongitem);
+        mission.check(wrongmob);
         assertEquals(mission.getNumInteractions(), numInteractions);
     }
 
     @Test
     public void testGetNumInteractionsIsUpdatedWithCorrectItems() {
-        mission.check(correctitem);
+        mission.check(correctmob);
         assertEquals(mission.getNumInteractions(), numInteractions-1);
     }
 
     //END OF SUPERCLASS TESTS
 
     @Test
-    public void testGetItemPopulationReturnsTheIDAndTheNumberOfItems() {
-        Map<String, Integer> ret = mission.getItemPopulation();
+    public void testGetEnemyPopulationReturnsTheIDAndTheNumberOfItems() {
+        Map<String, Integer> ret = mission.getEnemyPopulation();
         Set<String> keys = ret.keySet();
         for(String key : keys){
-            assertEquals(key, correctItemID);
+            assertEquals(key, correctMobID);
             assertEquals((int)ret.get(key), numInteractions);
         }
     }
 
     @Test
-    public void testGetEnemyPopulationReturnsNull() {
-        assertNull(mission.getEnemyPopulation());
+    public void testGetItemPopulationReturnsNull() {
+        assertNull(mission.getItemPopulation());
     }
 
     @Test
@@ -118,5 +119,4 @@ public class CollectNItemsMissionTest {
     public void testGetItemSetReturnsNull() {
         assertNull(mission.getItemSet());
     }
-
 }

@@ -12,7 +12,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 
-public class Enemy extends Mob implements MissionItem,Runnable {
+public class Enemy extends Mob implements MissionItem {
 
     private String id;
     private Block map;
@@ -20,8 +20,15 @@ public class Enemy extends Mob implements MissionItem,Runnable {
     private Rectangle vision;
     private int directVision = 10;
     private int lateralVision = 1;
+    private int speed;
     private Player player;
     private boolean attack,obstacle,favorY,favorX;
+
+    public Enemy(MobConfiguration configuration, String id) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
+    	super(configuration, id);
+    	this.id = id;
+    	direction = Directions.LEFT;
+	}
     
     public Enemy(MobConfiguration configuration, String id, Block map, Player p) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
         super(configuration, id);
@@ -41,6 +48,7 @@ public class Enemy extends Mob implements MissionItem,Runnable {
     	directVision *= map.getMap().getTileWidth();
     	lateralVision *= map.getMap().getTileHeight();
     	vision = new Rectangle(getX(), getY(),directVision,lateralVision);  // Vision
+    	speed = 2;
     	attack = false;
     	obstacle= false;
     	favorX = favorY = false;
@@ -99,31 +107,54 @@ public class Enemy extends Mob implements MissionItem,Runnable {
 				dirX = (px - getX());
 				dirY = (py - getY());
 				if(obstacle) {
-					if(map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, (dirX > 0)?  Directions.RIGHT: Directions.LEFT) &&
-							map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, (dirY > 0)?  Directions.DOWN: Directions.UP)) {
-						System.out.println(id+" "+map.getID()+" OBSTACLE MODE OFF");
-						obstacle = false;
-						favorY = (direction == Directions.LEFT || direction == Directions.RIGHT);
-						favorX = !favorY;
+					boolean collideX,collideY;
+					collideX = !map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, (dirX > 0)?  Directions.RIGHT: Directions.LEFT);
+					collideY = !map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, (dirY > 0)?  Directions.DOWN: Directions.UP);
+					if(!collideX && !collideY){
+						
+						boolean tmp =favorX;
+						favorX = favorY;
+						favorY = tmp;
+						
+						System.out.println(id+" "+map.getID()+" NOT COLLISION AROUND");
 					}
+					else if(!collideX) {
+						favorX = true;
+						favorY = false;
+						System.out.println(id+" "+map.getID()+"  NOT COLLISION X");
+					}
+					else if(!collideY) {
+						favorX = false;
+						favorY = true;
+						System.out.println(id+" "+map.getID()+"  NOT COLLISION Y");
+					}
+					else {
+						attack = false;
+						favorX = favorY = false;
+						System.out.println(id+" "+map.getID()+"  I QUIT ");
+					}
+					obstacle = false;
 				}
-				else if((dirX < -8 || dirX > 8) || favorX) {
+				else if(((dirX < -8 || dirX > 8) && !favorY) || favorX) {
 					System.out.println(id+" "+map.getID()+" MOVE X");
 					direction = (dirX > 0)?  Directions.RIGHT: Directions.LEFT;
-					favorX = !(dirX < -8 || dirX > 8);
+					
+					favorX = (dirX < -8 || dirX > 8);
 				}
-				else if((dirY < -8 || dirY > 8) || favorY) {
+				else if(((dirY < -8 || dirY > 8) && !favorX) || favorY) {
 					System.out.println(id+" "+map.getID()+" MOVE Y");
 					direction = (dirY > 0)?  Directions.DOWN: Directions.UP;
-					favorY = !(dirY < -8 || dirY > 8);
+					
+					favorY = (dirY < -8 || dirY > 8);
 				}
 				else {
 					System.out.println(id+" "+map.getID()+" ON PLAYER");
 					direction = -1;
+					favorX = favorY = false;
 				}
 			}
 			
-			if(!map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, direction)) {
+			if(direction!=-1 && !map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, direction)) {
 					System.out.println(id+" "+map.getID()+" COLLIDE");
 					
 					int choosen = direction;
@@ -165,22 +196,22 @@ public class Enemy extends Mob implements MissionItem,Runnable {
 				setLocation(x,y);
 				switch(direction) {
 					case Directions.LEFT:
-						x = x - 1;
+						x = x - speed;
 						System.out.println(id+" "+map.getID()+" LEFT");
 						faceLeft();
 						break;
 					case Directions.RIGHT:
-						x = x + 1;
+						x = x + speed;
 						System.out.println(id+" "+map.getID()+" RIGHT");
 						faceRight();
 						break;
 					case Directions.UP:
-						y = y - 1;
+						y = y - speed;
 						System.out.println(id+" "+map.getID()+" UP");
 						faceUp();
 						break;
 					case Directions.DOWN:
-						y = y + 1;
+						y = y + speed;
 						System.out.println(id+" "+map.getID()+" DOWN");
 						faceDown();
 						break;
@@ -192,17 +223,17 @@ public class Enemy extends Mob implements MissionItem,Runnable {
 	}
 
     
-	@Override
+	/*@Override
 	public void run() {
 		try {
 			while(getHp()>0) {
 				update();
-				Thread.sleep(100);
+				Thread.sleep(10);
 			}
 		} catch (NullAnimationException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 }

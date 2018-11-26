@@ -50,7 +50,18 @@ public abstract class SimpleInteractionMission extends Mission{
         return needed;
     }
 
+    /**
+     * @return the number of interactions needed to complete the mission
+     */
     public int getNumInteractions() {
         return numInteractions;
+    }
+
+    /**
+     * @return the number of missions in the component
+     */
+    @Override
+    public int numMissions() {
+        return 0;
     }
 }
