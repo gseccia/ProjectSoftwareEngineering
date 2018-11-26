@@ -4,7 +4,6 @@ import configuration.DoorsConfiguration;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import elements.Enemy;
-import elements.Mob;
 import elements.NullAnimationException;
 import elements.Player;
 import map.MapGraph;
@@ -26,7 +25,6 @@ public class Level extends StateBasedGame{
 	
 	/**
 	 * This class is the manager of a level
-	 * @throws SlickException slick exception
 	*/
 	public Level(String gamename,String charname,int level_difficulty) {
 		super(gamename);
@@ -71,7 +69,7 @@ public class Level extends StateBasedGame{
 		for(int i=0;i<difficulty;i++)
 		{
 			try {
-				mob = new Enemy(MobConfiguration.getInstance(),"zombo",b,player);  //Retrieve other String id
+				mob = new Enemy(MobConfiguration.getEnemyInstance(),"zombo",b,player);  //Retrieve other String id
 				mobs.add(mob);
 			} catch (NullAnimationException | NoSuchElementInConfigurationException e) {
 				e.printStackTrace();
@@ -86,7 +84,7 @@ public class Level extends StateBasedGame{
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException {
 		try {
-			Player player = new Player(MobConfiguration.getInstance(), charname);
+			Player player = new Player(MobConfiguration.getPlayerInstance(), charname);
 			generatePopulation(1,player); // level_difficulty
 			for(Block block: block_list)
 			{
