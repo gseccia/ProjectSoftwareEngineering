@@ -75,8 +75,9 @@ public class Enemy extends Mob implements MissionItem {
 			y = getY();
 			
 			
-			setLocation((int)(getX())-map.getShiftX()*map.getMap().getTileWidth(),(int)(getY())-map.getShiftY()*map.getMap().getTileHeight());
+			setLocation((int)(getX())-map.getShiftX()*map.getMap().getTileWidth(),(int)(getY())-map.getShiftY()*map.getMap().getTileHeight()); // Alignment
 			
+			// Vision Alignment
 			switch(direction) {
 				case Directions.LEFT:
 					vision.setBounds(getX()-directVision, getY(),directVision,lateralVision);
@@ -92,13 +93,14 @@ public class Enemy extends Mob implements MissionItem {
 					break;
 			}
 			
+			// Vision Logic
 			if(vision.intersects(player)) {
 				// Attack him!
 				attack = true;
 				System.out.println(id+" "+map.getID()+" ATTACK!");
 			}
 			
-			
+			// Attack Mode Logic
 			if(attack) {
 				System.out.println(id+" "+map.getID()+" ATTACK MODE ");
 				float px,py,dirX,dirY;
@@ -107,6 +109,7 @@ public class Enemy extends Mob implements MissionItem {
 				dirX = (px - getX());
 				dirY = (py - getY());
 				if(obstacle) {
+					// Obstacle management
 					boolean collideX,collideY;
 					collideX = !map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, (dirX > 0)?  Directions.RIGHT: Directions.LEFT);
 					collideY = !map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, (dirY > 0)?  Directions.DOWN: Directions.UP);
@@ -116,6 +119,7 @@ public class Enemy extends Mob implements MissionItem {
 						favorX = favorY;
 						favorY = tmp;
 						
+						obstacle = false;
 						System.out.println(id+" "+map.getID()+" NOT COLLISION AROUND");
 					}
 					else if(!collideX) {
@@ -131,46 +135,72 @@ public class Enemy extends Mob implements MissionItem {
 					else {
 						attack = false;
 						favorX = favorY = false;
+						obstacle = false;
 						System.out.println(id+" "+map.getID()+"  I QUIT ");
 					}
-					obstacle = false;
+					
 				}
+				
 				else if(((dirX < -8 || dirX > 8) && !favorY) || favorX) {
+					// X movements
 					System.out.println(id+" "+map.getID()+" MOVE X");
 					direction = (dirX > 0)?  Directions.RIGHT: Directions.LEFT;
 					
-					favorX = (dirX < -8 || dirX > 8);
+					//favorX = (dirX < -8 || dirX > 8);
 				}
+				
 				else if(((dirY < -8 || dirY > 8) && !favorX) || favorY) {
+					// Y movements
 					System.out.println(id+" "+map.getID()+" MOVE Y");
 					direction = (dirY > 0)?  Directions.DOWN: Directions.UP;
 					
-					favorY = (dirY < -8 || dirY > 8);
+					//favorY = (dirY < -8 || dirY > 8);
 				}
 				else {
+					// On player! Not needed movements
 					System.out.println(id+" "+map.getID()+" ON PLAYER");
 					direction = -1;
 					favorX = favorY = false;
 				}
 			}
 			
+			// Movements' logic  after a wall collision!
 			if(direction!=-1 && !map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, direction)) {
 					System.out.println(id+" "+map.getID()+" COLLIDE");
 					
 					int choosen = direction;
 					if(attack) {
-						// Ignore all walls!  Attack him! Destroy him!
-						if(direction == Directions.LEFT || direction == Directions.RIGHT) {
-							choosen = (player.getY() - getY() > 0) ? Directions.DOWN : Directions.UP;
+						// Attack Mode Movements Logic if there is an obstacle!
+						if(obstacle) {
+							System.out.println(id+" "+map.getID()+" DEVIATION");
+							/*
+							boolean tmp = favorX;
+							favorX = favorY;
+							favorY = tmp;*/
+							
+							if(direction == Directions.LEFT || direction == Directions.RIGHT) {
+								choosen = (player.getY() - getY() >0) ? Directions.DOWN : Directions.UP;
+							}
+							else {
+								choosen = (player.getX() - getX() >0) ? Directions.RIGHT : Directions.LEFT;
+							}
+							
+							
 						}
 						else {
-							choosen = (player.getX() - getX() > 0) ? Directions.RIGHT : Directions.LEFT;
+							System.out.println(id+" "+map.getID()+" OBSTACLE MODE");
+							obstacle = true;
+							if(direction == Directions.LEFT || direction == Directions.RIGHT) {
+								choosen = (direction == Directions.RIGHT) ? Directions.LEFT : Directions.RIGHT;
+							}
+							else {
+								choosen = (direction == Directions.UP) ? Directions.DOWN : Directions.UP;
+							}
 						}
-						obstacle = true;
-						System.out.println(id+" "+map.getID()+" OBSTACLE MODE");
+						
 					}
 					else {
-						//  Choose a random free direction
+						//  Choose a random free direction 
 						Random r = new Random();
 						while(choosen == direction) {
 							switch(r.nextInt(4)) {
@@ -192,9 +222,10 @@ public class Enemy extends Mob implements MissionItem {
 					direction = choosen;
 			}
 			
-				
-				setLocation(x,y);
-				switch(direction) {
+			setLocation(x,y); // Restore Correct Position
+			
+			// Movements Action!
+			switch(direction) {
 					case Directions.LEFT:
 						x = x - speed;
 						System.out.println(id+" "+map.getID()+" LEFT");
@@ -218,7 +249,8 @@ public class Enemy extends Mob implements MissionItem {
 					default:
 						faceStill();
 				}
-			setLocation(x,y);
+				
+			setLocation(x,y); // Position Updating
 		}
 	}
 
