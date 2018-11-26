@@ -11,18 +11,27 @@ import java.util.Set;
 
 
 public class MobConfiguration extends Configuration{
-    private static final String filename = System.getProperty("user.dir") + "/resource/configurations/mobs.conf";
-    private static MobConfiguration instance = null;
+    private static final String playerFilename = System.getProperty("user.dir") + "/resource/configurations/player.conf";
+    private static final String enemyFilename = System.getProperty("user.dir") + "/resource/configurations/enemy.conf";
+    private static MobConfiguration playerInstance = null;
+    private static MobConfiguration enemyInstance = null;
     private JsonObject configuration;
 
-    public static MobConfiguration getInstance(){
-        if(instance == null){
-            instance = new MobConfiguration();
+    public static MobConfiguration getEnemyInstance(){
+        if(enemyInstance == null){
+            enemyInstance = new MobConfiguration(enemyFilename);
         }
-        return instance;
+        return enemyInstance;
     }
 
-    private MobConfiguration(){
+    public static MobConfiguration getPlayerInstance(){
+        if(playerInstance == null){
+            playerInstance = new MobConfiguration(playerFilename);
+        }
+        return playerInstance;
+    }
+
+    private MobConfiguration(String filename){
         this.configuration = super.uploadConfiguration(filename);
     }
 
