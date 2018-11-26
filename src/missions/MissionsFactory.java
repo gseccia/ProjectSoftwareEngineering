@@ -2,12 +2,9 @@ package missions;
 
 import configuration.ItemConfiguration;
 import configuration.MobConfiguration;
-import utils.RandomHashSet;
+import utils.RandomCollection;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class MissionsFactory {
 
@@ -28,7 +25,7 @@ public class MissionsFactory {
         Set<Integer> excluded = new HashSet<>();
         while(difficulty > 0){
             int ran = generateRandomId(excluded);
-            Set<String> targetSet = getMissionIDs(ran);
+            List<String> targetSet = getMissionIDs(ran);
             Iterator<String> it = targetSet.iterator();
             boolean flag = true;
             while (it.hasNext() && flag) {
@@ -57,13 +54,13 @@ public class MissionsFactory {
         return ran;
     }
 
-    private Set<String> getMissionIDs(int mID){
+    private List<String> getMissionIDs(int mID){
         switch (mID){
             case 0:
-                return new RandomHashSet<>(mobConf.getMobNames());
+                return new RandomCollection<>(mobConf.getMobNames());
 
             case 1:
-                return new RandomHashSet<>(itemConf.getItemNames());
+                return new RandomCollection<>(itemConf.getItemNames());
 
             default:
                 return null;
