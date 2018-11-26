@@ -21,7 +21,7 @@ public class Enemy extends Mob implements MissionItem,Runnable {
     private int directVision = 10;
     private int lateralVision = 1;
     private Player player;
-    private boolean attack;
+    private boolean attack,obstacle,favorY,favorX;
     
     public Enemy(MobConfiguration configuration, String id, Block map, Player p) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
         super(configuration, id);
@@ -42,6 +42,8 @@ public class Enemy extends Mob implements MissionItem,Runnable {
     	lateralVision *= map.getMap().getTileHeight();
     	vision = new Rectangle(getX(), getY(),directVision,lateralVision);  // Vision
     	attack = false;
+    	obstacle= false;
+    	favorX = favorY = false;
     }
     
     public void draw() {
@@ -96,13 +98,24 @@ public class Enemy extends Mob implements MissionItem,Runnable {
 				py = player.getY();
 				dirX = (px - getX());
 				dirY = (py - getY());
-				if(dirX < -8 || dirX > 8) {
+				if(obstacle) {
+					if(map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, (dirX > 0)?  Directions.RIGHT: Directions.LEFT) &&
+							map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, (dirY > 0)?  Directions.DOWN: Directions.UP)) {
+						System.out.println(id+" "+map.getID()+" OBSTACLE MODE OFF");
+						obstacle = false;
+						favorY = (direction == Directions.LEFT || direction == Directions.RIGHT);
+						favorX = !favorY;
+					}
+				}
+				else if((dirX < -8 || dirX > 8) || favorX) {
 					System.out.println(id+" "+map.getID()+" MOVE X");
 					direction = (dirX > 0)?  Directions.RIGHT: Directions.LEFT;
+					favorX = !(dirX < -8 || dirX > 8);
 				}
-				else if(dirY < -8 || dirY > 8) {
+				else if((dirY < -8 || dirY > 8) || favorY) {
 					System.out.println(id+" "+map.getID()+" MOVE Y");
 					direction = (dirY > 0)?  Directions.DOWN: Directions.UP;
+					favorY = !(dirY < -8 || dirY > 8);
 				}
 				else {
 					System.out.println(id+" "+map.getID()+" ON PLAYER");
@@ -116,9 +129,17 @@ public class Enemy extends Mob implements MissionItem,Runnable {
 					int choosen = direction;
 					if(attack) {
 						// Ignore all walls!  Attack him! Destroy him!
+						if(direction == Directions.LEFT || direction == Directions.RIGHT) {
+							choosen = (player.getY() - getY() > 0) ? Directions.DOWN : Directions.UP;
+						}
+						else {
+							choosen = (player.getX() - getX() > 0) ? Directions.RIGHT : Directions.LEFT;
+						}
+						obstacle = true;
+						System.out.println(id+" "+map.getID()+" OBSTACLE MODE");
 					}
-					//  Choose a random free direction
 					else {
+						//  Choose a random free direction
 						Random r = new Random();
 						while(choosen == direction) {
 							switch(r.nextInt(4)) {
