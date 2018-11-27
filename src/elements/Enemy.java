@@ -267,4 +267,8 @@ public class Enemy extends Mob implements MissionItem {
     public Rectangle getVision() {
     	return vision;
     }
+    
+    public int getDirection() {
+    	return direction;
+    }
 }
