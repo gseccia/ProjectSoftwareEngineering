@@ -56,32 +56,28 @@ public class Block extends BasicGameState
 		mapCollision = new MapCollisionManager(map);
 		enemy = population.get(this);
 		this.player = player;
-		
-		/*enemy_ai = new Thread[enemy.size()];
-		int i = 0;
-		for(Enemy e: enemy) {
-			enemy_ai[i] = new Thread(e);
-			i++;
-		}*/
 	}
 	
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		setCharacterSpawn(1);
-		int x, y;
+		int x, y, n;
 
 		// Enemies spawn from a set of a random spawn points
+		n = 1;
 		for(Enemy e : enemy)
 		{
-			x = Integer.parseInt(map.getMapProperty("spawnX1","0"));
-			y = Integer.parseInt(map.getMapProperty("spawnY1","0"));
+			x = Integer.parseInt(map.getMapProperty("spawnX"+n,"-1"));
+			y = Integer.parseInt(map.getMapProperty("spawnY"+n,"-1"));
+			if(x==-1 || y==-1) {
+				x = Integer.parseInt(map.getMapProperty("spawnX1","-1"));
+				y = Integer.parseInt(map.getMapProperty("spawnY1","-1"));
+				n = 1;
+			}
+			n++;
 			e.init(x,y);
 		}
-		/*
-		for(Thread t:enemy_ai) {
-			t.start();
-		}*/
 		
 		prev_map_x = map_x;
 		prev_map_y = map_y;
@@ -107,6 +103,7 @@ public class Block extends BasicGameState
 		for(Enemy e : enemy)
 		{
 			e.draw();
+			//g.draw(e.getVision());  //TESTING LINE
 		}
 		player.draw();
 	}
@@ -151,15 +148,7 @@ public class Block extends BasicGameState
 			if(door != -1 && pressed) {
 				for(Edge e:graph.getEdges(this)) {
 					if(e.getPortSource(vertex)==door) {
-						e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));
-						
-						/*for(Thread t:enemy_ai) {
-							t.suspend();
-						}
-						for(Thread t: e.opposite(vertex).getBlock().getEnemies()) {
-							t.resume();
-						}*/
-						
+						e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));	
 						gs.enterState(e.opposite(vertex).getId());
 					}
 				}
