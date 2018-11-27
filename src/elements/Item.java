@@ -1,16 +1,20 @@
 package elements;
 
+import configuration.ItemConfiguration;
+import configuration.NoSuchElementInConfigurationException;
 import missions.MissionItem;
-import org.newdawn.slick.Animation;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Item extends AnimatedElement implements MissionItem {
 
     private String id;
 
-    public Item(String id) throws NullAnimationException {
-        //TODO change with values from configuration
-        super(new Animation(), 0, 0, 0, 0);
+    public Item(ItemConfiguration configuration, String id) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
+        super(configuration.getItemAnimation(id),
+                configuration.getWidth(id),
+                configuration.getHeight(id),
+                0, 0);
         this.id = id;
     }
     

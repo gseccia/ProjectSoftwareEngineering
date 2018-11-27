@@ -86,7 +86,7 @@ public class MissionManager extends Mission {
         if(items == null){
             try {
                 buildItemSet();
-            } catch (NullAnimationException e) {
+            } catch (NullAnimationException | SlickException | NoSuchElementInConfigurationException e) {
                 e.printStackTrace();
             }
         }
@@ -119,7 +119,7 @@ public class MissionManager extends Mission {
     /**
      * Build the minimal item set for this set of missions
      */
-    private void buildItemSet() throws NullAnimationException {
+    private void buildItemSet() throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
         //Gets all the mission specific items
         Set<Item> primer = new HashSet<>();
         for(Mission m : missions) {
@@ -144,7 +144,7 @@ public class MissionManager extends Mission {
         //Generate the remaining items
         for(Map.Entry<String, Integer> e : generals.entrySet()){
             for(int i=0; i<e.getValue(); i++){
-                primer.add(new Item(e.getKey()));
+                primer.add(new Item(itemConf, e.getKey()));
             }
         }
 

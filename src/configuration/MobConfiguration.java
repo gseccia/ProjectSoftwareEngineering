@@ -1,10 +1,7 @@
 package configuration;
 
-
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import java.util.Set;
@@ -90,29 +87,6 @@ public class MobConfiguration extends Configuration{
 
     public Animation getFaceStill(String id) throws SlickException, NoSuchElementInConfigurationException {
         return generateAnimation(id,"still");
-    }
-
-    private Animation generateAnimation(String id, String movement) throws SlickException, NoSuchElementInConfigurationException {
-        // load configuration from id
-        JsonObject conf = this.getConfiguration(id);
-        // load configuration for movement type
-        JsonObject mov = conf.getAsJsonObject(movement);
-        if(mov == null){
-            throw new NoSuchElementInConfigurationException();
-        }
-        // load frame for movement type
-        JsonArray images = mov.getAsJsonArray("frames");
-        // load duration for each frame
-        JsonArray duration = mov.getAsJsonArray("duration");
-        // setup an animation as a sequence of image and movements
-        Image[] arr = new Image[images.size()];
-        int[] dur = new int[images.size()];
-        String basePath = conf.get("base_folder").getAsString()+movement+"/";
-        for(int i = 0; i< images.size(); i++){
-            arr[i] = new Image(basePath+images.get(i).getAsString());
-            dur[i] = duration.get(i).getAsInt();
-        }
-        return new Animation(arr, dur);
     }
 
     public Set<String> getMobNames(){

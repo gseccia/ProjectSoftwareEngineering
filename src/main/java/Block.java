@@ -1,9 +1,11 @@
 package main.java;
 
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
+import configuration.ItemConfiguration;
+import configuration.NoSuchElementInConfigurationException;
+import elements.Item;
 import managers.Directions;
 import managers.MapCollisionManager;
 import map.Edge;
@@ -29,11 +31,12 @@ public class Block extends BasicGameState
 	private Mob player;
 	private Set<Enemy> enemy;
 	private int state;
-	private int map_x, map_y, prev_map_x, prev_map_y;
+	private int map_x, map_y;
 	private MapCollisionManager mapCollision;
 	private String mapName;
 	private MapGraph graph;
 	private Vertex vertex;
+	private Item pepsi;
 	//private Thread[] enemy_ai;
 	
 	public Block(int state,String mapName)
@@ -78,9 +81,16 @@ public class Block extends BasicGameState
 			n++;
 			e.init(x,y);
 		}
-		
-		prev_map_x = map_x;
-		prev_map_y = map_y;
+
+		ItemConfiguration i = ItemConfiguration.getInstance();
+		try {
+			pepsi = new Item(i, "pepsi");
+			pepsi.setLocation(288,240);
+		} catch (NullAnimationException | SlickException e) {
+			e.printStackTrace();
+		} catch (NoSuchElementInConfigurationException e) {
+			e.printStackTrace();
+		}
 	 }
 
 	@Override
@@ -106,6 +116,8 @@ public class Block extends BasicGameState
 			//g.draw(e.getVision());  //TESTING LINE
 		}
 		player.draw();
+		pepsi.draw();
+
 	}
 
 	@Override
@@ -162,9 +174,7 @@ public class Block extends BasicGameState
 		} catch (NullAnimationException e1) {
 			e1.printStackTrace();
 		}
-		
-		prev_map_x = map_x;
-		prev_map_y = map_y;
+
 	}
 
 	@Override
