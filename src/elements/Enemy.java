@@ -3,6 +3,7 @@ package elements;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import main.java.Block;
+import managers.CollisionDetectionWall;
 import managers.Directions;
 import missions.MissionItem;
 
@@ -22,6 +23,7 @@ public class Enemy extends Mob implements MissionItem {
     private int lateralVision;
     private int speed,surrendTime;
     private Player player;
+    private CollisionDetectionWall wallCollision;
     private boolean attack,obstacle,favorY,favorX;
 
     public Enemy(MobConfiguration configuration, String id) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
@@ -48,6 +50,7 @@ public class Enemy extends Mob implements MissionItem {
     	directVision = 8*map.getMap().getTileWidth();
     	lateralVision = 2*map.getMap().getTileHeight();
     	vision = new Rectangle(getX(), getY(),directVision,lateralVision);  // Vision
+    	wallCollision = new CollisionDetectionWall(map.getHitbox());
     	speed = 4;
     	surrendTime = 150;
     	attack = false;
@@ -120,8 +123,10 @@ public class Enemy extends Mob implements MissionItem {
 				if(obstacle) {
 					// Obstacle management
 					boolean collideX,collideY;
-					collideX = !map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, (dirX > 0)?  Directions.RIGHT: Directions.LEFT);
-					collideY = !map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, (dirY > 0)?  Directions.DOWN: Directions.UP);
+					wallCollision.setKey( (dirX > 0)?  Directions.RIGHT: Directions.LEFT);
+					collideX = !wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this);
+					wallCollision.setKey( (dirY > 0)?  Directions.DOWN: Directions.UP);
+					collideY = !wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this);
 					if(!collideX && !collideY){
 						
 						boolean tmp =favorX;
@@ -177,7 +182,8 @@ public class Enemy extends Mob implements MissionItem {
 			}
 			
 			// Movements' logic  after a wall collision!
-			if(direction!=-1 && !map.getCollisionManager().wallCollision(map.getShiftX(), map.getShiftY(), this, direction)) {
+			wallCollision.setKey(direction);
+			if(direction!=-1 && !wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this)) {
 					//System.out.println(id+" "+map.getID()+" COLLIDE");
 					
 					int choosen = direction;

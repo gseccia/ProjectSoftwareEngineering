@@ -1,17 +1,13 @@
 package main.java;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
-import managers.CollisionDetectionDoor;
-import managers.CollisionDetectionItem;
-import managers.CollisionDetectionWall;
+import configuration.ItemConfiguration;
+import configuration.NoSuchElementInConfigurationException;
+import elements.Item;
 import managers.Directions;
-import managers.HitboxMaker;
 import managers.MapCollisionManager;
-import managers.Wall;
 import map.Edge;
 import map.MapGraph;
 import map.Vertex;
@@ -29,21 +25,19 @@ import elements.Enemy;
 import elements.Mob;
 import elements.NullAnimationException;
 
-public class Block extends BasicGameState
+public class Block_2 extends BasicGameState
 {
-	private CollisionDetectionWall wallCollision;
-	private CollisionDetectionDoor doorCollision;
-	private CollisionDetectionItem itemCollision;
 	private TiledMap map;
 	private Mob player;
 	private Set<Enemy> enemy;
 	private int state;
-	private int mapX, mapY, prevMapX, prevMapY;
+	private int map_x, map_y;
 	private MapCollisionManager mapCollision;
 	private String mapName;
 	private MapGraph graph;
 	private Vertex vertex;
-	private Thread[] enemy_ai;
+	private Item pepsi;
+	//private Thread[] enemy_ai;
 	
 	public Block(int state,String mapName)
 	{
@@ -62,75 +56,68 @@ public class Block extends BasicGameState
 		map = new TiledMap("resource/maps/Complete"+mapName+"/"+mapName+".tmx");
 		this.vertex = graph.getVertex(this);
 		this.graph=graph;
-		//mapCollision = new MapCollisionManager(map);
+		mapCollision = new MapCollisionManager(map);
 		enemy = population.get(this);
 		this.player = player;
-		
-		enemy_ai = new Thread[enemy.size()];
-		int i = 0;
-		for(Enemy e: enemy) {
-			enemy_ai[i] = new Thread(e);
-			i++;
-		}
-		
-		HitboxMaker hitbox = new HitboxMaker(map);
-		hitbox.initiateHitbox();
-		
-		wallCollision = new CollisionDetectionWall(hitbox);
-		doorCollision = new CollisionDetectionDoor(hitbox);
-		itemCollision = new CollisionDetectionItem(hitbox);
 	}
 	
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		setCharacterSpawn(1);
-		int x, y;
+		int x, y, n;
 
 		// Enemies spawn from a set of a random spawn points
+		n = 1;
 		for(Enemy e : enemy)
 		{
-			x = Integer.parseInt(map.getMapProperty("spawnX1","0"));
-			y = Integer.parseInt(map.getMapProperty("spawnY1","0"));
+			x = Integer.parseInt(map.getMapProperty("spawnX"+n,"-1"));
+			y = Integer.parseInt(map.getMapProperty("spawnY"+n,"-1"));
+			if(x==-1 || y==-1) {
+				x = Integer.parseInt(map.getMapProperty("spawnX1","-1"));
+				y = Integer.parseInt(map.getMapProperty("spawnY1","-1"));
+				n = 1;
+			}
+			n++;
 			e.init(x,y);
 		}
-		
-		for(Thread t:enemy_ai) {
-			t.start();
+
+		ItemConfiguration i = ItemConfiguration.getInstance();
+		try {
+			pepsi = new Item(i, "pepsi");
+			pepsi.setLocation(288,240);
+		} catch (NullAnimationException | SlickException e) {
+			e.printStackTrace();
+		} catch (NoSuchElementInConfigurationException e) {
+			e.printStackTrace();
 		}
-		
-		prevMapX = mapX;
-		prevMapY = mapY;
 	 }
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) {
 		g.scale(1.5f, 1.5f);
-		map.render(0,0, mapX,mapY,mapX+50,mapY+50);
+		map.render(0,0, map_x,map_y,map_x+50,map_y+50);
 		//TESTING ZONE BEGIN
 		/*
 		for(Rectangle b: mapCollision.getCollidingBlocks())
 		{
 			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getWidth());
 		}*/
-		List<Wall> doors = doorCollision.getDoors();
-		for(Rectangle b: doors) {
+		for(Rectangle b: mapCollision.getDoors()) {
 			g.setColor(Color.blue);
-			g.drawRect(b.getX()-mapX*map.getTileWidth(),b.getY()-mapY*map.getTileHeight(),b.getWidth(),b.getHeight());
+			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getHeight());
 		}
 		g.setColor(Color.white);
-//		for(Rectangle b: mapCollision.getDoors()) {
-//			g.setColor(Color.blue);
-//			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getHeight());
-//		}
-//		g.setColor(Color.white);
 		//TESTING ZONE END
 
 		for(Enemy e : enemy)
 		{
 			e.draw();
+			//g.draw(e.getVision());  //TESTING LINE
 		}
 		player.draw();
+		pepsi.draw();
+
 	}
 
 	@Override
@@ -139,82 +126,55 @@ public class Block extends BasicGameState
 			boolean pressed =false;
 			if(gc.getInput().isKeyDown(Directions.RIGHT)){
 				player.faceRight();
-				wallCollision.setKey(Directions.RIGHT);
-				if(wallCollision.detectCollision(mapX, mapY, player)) {
-					mapX += 1;
+				if(mapCollision.wallCollision(map_x, map_y, player, Directions.RIGHT)){
+					map_x += 1;
 					pressed =true;
 				}
 			}
 			else if(gc.getInput().isKeyDown(Directions.LEFT)){
 				player.faceLeft();
-				wallCollision.setKey(Directions.LEFT);
-				if(wallCollision.detectCollision(mapX, mapY, player)){
-					mapX -= 1;
+				if(mapCollision.wallCollision(map_x, map_y, player, Directions.LEFT)){
+					map_x -= 1;
 					pressed =true;
 				}
 			}
 			else if(gc.getInput().isKeyDown(Directions.DOWN)){
 				player.faceDown();
-				wallCollision.setKey(Directions.DOWN);
-				if(wallCollision.detectCollision(mapX, mapY, player)){
-					mapY += 1;
+				if(mapCollision.wallCollision(map_x, map_y, player, Directions.DOWN)){
+					map_y += 1;
 					pressed =true;
 				}
 			}
 			else if(gc.getInput().isKeyDown(Directions.UP)){
 				player.faceUp();
-				wallCollision.setKey(Directions.UP);
-				if(wallCollision.detectCollision(mapX, mapY, player)){
-					mapY -= 1;
+				if(mapCollision.wallCollision(map_x, map_y, player, Directions.UP)){
+					map_y -= 1;
 					pressed =true;
 				}
+				
 			}
 			else{
 				player.faceStill();
 			}
-			if(doorCollision.detectCollision(mapX, mapY, player)) {
-				if(doorCollision.getCollidedDoor() != -1 && pressed) {
-					System.out.println("Collisione con la porta "+doorCollision.getCollidedDoor());
-					for(Edge e:graph.getEdges(this)) {
-						if(e.getPortSource(vertex) == doorCollision.getCollidedDoor()) {
-							e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));
-							
-							for(Thread t:enemy_ai) {
-								t.suspend();
-							}
-							for(Thread t: e.opposite(vertex).getBlock().getEnemies()) {
-								t.resume();
-							}
-							
-							gs.enterState(e.opposite(vertex).getId());
-						}
+			int door = mapCollision.doorCollision(map_x, map_y, player);
+			if(door != -1 && pressed) {
+				for(Edge e:graph.getEdges(this)) {
+					if(e.getPortSource(vertex)==door) {
+						e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));	
+						gs.enterState(e.opposite(vertex).getId());
 					}
 				}
 			}
-//			int door = mapCollision.doorCollision(map_x, map_y, player);
-//			if(door != -1 && pressed) {
-//				for(Edge e:graph.getEdges(this)) {
-//					if(e.getPortSource(vertex)==door) {
-//						e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));
-//						
-//						for(Thread t:enemy_ai) {
-//							t.suspend();
-//						}
-//						for(Thread t: e.opposite(vertex).getBlock().getEnemies()) {
-//							t.resume();
-//						}
-//						
-//						gs.enterState(e.opposite(vertex).getId());
-//					}
-//				}
-//			}
+			
+			// Enemy updating
+			for(Enemy e:enemy) {
+				e.update();
+			}
 
 		} catch (NullAnimationException e1) {
 			e1.printStackTrace();
 		}
-		
-		prevMapX = mapX;
-		prevMapY = mapY;
+
 	}
 
 	@Override
@@ -229,22 +189,22 @@ public class Block extends BasicGameState
 		width = Integer.parseInt(map.getMapProperty("charWidthDoor"+d,"0"));
 		height = Integer.parseInt(map.getMapProperty("charHeightDoor"+d,"0"));
 		player.setLocation(256,208);
-		mapX = x - (int)player.getX()/map.getTileWidth();
-		mapY = y - (int)player.getY()/map.getTileHeight();
+		map_x = x - (int)player.getX()/map.getTileWidth();
+		map_y = y - (int)player.getY()/map.getTileHeight();
 		if(width > height){
 			if(y < map.getHeight()/2){
-				mapY += 1;
+				map_y += 1;
 			}
 			else{
-				mapY -= 1;
+				map_y -= 1;
 			}
 		}
 		else{
 			if(x < map.getWidth()/2){
-				mapX += 1;
+				map_x += 1;
 			}
 			else{
-				mapX -= 1;
+				map_x -= 1;
 			}
 		}
 		
@@ -255,18 +215,18 @@ public class Block extends BasicGameState
 	}
 	
 	public int getShiftY() {
-		return mapY;
+		return map_y;
 	}
 	
 	public int getShiftX() {
-		return mapX;
+		return map_x;
 	}
 	
 	public TiledMap getMap() {
 		return map;
 	}
 	
-	public Thread[] getEnemies() {
+	/*public Thread[] getEnemies() {
 		return enemy_ai;
-	}
+	}*/
 }
