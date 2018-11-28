@@ -113,11 +113,11 @@ public class Block extends BasicGameState
 				n = 1;
 			}
 			n++;
-			i.setLocation(x*map.getTileWidth(),y*map.getTileHeight());
+			i.setLocation((x)*map.getTileWidth(),y*map.getTileHeight());
 		}
 		
-		prevMapX = mapX;
-		prevMapY = mapY;
+		prevMapX = 0;
+		prevMapY = 0;
 		
 	 }
 
