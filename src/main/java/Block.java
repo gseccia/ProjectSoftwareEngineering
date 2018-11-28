@@ -13,10 +13,12 @@ import managers.Wall;
 import map.Edge;
 import map.MapGraph;
 import map.Vertex;
+import missions.Mission;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
@@ -41,11 +43,12 @@ public class Block extends BasicGameState
 	private Set<Item> item;
 	private int state;
 	private int mapX, mapY, prevMapX, prevMapY;
+	private boolean paused;
 	private HitboxMaker hitbox;
 	private String mapName;
 	private MapGraph graph;
 	private Vertex vertex;
-	private Item pepsi;
+	private Mission mission;
 	
 	public Block(int state,String mapName)
 	{
@@ -59,13 +62,14 @@ public class Block extends BasicGameState
 	 * @param population map that contains information about enemies in the blocks
 	 * @throws SlickException if the map is not loaded correctly
 	 */
-	public void initBlock(Mob player,Map<Block,Set<Enemy>> population,Map<Block,Set<Item>> items,MapGraph graph) throws SlickException
+	public void initBlock(Mob player,Map<Block,Set<Enemy>> population,Map<Block,Set<Item>> items,MapGraph graph, Mission missionGenerated) throws SlickException
 	{
 		map = new TiledMap("resource/maps/Complete"+mapName+"/"+mapName+".tmx");
 		this.vertex = graph.getVertex(this);
 		this.graph=graph;
 		enemy = population.get(this);
 		item = items.get(this);
+		mission = missionGenerated;
 		
 		this.player = player;
 		
@@ -82,7 +86,8 @@ public class Block extends BasicGameState
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		setCharacterSpawn(1);
 		int x, y, n;
-
+		paused = false;
+		
 		// Enemies spawn from a set of a random spawn points
 		n = 1;
 		for(Enemy e : enemy)
@@ -98,18 +103,22 @@ public class Block extends BasicGameState
 			e.init(x,y);
 		}
 		
+		n = 1;
+		for(Item i:item) {
+			x = Integer.parseInt(map.getMapProperty("spawnX"+n,"-1"));
+			y = Integer.parseInt(map.getMapProperty("spawnY"+n,"-1"));
+			if(x==-1 || y==-1) {
+				x = Integer.parseInt(map.getMapProperty("spawnX1","25"));
+				y = Integer.parseInt(map.getMapProperty("spawnY1","25"));
+				n = 1;
+			}
+			n++;
+			i.setLocation(x*map.getTileWidth(),y*map.getTileHeight());
+		}
+		
 		prevMapX = mapX;
 		prevMapY = mapY;
 		
-		ItemConfiguration i = ItemConfiguration.getInstance();
-		try {
-			pepsi = new Item(i, "pepsi");
-			pepsi.setLocation(288,240);
-		} catch (NullAnimationException | SlickException e) {
-			e.printStackTrace();
-		} catch (NoSuchElementInConfigurationException e) {
-			e.printStackTrace();
-		}
 	 }
 
 	@Override
@@ -141,11 +150,24 @@ public class Block extends BasicGameState
 			//g.draw(e.getVision());  //TESTING LINE
 		}
 		player.draw();
-		pepsi.draw();
+		
+		for(Item i: item) 
+		{
+			i.draw();
+		}
+		
+		if(paused) {
+			g.setColor(Color.green);
+			g.drawString(mission.toString(), 0, 0);
+			g.drawString("PAUSE", player.getX(), player.getY());
+		}
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
+		if(gc.getInput().isKeyDown(Input.KEY_P)) paused = !paused;
+		
+		if(!paused) {
 		try {
 			boolean pressed =false;
 			if(gc.getInput().isKeyDown(Directions.RIGHT)){
@@ -185,7 +207,7 @@ public class Block extends BasicGameState
 			}
 			if(doorCollision.detectCollision(mapX, mapY, player)) {
 				if(doorCollision.getCollidedDoor() != -1 && pressed) {
-					System.out.println("Collisione con la porta "+doorCollision.getCollidedDoor());
+					//System.out.println("Collisione con la porta "+doorCollision.getCollidedDoor());
 					for(Edge e:graph.getEdges(this)) {
 						if(e.getPortSource(vertex) == doorCollision.getCollidedDoor()) {
 							e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));
@@ -200,6 +222,11 @@ public class Block extends BasicGameState
 			for(Enemy e:enemy) {
 				e.update();
 			}
+			
+			for(Item i:item) {
+				i.setLocation((int)(i.getX())+(prevMapX-mapX)*map.getTileWidth(),(int)(i.getY())+(prevMapY-mapY)*map.getTileHeight());
+			}
+			
 
 		} catch (NullAnimationException e1) {
 			e1.printStackTrace();
@@ -207,6 +234,7 @@ public class Block extends BasicGameState
 		
 		prevMapX = mapX;
 		prevMapY = mapY;
+		}
 	}
 
 	@Override

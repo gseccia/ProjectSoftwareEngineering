@@ -52,10 +52,11 @@ public class Level extends StateBasedGame{
 			capacity += Integer.parseInt(e.getMap().getMapProperty("capacity","1"));
 		}*/
 		
-		missions = new MissionsFactory(1,1,MobConfiguration.getEnemyInstance(),ItemConfiguration.getInstance());
+		missions = new MissionsFactory(capacity,level_difficulty,MobConfiguration.getEnemyInstance(),ItemConfiguration.getInstance());
 		
 		try {
 			mission_generated = missions.generateMissions();
+			
 			System.out.println(mission_generated);
 		} catch (NotEnoughMissionsException e1) {
 			e1.printStackTrace();
@@ -66,13 +67,17 @@ public class Level extends StateBasedGame{
 	}
 	
 	
-	private void distribute() {
+	private void distribute(Player player) {
 		int b;
 		if(mission_generated.getEnemySet() != null){
 			Iterator<Enemy> i = mission_generated.getEnemySet().iterator();
 			b = 0;
+			Enemy e;
 			while(i.hasNext()){
-				population.get(block_list.get(b)).add(i.next());
+				e = i.next();
+				e.setMap(block_list.get(b));
+				e.setPlayer(player);
+				population.get(block_list.get(b)).add(e);
 				b = (b+1)%block_list.size();
 			}
 		}
@@ -139,10 +144,10 @@ public class Level extends StateBasedGame{
 			Player player = new Player(MobConfiguration.getPlayerInstance(), charname);
 			generatePopulation(1,player); // level_difficulty
 			generateItems();
-			distribute();
+			distribute(player);
 			for(Block block: block_list)
 			{
-				block.initBlock(player, population, items,map);
+				block.initBlock(player, population, items,map,mission_generated);
 				this.addState(block);
 			}
 

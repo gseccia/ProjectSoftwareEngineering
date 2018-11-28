@@ -277,4 +277,12 @@ public class Enemy extends Mob implements MissionItem {
     public int getDirection() {
     	return direction;
     }
+    
+    public void setPlayer(Player player) {
+    	this.player = player;
+    }
+    
+    public void setMap(Block map) {
+    	this.map = map;
+    }
 }
