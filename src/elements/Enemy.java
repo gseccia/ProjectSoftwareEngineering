@@ -46,7 +46,7 @@ public class Enemy extends Mob implements MissionItem {
     }
     
     public void init(int x,int y) {
-    	setLocation((x-map.getShiftX())*map.getMap().getTileWidth(),(y-map.getShiftY())*map.getMap().getTileHeight());
+    	setLocation(x*map.getMap().getTileWidth(),y*map.getMap().getTileHeight());
     	directVision = 8*map.getMap().getTileWidth();
     	lateralVision = 2*map.getMap().getTileHeight();
     	vision = new Rectangle(getX(), getY(),directVision,lateralVision);  // Vision
