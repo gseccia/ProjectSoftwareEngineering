@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertNull;
 
 public class KillNEnemiesMissionTest {
 
@@ -106,17 +105,17 @@ public class KillNEnemiesMissionTest {
     }
 
     @Test
-    public void testGetItemPopulationReturnsNull() {
-        assertNull(mission.getItemPopulation());
+    public void testGetItemPopulationReturnsAnEmptyMap() {
+        assertEquals(0, mission.getItemPopulation().entrySet().size());
     }
 
     @Test
-    public void testGetEnemySetReturnsNull() {
-        assertNull(mission.getEnemySet());
+    public void testGetEnemySetReturnsAnEmptySet() {
+        assertEquals(0, mission.getEnemySet().size());
     }
 
     @Test
-    public void testGetItemSetReturnsNull() {
-        assertNull(mission.getItemSet());
+    public void testGetItemSetReturnsAnEmptySet() {
+        assertEquals(0, mission.getItemSet().size());
     }
 }

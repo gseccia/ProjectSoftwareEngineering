@@ -105,18 +105,18 @@ public class CollectNItemsMissionTest {
     }
 
     @Test
-    public void testGetEnemyPopulationReturnsNull() {
-        assertNull(mission.getEnemyPopulation());
+    public void testGetEnemyPopulationReturnsAnEmptyMap() {
+        assertEquals(0, mission.getEnemyPopulation().entrySet().size());
     }
 
     @Test
-    public void testGetEnemySetReturnsNull() {
-        assertNull(mission.getEnemySet());
+    public void testGetEnemySetReturnsAnEmptySet() {
+        assertEquals(0, mission.getEnemySet().size());
     }
 
     @Test
-    public void testGetItemSetReturnsNull() {
-        assertNull(mission.getItemSet());
+    public void testGetItemSetReturnsAnEmptySet() {
+        assertEquals(0, mission.getItemSet().size());
     }
 
 }

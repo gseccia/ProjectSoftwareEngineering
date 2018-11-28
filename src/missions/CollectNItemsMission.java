@@ -3,6 +3,8 @@ package missions;
 import elements.Enemy;
 import elements.Item;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,7 +29,7 @@ public class CollectNItemsMission extends SimpleInteractionMission {
      */
     @Override
     public Set<Item> getItemSet() {
-        return null;
+        return new HashSet<>();
     }
 
     /**
@@ -35,7 +37,7 @@ public class CollectNItemsMission extends SimpleInteractionMission {
      */
     @Override
     public Map<String, Integer> getEnemyPopulation() {
-        return null;
+        return new HashMap<>();
     }
 
     /**
@@ -43,7 +45,7 @@ public class CollectNItemsMission extends SimpleInteractionMission {
      */
     @Override
     public Set<Enemy> getEnemySet() {
-        return null;
+        return new HashSet<>();
     }
 
     @Override
