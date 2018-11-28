@@ -72,4 +72,8 @@ public class HitboxMaker {
 		return items;
 	}
 	
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+	
 }

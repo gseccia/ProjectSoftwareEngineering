@@ -1,5 +1,7 @@
 package main.java;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -75,6 +77,7 @@ public class Block extends BasicGameState
 		
 		hitbox = new HitboxMaker(map);
 		hitbox.initiateHitbox();
+		hitbox.setItems(new ArrayList<>(item));
 		
 		wallCollision = new CollisionDetectionWall(hitbox);
 		doorCollision = new CollisionDetectionDoor(hitbox);
@@ -217,6 +220,11 @@ public class Block extends BasicGameState
 					}
 				}
 			}
+			if(itemCollision.detectCollision(mapX, mapY, player)) {
+				System.out.println("Stai prendendo una "+itemCollision.getItem());
+				//item.remove(itemCollision.getItem());
+			}
+			
 			
 			// Enemy updating
 			for(Enemy e:enemy) {

@@ -18,7 +18,7 @@ public class CollisionDetectionItem extends CollisionDetectionStrategy {
 	@Override
 	public boolean detectCollision(int shiftX, int shiftY, Mob player) {
 		boolean collision = false;
-		aligner(shiftX, shiftY, player, false);
+		//aligner(shiftX, shiftY, player, false);
 		for(Item i : items) {
 			if(i.intersects(player)) {
 				collision = true;
