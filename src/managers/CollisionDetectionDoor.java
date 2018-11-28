@@ -5,7 +5,12 @@ import elements.Mob;
 public class CollisionDetectionDoor extends CollisionDetectionStrategy {
 	private int doorID;
 	
-	public int getDoor() {
+	public CollisionDetectionDoor(HitboxMaker hitbox) {
+		this.doors = hitbox.getDoors();
+		this.map = hitbox.getMap();
+	}
+	
+	public int getCollidedDoor() {
 		return doorID;
 	}
 
@@ -23,7 +28,8 @@ public class CollisionDetectionDoor extends CollisionDetectionStrategy {
 			}
 			i++;
 		}
-		doorID = -1;
+		if(!collision)
+			doorID = -1;
 		player.setLocation(px, py);
 		return collision;
 	}

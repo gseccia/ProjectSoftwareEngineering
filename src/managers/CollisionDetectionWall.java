@@ -4,6 +4,11 @@ import elements.Mob;
 
 public class CollisionDetectionWall extends CollisionDetectionStrategy {
 	
+	public CollisionDetectionWall(HitboxMaker hitbox) {
+		this.walls = hitbox.getWalls();
+		this.map = hitbox.getMap();
+	}
+	
 	public void setKey(int key) {
 		this.key = key;
 	}
@@ -20,7 +25,7 @@ public class CollisionDetectionWall extends CollisionDetectionStrategy {
 			}
 		}
 		player.setLocation(px, py);
-		return collision;
+		return !collision;
 	}
 
 }

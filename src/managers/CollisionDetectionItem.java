@@ -6,6 +6,11 @@ import elements.Mob;
 public class CollisionDetectionItem extends CollisionDetectionStrategy {
 	private String itemFound;
 	
+	public CollisionDetectionItem(HitboxMaker hitbox) {
+		this.items = hitbox.getItems();
+		this.map = hitbox.getMap();
+	}
+	
 	public String getItem() {
 		return itemFound;
 	}
