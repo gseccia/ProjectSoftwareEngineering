@@ -38,6 +38,7 @@ public class Block extends BasicGameState
 	private TiledMap map;
 	private Mob player;
 	private Set<Enemy> enemy;
+	private Set<Item> item;
 	private int state;
 	private int mapX, mapY, prevMapX, prevMapY;
 	private HitboxMaker hitbox;
@@ -58,13 +59,14 @@ public class Block extends BasicGameState
 	 * @param population map that contains information about enemies in the blocks
 	 * @throws SlickException if the map is not loaded correctly
 	 */
-	public void initBlock(Mob player,Map<Block,Set<Enemy>> population,MapGraph graph) throws SlickException
+	public void initBlock(Mob player,Map<Block,Set<Enemy>> population,Map<Block,Set<Item>> items,MapGraph graph) throws SlickException
 	{
 		map = new TiledMap("resource/maps/Complete"+mapName+"/"+mapName+".tmx");
 		this.vertex = graph.getVertex(this);
 		this.graph=graph;
-		//mapCollision = new MapCollisionManager(map);
 		enemy = population.get(this);
+		item = items.get(this);
+		
 		this.player = player;
 		
 		hitbox = new HitboxMaker(map);
