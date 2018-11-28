@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import managers.Wall;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
+import org.junit.*;
 import org.newdawn.slick.tiled.TiledMap;
 
 import configuration.MobConfiguration;
@@ -75,26 +74,29 @@ public class MapCollisionManagerTest {
 	}
 
 	@Test
-	public void wallCollisionTest() {
+	public void wallCollisionTest_positiveTests() {
 		// Collide
 		player.setLocation(-16,0);
-		assertEquals(mapcollision.wallCollision(0, 0, player, Directions.RIGHT),false);
+		assertFalse(mapcollision.wallCollision(0, 0, player, Directions.RIGHT));
 		player.setLocation(16,0);
-		assertEquals(mapcollision.wallCollision(0, 0, player, Directions.LEFT),false);
+		assertFalse(mapcollision.wallCollision(0, 0, player, Directions.LEFT));
 		player.setLocation(0,16);
-		assertEquals(mapcollision.wallCollision(0, 0, player, Directions.UP),false);
+		assertFalse(mapcollision.wallCollision(0, 0, player, Directions.UP));
 		player.setLocation(0,-16);
-		assertEquals(mapcollision.wallCollision(0, 0, player, Directions.DOWN),false);
+		assertFalse(mapcollision.wallCollision(0, 0, player, Directions.DOWN));
+	}
 
+	@Test
+	public void wallCollisionTest_negativeTests() {
 		// Not Collide
 		player.setLocation(32,32);
-		assertEquals(mapcollision.wallCollision(0, 0, player, Directions.RIGHT),true);
+		assertTrue(mapcollision.wallCollision(0, 0, player, Directions.RIGHT));
 		player.setLocation(32,0);
-		assertEquals(mapcollision.wallCollision(0, 0, player, Directions.LEFT),true);
+		assertTrue(mapcollision.wallCollision(0, 0, player, Directions.LEFT));
 		player.setLocation(0,32);
-		assertEquals(mapcollision.wallCollision(0, 0, player, Directions.UP),true);
+		assertTrue(mapcollision.wallCollision(0, 0, player, Directions.UP));
 		player.setLocation(0,32);
-		assertEquals(mapcollision.wallCollision(0, 0, player, Directions.DOWN),true);
+		assertTrue(mapcollision.wallCollision(0, 0, player, Directions.DOWN));
 	}
 
 	@Test

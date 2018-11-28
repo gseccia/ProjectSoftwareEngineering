@@ -18,7 +18,7 @@ public class MapGraphTest {
 
     @Test
     public void testThatGeneratedGraphIsConnected(){
-        assertEquals(GraphTests.isConnected(map.getGraph()), true);
+        assertTrue(GraphTests.isConnected(map.getGraph()));
     }
 
     @Test

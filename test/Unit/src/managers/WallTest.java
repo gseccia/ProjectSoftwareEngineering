@@ -14,17 +14,17 @@ public class WallTest {
 	public void intersectsTest() {
 		Wall w = new Wall(10,10,10,10);
 		Rectangle r=new Rectangle(10,10,10,10);
-		assertEquals(w.intersects(r),true);
+		assertTrue(w.intersects(r));
 		r=new Rectangle(21,21,10,10);
-		assertEquals(w.intersects(r),false);
+		assertFalse(w.intersects(r));
 		r=new Rectangle(0,10,10,10);
-		assertEquals(w.intersects(r),false);
+		assertFalse(w.intersects(r));
 		r=new Rectangle(10,0,10,10);
-		assertEquals(w.intersects(r),false);
+		assertFalse(w.intersects(r));
 		r=new Rectangle(20,10,10,10);
-		assertEquals(w.intersects(r),false);
+		assertFalse(w.intersects(r));
 		r=new Rectangle(10,20,10,10);
-		assertEquals(w.intersects(r),false);
+		assertFalse(w.intersects(r));
 	}
 
 }
