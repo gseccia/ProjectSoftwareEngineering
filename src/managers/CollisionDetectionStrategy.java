@@ -14,9 +14,14 @@ public abstract class CollisionDetectionStrategy implements Directions {
 	protected List<Wall> walls;
 	protected List<Wall> doors;
 	protected List<Item> items;
+	protected List<Mob> mobs;
 	
 	public List<Wall> getWalls() {
 		return walls;
+	}
+
+	public List<Mob> getMobs(){
+		return mobs;
 	}
 
 	public List<Wall> getDoors() {

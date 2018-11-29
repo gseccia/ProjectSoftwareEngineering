@@ -3,6 +3,7 @@ package managers;
 import java.util.ArrayList;
 import java.util.List;
 
+import elements.Mob;
 import org.newdawn.slick.tiled.TiledMap;
 
 import elements.Item;
@@ -12,9 +13,11 @@ public class HitboxMaker {
 	private List<Wall> walls;
 	private List<Wall> doors;
 	private List<Item> items;
+	private List<Mob> mobs;
 	
-	public HitboxMaker(TiledMap map) {
+	public HitboxMaker(TiledMap map,List mobs) {
 		this.map = map;
+		this.mobs = mobs;
 	}
 	
 	/**
@@ -70,6 +73,10 @@ public class HitboxMaker {
 
 	public List<Item> getItems() {
 		return items;
+	}
+
+	public List<Mob> getMobs(){
+		return mobs;
 	}
 	
 	public void setItems(List<Item> items) {

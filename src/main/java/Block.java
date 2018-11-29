@@ -1,17 +1,8 @@
 package main.java;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import managers.CollisionDetectionDoor;
-import managers.CollisionDetectionItem;
-import managers.CollisionDetectionWall;
-import managers.Directions;
-import managers.HitboxMaker;
-import managers.Wall;
+import managers.*;
 import map.Edge;
 import map.MapGraph;
 import map.Vertex;
@@ -39,6 +30,7 @@ public class Block extends BasicGameState
 	private CollisionDetectionWall wallCollision;
 	private CollisionDetectionDoor doorCollision;
 	private CollisionDetectionItem itemCollision;
+	private CollisionDetectionAttack mobsCollision;
 	private TiledMap map;
 	private Mob player;
 	private Set<Enemy> enemy;
@@ -75,13 +67,14 @@ public class Block extends BasicGameState
 		
 		this.player = player;
 		
-		hitbox = new HitboxMaker(map);
+		hitbox = new HitboxMaker(map, new LinkedList<Mob>(enemy));
 		hitbox.initiateHitbox();
 		hitbox.setItems(new ArrayList<>(item));
 		
 		wallCollision = new CollisionDetectionWall(hitbox);
 		doorCollision = new CollisionDetectionDoor(hitbox);
 		itemCollision = new CollisionDetectionItem(hitbox);
+		mobsCollision = new CollisionDetectionAttack(hitbox);
 	}
 	
 
@@ -224,7 +217,9 @@ public class Block extends BasicGameState
 				System.out.println("Stai prendendo una "+itemCollision.getItem());
 				//item.remove(itemCollision.getItem());
 			}
-			
+			if (mobsCollision.detectCollision(mapX, mapY, player)){
+				player.damage(mobsCollision.getCollidedMob().getAttackDamage());
+			}
 			
 			// Enemy updating
 			for(Enemy e:enemy) {
