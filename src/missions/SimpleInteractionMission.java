@@ -5,12 +5,13 @@ import java.util.Map;
 
 public abstract class SimpleInteractionMission extends Mission{
 
-    private int numInteractions;
+    private int numInteractions, total;
     private Map<String, Integer> needed;
 
     public SimpleInteractionMission(String targetId, int numInteractions) {
         super(targetId);
         this.numInteractions = numInteractions;
+        this.total = numInteractions;
         needed = new HashMap<>();
         needed.put(targetId, numInteractions);
     }
@@ -63,5 +64,9 @@ public abstract class SimpleInteractionMission extends Mission{
     @Override
     public int numMissions() {
         return 0;
+    }
+
+    public int getTotal() {
+        return total;
     }
 }
