@@ -28,18 +28,19 @@ public class MapGraph {
        LinkedList<String> tiledMaps = new LinkedList<>(mapNames);
        ArrayList<String> moreMaps = new ArrayList<>(mapNames);
        int i=0;
+       int rand = 0;
        Random random = new Random();
        int numeroCasuale = random.nextInt(5)+mapChosen-2;
        List<String> listTiledMaps = new ArrayList<>();
        while (i < numeroCasuale && tiledMaps.size() > 0) {
-           int rand = random.nextInt(tiledMaps.size()); // seleziona un elemento casuale tra tutte le tiledMaps
+           rand = random.nextInt(tiledMaps.size()); // seleziona un elemento casuale tra tutte le tiledMaps
            listTiledMaps.add(tiledMaps.remove(rand));
            i++;
        }
        while (i < numeroCasuale) {
-           int rand = random.nextInt(moreMaps.size()); // seleziona un elemento casuale tra tutte le tiledMaps
-            listTiledMaps.add(moreMaps.get(rand));
-            i++;
+           rand = random.nextInt(moreMaps.size()); // seleziona un elemento casuale tra tutte le tiledMaps
+           listTiledMaps.add(moreMaps.get(rand));
+           i++;
        }
        return listTiledMaps;
     }
