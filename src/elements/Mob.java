@@ -28,8 +28,11 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
         Animation faceRight = configuration.getFaceRight(id);
         Animation faceUp = configuration.getFaceUp(id);
         Animation faceDown = configuration.getFaceDown(id);
-        Animation standStill = configuration.getFaceStill(id);
-        generateMap(faceLeft, faceRight, faceUp, faceDown, standStill);
+        Animation standStillDown = configuration.getFaceStill(id);
+        Animation standStillUp = configuration.getFaceStill(id);
+        Animation standStillLeft = configuration.getFaceStill(id);
+        Animation standStillRight = configuration.getFaceStill(id);
+        generateMap(faceLeft, faceRight, faceUp, faceDown, standStillDown, standStillUp, standStillLeft, standStillRight);
         this.attack = new Attack(this);
     }
 
@@ -43,8 +46,11 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
         Animation faceRight = configuration.getFaceRight(id);
         Animation faceUp = configuration.getFaceUp(id);
         Animation faceDown = configuration.getFaceDown(id);
-        Animation standStill = configuration.getFaceStill(id);
-        generateMap(faceLeft, faceRight, faceUp, faceDown, standStill);
+        Animation standStillDown = configuration.getFaceStill(id);
+        Animation standStillUp = configuration.getFaceStill(id);
+        Animation standStillLeft = configuration.getFaceStill(id);
+        Animation standStillRight = configuration.getFaceStill(id);
+        generateMap(faceLeft, faceRight, faceUp, faceDown, standStillDown, standStillUp, standStillLeft, standStillRight);
         this.attack = new Attack(this);
     }
 
@@ -55,14 +61,20 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
      * @param faceRight  the right animation
      * @param faceUp     the up animation
      * @param faceDown   the down animation
-     * @param standStill the still animation
+     * @param standStillDown the still animation down
+     * @param standStillUp the sill animation up
+     * @param standStillRight the still animation right
+     * #param standStillLeft the still animation left
      */
-    private void generateMap(Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, Animation standStill) {
+    private void generateMap(Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, Animation standStillDown, Animation standStillUp, Animation standStillRight, Animation standStillLeft) {
         faces.put("left", faceLeft);
         faces.put("right", faceRight);
         faces.put("up", faceUp);
         faces.put("down", faceDown);
-        faces.put("still", standStill);
+        faces.put("stillDown", standStillDown);
+        faces.put("stillUp", standStillUp);
+        faces.put("stillRight", standStillRight);
+        faces.put("stillLeft", standStillLeft);
     }
 
     public int getHp() {
@@ -151,8 +163,32 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
      * Changes the current animation with the still one
      */
     @Override
-    public void faceStill() throws NullAnimationException {
-        setCurrent(faces.get("still"));
+    public void faceStillDown() throws NullAnimationException {
+        setCurrent(faces.get("stillDown"));
+    }
+    
+    /**
+     * Changes the current animation with the still one
+     */
+    @Override
+    public void faceStillUp() throws NullAnimationException {
+        setCurrent(faces.get("stillUp"));
+    }
+    
+    /**
+     * Changes the current animation with the still one
+     */
+    @Override
+    public void faceStillRight() throws NullAnimationException {
+        setCurrent(faces.get("stillRight"));
+    }
+    
+    /**
+     * Changes the current animation with the still one
+     */
+    @Override
+    public void faceStillLeft() throws NullAnimationException {
+        setCurrent(faces.get("stillLeft"));
     }
 
     /**

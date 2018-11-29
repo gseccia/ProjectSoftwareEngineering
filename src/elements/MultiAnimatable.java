@@ -25,6 +25,20 @@ public interface MultiAnimatable {
     /**
      * Shows the still animation of the character
      */
-    void faceStill() throws NullAnimationException;
-
+    void faceStillDown() throws NullAnimationException;
+    
+    /**
+     * Shows the still animation of the character
+     */
+    void faceStillUp() throws NullAnimationException;
+    
+    /**
+     * Shows the still animation of the character
+     */
+    void faceStillRight() throws NullAnimationException;
+    
+    /**
+     * Shows the still animation of the character
+     */
+    void faceStillLeft() throws NullAnimationException;
 }
