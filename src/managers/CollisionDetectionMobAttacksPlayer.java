@@ -2,11 +2,11 @@ package managers;
 
 import elements.Mob;
 
-public class CollisionDetectionAttack extends CollisionDetectionStrategy {
+public class CollisionDetectionMobAttacksPlayer extends CollisionDetectionStrategy {
     private Mob collidedMob;
     private int attackDemage;
 
-    public CollisionDetectionAttack(HitboxMaker hitbox){
+    public CollisionDetectionMobAttacksPlayer(HitboxMaker hitbox){
         this.mobs = hitbox.getMobs();
         this.map = hitbox.getMap();
     }

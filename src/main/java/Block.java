@@ -18,8 +18,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
-import configuration.ItemConfiguration;
-import configuration.NoSuchElementInConfigurationException;
 import elements.Enemy;
 import elements.Item;
 import elements.Mob;
@@ -30,7 +28,7 @@ public class Block extends BasicGameState
 	private CollisionDetectionWall wallCollision;
 	private CollisionDetectionDoor doorCollision;
 	private CollisionDetectionItem itemCollision;
-	private CollisionDetectionAttack mobsCollision;
+	private CollisionDetectionMobAttacksPlayer mobsCollision;
 	private TiledMap map;
 	private Mob player;
 	private Set<Enemy> enemy;
@@ -74,7 +72,7 @@ public class Block extends BasicGameState
 		wallCollision = new CollisionDetectionWall(hitbox);
 		doorCollision = new CollisionDetectionDoor(hitbox);
 		itemCollision = new CollisionDetectionItem(hitbox);
-		mobsCollision = new CollisionDetectionAttack(hitbox);
+		mobsCollision = new CollisionDetectionMobAttacksPlayer(hitbox);
 	}
 	
 
