@@ -25,14 +25,20 @@ public class MapGraph {
 
     private List<String> mapSubSet(){   //metodo che genera un sottoinsieme di mappe tra tutte quelle disponibili
        Set<String> mapNames = conf.getMapNames();
-       String[] tiledMaps = mapNames.toArray(new String[0]);
+       LinkedList<String> tiledMaps = new LinkedList<>(mapNames);
+       ArrayList<String> moreMaps = new ArrayList<>(mapNames);
        int i=0;
        Random random = new Random();
-       int numeroCasuale = random.nextInt(5)+mapChosen-2; // seleziona un sottoinsieme casuale di tiledMaps contenente almeno 2 elemento
-        List<String> listTiledMaps = new ArrayList<>();
+       int numeroCasuale = random.nextInt(5)+mapChosen-2;
+       List<String> listTiledMaps = new ArrayList<>();
+       while (i < numeroCasuale && tiledMaps.size() > 0) {
+           int rand = random.nextInt(tiledMaps.size()); // seleziona un elemento casuale tra tutte le tiledMaps
+           listTiledMaps.add(tiledMaps.remove(rand));
+           i++;
+       }
        while (i < numeroCasuale) {
-            int rand = random.nextInt(tiledMaps.length); // seleziona un elemento casuale tra tutte le tiledMaps
-            listTiledMaps.add(tiledMaps[rand]);
+           int rand = random.nextInt(moreMaps.size()); // seleziona un elemento casuale tra tutte le tiledMaps
+            listTiledMaps.add(moreMaps.get(rand));
             i++;
        }
        return listTiledMaps;
