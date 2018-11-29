@@ -263,7 +263,7 @@ public class Enemy extends Mob implements MissionItem {
 						faceDown();
 						break;
 					default:
-						faceDown() ;
+						faceDown();
 				}
 				
 			setLocation(x,y); // Position Updating

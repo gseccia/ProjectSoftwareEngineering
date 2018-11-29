@@ -41,6 +41,7 @@ public class Block extends BasicGameState
 	private MapGraph graph;
 	private Vertex vertex;
 	private Mission mission;
+	private int key = Directions.DOWN;
 	
 	public Block(int state,String mapName)
 	{
@@ -169,6 +170,7 @@ public class Block extends BasicGameState
 				wallCollision.setKey(Directions.RIGHT);
 				if(wallCollision.detectCollision(mapX, mapY, player)) {
 					mapX += 1;
+					key = Directions.RIGHT;
 					pressed =true;
 				}
 			}
@@ -177,6 +179,7 @@ public class Block extends BasicGameState
 				wallCollision.setKey(Directions.LEFT);
 				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapX -= 1;
+					key = Directions.LEFT;
 					pressed =true;
 				}
 			}
@@ -185,6 +188,7 @@ public class Block extends BasicGameState
 				wallCollision.setKey(Directions.DOWN);
 				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapY += 1;
+					key = Directions.DOWN;
 					pressed =true;
 				}
 			}
@@ -193,11 +197,23 @@ public class Block extends BasicGameState
 				wallCollision.setKey(Directions.UP);
 				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapY -= 1;
+					key = Directions.UP;
 					pressed =true;
 				}
 			}
 			else{
-				player.faceStill();
+				if(key == Directions.UP) {
+					player.faceStillUp();
+				}
+				else if(key == Directions.DOWN) {
+					player.faceStillDown();
+				}
+				else if(key == Directions.LEFT) {
+					player.faceStillLeft();
+				}
+				else if(key == Directions.RIGHT) {
+					player.faceStillRight();
+				}
 			}
 			if(doorCollision.detectCollision(mapX, mapY, player)) {
 				if(doorCollision.getCollidedDoor() != -1 && pressed) {

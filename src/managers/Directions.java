@@ -8,4 +8,5 @@ public interface Directions {
     int DOWN = Input.KEY_S;
     int LEFT = Input.KEY_A;
     int RIGHT = Input.KEY_D;
+    int KEY_M = Input.KEY_M;
 }

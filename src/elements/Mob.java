@@ -37,7 +37,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
     }
 
     public Mob(MobConfiguration configuration, String id) throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
-        super(configuration.getFaceStill(id), configuration.getWidth(id), configuration.getHeight(id), 0, 0);
+        super(configuration.getFaceStillDown(id), configuration.getWidth(id), configuration.getHeight(id), 0, 0);
         this.hp = configuration.getHp(id);
         this.maxHp = hp;
         this.attackDamage = configuration.getAttack(id);
@@ -46,10 +46,10 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
         Animation faceRight = configuration.getFaceRight(id);
         Animation faceUp = configuration.getFaceUp(id);
         Animation faceDown = configuration.getFaceDown(id);
-        Animation standStillDown = configuration.getFaceStill(id);
-        Animation standStillUp = configuration.getFaceStill(id);
-        Animation standStillLeft = configuration.getFaceStill(id);
-        Animation standStillRight = configuration.getFaceStill(id);
+        Animation standStillDown = configuration.getFaceStillDown(id);
+        Animation standStillUp = configuration.getFaceStillUp(id);
+        Animation standStillLeft = configuration.getFaceStillLeft(id);
+        Animation standStillRight = configuration.getFaceStillRight(id);
         generateMap(faceLeft, faceRight, faceUp, faceDown, standStillDown, standStillUp, standStillLeft, standStillRight);
         this.attack = new Attack(this);
     }
