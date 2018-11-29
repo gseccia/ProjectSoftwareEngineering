@@ -232,7 +232,7 @@ public class Block extends BasicGameState
 				//item.remove(itemCollision.getItem());
 			}
 			if (mobsCollision.detectCollision(mapX, mapY, player)){
-				player.damage(mobsCollision.getAttackDemage());
+				player.damage(mobsCollision.getAttackDamage());
 			}
 			
 			// Enemy updating

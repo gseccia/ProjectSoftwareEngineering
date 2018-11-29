@@ -1,5 +1,7 @@
 package elements;
 
+import attacks.Attack;
+import attacks.StandardEnemyAttack;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import main.java.Block;
@@ -17,11 +19,11 @@ public class Enemy extends Mob implements MissionItem {
 
     private String id;
     private Block map;
-    private int direction,imposed_direction;
+    private int imposed_direction;
     private Rectangle vision;
     private int directVision;
     private int lateralVision;
-    private int speed,surrendTime;
+    private int speed, surrendTime;
     private Player player;
     private CollisionDetectionWall wallCollision;
     private boolean attack,obstacle,favorY,favorX;
@@ -30,6 +32,7 @@ public class Enemy extends Mob implements MissionItem {
     	super(configuration, id);
     	this.id = id;
     	direction = Directions.LEFT;
+    	setAttack(new StandardEnemyAttack(this));
 	}
     
     public Enemy(MobConfiguration configuration, String id, Block map, Player p) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
@@ -38,6 +41,7 @@ public class Enemy extends Mob implements MissionItem {
         this.map = map;
         this.player = p;
         direction = Directions.LEFT;     // Suppose initial direction right
+		setAttack(new StandardEnemyAttack(this));
     }
 
     @Override
@@ -273,11 +277,14 @@ public class Enemy extends Mob implements MissionItem {
     public Rectangle getVision() {
     	return vision;
     }
-    
-    public int getDirection() {
-    	return direction;
-    }
-    
+
+    @Override
+	public Attack getAttack(){
+    	Attack tmp = super.getAttack();
+    	tmp.setHitbox();
+    	return tmp;
+	}
+
     public void setPlayer(Player player) {
     	this.player = player;
     }

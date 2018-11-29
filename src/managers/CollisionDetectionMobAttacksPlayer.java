@@ -17,7 +17,7 @@ public class CollisionDetectionMobAttacksPlayer extends CollisionDetectionStrate
         boolean collision = false;
         aligner(shiftX, shiftY, player, false);
         for (Mob mob : this.mobs){
-            if (mob.intersects(player)){
+            if (mob.getAttack().intersects(player)){
                 collision = true;
                 this.collidedMob = mob;
                 attackDemage += mob.getAttackDamage();
@@ -31,7 +31,7 @@ public class CollisionDetectionMobAttacksPlayer extends CollisionDetectionStrate
         return this.collidedMob;
     }
 
-    public int getAttackDemage(){
+    public int getAttackDamage(){
         return attackDemage;
     }
 }

@@ -1,18 +1,24 @@
-package elements;
+package attacks;
 
+import elements.AnimatedElement;
+import elements.Mob;
 import managers.Directions;
 
-public class Attack extends AnimatedElement {
+public class StandardPlayerAttack extends AnimatedElement implements Attack {
 
-    private AnimatedElement caster;
+    private Mob caster;
 
-    public Attack(AnimatedElement caster) {
+    public StandardPlayerAttack(Mob caster) {
         this.caster = caster;
     }
 
-    public void setHitbox(int direction){
+    /**
+     * Sets the hitbox of the attack
+     */
+    @Override
+    public void setHitbox(){
         float x, y, height, width;
-        switch (direction){
+        switch (caster.getDirection()){
             case Directions.LEFT:
                 x = caster.getX() - caster.getWidth();
                 y = caster.getY();
@@ -52,5 +58,4 @@ public class Attack extends AnimatedElement {
         setHeight(height);
         setWidth(width);
     }
-
 }

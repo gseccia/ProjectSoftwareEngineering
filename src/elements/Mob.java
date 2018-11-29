@@ -1,5 +1,6 @@
 package elements;
 
+import attacks.Attack;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import org.newdawn.slick.*;
@@ -15,6 +16,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
      * hp are the current hp, maxHP the total hp
      */
     private int hp, maxHp, attackDamage;
+    protected int direction;
     private Attack attack;
     private HashMap<String, Animation> faces;
 
@@ -33,7 +35,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
         Animation standStillLeft = configuration.getFaceStill(id);
         Animation standStillRight = configuration.getFaceStill(id);
         generateMap(faceLeft, faceRight, faceUp, faceDown, standStillDown, standStillUp, standStillLeft, standStillRight);
-        this.attack = new Attack(this);
+
     }
 
     public Mob(MobConfiguration configuration, String id) throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
@@ -51,7 +53,6 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
         Animation standStillLeft = configuration.getFaceStillLeft(id);
         Animation standStillRight = configuration.getFaceStillRight(id);
         generateMap(faceLeft, faceRight, faceUp, faceDown, standStillDown, standStillUp, standStillLeft, standStillRight);
-        this.attack = new Attack(this);
     }
 
     /**
@@ -89,6 +90,10 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
         }
     }
 
+    public int getDirection() {
+        return direction;
+    }
+
     public int getMaxHp() {
         return maxHp;
     }
@@ -107,6 +112,11 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
     public Attack getAttack() {
         return attack;
     }
+
+    protected void setAttack(Attack attack){
+        this.attack = attack;
+    }
+
 
     public void setAttackDamage(int attackDamage) throws NotPositiveValueException {
         if (attackDamage < 0) {
