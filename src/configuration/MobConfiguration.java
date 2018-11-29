@@ -104,6 +104,23 @@ public class MobConfiguration extends Configuration{
     public Animation getFaceStillRight(String id) throws SlickException, NoSuchElementInConfigurationException {
         return generateAnimation(id,"stillRight");
     }
+    
+    public Animation getAttackLeft(String id) throws SlickException, NoSuchElementInConfigurationException {
+        return generateAnimation(id,"attackLeft");
+    }
+    
+    public Animation getAttackRight(String id) throws SlickException, NoSuchElementInConfigurationException {
+        return generateAnimation(id,"attackRight");
+    }
+    
+    public Animation getAttackUp(String id) throws SlickException, NoSuchElementInConfigurationException {
+        return generateAnimation(id,"attackUp");
+    }
+    
+    public Animation getAttackDown(String id) throws SlickException, NoSuchElementInConfigurationException {
+        return generateAnimation(id,"attackDown");
+    }
+    
     public Set<String> getMobNames(){
         return configuration.keySet();
     }

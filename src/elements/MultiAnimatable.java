@@ -41,4 +41,24 @@ public interface MultiAnimatable {
      * Shows the still animation of the character
      */
     void faceStillLeft() throws NullAnimationException;
+    
+    /**
+     * Shows the still animation of the character
+     */
+    void attackDowm() throws NullAnimationException;
+    
+    /**
+     * Shows the still animation of the character
+     */
+    void attackUp() throws NullAnimationException;
+    
+    /**
+     * Shows the still animation of the character
+     */
+    void attackLeft() throws NullAnimationException;
+    
+    /**
+     * Shows the still animation of the character
+     */
+    void attackRight() throws NullAnimationException;
 }

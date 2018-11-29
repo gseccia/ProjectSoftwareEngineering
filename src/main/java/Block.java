@@ -205,6 +205,20 @@ public class Block extends BasicGameState
 					pressed =true;
 				}
 			}
+			else if(gc.getInput().isKeyDown(Directions.KEY_M)) {
+				if(key == Directions.UP) {
+					player.attackUp();
+				}
+				else if(key == Directions.DOWN) {
+					player.attackDowm();
+				}
+				else if(key == Directions.LEFT) {
+					player.attackLeft();
+				}
+				else if(key == Directions.RIGHT) {
+					player.attackRight();
+				}
+			}
 			else{
 				if(key == Directions.UP) {
 					player.faceStillUp();

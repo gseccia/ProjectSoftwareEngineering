@@ -20,6 +20,8 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
     private Attack attack;
     private HashMap<String, Animation> faces;
 
+    //NON SERVE A NIENTE
+    //DA CANCELLARE
     public Mob(MobConfiguration configuration, String id, int x, int y) throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
         super(configuration.getFaceStill(id), configuration.getWidth(id), configuration.getHeight(id), x, y);
         this.hp = configuration.getHp(id);
@@ -34,7 +36,11 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
         Animation standStillUp = configuration.getFaceStill(id);
         Animation standStillLeft = configuration.getFaceStill(id);
         Animation standStillRight = configuration.getFaceStill(id);
-        generateMap(faceLeft, faceRight, faceUp, faceDown, standStillDown, standStillUp, standStillLeft, standStillRight);
+        Animation attackDown = configuration.getAttackDown(id);
+        Animation attackUp = configuration.getAttackUp(id);
+        Animation attackLeft = configuration.getAttackLeft(id);
+        Animation attackRight = configuration.getAttackRight(id);
+        generateMap(faceLeft, faceRight, faceUp, faceDown, standStillDown, standStillUp, standStillRight, standStillLeft, attackDown, attackUp, attackLeft, attackRight);
 
     }
 
@@ -52,9 +58,13 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
         Animation standStillUp = configuration.getFaceStillUp(id);
         Animation standStillLeft = configuration.getFaceStillLeft(id);
         Animation standStillRight = configuration.getFaceStillRight(id);
-        generateMap(faceLeft, faceRight, faceUp, faceDown, standStillDown, standStillUp, standStillLeft, standStillRight);
+        Animation attackDown = configuration.getAttackDown(id);
+        Animation attackUp = configuration.getAttackUp(id);
+        Animation attackLeft = configuration.getAttackLeft(id);
+        Animation attackRight = configuration.getAttackRight(id);
+        generateMap(faceLeft, faceRight, faceUp, faceDown, standStillDown, standStillUp, standStillRight, standStillLeft, attackDown, attackUp, attackLeft, attackRight);
     }
-
+    
     /**
      * Creates a map with the animations
      *
@@ -65,9 +75,15 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
      * @param standStillDown the still animation down
      * @param standStillUp the sill animation up
      * @param standStillRight the still animation right
-     * #param standStillLeft the still animation left
+     * @param standStillLeft the still animation left
+     * @param attackLeft
+     * @param attackRight
+     * @param attackUp
+     * @param attackDown
      */
-    private void generateMap(Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, Animation standStillDown, Animation standStillUp, Animation standStillRight, Animation standStillLeft) {
+    private void generateMap(Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, Animation standStillDown, 
+    		Animation standStillUp, Animation standStillRight, Animation standStillLeft, Animation attackDown, Animation attackUp,  Animation attackLeft, Animation attackRight) {
+    	
         faces.put("left", faceLeft);
         faces.put("right", faceRight);
         faces.put("up", faceUp);
@@ -76,6 +92,10 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
         faces.put("stillUp", standStillUp);
         faces.put("stillRight", standStillRight);
         faces.put("stillLeft", standStillLeft);
+        faces.put("attackLeft", attackLeft);
+        faces.put("attackRight", attackRight);
+        faces.put("attackUp", attackUp);
+        faces.put("attackDown", attackDown);
     }
 
     public int getHp() {
@@ -204,7 +224,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
     public void faceStillLeft() throws NullAnimationException {
         setCurrent(faces.get("stillLeft"));
     }
-
+    
     /**
      * Move the character of a certain increment on the x axis based on the current position
      *
@@ -224,4 +244,24 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
     public void moveY(int dy) {
         setY(getY() + dy);
     }
+
+	@Override
+	public void attackDowm() throws NullAnimationException {
+		setCurrent(faces.get("attackDown"));
+	}
+
+	@Override
+	public void attackUp() throws NullAnimationException {
+		setCurrent(faces.get("attackUp"));
+	}
+
+	@Override
+	public void attackLeft() throws NullAnimationException {
+		setCurrent(faces.get("attackLeft"));		
+	}
+
+	@Override
+	public void attackRight() throws NullAnimationException {
+		setCurrent(faces.get("attackRight"));
+	}
 }
