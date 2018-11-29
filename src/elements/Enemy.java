@@ -19,7 +19,7 @@ public class Enemy extends Mob implements MissionItem {
 
     private String id;
     private Block map;
-    private int imposed_direction;
+    private int direction, imposed_direction;
     private Rectangle vision;
     private int directVision;
     private int lateralVision;
@@ -283,6 +283,10 @@ public class Enemy extends Mob implements MissionItem {
     	Attack tmp = super.getAttack();
     	tmp.setHitbox();
     	return tmp;
+	}
+
+	public int getDirection() {
+		return direction;
 	}
 
     public void setPlayer(Player player) {

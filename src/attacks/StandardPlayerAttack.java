@@ -18,7 +18,7 @@ public class StandardPlayerAttack extends AnimatedElement implements Attack {
     @Override
     public void setHitbox(){
         float x, y, height, width;
-        switch (caster.getDirection()){
+        switch (caster.getCurrentDirection()){
             case Directions.LEFT:
                 x = caster.getX() - caster.getWidth();
                 y = caster.getY();

@@ -16,7 +16,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
      * hp are the current hp, maxHP the total hp
      */
     private int hp, maxHp, attackDamage;
-    protected int direction;
+    private int currentDirection;
     private Attack attack;
     private HashMap<String, Animation> faces;
 
@@ -90,12 +90,12 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
         }
     }
 
-    public int getDirection() {
-        return direction;
+    public int getCurrentDirection() {
+        return currentDirection;
     }
 
-    public void setDirection(int direction) {
-        this.direction = direction;
+    public void setCurrentDirection(int currentDirection) {
+        this.currentDirection = currentDirection;
     }
 
     public int getMaxHp() {
