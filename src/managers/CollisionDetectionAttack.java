@@ -4,6 +4,7 @@ import elements.Mob;
 
 public class CollisionDetectionAttack extends CollisionDetectionStrategy {
     private Mob collidedMob;
+    private int attackDemage;
 
     public CollisionDetectionAttack(HitboxMaker hitbox){
         this.mobs = hitbox.getMobs();
@@ -12,13 +13,14 @@ public class CollisionDetectionAttack extends CollisionDetectionStrategy {
 
     @Override
     public boolean detectCollision(int shiftX, int shiftY, Mob player){
+        attackDemage = 0;
         boolean collision = false;
         aligner(shiftX, shiftY, player, false);
         for (Mob mob : this.mobs){
             if (mob.intersects(player)){
                 collision = true;
                 this.collidedMob = mob;
-                break;
+                attackDemage += mob.getAttackDamage();
             }
         }
         player.setLocation(px,py);
@@ -27,5 +29,9 @@ public class CollisionDetectionAttack extends CollisionDetectionStrategy {
 
     public Mob getCollidedMob(){
         return this.collidedMob;
+    }
+
+    public int getAttackDemage(){
+        return attackDemage;
     }
 }
