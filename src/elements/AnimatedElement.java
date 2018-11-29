@@ -9,6 +9,12 @@ import org.newdawn.slick.geom.Rectangle;
 public abstract class AnimatedElement extends Rectangle{
     private Animation current;
 
+    protected AnimatedElement(){
+        super(0, 0, 0, 0);
+        this.current = new Animation();
+
+    }
+
     protected AnimatedElement(Animation a, int width, int height, int x, int y) throws NullAnimationException{
         super(x, y, width, height);
         if(a == null){

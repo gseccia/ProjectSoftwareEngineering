@@ -15,6 +15,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
      * hp are the current hp, maxHP the total hp
      */
     private int hp, maxHp, attackDamage;
+    private Attack attack;
     private HashMap<String, Animation> faces;
 
     public Mob(MobConfiguration configuration, String id, int x, int y) throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
@@ -29,6 +30,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
         Animation faceDown = configuration.getFaceDown(id);
         Animation standStill = configuration.getFaceStill(id);
         generateMap(faceLeft, faceRight, faceUp, faceDown, standStill);
+        this.attack = new Attack(this);
     }
 
     public Mob(MobConfiguration configuration, String id) throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
@@ -43,6 +45,7 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
         Animation faceDown = configuration.getFaceDown(id);
         Animation standStill = configuration.getFaceStill(id);
         generateMap(faceLeft, faceRight, faceUp, faceDown, standStill);
+        this.attack = new Attack(this);
     }
 
     /**
@@ -87,6 +90,10 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
 
     public int getAttackDamage() {
         return attackDamage;
+    }
+
+    public Attack getAttack() {
+        return attack;
     }
 
     public void setAttackDamage(int attackDamage) throws NotPositiveValueException {
