@@ -171,6 +171,7 @@ public class Block extends BasicGameState
 				if(wallCollision.detectCollision(mapX, mapY, player)) {
 					mapX += 1;
 					key = Directions.RIGHT;
+					player.setDirection(Directions.RIGHT);
 					pressed =true;
 				}
 			}
@@ -180,6 +181,7 @@ public class Block extends BasicGameState
 				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapX -= 1;
 					key = Directions.LEFT;
+					player.setDirection(Directions.LEFT);
 					pressed =true;
 				}
 			}
@@ -189,6 +191,7 @@ public class Block extends BasicGameState
 				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapY += 1;
 					key = Directions.DOWN;
+					player.setDirection(Directions.DOWN);
 					pressed =true;
 				}
 			}
@@ -198,6 +201,7 @@ public class Block extends BasicGameState
 				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapY -= 1;
 					key = Directions.UP;
+					player.setDirection(Directions.UP);
 					pressed =true;
 				}
 			}

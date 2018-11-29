@@ -94,6 +94,10 @@ public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
         return direction;
     }
 
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
     public int getMaxHp() {
         return maxHp;
     }
