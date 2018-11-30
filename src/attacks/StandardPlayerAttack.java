@@ -35,7 +35,7 @@ public class StandardPlayerAttack extends AnimatedElement implements Attack {
 
             case Directions.UP:
                 x = caster.getX();
-                y = caster.getY() + caster.getHeight();
+                y = caster.getY() - caster.getHeight();
                 height = caster.getHeight() * 2;
                 width = caster.getWidth();
                 break;

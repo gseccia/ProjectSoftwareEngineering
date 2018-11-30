@@ -3,6 +3,7 @@ package elements;
 import attacks.Attack;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
+import managers.Directions;
 import org.newdawn.slick.*;
 import java.util.*;
 
@@ -16,7 +17,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
      * hp are the current hp, maxHP the total hp
      */
     private int hp, maxHp, attackDamage;
-    private int currentDirection;
+    private int currentDirection = Directions.DOWN;
     private Attack attack;
     private HashMap<String, Animation> faces;
 
@@ -167,6 +168,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     @Override
     public void faceUp() throws NullAnimationException {
         setCurrent(faces.get("up"));
+        setCurrentDirection(Directions.UP);
     }
 
     /**
@@ -175,6 +177,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     @Override
     public void faceDown() throws NullAnimationException {
         setCurrent(faces.get("down"));
+        setCurrentDirection(Directions.DOWN);
     }
 
     /**
@@ -183,6 +186,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     @Override
     public void faceRight() throws NullAnimationException {
         setCurrent(faces.get("right"));
+        setCurrentDirection(Directions.RIGHT);
     }
 
     /**
@@ -191,6 +195,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     @Override
     public void faceLeft() throws NullAnimationException {
         setCurrent(faces.get("left"));
+        setCurrentDirection(Directions.LEFT);
     }
 
     /**
@@ -264,4 +269,8 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
 	public void attackRight() throws NullAnimationException {
 		setCurrent(faces.get("attackRight"));
 	}
+
+    public abstract boolean isReadyToAttack();
+
+    public abstract void hasAttacked();
 }

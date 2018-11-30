@@ -20,4 +20,13 @@ public class Player extends Mob {
         return tmp;
     }
 
+    @Override
+    public boolean isReadyToAttack() {
+        return true;
+    }
+
+    @Override
+    public void hasAttacked() {
+
+    }
 }

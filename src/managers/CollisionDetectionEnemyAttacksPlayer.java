@@ -4,30 +4,26 @@ import elements.Mob;
 
 public class CollisionDetectionEnemyAttacksPlayer extends CollisionDetectionStrategy {
     private Mob collidedMob;
-    private int attackDemage;
-    private int collisionTime;
+    private int attackDamage;
 
     public CollisionDetectionEnemyAttacksPlayer(HitboxMaker hitbox){
         this.mobs = hitbox.getMobs();
         this.map = hitbox.getMap();
-        collisionTime = 0;
     }
 
     @Override
     public boolean detectCollision(int shiftX, int shiftY, Mob player){
-        attackDemage = 0;
+        attackDamage = 0;
         boolean collision = false;
         aligner(shiftX, shiftY, player, false);
         for (Mob mob : this.mobs){
-            if (mob.getAttack().intersects(player) && collisionTime <= 0){
+            if (mob.getAttack().intersects(player) && mob.isReadyToAttack()){
+                mob.hasAttacked();
                 collision = true;
                 this.collidedMob = mob;
-                collisionTime = 50;
-                attackDemage += mob.getAttackDamage();
-                System.out.println("ATTACK "+mob.getX()+" "+mob.getAttackDamage());
+                attackDamage += mob.getAttackDamage();
             }
         }
-        collisionTime--;
         player.setLocation(px,py);
         return collision;
     }
@@ -37,6 +33,6 @@ public class CollisionDetectionEnemyAttacksPlayer extends CollisionDetectionStra
     }
 
     public int getAttackDamage(){
-        return attackDemage;
+        return attackDamage;
     }
 }
