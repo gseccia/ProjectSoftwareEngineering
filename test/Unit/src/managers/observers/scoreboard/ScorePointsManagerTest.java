@@ -7,7 +7,7 @@ import org.junit.Test;
 import managers.observers.scoreboard.LifePointsAccumulatorObserver;
 import managers.observers.scoreboard.PointsAccumulatorObserver;
 import managers.observers.scoreboard.ScorePointsManager;
-import managers.observers.scoreboard.ScoreFileObserver;
+//import managers.observers.scoreboard.ScoreFileObserver;
 
 public class ScorePointsManagerTest {
 	// Subjects
@@ -15,26 +15,45 @@ public class ScorePointsManagerTest {
 	// Observers
 	private PointsAccumulatorObserver pao = new PointsAccumulatorObserver(pm);
 	private LifePointsAccumulatorObserver lpao = new LifePointsAccumulatorObserver(pm);
-	private ScoreFileObserver sfo = new ScoreFileObserver(pm);
+//	private ScoreFileObserver sfo = new ScoreFileObserver(pm);
 	
 	@Test
-	public void creationLoggerFileTest() {
-		/*System.out.println("Testing PointsManager");
-//		pm.attach(pao);
-//		pm.attach(sfo);
-		
-		pm.saveNamePlayer("Armando");
-		pm.increase(43);
-		pm.decrease(1);
+	public void createScorePointManagerSingletonTest() {
+		ScorePointsManager anotherInstanceOfScorePointsManager = ScorePointsManager.getScorePointsManagerInstance();
+		assertEquals(pm, anotherInstanceOfScorePointsManager);
+	}
+	
+	@Test
+	public void setStateTest() {
 		pm.setState(0);
-		
-		pm.increase(0);
-		pm.decrease(20);
-		pm.setState(1);
-		
-		pm.setState(2);
-		System.out.println("Points total: " + pao.getPoints());
-		System.out.println("Hp total: " + lpao.getHp());
-		System.out.println("Mappa di prove" + sfo.getScores());*/
+		assertEquals(pm.getState(), 0);
+	}
+	
+	@Test
+	public void saveNamePlayerTest() {
+		pm.saveNamePlayer("Armando");
+		assertEquals(pm.getNamePlayer(), "Armando");
+	}
+	
+	@Test
+	public void increasePointsTest() {
+		pm.increase(42);
+		assertEquals(42, pm.getIncreaseValue());
+	}
+	
+	@Test
+	public void decreasePointsTest() {
+		pm.decrease(42);
+		assertEquals(42, pm.getDecreaseValue());
+	}
+	
+	@Test
+	public void getLifePointsAccumulatorObserverTest() {
+		assertEquals(lpao.getClass(), pm.getLifePointsAccumulatorObserver().getClass());
+	}
+	
+	@Test
+	public void getPointsAccumulatorObserverTest() {
+		assertEquals(pao.getClass(), pm.getPointsAccumulatorObserver().getClass());
 	}
 }
