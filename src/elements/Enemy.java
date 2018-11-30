@@ -4,7 +4,7 @@ import attacks.Attack;
 import attacks.StandardEnemyAttack;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
-import main.java.Block;
+import main.Block;
 import managers.CollisionDetectionWall;
 import managers.Directions;
 import missions.MissionItem;

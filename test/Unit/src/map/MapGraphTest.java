@@ -1,7 +1,7 @@
 package Unit.src.map;
 
 import configuration.*;
-import main.java.Block;
+import main.Block;
 import map.*;
 import org.jgrapht.GraphTests;
 import org.junit.*;

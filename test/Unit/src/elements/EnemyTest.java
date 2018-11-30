@@ -15,7 +15,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import managers.Directions;
-import main.java.Block;
+import main.Block;
 
 import static org.junit.Assert.assertEquals;
 

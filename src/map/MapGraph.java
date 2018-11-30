@@ -2,7 +2,7 @@ package map;
 
 import configuration.DoorsConfiguration;
 import configuration.NoSuchElementInConfigurationException;
-import main.java.Block;
+import main.Block;
 
 import org.jgrapht.graph.DefaultUndirectedGraph;
 
