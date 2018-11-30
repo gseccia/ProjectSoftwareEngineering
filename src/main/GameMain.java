@@ -1,4 +1,4 @@
-package main.java;
+package main;
 
 import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.AppGameContainer;

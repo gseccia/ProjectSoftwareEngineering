@@ -1,4 +1,4 @@
-package main.java;
+package main;
 
 import configuration.DoorsConfiguration;
 import configuration.ItemConfiguration;
