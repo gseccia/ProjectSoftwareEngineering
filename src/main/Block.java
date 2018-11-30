@@ -17,6 +17,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.fills.GradientFill;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -47,6 +48,7 @@ public class Block extends BasicGameState
 	private Mission mission;
 	private int key = Directions.DOWN;
 	private ScorePointsManager scoreManager;
+	private PointsAccumulatorObserver pao;
 	
 	public Block(int state,String mapName)
 	{
@@ -82,7 +84,7 @@ public class Block extends BasicGameState
 		mobsCollision = new CollisionDetectionMobAttacksPlayer(hitbox);
 		// initialize scoremanager and observers
 		this.scoreManager = spm;
-		PointsAccumulatorObserver pao = new PointsAccumulatorObserver(this.scoreManager);
+		pao = new PointsAccumulatorObserver(this.scoreManager);
 //				ScoreFileObserver sfo = new ScoreFileObserver(this.scoreManager);
 		this.scoreManager.setNamePlayer("Armando");
 	}
@@ -169,13 +171,19 @@ public class Block extends BasicGameState
 		}
 		
 		// Qua viene stampato il punteggio
-		for (Observer e: this.scoreManager.getObservers()) {
-			if (e.getClass() == PointsAccumulatorObserver.class) {
-//						System.out.println("Punteggio: " + ((PointsAccumulatorObserver) e).getPoints());
-				g.setColor(Color.green);
-				g.drawString(String.valueOf(((PointsAccumulatorObserver) e).getPoints()), 500, 0);
-			}
-		}
+		g.setColor(Color.green);
+		g.drawString(String.valueOf(this.pao.getPoints()), 500, 0);
+		
+		int currentHealth = 30;
+		int maxHealth = 100;
+		int x = 400;
+		int y = 30;
+		
+		// Barra della vita
+		g.setColor(Color.pink);
+		g.fillRect(x, y, maxHealth, 15);
+		g.setColor(Color.green);
+		g.fillRect(x, y, currentHealth, 15);
 	}
 
 	@Override
