@@ -35,11 +35,11 @@ public abstract class Subject {
 	   this.notifyAllObservers();
    }
 
-	public void setIncreaseValue(int increaseValue) {
+	protected void setIncreaseValue(int increaseValue) {
 	this.increaseValue = increaseValue;
 }
 
-	public void setDecreaseValue(int decreaseValue) {
+	protected void setDecreaseValue(int decreaseValue) {
 		this.decreaseValue = decreaseValue;
 	}
 

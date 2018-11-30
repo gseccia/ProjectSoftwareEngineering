@@ -2,7 +2,6 @@ package main;
 
 import java.util.*;
 
-import elements.*;
 import managers.*;
 import map.Edge;
 import map.MapGraph;
@@ -13,7 +12,6 @@ import managers.observers.scoreboard.PointsAccumulatorObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 import managers.observers.scoreboard.States;
 
-import org.lwjgl.Sys;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -23,6 +21,11 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
+
+import elements.Enemy;
+import elements.Item;
+import elements.Mob;
+import elements.NullAnimationException;
 
 public class Block extends BasicGameState
 {
@@ -219,6 +222,7 @@ public class Block extends BasicGameState
 				if(wallCollision.detectCollision(mapX, mapY, player)) {
 					mapX += 1;
 					key = Directions.RIGHT;
+					player.setCurrentDirection(Directions.RIGHT);
 					pressed =true;
 				}
 			}
@@ -228,6 +232,7 @@ public class Block extends BasicGameState
 				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapX -= 1;
 					key = Directions.LEFT;
+					player.setCurrentDirection(Directions.LEFT);
 					pressed =true;
 				}
 			}
@@ -237,6 +242,7 @@ public class Block extends BasicGameState
 				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapY += 1;
 					key = Directions.DOWN;
+					player.setCurrentDirection(Directions.DOWN);
 					pressed =true;
 				}
 			}
@@ -246,6 +252,7 @@ public class Block extends BasicGameState
 				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapY -= 1;
 					key = Directions.UP;
+					player.setCurrentDirection(Directions.UP);
 					pressed =true;
 				}
 			}
@@ -291,7 +298,7 @@ public class Block extends BasicGameState
 			}
 			if(itemCollision.detectCollision(mapX, mapY, player)) {
 				if (itemCollision.getItemID() != "") {
-					//System.out.println("Stai prendendo una "+itemCollision.getItemID());
+//					System.out.println("Stai prendendo una "+itemCollision.getItemID());
 					this.scoreManager.decrease(0);
 					this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
 					this.scoreManager.setState(States.PointsAccumulator);
@@ -301,15 +308,17 @@ public class Block extends BasicGameState
 			}
 			if (enemyCollision.detectCollision(mapX, mapY, player)){
 				player.damage(enemyCollision.getAttackDamage());
-				//System.out.println("Collisione");
-				scoreManager.setDecreaseValue(enemyCollision.getAttackDamage());
-				scoreManager.setIncreaseValue(0);
+				System.out.println("Collisione");
+//				Usare subject per modificare l'observer
+//				Inserire in decrease() i punti di vita da togliere per la collisione con lo zombo
+				scoreManager.decrease(enemyCollision.getAttackDamage());
+				scoreManager.increase(0);
 				scoreManager.setState(States.LifePointsAccumulator);
-				lpao.setHp(-enemyCollision.getAttackDamage());
+//				lpao.setHp(-enemyCollision.getAttackDamage());
 			}
 			if (attackCollision.detectCollision(mapX, mapY, player) && (gc.getInput().isKeyPressed(Directions.KEY_M))){
-				//System.out.println("Attacco del player");
-				for(Mob target : attackCollision.getEnemy()){
+				System.out.println("Attacco del player");
+				for (Mob target : attackCollision.getEnemy()) {
 					target.damage(player.getAttackDamage());
 					//System.out.println(target + " "+ target.getHp());
 					if(target.getHp() <= 0){
@@ -321,7 +330,6 @@ public class Block extends BasicGameState
 						this.scoreManager.setState(States.PointsAccumulator);
 					}
 				}
-
 			}
 			// Life player check, there will be handled death
 			if (player.getHp() <= 0) this.dead = true;
