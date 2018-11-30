@@ -8,6 +8,7 @@ import elements.Enemy;
 import elements.Item;
 import elements.NullAnimationException;
 import elements.Player;
+import managers.observers.scoreboard.ScorePointsManager;
 import map.MapGraph;
 import missions.Mission;
 import missions.MissionsFactory;
@@ -30,6 +31,8 @@ public class Level extends StateBasedGame{
 	private Map<Block,Set<Item>> items;
 	private MissionsFactory missions;
 	private Mission mission_generated;
+	private ScorePointsManager spm;
+	
 	/**
 	 * This class is the manager of a level
 	*/
@@ -144,10 +147,12 @@ public class Level extends StateBasedGame{
 			Player player = new Player(MobConfiguration.getPlayerInstance(), charname);
 			generatePopulation(1,player); // level_difficulty
 			generateItems();
+			spm = ScorePointsManager.getScorePointsManagerInstance();
+			
 			distribute(player);
 			for(Block block: block_list)
 			{
-				block.initBlock(player, population, items,map,mission_generated);
+				block.initBlock(player, population, items,map,mission_generated, spm);
 				this.addState(block);
 			}
 

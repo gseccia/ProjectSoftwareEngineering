@@ -7,6 +7,10 @@ import map.Edge;
 import map.MapGraph;
 import map.Vertex;
 import missions.Mission;
+import managers.observers.scoreboard.Observer;
+import managers.observers.scoreboard.PointsAccumulatorObserver;
+import managers.observers.scoreboard.ScoreFileObserver;
+import managers.observers.scoreboard.ScorePointsManager;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -42,6 +46,7 @@ public class Block extends BasicGameState
 	private Vertex vertex;
 	private Mission mission;
 	private int key = Directions.DOWN;
+	private ScorePointsManager scoreManager;
 	
 	public Block(int state,String mapName)
 	{
@@ -55,7 +60,8 @@ public class Block extends BasicGameState
 	 * @param population map that contains information about enemies in the blocks
 	 * @throws SlickException if the map is not loaded correctly
 	 */
-	public void initBlock(Mob player,Map<Block,Set<Enemy>> population,Map<Block,Set<Item>> items,MapGraph graph, Mission missionGenerated) throws SlickException
+	public void initBlock(Mob player,Map<Block,Set<Enemy>> population,Map<Block,Set<Item>> items, 
+			MapGraph graph, Mission missionGenerated, ScorePointsManager spm) throws SlickException
 	{
 		map = new TiledMap("resource/maps/Complete"+mapName+"/"+mapName+".tmx");
 		this.vertex = graph.getVertex(this);
@@ -74,6 +80,11 @@ public class Block extends BasicGameState
 		doorCollision = new CollisionDetectionDoor(hitbox);
 		itemCollision = new CollisionDetectionItem(hitbox);
 		mobsCollision = new CollisionDetectionMobAttacksPlayer(hitbox);
+		// initialize scoremanager and observers
+		this.scoreManager = spm;
+		PointsAccumulatorObserver pao = new PointsAccumulatorObserver(this.scoreManager);
+//				ScoreFileObserver sfo = new ScoreFileObserver(this.scoreManager);
+		this.scoreManager.setNamePlayer("Armando");
 	}
 	
 
@@ -155,6 +166,15 @@ public class Block extends BasicGameState
 			g.setColor(Color.green);
 			g.drawString(mission.toString(), 0, 0);
 			g.drawString("PAUSE", player.getX(), player.getY());
+		}
+		
+		// Qua viene stampato il punteggio
+		for (Observer e: this.scoreManager.getObservers()) {
+			if (e.getClass() == PointsAccumulatorObserver.class) {
+//						System.out.println("Punteggio: " + ((PointsAccumulatorObserver) e).getPoints());
+				g.setColor(Color.green);
+				g.drawString(String.valueOf(((PointsAccumulatorObserver) e).getPoints()), 500, 0);
+			}
 		}
 	}
 
@@ -246,8 +266,13 @@ public class Block extends BasicGameState
 				}
 			}
 			if(itemCollision.detectCollision(mapX, mapY, player)) {
-				System.out.println("Stai prendendo una "+itemCollision.getItem());
-				//item.remove(itemCollision.getItem());
+				if (itemCollision.getItemID() != "") {
+					System.out.println("Stai prendendo una "+itemCollision.getItemID());
+					this.scoreManager.decrease(0);
+					this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
+					this.scoreManager.setState(0);
+					item.remove(itemCollision.getCollidedItem());
+				}
 			}
 			if (mobsCollision.detectCollision(mapX, mapY, player)){
 				player.damage(mobsCollision.getAttackDamage());

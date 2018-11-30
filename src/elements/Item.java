@@ -9,6 +9,7 @@ import org.newdawn.slick.geom.Rectangle;
 public class Item extends AnimatedElement implements MissionItem {
 
     private String id;
+    private int itemPoints;
 
     public Item(ItemConfiguration configuration, String id) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
         super(configuration.getItemAnimation(id),
@@ -16,6 +17,7 @@ public class Item extends AnimatedElement implements MissionItem {
                 configuration.getHeight(id),
                 0, 0);
         this.id = id;
+        this.itemPoints = 1;
     }
     
     /**
@@ -48,4 +50,8 @@ public class Item extends AnimatedElement implements MissionItem {
     public String getID() {
         return id;
     }
+
+	public int getItemPoints() {
+		return this.itemPoints;
+	}
 }
