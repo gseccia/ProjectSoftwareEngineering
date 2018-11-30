@@ -19,7 +19,7 @@ public class ScorePointsManagerTest {
 	
 	@Test
 	public void creationLoggerFileTest() {
-		System.out.println("Testing PointsManager");
+		/*System.out.println("Testing PointsManager");
 //		pm.attach(pao);
 //		pm.attach(sfo);
 		
@@ -35,6 +35,6 @@ public class ScorePointsManagerTest {
 		pm.setState(2);
 		System.out.println("Points total: " + pao.getPoints());
 		System.out.println("Hp total: " + lpao.getHp());
-		System.out.println("Mappa di prove" + sfo.getScores());
+		System.out.println("Mappa di prove" + sfo.getScores());*/
 	}
 }

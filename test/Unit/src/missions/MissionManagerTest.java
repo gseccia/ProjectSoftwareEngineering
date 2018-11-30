@@ -230,7 +230,7 @@ public class MissionManagerTest {
 
     @Test
     public void testGetItemPopulationReturnsNull() {
-        assertNull(manager.getItemPopulation());
+        assertEquals(new HashMap<String, Integer>(),manager.getItemPopulation());
     }
 
     @Test
@@ -295,7 +295,7 @@ public class MissionManagerTest {
 
     @Test
     public void testGetEnemyPopulationReturnsNull() {
-        assertNull(manager.getEnemyPopulation());
+        assertEquals(new HashMap<String, Integer>(), manager.getEnemyPopulation());
     }
 
 

@@ -10,7 +10,7 @@ import java.util.*;
  * This class represent all the mobile objects in the game, that have at least four different animations
  * (for the four directions) a HP value and an attack value. Probably this will become abstract
  */
-public class Mob extends AnimatedElement implements MultiAnimatable, Movable {
+public abstract class Mob extends AnimatedElement implements MultiAnimatable, Movable {
 
     /**
      * hp are the current hp, maxHP the total hp

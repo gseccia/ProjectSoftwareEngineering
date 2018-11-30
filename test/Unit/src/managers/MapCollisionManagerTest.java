@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import elements.Player;
 import managers.Wall;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -45,7 +46,7 @@ public class MapCollisionManagerTest {
             Mockito.when(this.mobconf.getFaceUp(this.id)).thenReturn(new Animation());
             Mockito.when(this.mobconf.getFaceLeft(this.id)).thenReturn(new Animation());
             Mockito.when(this.mobconf.getFaceRight(this.id)).thenReturn(new Animation());
-            this.player = new Mob(this.mobconf,this.id);
+            this.player = new Player(this.mobconf,this.id);
         } catch (NoSuchElementInConfigurationException | SlickException | NullAnimationException e) {
             e.printStackTrace();
         }

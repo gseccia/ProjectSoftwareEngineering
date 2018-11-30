@@ -6,6 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.newdawn.slick.SlickException;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+
 import static org.junit.Assert.assertEquals;
 
 public class MobConfigurationTest {
@@ -14,7 +18,14 @@ public class MobConfigurationTest {
 
     @Before
     public void setUp(){
-        this.conf = MobConfiguration.getEnemyInstance();
+
+        try {
+            Constructor<MobConfiguration> constructor = MobConfiguration.class.getDeclaredConstructor(String.class);
+            constructor.setAccessible(true);
+            this.conf = constructor.newInstance(System.getProperty("user.dir") + "/resource/configurations/test.conf");
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
