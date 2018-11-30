@@ -7,9 +7,7 @@ import map.Edge;
 import map.MapGraph;
 import map.Vertex;
 import missions.Mission;
-import managers.observers.scoreboard.Observer;
 import managers.observers.scoreboard.PointsAccumulatorObserver;
-import managers.observers.scoreboard.ScoreFileObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 
 import org.newdawn.slick.Color;
@@ -17,7 +15,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.fills.GradientFill;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -33,7 +30,8 @@ public class Block extends BasicGameState
 	private CollisionDetectionWall wallCollision;
 	private CollisionDetectionDoor doorCollision;
 	private CollisionDetectionItem itemCollision;
-	private CollisionDetectionMobAttacksPlayer mobsCollision;
+	private CollisionDetectionEnemyAttacksPlayer enemyCollision;
+	private CollisionDetectionPlayerAttacksEnemy attackCollision;
 	private TiledMap map;
 	private Mob player;
 	private Set<Enemy> enemy;
@@ -81,7 +79,9 @@ public class Block extends BasicGameState
 		wallCollision = new CollisionDetectionWall(hitbox);
 		doorCollision = new CollisionDetectionDoor(hitbox);
 		itemCollision = new CollisionDetectionItem(hitbox);
-		mobsCollision = new CollisionDetectionMobAttacksPlayer(hitbox);
+		enemyCollision = new CollisionDetectionEnemyAttacksPlayer(hitbox);
+		attackCollision = new CollisionDetectionPlayerAttacksEnemy(hitbox);
+
 		// initialize scoremanager and observers
 		this.scoreManager = spm;
 		pao = new PointsAccumulatorObserver(this.scoreManager);
@@ -282,8 +282,13 @@ public class Block extends BasicGameState
 					item.remove(itemCollision.getCollidedItem());
 				}
 			}
-			if (mobsCollision.detectCollision(mapX, mapY, player)){
-				player.damage(mobsCollision.getAttackDamage());
+			if (enemyCollision.detectCollision(mapX, mapY, player) && !attackCollision.detectCollision(mapX, mapY, player)){
+				player.damage(enemyCollision.getAttackDamage());
+				System.out.println("Collisione");
+			}
+			if (attackCollision.detectCollision(mapX, mapY, player) && (gc.getInput().isKeyDown(Directions.KEY_M))){
+				System.out.println("Attacco del player");
+
 			}
 			
 			// Enemy updating
