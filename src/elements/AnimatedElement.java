@@ -36,4 +36,12 @@ public abstract class AnimatedElement extends Rectangle{
     public void draw(){
         current.draw(getX(), getY());
     }
+    
+    /**
+     * Custom draw method at input coordinates
+     */
+    public void draw(int x, int y){
+        current.draw(x, y);
+    }
+    
 }

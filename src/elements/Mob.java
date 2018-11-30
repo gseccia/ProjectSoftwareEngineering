@@ -25,7 +25,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     public Mob(MobConfiguration configuration, String id, int x, int y) throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
         super(configuration.getFaceStill(id), configuration.getWidth(id), configuration.getHeight(id), x, y);
         this.hp = configuration.getHp(id);
-        this.maxHp = hp;
+        this.maxHp = 100;
         this.attackDamage = configuration.getAttack(id);
         faces = new HashMap<>();
         Animation faceLeft = configuration.getFaceLeft(id);

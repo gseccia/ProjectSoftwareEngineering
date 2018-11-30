@@ -55,7 +55,7 @@ public class Enemy extends Mob implements MissionItem {
     	lateralVision = 2*map.getMap().getTileHeight();
     	vision = new Rectangle(getX(), getY(),directVision,lateralVision);  // Vision
     	wallCollision = new CollisionDetectionWall(map.getHitbox());
-    	speed = 4;
+    	speed = 8;
     	surrendTime = 150;
     	attack = false;
     	obstacle= false;
@@ -160,20 +160,20 @@ public class Enemy extends Mob implements MissionItem {
 					
 				}
 				
-				else if(((dirX < -8 || dirX > 8) && !favorY) || favorX) {
+				else if(((dirX < -16 || dirX > 16) && !favorY) || favorX) {
 					// X movements
 					//System.out.println(id+" "+map.getID()+" MOVE X");
 					direction = (dirX > 0)?  Directions.RIGHT: Directions.LEFT;
 					
-					favorX = (dirX < -8 || dirX > 8);
+					favorX = (dirX < -16 || dirX > 16);
 				}
 				
-				else if(((dirY < -8 || dirY > 8) && !favorX) || favorY) {
+				else if(((dirY < -16 || dirY > 16) && !favorX) || favorY) {
 					// Y movements
 					//System.out.println(id+" "+map.getID()+" MOVE Y");
 					direction = (dirY > 0)?  Directions.DOWN: Directions.UP;
 					
-					favorY = (dirY < -8 || dirY > 8);
+					favorY = (dirY < -16 || dirY > 16);
 				}
 				else {
 					// On player! Not needed movements

@@ -1,8 +1,19 @@
 package managers.observers.scoreboard;
 
+import javax.naming.InitialContext;
+
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+
+import configuration.ItemConfiguration;
+import configuration.NoSuchElementInConfigurationException;
+import elements.Item;
+import elements.NullAnimationException;
 
 public class LifePointsAccumulatorObserver extends Observer{
 	private int hp = 100;
+	ItemConfiguration lifeConf = ItemConfiguration.getInstance();
+	Item heart;
 	
 	public LifePointsAccumulatorObserver(Subject s) {
 		this.subject = s;
@@ -15,6 +26,44 @@ public class LifePointsAccumulatorObserver extends Observer{
 
 	public void setHp(int hp) {
 		this.hp += hp;
+	}
+	
+	private int getNumberOfHearts() {
+		if (this.hp <= 100 && this.hp > 80) {
+			return 5;
+		}
+		else if (this.hp <= 80 && this.hp > 60) {
+			return 4;
+		}
+		else if (this.hp <= 60 && this.hp > 40) {
+			return 3;
+		}
+		else if (this.hp <= 40 && this.hp > 20) {
+			return 2;
+		}
+		else if (this.hp <= 20 && this.hp > 0) {
+			return 1;
+		}
+		else if (this.hp <= 0) {
+			return 0;
+		}
+		else {
+			return -1;
+		}
+	}
+	
+	public void renderHearts(Graphics g, int width) {
+
+		int initialWidthHearts = width - 90;
+		try {
+			heart = new Item(lifeConf, "heart");
+		} catch (NullAnimationException | SlickException | NoSuchElementInConfigurationException e) {
+			e.printStackTrace();
+		}
+		for (int i=0; i < this.getNumberOfHearts(); i++) {
+			heart.draw(initialWidthHearts+18*i, 30);
+		}
+		
 	}
 
 	@Override

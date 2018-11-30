@@ -7,6 +7,7 @@ import map.Edge;
 import map.MapGraph;
 import map.Vertex;
 import missions.Mission;
+import managers.observers.scoreboard.LifePointsAccumulatorObserver;
 import managers.observers.scoreboard.PointsAccumulatorObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 
@@ -39,6 +40,7 @@ public class Block extends BasicGameState
 	private int state;
 	private int mapX, mapY, prevMapX, prevMapY;
 	private boolean paused;
+	private boolean dead;
 	private HitboxMaker hitbox;
 	private String mapName;
 	private MapGraph graph;
@@ -47,6 +49,8 @@ public class Block extends BasicGameState
 	private int key = Directions.DOWN;
 	private ScorePointsManager scoreManager;
 	private PointsAccumulatorObserver pao;
+	private LifePointsAccumulatorObserver lpao;
+	
 	
 	public Block(int state,String mapName)
 	{
@@ -85,6 +89,7 @@ public class Block extends BasicGameState
 		// initialize scoremanager and observers
 		this.scoreManager = spm;
 		pao = new PointsAccumulatorObserver(this.scoreManager);
+		lpao = new LifePointsAccumulatorObserver(this.scoreManager);
 //				ScoreFileObserver sfo = new ScoreFileObserver(this.scoreManager);
 		this.scoreManager.setNamePlayer("Armando");
 	}
@@ -95,6 +100,7 @@ public class Block extends BasicGameState
 		setCharacterSpawn(1);
 		int x, y, n;
 		paused = false;
+		dead = false;
 		
 		// Enemies spawn from a set of a random spawn points
 		n = 1;
@@ -169,28 +175,44 @@ public class Block extends BasicGameState
 			g.drawString(mission.toString(), 0, 0);
 			g.drawString("PAUSE", player.getX(), player.getY());
 		}
+		if(dead) {
+			g.setColor(Color.red);
+			g.drawString("You died!", 
+					(Long.valueOf(Math.round(gc.getWidth()*0.3)).intValue()),
+					(Long.valueOf(Math.round(gc.getHeight()*0.3)).intValue())
+					);
+//			try {
+//				TimeUnit.SECONDS.sleep(5);
+//			} catch (InterruptedException e1) {
+//				e1.printStackTrace();
+//			}
+//			System.exit(0);
+		}
 		
 		// Qua viene stampato il punteggio
 		g.setColor(Color.green);
-		g.drawString(String.valueOf(this.pao.getPoints()), 500, 0);
+		g.drawString(String.valueOf(this.pao.getPoints()), (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-5*18, 0);
 		
-		int currentHealth = 30;
-		int maxHealth = 100;
-		int x = 400;
-		int y = 30;
+		// Stampo i cuoricini <3
+		lpao.renderHearts(g, (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue()));
 		
-		// Barra della vita
-		g.setColor(Color.pink);
-		g.fillRect(x, y, maxHealth, 15);
-		g.setColor(Color.green);
-		g.fillRect(x, y, currentHealth, 15);
+//		int currentHealth = 30;
+//		int maxHealth = 100;
+//		int x = 400;
+//		int y = 30;
+//		
+//		// Barra della vita
+//		g.setColor(Color.pink);
+//		g.fillRect(x, y, maxHealth, 15);
+//		g.setColor(Color.green);
+//		g.fillRect(x, y, currentHealth, 15);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
-		if(gc.getInput().isKeyDown(Input.KEY_P)) paused = !paused;
+		if(gc.getInput().isKeyPressed(Input.KEY_P)) paused = !paused;
 		
-		if(!paused) {
+		if(!paused && !dead) {
 		try {
 			boolean pressed =false;
 			if(gc.getInput().isKeyDown(Directions.RIGHT)){
@@ -282,14 +304,25 @@ public class Block extends BasicGameState
 					item.remove(itemCollision.getCollidedItem());
 				}
 			}
-			if (enemyCollision.detectCollision(mapX, mapY, player) && !attackCollision.detectCollision(mapX, mapY, player)){
+			if (enemyCollision.detectCollision(mapX, mapY, player)){
 				player.damage(enemyCollision.getAttackDamage());
 				System.out.println("Collisione");
+				lpao.setHp(-enemyCollision.getAttackDamage());
 			}
-			if (attackCollision.detectCollision(mapX, mapY, player) && (gc.getInput().isKeyDown(Directions.KEY_M))){
+			if (attackCollision.detectCollision(mapX, mapY, player) && (gc.getInput().isKeyPressed(Directions.KEY_M))){
 				System.out.println("Attacco del player");
+				attackCollision.getEnemy().setHp(attackCollision.getEnemy().getHp() - player.getAttackDamage());
+				if (attackCollision.getEnemy().getHp() <= 0) {
+					enemy.remove(attackCollision.getEnemy());
+					this.scoreManager.decrease(0);
+					// in increase() must be passed points associated to enemy kill
+					this.scoreManager.increase(100);
+					this.scoreManager.setState(0);
+				}
 
 			}
+			// Life player check, there will be handled death
+			if (player.getHp() <= 0) this.dead = true;
 			
 			// Enemy updating
 			for(Enemy e:enemy) {

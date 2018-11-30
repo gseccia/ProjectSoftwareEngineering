@@ -26,7 +26,7 @@ public class ItemConfiguration extends Configuration {
         }
         return instance;
     }
-
+    
     private ItemConfiguration(String filename){
         this.configuration = super.uploadConfiguration(filename);
     }
