@@ -15,7 +15,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     /**
      * hp are the current hp, maxHP the total hp
      */
-    private int hp, maxHp, attackDamage;
+    private int hp, maxHp, attackDamage, points;
     private int currentDirection;
     private Attack attack;
     private HashMap<String, Animation> faces;
@@ -48,6 +48,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
         super(configuration.getFaceStillDown(id), configuration.getWidth(id), configuration.getHeight(id), 0, 0);
         this.hp = configuration.getHp(id);
         this.maxHp = hp;
+        this.points = configuration.getMobPoints(id);
         this.attackDamage = configuration.getAttack(id);
         faces = new HashMap<>();
         Animation faceLeft = configuration.getFaceLeft(id);
@@ -142,7 +143,11 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     }
 
 
-    public void setAttackDamage(int attackDamage) throws NotPositiveValueException {
+    public int getMobPoints() {
+		return this.points;
+	}
+
+	public void setAttackDamage(int attackDamage) throws NotPositiveValueException {
         if (attackDamage < 0) {
             throw new NotPositiveValueException("Attack Damage value cannot be less or equal than 0!");
         }

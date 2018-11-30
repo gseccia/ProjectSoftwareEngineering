@@ -38,6 +38,13 @@ public class MobConfiguration extends Configuration{
         }
         return this.getConfiguration(id).get("hp").getAsInt();
     }
+    
+    public int getMobPoints(String id) throws NoSuchElementInConfigurationException {
+        if(getConfiguration(id).get("points") == null) {
+            throw new NoSuchElementInConfigurationException();
+        }
+        return this.getConfiguration(id).get("points").getAsInt();
+    }
 
     public int getHeight(String id) throws NoSuchElementInConfigurationException {
         if(getConfiguration(id).get("height") == null) {

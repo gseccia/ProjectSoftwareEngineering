@@ -16,7 +16,8 @@ public class ScorePointsManager extends Subject{
 	public void setState(int state) {
 		/* Salva lo stato corrente e notifica il cambiamento agli observer
 		* Lo stato corrisponde a:
-		*	
+		*	0 punti
+		*	1 vita
 		*/
 		
 		this.state = state;
