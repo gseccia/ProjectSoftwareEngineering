@@ -11,6 +11,7 @@ import missions.Mission;
 import managers.observers.scoreboard.LifePointsAccumulatorObserver;
 import managers.observers.scoreboard.PointsAccumulatorObserver;
 import managers.observers.scoreboard.ScorePointsManager;
+import managers.observers.scoreboard.States;
 
 import org.lwjgl.Sys;
 import org.newdawn.slick.Color;
@@ -293,7 +294,7 @@ public class Block extends BasicGameState
 					//System.out.println("Stai prendendo una "+itemCollision.getItemID());
 					this.scoreManager.decrease(0);
 					this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
-					this.scoreManager.setState(0);
+					this.scoreManager.setState(States.PointsAccumulator);
 					mission.check(itemCollision.getCollidedItem());
 					item.remove(itemCollision.getCollidedItem());
 				}
@@ -301,6 +302,9 @@ public class Block extends BasicGameState
 			if (enemyCollision.detectCollision(mapX, mapY, player)){
 				player.damage(enemyCollision.getAttackDamage());
 				//System.out.println("Collisione");
+				scoreManager.setDecreaseValue(enemyCollision.getAttackDamage());
+				scoreManager.setIncreaseValue(0);
+				scoreManager.setState(States.LifePointsAccumulator);
 				lpao.setHp(-enemyCollision.getAttackDamage());
 			}
 			if (attackCollision.detectCollision(mapX, mapY, player) && (gc.getInput().isKeyPressed(Directions.KEY_M))){
@@ -313,8 +317,8 @@ public class Block extends BasicGameState
 						mission.check((Enemy)target);
 						this.scoreManager.decrease(0);
 						// in increase() must be passed points associated to enemy kill
-						this.scoreManager.increase(100);
-						this.scoreManager.setState(0);
+						this.scoreManager.increase(target.getMobPoints());
+						this.scoreManager.setState(States.PointsAccumulator);
 					}
 				}
 

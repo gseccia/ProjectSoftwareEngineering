@@ -39,7 +39,7 @@
  </layer>
  <layer id="33" name="Base" width="50" height="35">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu2RQQqAMAwE86de/KA+0td4EKFI68H0MNZZGEIDCRkaMU/WErGVs9bce733qNm3e1oedW31nm7JzGb2/NWj9+cjZjN7ruzLt9GDhR4s9GChBws9WOjBQg8WerDQg4UeLPRgoQcLPVjowWKmHKYf6XtYGwAA
+   H4sIAAAAAAAACu3RsRGAQAzEwKvqA7cMPUEXTwgJPcgeXbJOPUrmbK/kWX31D5bT/jgqOauv/67vvquv9mBpD5b2YGkPlvZgaQ+W9mBpD5b2YGkPlvZgaQ+W9mA5rceEvdft/M1YGwAA
   </data>
  </layer>
  <layer id="36" name="Wall" width="50" height="35">
