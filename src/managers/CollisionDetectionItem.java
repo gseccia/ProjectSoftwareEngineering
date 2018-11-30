@@ -30,7 +30,6 @@ public class CollisionDetectionItem extends CollisionDetectionStrategy {
 				itemID = i.getID();
 				itemFound = i;
 				items.remove(i);
-				System.out.println("Inside collision");
 				break;
 			}
 		}

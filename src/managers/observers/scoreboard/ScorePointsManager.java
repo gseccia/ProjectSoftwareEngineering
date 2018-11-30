@@ -33,4 +33,22 @@ public class ScorePointsManager extends Subject{
 	public void saveNamePlayer(String name) {
 		setNamePlayer(name);
 	}
+	
+	public LifePointsAccumulatorObserver getLifePointsAccumulatorObserver() {
+	   for (Observer e : observers) {
+		   if (e.getClass() == LifePointsAccumulatorObserver.class) {
+			   return (LifePointsAccumulatorObserver) e;
+		   }
+	   }
+	return null;
+	}
+	
+	public PointsAccumulatorObserver getPointsAccumulatorObserver() {
+	   for (Observer e : observers) {
+		   if (e.getClass() == PointsAccumulatorObserver.class) {
+			   return (PointsAccumulatorObserver) e;
+		   }
+	   }
+	return null;
+	}
 }
