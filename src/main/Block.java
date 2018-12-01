@@ -47,7 +47,7 @@ public class Block extends BasicGameState
 	private ScorePointsManager scoreManager;
 	private PointsAccumulatorObserver pao;
 	private LifePointsAccumulatorObserver lpao;
-	private Sound ost;
+	private Sound endLevel, deadEnd;
 	
 	
 	public Block(int state,String mapName)
@@ -96,7 +96,8 @@ public class Block extends BasicGameState
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		try {
-			ost = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/levelCompleted.ogg");
+			endLevel = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/levelCompleted.ogg");
+			deadEnd = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/dead.ogg");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -184,6 +185,9 @@ public class Block extends BasicGameState
 					(Long.valueOf(Math.round(gc.getWidth()*0.3)).intValue()),
 					(Long.valueOf(Math.round(gc.getHeight()*0.3)).intValue())
 					);
+			if(!deadEnd.playing()){
+				deadEnd.loop();
+			}
 //			try {
 //				TimeUnit.SECONDS.sleep(5);
 //			} catch (InterruptedException e1) {
@@ -198,8 +202,8 @@ public class Block extends BasicGameState
                 g.fillRect(0, 0, gc.getWidth(), gc.getHeight(), new Image(System.getProperty("user.dir") + "/resource/textures/transitions/background.png"), 0, 0);
                 g.drawString("LEVEL COMPLETED!", player.getX()-35, player.getY()-30);
                 g.drawImage(new Image(System.getProperty("user.dir") + "/resource/textures/transitions/toBeCont.png"), player.getX()-85, player.getY()-25);
-                if(!ost.playing()) {
-					ost.loop();
+                if(!endLevel.playing()) {
+					endLevel.loop();
 				}
             } catch (SlickException e) {
                 e.printStackTrace();
