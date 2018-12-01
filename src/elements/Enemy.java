@@ -1,7 +1,7 @@
 package elements;
 
 import attacks.Attack;
-import attacks.StandardEnemyAttack;
+import attacks.PointBlankRangeAttack;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import main.Block;
@@ -14,6 +14,7 @@ import java.util.Random;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import utils.Constants;
 
 
 public class Enemy extends Mob implements MissionItem {
@@ -30,7 +31,7 @@ public class Enemy extends Mob implements MissionItem {
     private CollisionDetectionDoor doorCollision;
     private boolean attack,obstacle,favorY,favorX;
     
-    private final int RELOADING_TIME = 20;
+    private final int RELOADING_TIME = Constants.framerate;
     private final int SPEED = 8;
     private final int SURREND_TIME = 150;
 
@@ -38,7 +39,7 @@ public class Enemy extends Mob implements MissionItem {
     	super(configuration, id);
     	this.id = id;
     	direction = Directions.LEFT;
-    	setAttack(new StandardEnemyAttack(this));
+    	setAttack(new PointBlankRangeAttack(this));
 	}
     
     public Enemy(MobConfiguration configuration, String id, Block map, Player p) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
@@ -47,7 +48,7 @@ public class Enemy extends Mob implements MissionItem {
         this.map = map;
         this.player = p;
         direction = Directions.LEFT;     // Suppose initial direction right
-		setAttack(new StandardEnemyAttack(this));
+		setAttack(new PointBlankRangeAttack(this));
     }
 
     @Override

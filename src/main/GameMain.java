@@ -5,6 +5,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import utils.Constants;
 
 public class GameMain{
 	public final static int MENU = 0;
@@ -19,7 +20,7 @@ public class GameMain{
 			 AppGameContainer app = new AppGameContainer(new Level("UNI:ZA","guntan",2));
 			 app.setDisplayMode(800, 700, false);
 			 app.setShowFPS(true);
-			 app.setTargetFrameRate(19);
+			 app.setTargetFrameRate(Constants.framerate);
 		     app.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
