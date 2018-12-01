@@ -2,10 +2,11 @@ package Unit.src.managers.observers.scoreboard;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
 
 import managers.observers.scoreboard.LifePointsAccumulatorObserver;
 import managers.observers.scoreboard.ScorePointsManager;
+import org.junit.Test;
 
 class LifePointsAccumulatorObserverTest {
 

@@ -12,11 +12,7 @@ import managers.observers.scoreboard.PointsAccumulatorObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 import managers.observers.scoreboard.States;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -51,6 +47,7 @@ public class Block extends BasicGameState
 	private ScorePointsManager scoreManager;
 	private PointsAccumulatorObserver pao;
 	private LifePointsAccumulatorObserver lpao;
+	private Sound ost;
 	
 	
 	public Block(int state,String mapName)
@@ -98,6 +95,11 @@ public class Block extends BasicGameState
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
+		try {
+			ost = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/levelCompleted.ogg");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 		setCharacterSpawn(1);
 		int x, y, n;
 		paused = false;
@@ -189,6 +191,21 @@ public class Block extends BasicGameState
 //			}
 //			System.exit(0);
 		}
+		//TEMPORARY, just to show something
+		if(mission.completed()){
+			g.setColor(Color.white);
+            try {
+                g.fillRect(0, 0, gc.getWidth(), gc.getHeight(), new Image(System.getProperty("user.dir") + "/resource/textures/transitions/background.png"), 0, 0);
+                g.drawString("LEVEL COMPLETED!", player.getX()-35, player.getY()-30);
+                g.drawImage(new Image(System.getProperty("user.dir") + "/resource/textures/transitions/toBeCont.png"), player.getX()-85, player.getY()-25);
+                if(!ost.playing()) {
+					ost.loop();
+				}
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+
+        }
 		
 		// Qua viene stampato il punteggio
 		g.setColor(Color.green);
@@ -213,7 +230,7 @@ public class Block extends BasicGameState
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
 		if(gc.getInput().isKeyPressed(Input.KEY_P)) paused = !paused;
 		
-		if(!paused && !dead) {
+		if(!paused && !dead && !mission.completed()) {
 		try {
 			boolean pressed =false;
 			if(gc.getInput().isKeyDown(Directions.RIGHT)){
