@@ -171,7 +171,6 @@ public class Enemy extends Mob implements MissionItem {
 					// X movements
 					//System.out.println(id+" "+map.getID()+" MOVE X");
 					direction = (dirX > 0)?  Directions.RIGHT: Directions.LEFT;
-					System.out.println(id+" "+map.getID()+" PLAYER W "+player.getWidth());
 					favorX = Math.abs(dirX) > player.getWidth(); //map.getMap().getTileWidth();(dirX < -player.getWidth() && dirX<0) || (dirX>0 && dirX > getWidth());
 				}
 				
@@ -179,7 +178,6 @@ public class Enemy extends Mob implements MissionItem {
 					// Y movements
 					//System.out.println(id+" "+map.getID()+" MOVE Y");
 					direction = (dirY > 0)?  Directions.DOWN: Directions.UP;
-					System.out.println(id+" "+map.getID()+" PLAYER H "+player.getHeight());
 					favorY = Math.abs(dirY) > player.getHeight(); //map.getMap().getTileHeight() Math.abs(dirY) > player.getHeight() + getHeight();
 				}
 				else {
