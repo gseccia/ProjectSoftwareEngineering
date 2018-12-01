@@ -9,7 +9,6 @@ import managers.CollisionDetectionWall;
 import managers.Directions;
 import missions.MissionItem;
 
-import java.lang.annotation.Native;
 import java.util.Random;
 
 import org.newdawn.slick.SlickException;
@@ -20,22 +19,20 @@ public class Enemy extends Mob implements MissionItem {
 
     private String id;
     private Block map;
-    private int direction, imposed_direction, attackLatency;
+    private int direction, imposed_direction, reloadingTime = 20, untilNextAttack = 0;
     private Rectangle vision;
     private int directVision;
     private int lateralVision;
     private int speed, surrendTime;
     private Player player;
     private CollisionDetectionWall wallCollision;
-    private boolean attack,obstacle,favorY,favorX, canAttack;
-    private Thread attackThread;
+    private boolean attack,obstacle,favorY,favorX;
 
     public Enemy(MobConfiguration configuration, String id) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
     	super(configuration, id);
     	this.id = id;
     	direction = Directions.LEFT;
     	setAttack(new StandardEnemyAttack(this));
-    	setUpThread();
 	}
     
     public Enemy(MobConfiguration configuration, String id, Block map, Player p) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
@@ -45,26 +42,7 @@ public class Enemy extends Mob implements MissionItem {
         this.player = p;
         direction = Directions.LEFT;     // Suppose initial direction right
 		setAttack(new StandardEnemyAttack(this));
-		setUpThread();
     }
-
-    private void setUpThread(){
-    	attackThread = new Thread(() -> {
-			while(getHp()>0) {
-				try {
-					if (canAttack) {
-						Thread.sleep(100);
-					} else {
-						Thread.sleep(1000);
-						canAttack = true;
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-    	attackThread.start();
-	}
 
     @Override
     public String getID() {
@@ -321,13 +299,17 @@ public class Enemy extends Mob implements MissionItem {
 
     @Override
     public boolean isReadyToAttack(){
-		return canAttack;
+		return untilNextAttack == 0;
 	}
 
 	@Override
-	public void hasAttacked(){
-    	if(canAttack){
-    		canAttack = false;
+	public void hasAttacked() {
+    	untilNextAttack = reloadingTime;
+	}
+
+	public void reloadAttack() {
+    	if(untilNextAttack > 0) {
+			untilNextAttack--;
 		}
 	}
 }

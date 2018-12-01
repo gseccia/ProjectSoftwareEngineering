@@ -337,6 +337,7 @@ public class Block extends BasicGameState
 			// Enemy updating
 			for(Enemy e:enemy) {
 				e.update();
+				e.reloadAttack();
 			}
 			
 			for(Item i:item) {
