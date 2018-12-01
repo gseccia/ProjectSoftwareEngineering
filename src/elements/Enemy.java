@@ -5,6 +5,7 @@ import attacks.StandardEnemyAttack;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import main.Block;
+import managers.CollisionDetectionDoor;
 import managers.CollisionDetectionWall;
 import managers.Directions;
 import missions.MissionItem;
@@ -19,14 +20,19 @@ public class Enemy extends Mob implements MissionItem {
 
     private String id;
     private Block map;
-    private int direction, imposed_direction, reloadingTime = 20, untilNextAttack = 0;
+    private int direction, imposed_direction,untilNextAttack;
     private Rectangle vision;
     private int directVision;
     private int lateralVision;
-    private int speed, surrendTime;
+    private int surrendTime;
     private Player player;
     private CollisionDetectionWall wallCollision;
+    private CollisionDetectionDoor doorCollision;
     private boolean attack,obstacle,favorY,favorX;
+    
+    private final int RELOADING_TIME = 20;
+    private final int SPEED = 8;
+    private final int SURREND_TIME = 150;
 
     public Enemy(MobConfiguration configuration, String id) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
     	super(configuration, id);
@@ -55,11 +61,12 @@ public class Enemy extends Mob implements MissionItem {
     	lateralVision = 2*map.getMap().getTileHeight();
     	vision = new Rectangle(getX(), getY(),directVision,lateralVision);  // Vision
     	wallCollision = new CollisionDetectionWall(map.getHitbox());
-    	speed = 8;
-    	surrendTime = 150;
+    	doorCollision = new CollisionDetectionDoor(map.getHitbox());
+    	surrendTime = SURREND_TIME;
     	attack = false;
     	obstacle= false;
     	favorX = favorY = false;
+    	untilNextAttack = 0;
     	imposed_direction = -1;
     }
     
@@ -106,7 +113,7 @@ public class Enemy extends Mob implements MissionItem {
 			if(vision.intersects(player)) {
 				// Attack him!
 				attack = true;
-				surrendTime = 150;
+				surrendTime = SURREND_TIME;
 				//System.out.println(id+" "+map.getID()+" ATTACK!");
 			}
 			else if(attack) {
@@ -160,20 +167,20 @@ public class Enemy extends Mob implements MissionItem {
 					
 				}
 				
-				else if(((dirX < -16 || dirX > 16) && !favorY) || favorX) {
+				else if((Math.abs(dirX) > player.getWidth() && !favorY) || favorX) {
 					// X movements
 					//System.out.println(id+" "+map.getID()+" MOVE X");
 					direction = (dirX > 0)?  Directions.RIGHT: Directions.LEFT;
-					
-					favorX = (dirX < -16 || dirX > 16);
+					System.out.println(id+" "+map.getID()+" PLAYER W "+player.getWidth());
+					favorX = Math.abs(dirX) > player.getWidth(); //map.getMap().getTileWidth();(dirX < -player.getWidth() && dirX<0) || (dirX>0 && dirX > getWidth());
 				}
 				
-				else if(((dirY < -16 || dirY > 16) && !favorX) || favorY) {
+				else if((Math.abs(dirY) > player.getHeight() && !favorX) || favorY) {
 					// Y movements
 					//System.out.println(id+" "+map.getID()+" MOVE Y");
 					direction = (dirY > 0)?  Directions.DOWN: Directions.UP;
-					
-					favorY = (dirY < -16 || dirY > 16);
+					System.out.println(id+" "+map.getID()+" PLAYER H "+player.getHeight());
+					favorY = Math.abs(dirY) > player.getHeight(); //map.getMap().getTileHeight() Math.abs(dirY) > player.getHeight() + getHeight();
 				}
 				else {
 					// On player! Not needed movements
@@ -187,7 +194,7 @@ public class Enemy extends Mob implements MissionItem {
 			
 			// Movements' logic  after a wall collision!
 			wallCollision.setKey(direction);
-			if(direction!=-1 && !wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this)) {
+			if(direction!=-1 && (!wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this) || doorCollision.detectCollision(map.getShiftX(), map.getShiftY(), this)) ) {
 					//System.out.println(id+" "+map.getID()+" COLLIDE");
 					
 					int choosen = direction;
@@ -247,27 +254,40 @@ public class Enemy extends Mob implements MissionItem {
 			// Movements Action!
 			switch(direction) {
 					case Directions.LEFT:
-						x = x - speed;
+						x = x - SPEED;
 						//System.out.println(id+" "+map.getID()+" LEFT");
 						faceLeft();
 						break;
 					case Directions.RIGHT:
-						x = x + speed;
+						x = x + SPEED;
 						//System.out.println(id+" "+map.getID()+" RIGHT");
 						faceRight();
 						break;
 					case Directions.UP:
-						y = y - speed;
+						y = y - SPEED;
 						//System.out.println(id+" "+map.getID()+" UP");
 						faceUp();
 						break;
 					case Directions.DOWN:
-						y = y + speed;
+						y = y + SPEED;
 						//System.out.println(id+" "+map.getID()+" DOWN");
 						faceDown();
 						break;
-					default:
-						faceDown();
+					default: // No movements animation
+						switch(getCurrentDirection()) {
+							case Directions.LEFT:
+								faceStillLeft();
+								break;
+							case Directions.RIGHT:
+								faceStillRight();
+								break;
+							case Directions.UP:
+								faceStillUp();
+								break;
+							case Directions.DOWN:
+								faceStillDown();
+								break;
+						}
 				}
 				
 			setLocation(x,y); // Position Updating
@@ -304,7 +324,7 @@ public class Enemy extends Mob implements MissionItem {
 
 	@Override
 	public void hasAttacked() {
-    	untilNextAttack = reloadingTime;
+    	untilNextAttack = RELOADING_TIME;
 	}
 
 	public void reloadAttack() {
