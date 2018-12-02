@@ -7,28 +7,10 @@ import org.newdawn.slick.SlickException;
 import java.util.Set;
 
 
-public class MobConfiguration extends Configuration{
-    private static final String playerFilename = System.getProperty("user.dir") + "/resource/configurations/player.conf";
-    private static final String enemyFilename = System.getProperty("user.dir") + "/resource/configurations/enemy.conf";
-    private static MobConfiguration playerInstance = null;
-    private static MobConfiguration enemyInstance = null;
+public abstract class MobConfiguration extends Configuration{
     private JsonObject configuration;
 
-    public static MobConfiguration getEnemyInstance(){
-        if(enemyInstance == null){
-            enemyInstance = new MobConfiguration(enemyFilename);
-        }
-        return enemyInstance;
-    }
-
-    public static MobConfiguration getPlayerInstance(){
-        if(playerInstance == null){
-            playerInstance = new MobConfiguration(playerFilename);
-        }
-        return playerInstance;
-    }
-
-    private MobConfiguration(String filename){
+    protected MobConfiguration(String filename){
         this.configuration = super.uploadConfiguration(filename);
     }
 
@@ -37,13 +19,6 @@ public class MobConfiguration extends Configuration{
             throw new NoSuchElementInConfigurationException();
         }
         return this.getConfiguration(id).get("hp").getAsInt();
-    }
-    
-    public int getMobPoints(String id) throws NoSuchElementInConfigurationException {
-        if(getConfiguration(id).get("points") == null) {
-            throw new NoSuchElementInConfigurationException();
-        }
-        return this.getConfiguration(id).get("points").getAsInt();
     }
 
     public int getHeight(String id) throws NoSuchElementInConfigurationException {
@@ -127,8 +102,8 @@ public class MobConfiguration extends Configuration{
     public Animation getAttackDown(String id) throws SlickException, NoSuchElementInConfigurationException {
         return generateAnimation(id,"attackDown");
     }
-    
-    public Set<String> getMobNames(){
+
+    protected Set<String> getIdSet(){
         return configuration.keySet();
     }
 }

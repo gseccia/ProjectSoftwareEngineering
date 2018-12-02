@@ -16,7 +16,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     /**
      * hp are the current hp, maxHP the total hp
      */
-    private int hp, maxHp, attackDamage, points;
+    private int hp, maxHp, attackDamage;
     private int currentDirection = Directions.DOWN;;
     private Attack attack;
     private HashMap<String, Animation> faces;
@@ -49,7 +49,6 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
         super(configuration.getFaceStillDown(id), configuration.getWidth(id), configuration.getHeight(id), 0, 0);
         this.hp = configuration.getHp(id);
         this.maxHp = hp;
-        this.points = configuration.getMobPoints(id);
         this.attackDamage = configuration.getAttack(id);
         faces = new HashMap<>();
         Animation faceLeft = configuration.getFaceLeft(id);
@@ -78,10 +77,10 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
      * @param standStillUp the sill animation up
      * @param standStillRight the still animation right
      * @param standStillLeft the still animation left
-     * @param attackLeft
-     * @param attackRight
-     * @param attackUp
-     * @param attackDown
+     * @param attackLeft the attack left animation
+     * @param attackRight the attack right animation
+     * @param attackUp the attack up animation
+     * @param attackDown the attack down animation
      */
     private void generateMap(Animation faceLeft, Animation faceRight, Animation faceUp, Animation faceDown, Animation standStillDown, 
     		Animation standStillUp, Animation standStillRight, Animation standStillLeft, Animation attackDown, Animation attackUp,  Animation attackLeft, Animation attackRight) {
@@ -142,11 +141,6 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     protected void setAttack(Attack attack){
         this.attack = attack;
     }
-
-
-    public int getMobPoints() {
-		return this.points;
-	}
 
 	public void setAttackDamage(int attackDamage) throws NotPositiveValueException {
         if (attackDamage < 0) {

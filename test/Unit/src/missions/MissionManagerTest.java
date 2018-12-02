@@ -1,5 +1,6 @@
 package Unit.src.missions;
 
+import configuration.EnemyConfiguration;
 import configuration.ItemConfiguration;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
@@ -38,7 +39,7 @@ public class MissionManagerTest {
     private static final int numInt1 = 1;
     private static final int numInt2 = 2;
 
-    @Mock private MobConfiguration mobconf;
+    @Mock private EnemyConfiguration mobconf;
     @Mock private ItemConfiguration itemconf;
     @Mock private Item mockItem1;
     @Mock private Item mockItem2;
@@ -66,7 +67,7 @@ public class MissionManagerTest {
 
     @Before
     public void setUp() {
-        mobconf = Mockito.mock(MobConfiguration.class);
+        mobconf = Mockito.mock(EnemyConfiguration.class);
         try {
             Mockito.when(mobconf.getAttack(mob1)).thenReturn(100);
             Mockito.when(mobconf.getHeight(mob1)).thenReturn(42);

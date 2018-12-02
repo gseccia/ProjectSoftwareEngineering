@@ -1,5 +1,6 @@
 package missions;
 
+import configuration.EnemyConfiguration;
 import configuration.ItemConfiguration;
 import configuration.MobConfiguration;
 import utils.RandomCollection;
@@ -10,10 +11,10 @@ public class MissionsFactory {
 
     private final static int numMissions = 2;
     private int capacity, difficulty;
-    private MobConfiguration mobConf;
+    private EnemyConfiguration mobConf;
     private ItemConfiguration itemConf;
 
-    public MissionsFactory(int capacity, int difficulty, MobConfiguration mobConf, ItemConfiguration itemConf) {
+    public MissionsFactory(int capacity, int difficulty, EnemyConfiguration mobConf, ItemConfiguration itemConf) {
         this.capacity = capacity;
         this.difficulty = difficulty;
         this.mobConf = mobConf;

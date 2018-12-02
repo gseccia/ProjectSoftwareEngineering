@@ -1,5 +1,6 @@
 package Unit.src.elements;
 
+import configuration.EnemyConfiguration;
 import elements.*;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,30 +11,23 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TiledMap;
 
-import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
-import managers.Directions;
 import main.Block;
-
-import javax.swing.*;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EnemyTest {
-	@Mock private MobConfiguration enemyconf;
+	@Mock private EnemyConfiguration enemyconf;
 
     private Enemy enemy;
 
     @Before
     public void setUp()  {
-        this.enemyconf = Mockito.mock(MobConfiguration.class);
+        this.enemyconf = Mockito.mock(EnemyConfiguration.class);
         Block block = Mockito.mock(Block.class);
-        TiledMap map = Mockito.mock(TiledMap.class);
         Player p = Mockito.mock(Player.class);
 
         try {
@@ -63,12 +57,12 @@ public class EnemyTest {
     }
     
     @Test
-    public void testID() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testID() {
         Assert.assertEquals("test", this.enemy.getID());
     }
 
   //POSITIONING TESTS
-    /** HOW CAN I ACCESS THE WALL ???
+    /* HOW CAN I ACCESS THE WALL ???
     @Test
     public void testEnemyIsPositionedAtOrigin() throws NullAnimationException, NoSuchElementInConfigurationException {
     	this.enemy.init(42, 42);
@@ -80,30 +74,30 @@ public class EnemyTest {
     public void testEnemyInitialDirection() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
         this.enemy.init(0, 0);
         Assert.assertEquals((int) this.enemy.getDirection(), Directions.LEFT);
-    }**/
+    }*/
 
     /**********************/
     @Test
-    public void testHpIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testHpIsReadCorrectly() {
         Assert.assertEquals(this.enemy.getHp(), 100);
     }
 
     @Test
-    public void testHpIsSetCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testHpIsSetCorrectly() {
         int change = 10;
         this.enemy.setHp(change);
         Assert.assertEquals(this.enemy.getHp(), change);
     }
 
     @Test
-    public void testHpValueCannotBeLessThanZero() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testHpValueCannotBeLessThanZero() {
         int change = -1;
         this.enemy.setHp(change);
         Assert.assertEquals(this.enemy.getHp(), 0);
     }
 
     @Test
-    public void testHpValueCanBeZero() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testHpValueCanBeZero() {
         int change = 0;
         this.enemy.setHp(change);
         Assert.assertEquals(this.enemy.getHp(), 0);
@@ -112,25 +106,25 @@ public class EnemyTest {
     //MAX HP TESTS
 
     @Test
-    public void testMaxHpIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testMaxHpIsReadCorrectly() {
         Assert.assertEquals(this.enemy.getMaxHp(), 100);
     }
 
     @Test
-    public void testMaxHpIsSetCorrectly() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
+    public void testMaxHpIsSetCorrectly() throws NotPositiveValueException {
         int change = 10;
         this.enemy.setMaxHp(change);
         Assert.assertEquals(this.enemy.getMaxHp(), change);
     }
 
     @Test(expected = NotPositiveValueException.class)
-    public void testMaxHpCannotBeLessThanZero() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
+    public void testMaxHpCannotBeLessThanZero() throws NotPositiveValueException {
         int change = -1;
         this.enemy.setMaxHp(change);
     }
 
     @Test(expected = NotPositiveValueException.class)
-    public void testMaxHpCannotBeEqualToZero() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
+    public void testMaxHpCannotBeEqualToZero() throws NotPositiveValueException {
         int change = 0;
         this.enemy.setMaxHp(change);
     }
@@ -138,25 +132,25 @@ public class EnemyTest {
     //ATTACK DAMAGE TESTS
 
     @Test
-    public void testAttackDamageIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testAttackDamageIsReadCorrectly() {
         Assert.assertEquals(this.enemy.getAttackDamage(), 100);
     }
 
     @Test
-    public void testAttackDamageIsSetCorrectly() throws NullAnimationException, NotPositiveValueException, NoSuchElementInConfigurationException {
+    public void testAttackDamageIsSetCorrectly() throws NotPositiveValueException {
         int change = 10;
         this.enemy.setAttackDamage(change);
         Assert.assertEquals(this.enemy.getAttackDamage(), change);
     }
 
     @Test(expected = NotPositiveValueException.class)
-    public void testAttackDamageCannotBeLessThanZero() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
+    public void testAttackDamageCannotBeLessThanZero() throws NotPositiveValueException {
         int change = -1;
         this.enemy.setAttackDamage(change);
     }
 
     @Test
-    public void testAttackDamageCanBeZero() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
+    public void testAttackDamageCanBeZero() throws NotPositiveValueException {
         int change = 0;
         this.enemy.setAttackDamage(change);
         Assert.assertEquals(this.enemy.getAttackDamage(), 0);
@@ -165,7 +159,7 @@ public class EnemyTest {
     //DAMAGE CALCULATION TESTS
 
     @Test
-    public void testDamageIsCalculatedCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testDamageIsCalculatedCorrectly() {
         int life = this.enemy.getHp();
         int damage = 10;
         this.enemy.damage(damage);
@@ -173,14 +167,14 @@ public class EnemyTest {
     }
 
     @Test
-    public void testDamageDoesNotAffectMaxHp() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testDamageDoesNotAffectMaxHp() {
         int startingLife = this.enemy.getMaxHp();
         this.enemy.damage(10);
         Assert.assertEquals(this.enemy.getMaxHp(), startingLife);
     }
 
     @Test
-    public void testIfDamageExceedsHpThenHpEqualsZero() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testIfDamageExceedsHpThenHpEqualsZero() {
         int damage = this.enemy.getMaxHp() + 10;
         this.enemy.damage(damage);
         Assert.assertEquals(this.enemy.getHp(), 0);
@@ -189,21 +183,21 @@ public class EnemyTest {
     //HEIGHT TESTS
 
     @Test
-    public void testHeightIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testHeightIsReadCorrectly() {
         Assert.assertEquals((int) this.enemy.getHeight(), 42);
     }
 
     //WIDTH TEST
 
     @Test
-    public void testWidthIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testWidthIsReadCorrectly() {
         Assert.assertEquals((int) this.enemy.getWidth(), 17);
     }
 
     //REPOSITIONING TESTS
 
     @Test
-    public void testEnemyIsRepositionedCorrectlyWithPositiveXAndPositiveY() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testEnemyIsRepositionedCorrectlyWithPositiveXAndPositiveY() {
         int x = 22;
         int y = 33;
         this.enemy.setLocation(x, y);
@@ -212,7 +206,7 @@ public class EnemyTest {
     }
 
     @Test
-    public void testEnemyIsRepositionedCorrectlyWithPositiveXAndNegativeY() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testEnemyIsRepositionedCorrectlyWithPositiveXAndNegativeY() {
         int x = 22;
         int y = -33;
         this.enemy.setLocation(x, y);
@@ -221,7 +215,7 @@ public class EnemyTest {
     }
 
     @Test
-    public void testEnemyIsRepositionedCorrectlyWithNegativeXAndNegativeY() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testEnemyIsRepositionedCorrectlyWithNegativeXAndNegativeY() {
         int x = -22;
         int y = -33;
         this.enemy.setLocation(x, y);
@@ -230,7 +224,7 @@ public class EnemyTest {
     }
 
     @Test
-    public void testEnemyIsRepositionedCorrectlyWithNegativeXAndPositiveY() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testEnemyIsRepositionedCorrectlyWithNegativeXAndPositiveY() {
         int x = -22;
         int y = 33;
         this.enemy.setLocation(x, y);
@@ -239,7 +233,7 @@ public class EnemyTest {
     }
 
     @Test
-    public void testEnemyIsRepositionedCorrectlyAtOrigin() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testEnemyIsRepositionedCorrectlyAtOrigin() {
         int x = 0;
         int y = 0;
         this.enemy.setLocation(x, y);
@@ -251,27 +245,24 @@ public class EnemyTest {
     //X MOVEMENT TESTING
 
     @Test
-    public void testEnemyCanMoveOnXAxisWithPositiveDelta() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
+    public void testEnemyCanMoveOnXAxisWithPositiveDelta() {
         int x = 0;
-        int y = 0;
         int dx = 22;
         this.enemy.moveX(dx);
         Assert.assertEquals((int) this.enemy.getX(), x + dx);
     }
 
     @Test
-    public void testEnemyCanMoveOnXAxisWithNegativeDelta() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
+    public void testEnemyCanMoveOnXAxisWithNegativeDelta() {
         int x = 0;
-        int y = 0;
         int dx = -22;
         this.enemy.moveX(dx);
         Assert.assertEquals((int) this.enemy.getX(), x + dx);
     }
 
     @Test
-    public void testEnemyCanMoveOnXAxisWithZeroDelta() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
+    public void testEnemyCanMoveOnXAxisWithZeroDelta() {
         int x = 0;
-        int y = 0;
         int dx = 0;
         this.enemy.moveX(dx);
         Assert.assertEquals((int) this.enemy.getX(), x + dx);
@@ -280,8 +271,7 @@ public class EnemyTest {
     //Y-AXIS MOVEMENT TESTING
 
     @Test
-    public void testEnemyCanMoveOnYAxisWithPositiveDelta() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
-        int x = 0;
+    public void testEnemyCanMoveOnYAxisWithPositiveDelta() {
         int y = 0;
         int dy = 22;
         this.enemy.moveY(dy);
@@ -289,8 +279,7 @@ public class EnemyTest {
     }
 
     @Test
-    public void testEnemyCanMoveOnYAxisWithNegativeDelta() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
-        int x = 0;
+    public void testEnemyCanMoveOnYAxisWithNegativeDelta() {
         int y = 0;
         int dy = -22;
         this.enemy.moveY(dy);
@@ -298,8 +287,7 @@ public class EnemyTest {
     }
 
     @Test
-    public void testEnemyCanMoveOnYAxisWithZeroDelta() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
-        int x = 0;
+    public void testEnemyCanMoveOnYAxisWithZeroDelta() {
         int y = 0;
         int dy = 0;
         this.enemy.moveY(dy);

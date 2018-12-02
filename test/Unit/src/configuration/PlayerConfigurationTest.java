@@ -1,26 +1,25 @@
 package Unit.src.configuration;
 
-import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
+import configuration.PlayerConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 import org.newdawn.slick.SlickException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
 
 import static org.junit.Assert.assertEquals;
 
-public class MobConfigurationTest {
+public class PlayerConfigurationTest {
 
-    private MobConfiguration conf;
+    private PlayerConfiguration conf;
 
     @Before
     public void setUp(){
 
         try {
-            Constructor<MobConfiguration> constructor = MobConfiguration.class.getDeclaredConstructor(String.class);
+            Constructor<PlayerConfiguration> constructor = PlayerConfiguration.class.getDeclaredConstructor(String.class);
             constructor.setAccessible(true);
             this.conf = constructor.newInstance(System.getProperty("user.dir") + "/resource/configurations/test.conf");
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
@@ -29,9 +28,9 @@ public class MobConfigurationTest {
     }
 
     @Test
-    public void testMobConfigurationIsASingleton(){
-        MobConfiguration conf1 = MobConfiguration.getEnemyInstance();
-        MobConfiguration conf2 = MobConfiguration.getEnemyInstance();
+    public void tesEnemyConfigurationIsASingleton(){
+        PlayerConfiguration conf1 = PlayerConfiguration.getInstance();
+        PlayerConfiguration conf2 = PlayerConfiguration.getInstance();
         assertEquals(conf1, conf2);
     }
 
@@ -125,6 +124,4 @@ public class MobConfigurationTest {
     public void testFaceDownThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
         this.conf.getFaceDown("test_not_found");
     }
-
-
 }

@@ -2,6 +2,7 @@ package elements;
 
 import attacks.Attack;
 import attacks.PointBlankRangeAttack;
+import configuration.EnemyConfiguration;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import main.Block;
@@ -30,23 +31,26 @@ public class Enemy extends Mob implements MissionItem {
     private CollisionDetectionWall wallCollision;
     private CollisionDetectionDoor doorCollision;
     private boolean attack,obstacle,favorY,favorX;
+    private int points;
     
     private final int RELOADING_TIME = Constants.framerate;
     private final int SPEED = 8;
     private final int SURREND_TIME = 150;
 
-    public Enemy(MobConfiguration configuration, String id) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
+    public Enemy(EnemyConfiguration configuration, String id) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
     	super(configuration, id);
     	this.id = id;
+		this.points = configuration.getMobPoints(id);
     	direction = Directions.LEFT;
     	setAttack(new PointBlankRangeAttack(this));
 	}
     
-    public Enemy(MobConfiguration configuration, String id, Block map, Player p) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
+    public Enemy(EnemyConfiguration configuration, String id, Block map, Player p) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
         super(configuration, id);
         this.id = id;
         this.map = map;
         this.player = p;
+		this.points = configuration.getMobPoints(id);
         direction = Directions.LEFT;     // Suppose initial direction right
 		setAttack(new PointBlankRangeAttack(this));
     }
@@ -83,6 +87,10 @@ public class Enemy extends Mob implements MissionItem {
     		setLocation(px,py);
     	}
     }
+
+	public int getMobPoints() {
+		return this.points;
+	}
     
     public void update() throws NullAnimationException {
     	float x,y;

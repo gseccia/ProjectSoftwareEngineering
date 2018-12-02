@@ -1,9 +1,6 @@
 package main;
 
-import configuration.DoorsConfiguration;
-import configuration.ItemConfiguration;
-import configuration.MobConfiguration;
-import configuration.NoSuchElementInConfigurationException;
+import configuration.*;
 import elements.Enemy;
 import elements.Item;
 import elements.NullAnimationException;
@@ -55,7 +52,7 @@ public class Level extends StateBasedGame{
 			capacity += Integer.parseInt(e.getMap().getMapProperty("capacity","1"));
 		}*/
 		
-		missions = new MissionsFactory(capacity,level_difficulty,MobConfiguration.getEnemyInstance(),ItemConfiguration.getInstance());
+		missions = new MissionsFactory(capacity,level_difficulty, EnemyConfiguration.getInstance() ,ItemConfiguration.getInstance());
 		
 		try {
 			mission_generated = missions.generateMissions();
@@ -121,7 +118,7 @@ public class Level extends StateBasedGame{
 		for(int i=0;i<difficulty;i++)
 		{
 			try {
-				mob = new Enemy(MobConfiguration.getEnemyInstance(),"zombo",b,player);  //Retrieve other String id
+				mob = new Enemy(EnemyConfiguration.getInstance(),"zombo",b,player);  //Retrieve other String id
 				mobs.add(mob);
 			} catch (NullAnimationException | NoSuchElementInConfigurationException e) {
 				e.printStackTrace();
@@ -144,7 +141,7 @@ public class Level extends StateBasedGame{
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException {
 		try {
-			Player player = new Player(MobConfiguration.getPlayerInstance(), charname);
+			Player player = new Player(PlayerConfiguration.getInstance(), charname);
 			generatePopulation(1,player); // level_difficulty
 			generateItems();
 			spm = ScorePointsManager.getScorePointsManagerInstance();

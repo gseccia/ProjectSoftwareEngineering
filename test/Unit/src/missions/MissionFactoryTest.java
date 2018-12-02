@@ -1,7 +1,7 @@
 package Unit.src.missions;
 
+import configuration.EnemyConfiguration;
 import configuration.ItemConfiguration;
-import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import missions.Mission;
 import missions.MissionsFactory;
@@ -25,7 +25,7 @@ public class MissionFactoryTest {
     private static final int defaultCapacity = 20;
     private static final int defaultDifficulty = 2;
 
-    @Mock private MobConfiguration mobconf;
+    @Mock private EnemyConfiguration mobconf;
     @Mock private ItemConfiguration itemconf;
 
     @Before
@@ -34,7 +34,7 @@ public class MissionFactoryTest {
         HashSet<String> mobNames = new HashSet<>();
         mobNames.add(mob1);
 
-        mobconf = Mockito.mock(MobConfiguration.class);
+        mobconf = Mockito.mock(EnemyConfiguration.class);
         try {
             Mockito.when(mobconf.getAttack(mob1)).thenReturn(100);
             Mockito.when(mobconf.getHeight(mob1)).thenReturn(42);

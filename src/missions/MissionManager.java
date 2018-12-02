@@ -1,5 +1,6 @@
 package missions;
 
+import configuration.EnemyConfiguration;
 import configuration.ItemConfiguration;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
@@ -18,10 +19,10 @@ public class MissionManager extends Mission {
     private Set<Enemy> enemies;
     private Set<Item> items;
     private Set<Mission> missions;
-    private MobConfiguration mobConf;
+    private EnemyConfiguration mobConf;
     private ItemConfiguration itemConf;
 
-    public MissionManager(MobConfiguration mobConf, ItemConfiguration itemConf){
+    public MissionManager(EnemyConfiguration mobConf, ItemConfiguration itemConf){
         this.mobConf = mobConf;
         this.itemConf = itemConf;
         this.missions = new HashSet<>();

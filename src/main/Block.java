@@ -344,10 +344,11 @@ public class Block extends BasicGameState
 					//System.out.println(target + " "+ target.getHp());
 					if(target.getHp() <= 0){
 						enemy.remove(target);
-						mission.check((Enemy)target);
+						Enemy castedTarget = (Enemy)target;
+						mission.check(castedTarget);
 						this.scoreManager.decrease(0);
 						// in increase() must be passed points associated to enemy kill
-						this.scoreManager.increase(target.getMobPoints());
+						this.scoreManager.increase(castedTarget.getMobPoints());
 						this.scoreManager.setState(States.PointsAccumulator);
 					}
 				}
