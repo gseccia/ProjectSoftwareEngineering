@@ -36,12 +36,21 @@ public abstract class AnimatedElement extends Rectangle{
     public void draw(){
         current.draw(getX(), getY());
     }
-    
+
+    /**
+     * Draw with filter
+     * @param filter the color filter to apply
+     */
+    public void draw(Color filter){
+        current.draw(getX(), getY(), filter);
+    }
+
     /**
      * Custom draw method at input coordinates
      */
     public void draw(int x, int y){
         current.draw(x, y);
     }
+
     
 }

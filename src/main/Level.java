@@ -53,42 +53,31 @@ public class Level extends StateBasedGame{
 		}*/
 		
 		missions = new MissionsFactory(capacity,level_difficulty, EnemyConfiguration.getInstance() ,ItemConfiguration.getInstance());
-		
-		try {
-			mission_generated = missions.generateMissions();
-			
-			System.out.println(mission_generated);
-		} catch (NotEnoughMissionsException e1) {
-			e1.printStackTrace();
-		}
-		
+
 		this.charname = charname;
 		this.level_difficulty = level_difficulty;
 	}
 	
 	
 	private void distribute(Player player) {
+
 		int b;
-		if(mission_generated.getEnemySet() != null){
-			Iterator<Enemy> i = mission_generated.getEnemySet().iterator();
-			b = 0;
-			Enemy e;
-			while(i.hasNext()){
-				e = i.next();
-				e.setMap(block_list.get(b));
-				e.setPlayer(player);
-				population.get(block_list.get(b)).add(e);
-				b = (b+1)%block_list.size();
-			}
+		Iterator<Enemy> i = mission_generated.getEnemySet().iterator();
+		b = 0;
+		Enemy e;
+		while(i.hasNext()){
+			e = i.next();
+			e.setMap(block_list.get(b));
+			e.setPlayer(player);
+			population.get(block_list.get(b)).add(e);
+			b = (b+1)%block_list.size();
 		}
-		
-		if(mission_generated.getItemSet() != null) {
-			Iterator<Item> iter_item = mission_generated.getItemSet().iterator();
-			b = 0;
-			while(iter_item.hasNext()){
-				items.get(block_list.get(b)).add(iter_item.next());
-				b = (b+1)%block_list.size();
-			}
+
+		Iterator<Item> iter_item = mission_generated.getItemSet().iterator();
+		b = 0;
+		while(iter_item.hasNext()){
+			items.get(block_list.get(b)).add(iter_item.next());
+			b = (b+1)%block_list.size();
 		}
 		
 	}
@@ -145,7 +134,9 @@ public class Level extends StateBasedGame{
 			generatePopulation(1,player); // level_difficulty
 			generateItems();
 			spm = ScorePointsManager.getScorePointsManagerInstance();
-			
+
+			mission_generated = missions.generateMissions();
+
 			distribute(player);
 			for(Block block: block_list)
 			{
@@ -154,7 +145,7 @@ public class Level extends StateBasedGame{
 			}
 
 			this.enterState(1); //always enter in first block
-		} catch (NullAnimationException | NoSuchElementInConfigurationException e) {
+		} catch (NullAnimationException | NoSuchElementInConfigurationException | NotEnoughMissionsException e) {
 			e.printStackTrace();
 			System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
 		}

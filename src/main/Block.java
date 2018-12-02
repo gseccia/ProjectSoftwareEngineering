@@ -71,6 +71,7 @@ public class Block extends BasicGameState
 		enemy = population.get(this);
 		item = items.get(this);
 		mission = missionGenerated;
+		System.out.println(mission);
 		
 		this.player = player;
 		

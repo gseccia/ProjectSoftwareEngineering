@@ -2,7 +2,6 @@ package missions;
 
 import configuration.EnemyConfiguration;
 import configuration.ItemConfiguration;
-import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import elements.Enemy;
 import elements.Item;

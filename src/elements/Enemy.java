@@ -13,6 +13,7 @@ import missions.MissionItem;
 
 import java.util.Random;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import utils.Constants;
@@ -32,6 +33,7 @@ public class Enemy extends Mob implements MissionItem {
     private CollisionDetectionDoor doorCollision;
     private boolean attack,obstacle,favorY,favorX;
     private int points;
+    private Color bossFilter;
     
     private final int RELOADING_TIME = Constants.framerate;
     private final int SPEED = 8;
@@ -83,10 +85,18 @@ public class Enemy extends Mob implements MissionItem {
     		x = (int)(getX())-map.getShiftX()*map.getMap().getTileWidth();
     		y = (int)(getY())-map.getShiftY()*map.getMap().getTileHeight();
     		setLocation(x,y);
-    		super.draw();
+    		super.draw(bossFilter);
     		setLocation(px,py);
     	}
     }
+
+    public void makeBoss(int powerUp, Color filter) throws NotPositiveValueException {
+    	points *= powerUp;
+    	setMaxHp(getMaxHp()*powerUp);
+    	setHp(getHp()*powerUp);
+    	setAttackDamage(getAttackDamage()*powerUp);
+    	bossFilter = filter;
+	}
 
 	public int getMobPoints() {
 		return this.points;
