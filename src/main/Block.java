@@ -48,7 +48,7 @@ public class Block extends BasicGameState
 	private PointsAccumulatorObserver pao;
 	private LifePointsAccumulatorObserver lpao;
 	private Sound endLevel, deadEnd;
-	
+	private int count = 0;
 	
 	public Block(int state,String mapName)
 	{
@@ -281,31 +281,70 @@ public class Block extends BasicGameState
 			else if(gc.getInput().isKeyDown(Directions.KEY_M)) {
 				if(key == Directions.UP) {
 					player.attackUp();
+					if(count <= 600) {
+						count += delta;
+					}
+					else 
+						player.faceStillUp();
 				}
 				else if(key == Directions.DOWN) {
 					player.attackDowm();
+					if(count <= 600) {
+						count += delta;
+					}
+					else 
+						player.faceStillDown();
 				}
 				else if(key == Directions.LEFT) {
 					player.attackLeft();
+					if(count <= 600) {
+						count += delta;
+					}
+					else 
+						player.faceStillLeft();
 				}
 				else if(key == Directions.RIGHT) {
 					player.attackRight();
+					if(count <= 600) {
+						count += delta;
+					}
+					else 
+						player.faceStillRight();
 				}
 			}
-			else{
-				if(key == Directions.UP) {
-					player.faceStillUp();
-				}
-				else if(key == Directions.DOWN) {
-					player.faceStillDown();
-				}
-				else if(key == Directions.LEFT) {
-					player.faceStillLeft();
-				}
-				else if(key == Directions.RIGHT) {
-					player.faceStillRight();
+			else {
+				System.out.println("Non sto premendo tasti");
+				if(count == 0 || count >= 600) {
+					System.out.println("Coontatore: "+count);
+					count = 0;
+					if(key == Directions.UP) {
+						player.faceStillUp();
+					}
+					else if(key == Directions.DOWN) {
+						player.faceStillDown();
+					}
+					else if(key == Directions.LEFT) {
+						player.faceStillLeft();
+					}
+					else if(key == Directions.RIGHT) {
+						player.faceStillRight();
+					}
 				}
 			}
+//			else if(!gc.getInput().isKeyPressed(Directions.KEY_M)){
+//				if(key == Directions.UP) {
+//					player.faceStillUp();
+//				}
+//				else if(key == Directions.DOWN) {
+//					player.faceStillDown();
+//				}
+//				else if(key == Directions.LEFT) {
+//					player.faceStillLeft();
+//				}
+//				else if(key == Directions.RIGHT) {
+//					player.faceStillRight();
+//				}
+//			}
 			if(doorCollision.detectCollision(mapX, mapY, player)) {
 				if(doorCollision.getCollidedDoor() != -1 && pressed) {
 					//System.out.println("Collisione con la porta "+doorCollision.getCollidedDoor());
