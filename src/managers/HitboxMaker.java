@@ -15,7 +15,7 @@ public class HitboxMaker {
 	private List<Item> items;
 	private List<Mob> mobs;
 	
-	public HitboxMaker(TiledMap map,List mobs) {
+	public HitboxMaker(TiledMap map,List<Mob> mobs) {
 		this.map = map;
 		this.mobs = mobs;
 	}
