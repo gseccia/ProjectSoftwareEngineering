@@ -16,6 +16,11 @@ public class KillTheBossMission extends Mission {
 
     private Set<Enemy> population;
 
+    /**
+     * Creates the mission selecting a boss mob (an ordinary mob with powered-up stats and changed color
+     * @param targetId the mob
+     * @param powerUp the strengthening factor
+     */
     public KillTheBossMission(String targetId, int powerUp) {
         super(targetId);
         population = new HashSet<>();
