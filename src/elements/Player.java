@@ -32,6 +32,8 @@ public class Player extends Mob {
     @Override
     public void hasAttacked() { }
 
+    //Overrides the methods of Mob to draw also the attack animation
+
     /**
      * Draw the current animation at a defined point.
      */
