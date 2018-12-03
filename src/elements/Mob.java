@@ -17,7 +17,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
      * hp are the current hp, maxHP the total hp
      */
     private int hp, maxHp, attackDamage;
-    private int currentDirection = Directions.DOWN;;
+    private int currentDirection = Directions.DOWN;
     private Attack attack;
     private HashMap<String, Animation> faces;
 
@@ -250,7 +250,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     }
 
 	@Override
-	public void attackDowm() throws NullAnimationException {
+	public void attackDown() throws NullAnimationException {
 		setCurrent(faces.get("attackDown"));
 	}
 

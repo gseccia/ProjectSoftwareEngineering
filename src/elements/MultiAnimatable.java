@@ -45,7 +45,7 @@ public interface MultiAnimatable {
     /**
      * Shows the still animation of the character
      */
-    void attackDowm() throws NullAnimationException;
+    void attackDown() throws NullAnimationException;
     
     /**
      * Shows the still animation of the character

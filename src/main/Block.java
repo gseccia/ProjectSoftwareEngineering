@@ -288,7 +288,7 @@ public class Block extends BasicGameState
 						player.faceStillUp();
 				}
 				else if(key == Directions.DOWN) {
-					player.attackDowm();
+					player.attackDown();
 					if(count <= 600) {
 						count += delta;
 					}

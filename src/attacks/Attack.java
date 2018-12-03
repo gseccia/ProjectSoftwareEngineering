@@ -14,4 +14,9 @@ public interface Attack {
      */
     void setHitbox();
 
+    /**
+     * Draws the animation of the attack
+     */
+    void draw();
+
 }
