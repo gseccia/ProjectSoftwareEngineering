@@ -7,18 +7,22 @@ import configuration.NoSuchElementInConfigurationException;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 import utils.Constants;
 
 public class Player extends Mob {
 
     private boolean isAttacking = false;
+
     private final int RELOADING_TIME = Constants.framerate;
     private int attackDuration;
+    private Sound step;
 
     public Player(MobConfiguration configuration, String id) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
         super(configuration, id);
         setAttack(new ShortRangeAttack(this));
+        step = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/step.ogg");
     }
 
     @Override
@@ -47,6 +51,12 @@ public class Player extends Mob {
         }
     }
 
+    private void playStep(){
+        if(!step.playing()){
+            step.play(2,1);
+        }
+    }
+
     //Overrides the methods of Mob to draw also the attack animation
 
     /**
@@ -65,6 +75,7 @@ public class Player extends Mob {
      */
     @Override
     public void faceUp() throws NullAnimationException {
+        playStep();
         super.faceUp();
     }
 
@@ -73,6 +84,7 @@ public class Player extends Mob {
      */
     @Override
     public void faceDown() throws NullAnimationException {
+        playStep();
         super.faceDown();
     }
 
@@ -81,6 +93,7 @@ public class Player extends Mob {
      */
     @Override
     public void faceRight() throws NullAnimationException {
+        playStep();
         super.faceRight();
     }
 
@@ -89,6 +102,7 @@ public class Player extends Mob {
      */
     @Override
     public void faceLeft() throws NullAnimationException {
+        playStep();
         super.faceLeft();
     }
 

@@ -117,11 +117,21 @@ public class Level extends StateBasedGame{
 		return mobs;
 	}
 	
+	private Set<Item> generateItem() throws NullAnimationException, SlickException, NoSuchElementInConfigurationException{
+		HashSet<Item> item = new HashSet<>();
+		
+		for(int i=0;i<level_difficulty;i++) {
+				item.add(new Item(ItemConfiguration.getInstance(),"pizza"));
+		}
+		
+		return item;
+	}
 	
-	private void generateItems() {
+	
+	private void generateItems() throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
 		for(Block block: block_list)
 		{
-			items.put(block, new HashSet<>());
+			items.put(block, generateItem());
 		}
 	}
 
@@ -136,10 +146,13 @@ public class Level extends StateBasedGame{
 			spm = ScorePointsManager.getScorePointsManagerInstance();
 
 			mission_generated = missions.generateMissions();
-
+			
 			distribute(player);
 			for(Block block: block_list)
 			{
+				for(int i=0;i<population.get(block).size()/2;i++) {
+					items.get(block).add(new Item(ItemConfiguration.getInstance(),"heart"));
+				}
 				block.initBlock(player, population, items,map,mission_generated, spm);
 				this.addState(block);
 			}

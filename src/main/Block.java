@@ -12,6 +12,9 @@ import managers.observers.scoreboard.PointsAccumulatorObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 import managers.observers.scoreboard.States;
 
+import music.BgMusic;
+import music.DeadMusic;
+import music.LevelCompletedMusic;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
@@ -49,6 +52,7 @@ public class Block extends BasicGameState
 	private PointsAccumulatorObserver pao;
 	private LifePointsAccumulatorObserver lpao;
 	private Sound endLevel, deadEnd;
+	private Music bgMusic;
 	private int count = 0;
 	
 	public Block(int state,String mapName)
@@ -98,8 +102,9 @@ public class Block extends BasicGameState
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		try {
-			endLevel = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/levelCompleted.ogg");
-			deadEnd = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/dead.ogg");
+			endLevel = LevelCompletedMusic.getLevelCompletedMusic();
+			deadEnd = DeadMusic.getDeadMusic();
+			bgMusic = BgMusic.getBgMusic();
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -138,7 +143,10 @@ public class Block extends BasicGameState
 		
 		prevMapX = 0;
 		prevMapY = 0;
-		
+		if(!bgMusic.playing()){
+			bgMusic.loop(1, 0.4f);
+		}
+
 	 }
 
 	@Override
@@ -175,7 +183,7 @@ public class Block extends BasicGameState
 		{
 			i.draw();
 		}
-		
+
 		if(paused) {
 			g.setColor(Color.green);
 			g.drawString(mission.toString(), 0, 0);
@@ -187,6 +195,7 @@ public class Block extends BasicGameState
 					(Long.valueOf(Math.round(gc.getWidth()*0.3)).intValue()),
 					(Long.valueOf(Math.round(gc.getHeight()*0.3)).intValue())
 					);
+			bgMusic.stop();
 			if(!deadEnd.playing()){
 				deadEnd.loop();
 			}
@@ -204,6 +213,7 @@ public class Block extends BasicGameState
                 g.fillRect(0, 0, gc.getWidth(), gc.getHeight(), new Image(System.getProperty("user.dir") + "/resource/textures/transitions/background.png"), 0, 0);
                 g.drawString("LEVEL COMPLETED!", player.getX()-35, player.getY()-30);
                 g.drawImage(new Image(System.getProperty("user.dir") + "/resource/textures/transitions/toBeCont.png"), player.getX()-85, player.getY()-25);
+				bgMusic.stop();
                 if(!endLevel.playing()) {
 					endLevel.loop();
 				}
