@@ -23,7 +23,7 @@ public class CollisionDetectionPlayerAttacksEnemy extends CollisionDetectionStra
             if(mobs.get(i).getHp() <= 0){
                 mobs.remove(i);
             }
-            else if(player.getAttack().intersects(mobs.get(i))){
+            else if(player.getAttack().intersects(mobs.get(i)) && !player.isReadyToAttack()){
                 condition = true;
                 enemy.add(mobs.get(i));
             }

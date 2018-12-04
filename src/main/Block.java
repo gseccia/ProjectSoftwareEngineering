@@ -21,6 +21,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import elements.Enemy;
 import elements.Item;
 import elements.Mob;
+import elements.Player;
 import elements.NullAnimationException;
 
 public class Block extends BasicGameState
@@ -31,7 +32,7 @@ public class Block extends BasicGameState
 	private CollisionDetectionEnemyAttacksPlayer enemyCollision;
 	private CollisionDetectionPlayerAttacksEnemy attackCollision;
 	private TiledMap map;
-	private Mob player;
+	private Player player;
 	private Set<Enemy> enemy;
 	private Set<Item> item;
 	private int state;
@@ -62,7 +63,7 @@ public class Block extends BasicGameState
 	 * @param population map that contains information about enemies in the blocks
 	 * @throws SlickException if the map is not loaded correctly
 	 */
-	public void initBlock(Mob player,Map<Block,Set<Enemy>> population,Map<Block,Set<Item>> items, 
+	public void initBlock(Player player,Map<Block,Set<Enemy>> population,Map<Block,Set<Item>> items,
 			MapGraph graph, Mission missionGenerated, ScorePointsManager spm) throws SlickException
 	{
 		map = new TiledMap("resource/maps/Complete"+mapName+"/"+mapName+".tmx");
@@ -281,38 +282,30 @@ public class Block extends BasicGameState
 			else if(gc.getInput().isKeyDown(Directions.KEY_M)) {
 				if(key == Directions.UP) {
 					player.attackUp();
-					if(count <= 600) {
-						count += delta;
-					}
-					else 
+					if(player.isReadyToAttack()) {
 						player.faceStillUp();
+					}
 				}
 				else if(key == Directions.DOWN) {
 					player.attackDown();
-					if(count <= 600) {
-						count += delta;
-					}
-					else 
+					if(player.isReadyToAttack()) {
 						player.faceStillDown();
+					}
 				}
 				else if(key == Directions.LEFT) {
 					player.attackLeft();
-					if(count <= 600) {
-						count += delta;
-					}
-					else 
+					if(player.isReadyToAttack()) {
 						player.faceStillLeft();
+					}
 				}
 				else if(key == Directions.RIGHT) {
 					player.attackRight();
-					if(count <= 600) {
-						count += delta;
-					}
-					else 
+					if(player.isReadyToAttack()) {
 						player.faceStillRight();
+					}
 				}
 			}
-			else {
+			else if(player.isReadyToAttack()) {
 				System.out.println("Non sto premendo tasti");
 				if(count == 0 || count >= 600) {
 					System.out.println("Coontatore: "+count);
@@ -377,7 +370,7 @@ public class Block extends BasicGameState
 				scoreManager.setState(States.LifePointsAccumulator);
 //				lpao.setHp(-enemyCollision.getAttackDamage());
 			}
-			if (attackCollision.detectCollision(mapX, mapY, player) && (gc.getInput().isKeyPressed(Directions.KEY_M))){
+			if (attackCollision.detectCollision(mapX, mapY, player)  /*&& (gc.getInput().isKeyPressed(Directions.KEY_M))*/){
 				System.out.println("Attacco del player");
 				for (Mob target : attackCollision.getEnemy()) {
 					target.damage(player.getAttackDamage());
@@ -395,6 +388,9 @@ public class Block extends BasicGameState
 			}
 			// Life player check, there will be handled death
 			if (player.getHp() <= 0) this.dead = true;
+
+			// Player attack update
+			player.reloadAttack();
 			
 			// Enemy updating
 			for(Enemy e:enemy) {

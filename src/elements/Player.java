@@ -8,9 +8,13 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import utils.Constants;
+
 public class Player extends Mob {
 
     private boolean isAttacking = false;
+    private final int RELOADING_TIME = Constants.framerate;
+    private int attackDuration;
 
     public Player(MobConfiguration configuration, String id) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
         super(configuration, id);
@@ -25,12 +29,23 @@ public class Player extends Mob {
     }
 
     @Override
-    public boolean isReadyToAttack() {
-        return true;
+    public boolean isReadyToAttack(){
+        return !isAttacking;
     }
 
     @Override
-    public void hasAttacked() { }
+    public void hasAttacked() {
+        isAttacking = true;
+        attackDuration = RELOADING_TIME;
+    }
+
+    public void reloadAttack() {
+        if(attackDuration > 0) {
+            attackDuration--;
+        }else{
+            isAttacking=false;
+        }
+    }
 
     //Overrides the methods of Mob to draw also the attack animation
 
@@ -50,7 +65,6 @@ public class Player extends Mob {
      */
     @Override
     public void faceUp() throws NullAnimationException {
-        isAttacking = false;
         super.faceUp();
     }
 
@@ -59,7 +73,6 @@ public class Player extends Mob {
      */
     @Override
     public void faceDown() throws NullAnimationException {
-        isAttacking = false;
         super.faceDown();
     }
 
@@ -68,7 +81,6 @@ public class Player extends Mob {
      */
     @Override
     public void faceRight() throws NullAnimationException {
-        isAttacking = false;
         super.faceRight();
     }
 
@@ -77,7 +89,6 @@ public class Player extends Mob {
      */
     @Override
     public void faceLeft() throws NullAnimationException {
-        isAttacking = false;
         super.faceLeft();
     }
 
@@ -86,7 +97,6 @@ public class Player extends Mob {
      */
     @Override
     public void faceStillDown() throws NullAnimationException {
-        isAttacking = false;
         super.faceStillDown();
     }
 
@@ -95,7 +105,6 @@ public class Player extends Mob {
      */
     @Override
     public void faceStillUp() throws NullAnimationException {
-        isAttacking = false;
         super.faceStillUp();
     }
 
@@ -104,7 +113,6 @@ public class Player extends Mob {
      */
     @Override
     public void faceStillRight() throws NullAnimationException {
-        isAttacking = false;
         super.faceStillRight();
     }
 
@@ -113,31 +121,31 @@ public class Player extends Mob {
      */
     @Override
     public void faceStillLeft() throws NullAnimationException {
-        isAttacking = false;
         super.faceStillLeft();
     }
 
     @Override
     public void attackRight() throws NullAnimationException {
-        isAttacking = true;
+        this.hasAttacked();
         super.attackRight();
     }
 
     @Override
     public void attackDown() throws NullAnimationException {
-        isAttacking = true;
+        this.hasAttacked();
         super.attackDown();
+
     }
 
     @Override
     public void attackUp() throws NullAnimationException {
-        isAttacking = true;
+        this.hasAttacked();
         super.attackUp();
     }
 
     @Override
     public void attackLeft() throws NullAnimationException {
-        isAttacking = true;
+        this.hasAttacked();
         super.attackLeft();
     }
 }
