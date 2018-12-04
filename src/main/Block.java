@@ -143,7 +143,7 @@ public class Block extends BasicGameState
 		prevMapX = 0;
 		prevMapY = 0;
 		if(!bgMusic.playing()){
-			bgMusic.loop();
+			bgMusic.loop(1, 0.4f);
 		}
 
 	 }
