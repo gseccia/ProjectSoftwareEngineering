@@ -15,8 +15,11 @@ import managers.observers.scoreboard.States;
 import music.BgMusic;
 import music.DeadMusic;
 import music.LevelCompletedMusic;
+import music.MusicManager;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
@@ -53,6 +56,7 @@ public class Block extends BasicGameState
 	private LifePointsAccumulatorObserver lpao;
 	private Sound endLevel, deadEnd;
 	private Music bgMusic;
+	private MusicManager musicManager;
 	private int count = 0;
 	
 	public Block(int state,String mapName)
@@ -143,10 +147,13 @@ public class Block extends BasicGameState
 		
 		prevMapX = 0;
 		prevMapY = 0;
-		if(!bgMusic.playing()){
-			bgMusic.loop(1, 0.4f);
-		}
-
+		
+		// TODO finest management of music
+//		if(!bgMusic.playing()){
+//			bgMusic.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
+//		}
+		this.musicManager = new MusicManager(bgMusic);
+		musicManager.start();
 	 }
 
 	@Override
@@ -195,7 +202,9 @@ public class Block extends BasicGameState
 					(Long.valueOf(Math.round(gc.getWidth()*0.3)).intValue()),
 					(Long.valueOf(Math.round(gc.getHeight()*0.3)).intValue())
 					);
-			bgMusic.stop();
+			// TODO Finest music management
+			this.musicManager.end();
+//			bgMusic.stop();
 			if(!deadEnd.playing()){
 				deadEnd.loop();
 			}
@@ -315,24 +324,21 @@ public class Block extends BasicGameState
 					}
 				}
 			}
-			else if(player.isReadyToAttack()) {
+			else if(player.isReadyToAttack() && !gc.getInput().isKeyDown((Directions.KEY_M))) {
 //				System.out.println("Non sto premendo tasti");
-				if(count == 0 || count >= 600) {
-//					System.out.println("Coontatore: "+count);
-					count = 0;
-					if(key == Directions.UP) {
-						player.faceStillUp();
-					}
-					else if(key == Directions.DOWN) {
-						player.faceStillDown();
-					}
-					else if(key == Directions.LEFT) {
-						player.faceStillLeft();
-					}
-					else if(key == Directions.RIGHT) {
-						player.faceStillRight();
-					}
+				if(key == Directions.UP) {
+					player.faceStillUp();
 				}
+				else if(key == Directions.DOWN) {
+					player.faceStillDown();
+				}
+				else if(key == Directions.LEFT) {
+					player.faceStillLeft();
+				}
+				else if(key == Directions.RIGHT) {
+					player.faceStillRight();
+				}
+				
 			}
 //			else if(!gc.getInput().isKeyPressed(Directions.KEY_M)){
 //				if(key == Directions.UP) {
