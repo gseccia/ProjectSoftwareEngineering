@@ -12,6 +12,9 @@ import managers.observers.scoreboard.PointsAccumulatorObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 import managers.observers.scoreboard.States;
 
+import music.BgMusic;
+import music.DeadMusic;
+import music.LevelCompletedMusic;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
@@ -47,7 +50,8 @@ public class Block extends BasicGameState
 	private ScorePointsManager scoreManager;
 	private PointsAccumulatorObserver pao;
 	private LifePointsAccumulatorObserver lpao;
-	private Sound endLevel, deadEnd, bgMusic;
+	private Sound endLevel, deadEnd;
+	private Music bgMusic;
 	private int count = 0;
 	
 	public Block(int state,String mapName)
@@ -97,9 +101,9 @@ public class Block extends BasicGameState
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		try {
-			endLevel = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/levelCompleted.ogg");
-			deadEnd = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/dead.ogg");
-			bgMusic = new Sound(System.getProperty("user.dir") + "/resource/audio/bg/bg.ogg");
+			endLevel = LevelCompletedMusic.getLevelCompletedMusic();
+			deadEnd = DeadMusic.getDeadMusic();
+			bgMusic = BgMusic.getBgMusic();
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -141,7 +145,7 @@ public class Block extends BasicGameState
 		if(!bgMusic.playing()){
 			bgMusic.loop();
 		}
-		
+
 	 }
 
 	@Override
@@ -178,7 +182,7 @@ public class Block extends BasicGameState
 		{
 			i.draw();
 		}
-		
+
 		if(paused) {
 			g.setColor(Color.green);
 			g.drawString(mission.toString(), 0, 0);
