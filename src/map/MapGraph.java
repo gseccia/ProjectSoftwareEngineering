@@ -15,8 +15,8 @@ public class MapGraph {
 
     public MapGraph(int mapChosen, DoorsConfiguration conf){
 
-        if (mapChosen <= 4)
-            this.mapChosen = 4;
+        if (mapChosen <= 6)
+            this.mapChosen = 6;
         else
             this.mapChosen = mapChosen;
         this.conf = conf;
@@ -30,7 +30,7 @@ public class MapGraph {
        int i=0;
        int rand = 0;
        Random random = new Random();
-       int numeroCasuale = random.nextInt(5)+mapChosen-2;
+       int numeroCasuale = random.nextInt(6)+mapChosen-3;
        List<String> listTiledMaps = new ArrayList<>();
        while (i < numeroCasuale && tiledMaps.size() > 0) {
            rand = random.nextInt(tiledMaps.size()); // seleziona un elemento casuale tra tutte le tiledMaps
