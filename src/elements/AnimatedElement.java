@@ -30,7 +30,11 @@ public abstract class AnimatedElement extends Rectangle{
         this.current = current;
     }
 
-    /**
+    public Animation getCurrent() {
+		return current;
+	}
+
+	/**
      * Draw the current animation at a defined point.
      */
     public void draw(){

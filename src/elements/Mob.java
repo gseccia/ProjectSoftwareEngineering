@@ -202,6 +202,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
      */
     @Override
     public void faceStillDown() throws NullAnimationException {
+    	getCurrent().stop();
         setCurrent(faces.get("stillDown"));
     }
     
@@ -210,6 +211,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
      */
     @Override
     public void faceStillUp() throws NullAnimationException {
+    	getCurrent().stop();
         setCurrent(faces.get("stillUp"));
     }
     
@@ -218,6 +220,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
      */
     @Override
     public void faceStillRight() throws NullAnimationException {
+    	getCurrent().stop();
         setCurrent(faces.get("stillRight"));
     }
     
@@ -226,6 +229,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
      */
     @Override
     public void faceStillLeft() throws NullAnimationException {
+    	getCurrent().stop();
         setCurrent(faces.get("stillLeft"));
     }
     
@@ -252,21 +256,25 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
 	@Override
 	public void attackDown() throws NullAnimationException {
 		setCurrent(faces.get("attackDown"));
+		getCurrent().start();
 	}
 
 	@Override
 	public void attackUp() throws NullAnimationException {
 		setCurrent(faces.get("attackUp"));
+		getCurrent().start();
 	}
 
 	@Override
 	public void attackLeft() throws NullAnimationException {
-		setCurrent(faces.get("attackLeft"));		
+		setCurrent(faces.get("attackLeft"));
+		getCurrent().start();		
 	}
 
 	@Override
 	public void attackRight() throws NullAnimationException {
 		setCurrent(faces.get("attackRight"));
+		getCurrent().start();
 	}
 
     public abstract boolean isReadyToAttack();

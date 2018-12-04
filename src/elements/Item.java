@@ -17,7 +17,8 @@ public class Item extends AnimatedElement implements MissionItem {
                 configuration.getHeight(id),
                 0, 0);
         this.id = id;
-        this.itemPoints = 1;
+        // TODO rotto id per colpa di antonio
+        this.itemPoints = configuration.getItemPoints(id);
     }
     
     /**

@@ -120,10 +120,9 @@ public class Level extends StateBasedGame{
 	private Set<Item> generateItem() throws NullAnimationException, SlickException, NoSuchElementInConfigurationException{
 		HashSet<Item> item = new HashSet<>();
 		
-		for(int i=0;i<level_difficulty;i++) {
-				item.add(new Item(ItemConfiguration.getInstance(),"pizza"));
+		for(int i=0;i<level_difficulty/3;i++) {
+			item.add(new Item(ItemConfiguration.getInstance(),"pizza"));
 		}
-		
 		return item;
 	}
 	
@@ -150,6 +149,7 @@ public class Level extends StateBasedGame{
 			distribute(player);
 			for(Block block: block_list)
 			{
+				// TODO PEZZA DI ANTONIO in questo modo tutti gli item inseriti hanno id=heart
 				for(int i=0;i<population.get(block).size()/2;i++) {
 					items.get(block).add(new Item(ItemConfiguration.getInstance(),"heart"));
 				}

@@ -52,4 +52,15 @@ public class ItemConfiguration extends Configuration {
         }
         return this.getConfiguration(id).get("width").getAsInt();
     }
+    
+    /*
+     * Metodo per il PointsAccumulator cosicchè ogni oggetto conserva nel file di configurazione
+     * i punti associati al tipo di item
+     */
+    public int getItemPoints(String id) throws NoSuchElementInConfigurationException {
+        if(getConfiguration(id).get("points") == null) {
+            throw new NoSuchElementInConfigurationException();
+        }
+        return this.getConfiguration(id).get("points").getAsInt();
+    }
 }

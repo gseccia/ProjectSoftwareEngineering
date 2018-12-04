@@ -316,9 +316,9 @@ public class Block extends BasicGameState
 				}
 			}
 			else if(player.isReadyToAttack()) {
-				System.out.println("Non sto premendo tasti");
+//				System.out.println("Non sto premendo tasti");
 				if(count == 0 || count >= 600) {
-					System.out.println("Coontatore: "+count);
+//					System.out.println("Coontatore: "+count);
 					count = 0;
 					if(key == Directions.UP) {
 						player.faceStillUp();
@@ -362,7 +362,8 @@ public class Block extends BasicGameState
 			}
 			if(itemCollision.detectCollision(mapX, mapY, player)) {
 				if (itemCollision.getItemID() != "") {
-//					System.out.println("Stai prendendo una "+itemCollision.getItemID());
+					System.out.println("Stai prendendo una "+itemCollision.getItemID());
+					//TODO manca la gestione dei cuori
 					this.scoreManager.decrease(0);
 					this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
 					this.scoreManager.setState(States.PointsAccumulator);
@@ -381,7 +382,7 @@ public class Block extends BasicGameState
 //				lpao.setHp(-enemyCollision.getAttackDamage());
 			}
 			if (attackCollision.detectCollision(mapX, mapY, player)  /*&& (gc.getInput().isKeyPressed(Directions.KEY_M))*/){
-				System.out.println("Attacco del player");
+//				System.out.println("Attacco del player");
 				for (Mob target : attackCollision.getEnemy()) {
 					target.damage(player.getAttackDamage());
 					//System.out.println(target + " "+ target.getHp());
