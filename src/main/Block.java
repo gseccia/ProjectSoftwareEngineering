@@ -1,6 +1,7 @@
 package main;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import managers.*;
 import map.Edge;
@@ -204,16 +205,16 @@ public class Block extends BasicGameState
 					);
 			// TODO Finest music management
 			this.musicManager.end();
-//			bgMusic.stop();
+			bgMusic.stop();
 			if(!deadEnd.playing()){
 				deadEnd.loop();
 			}
-//			try {
-//				TimeUnit.SECONDS.sleep(5);
-//			} catch (InterruptedException e1) {
-//				e1.printStackTrace();
-//			}
-//			System.exit(0);
+			try {
+				TimeUnit.SECONDS.sleep(5);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			System.exit(0);
 		}
 		//TEMPORARY, just to show something
 		if(mission.completed()){
@@ -368,11 +369,20 @@ public class Block extends BasicGameState
 			}
 			if(itemCollision.detectCollision(mapX, mapY, player)) {
 				if (itemCollision.getItemID() != "") {
-					System.out.println("Stai prendendo una "+itemCollision.getItemID());
-					//TODO manca la gestione dei cuori
-					this.scoreManager.decrease(0);
-					this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
-					this.scoreManager.setState(States.PointsAccumulator);
+					this.itemCollision.getCollidedItem().setID(this.itemCollision.getItemID());
+//					System.out.println("Stai prendendo una "+itemCollision.getItemID());
+					//TODO pezza cuori
+					if (itemCollision.getItemID() == "heart") {
+						this.scoreManager.decrease(0);
+						this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
+						this.scoreManager.setState(States.LifePointsAccumulator);
+					}
+					//TODO pezza punti 
+					else {
+						this.scoreManager.decrease(0);
+						this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
+						this.scoreManager.setState(States.PointsAccumulator);
+					}
 					mission.check(itemCollision.getCollidedItem());
 					item.remove(itemCollision.getCollidedItem());
 				}

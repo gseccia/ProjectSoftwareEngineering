@@ -126,14 +126,12 @@ public class Level extends StateBasedGame{
 		return item;
 	}
 	
-	
 	private void generateItems() throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
 		for(Block block: block_list)
 		{
 			items.put(block, generateItem());
 		}
 	}
-
 
 
 	@Override
@@ -149,7 +147,6 @@ public class Level extends StateBasedGame{
 			distribute(player);
 			for(Block block: block_list)
 			{
-				// TODO PEZZA DI ANTONIO in questo modo tutti gli item inseriti hanno id=heart
 				for(int i=0;i<population.get(block).size()/2;i++) {
 					items.get(block).add(new Item(ItemConfiguration.getInstance(),"heart"));
 				}
