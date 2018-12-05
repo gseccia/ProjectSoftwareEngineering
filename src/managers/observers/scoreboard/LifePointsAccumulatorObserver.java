@@ -29,19 +29,19 @@ public class LifePointsAccumulatorObserver extends Observer{
 	}
 	
 	private int getNumberOfHearts() {
-		if (this.hp <= 100 && this.hp > 80) {
+		if (this.hp > 80) {
 			return 5;
 		}
-		else if (this.hp <= 80 && this.hp > 60) {
+		else if (this.hp > 60) {
 			return 4;
 		}
-		else if (this.hp <= 60 && this.hp > 40) {
+		else if (this.hp > 40) {
 			return 3;
 		}
-		else if (this.hp <= 40 && this.hp > 20) {
+		else if (this.hp > 20) {
 			return 2;
 		}
-		else if (this.hp <= 20 && this.hp > 0) {
+		else if (this.hp > 0) {
 			return 1;
 		}
 		else if (this.hp <= 0) {
