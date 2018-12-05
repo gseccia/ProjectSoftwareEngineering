@@ -17,8 +17,8 @@ public class Item extends AnimatedElement implements MissionItem {
                 configuration.getHeight(id),
                 0, 0);
         this.id = id;
-        // TODO rotto id per colpa di antonio
-        this.itemPoints = configuration.getItemPoints(id);
+//        TODO rotto id per colpa di vincenzo
+//        this.itemPoints = configuration.getItemPoints(id);
     }
     
     /**
@@ -50,6 +50,15 @@ public class Item extends AnimatedElement implements MissionItem {
     @Override
     public String getID() {
         return id;
+    }
+    
+    public void setID(String name) {
+        this.id = name;
+        try {
+			this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
+		} catch (NoSuchElementInConfigurationException e) {
+			e.printStackTrace();
+		}
     }
 
 	public int getItemPoints() {
