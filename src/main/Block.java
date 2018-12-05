@@ -133,6 +133,7 @@ public class Block extends BasicGameState
 		}
 		
 		n = 1;
+		Random r = new Random();
 		for(Item i:item) {
 			x = Integer.parseInt(map.getMapProperty("spawnX"+n,"-1"));
 			y = Integer.parseInt(map.getMapProperty("spawnY"+n,"-1"));
@@ -141,6 +142,8 @@ public class Block extends BasicGameState
 				y = Integer.parseInt(map.getMapProperty("spawnY1","25"));
 				n = 1;
 			}
+			x += (r.nextBoolean())? r.nextInt(3):-r.nextInt(3);
+			y += (r.nextBoolean())? r.nextInt(3):-r.nextInt(3);
 			n++;
 			i.setLocation((x)*map.getTileWidth(),y*map.getTileHeight());
 		}

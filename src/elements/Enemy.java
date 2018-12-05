@@ -186,14 +186,14 @@ public class Enemy extends Mob implements MissionItem {
 					
 				}
 				
-				else if((Math.abs(dirX) > player.getWidth()+1 && !favorY) || favorX) {
+				else if((Math.abs(dirX) > player.getWidth()-getWidth() && !favorY) || favorX) {
 					// X movements
 					//System.out.println(id+" "+map.getID()+" MOVE X");
 					direction = (dirX > 0)?  Directions.RIGHT: Directions.LEFT;
-					favorX = Math.abs(dirX) > player.getWidth()-1; //map.getMap().getTileWidth();(dirX < -player.getWidth() && dirX<0) || (dirX>0 && dirX > getWidth());
+					favorX = Math.abs(dirX) > player.getWidth()-getWidth(); //map.getMap().getTileWidth();(dirX < -player.getWidth() && dirX<0) || (dirX>0 && dirX > getWidth());
 				}
 				
-				else if((Math.abs(dirY) > player.getHeight()+1 && !favorX) || favorY) {
+				else if((Math.abs(dirY) > player.getHeight()-1 && !favorX) || favorY) {
 					// Y movements
 					//System.out.println(id+" "+map.getID()+" MOVE Y");
 					direction = (dirY > 0)?  Directions.DOWN: Directions.UP;
