@@ -212,12 +212,12 @@ public class Block extends BasicGameState
 			if(!deadEnd.playing()){
 				deadEnd.loop();
 			}
-			try {
+			/*try {
 				TimeUnit.SECONDS.sleep(5);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
-			System.exit(0);
+			System.exit(0);*/
 		}
 		//TEMPORARY, just to show something
 		if(mission.completed()){
@@ -378,6 +378,8 @@ public class Block extends BasicGameState
 					if (itemCollision.getItemID() == "heart") {
 						this.scoreManager.decrease(0);
 						this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
+						player.setHp(player.getHp() + player.getMaxHp()/5);
+						if(player.getHp() > player.getMaxHp()) player.setHp(player.getMaxHp());
 						this.scoreManager.setState(States.LifePointsAccumulator);
 					}
 					//TODO pezza punti 
