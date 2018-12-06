@@ -8,6 +8,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.SoundStore;
 
 import utils.Constants;
 
@@ -53,7 +54,7 @@ public class Player extends Mob {
 
     private void playStep(){
         if(!step.playing()){
-            step.play(2,1);
+            step.play(1.0f, SoundStore.get().getMusicVolume() * 0.2f);
         }
     }
 

@@ -9,8 +9,8 @@ public class BgMusic {
 
     public static Music getBgMusic() throws SlickException {
         if(bgMusic == null){
-//            bgMusic = new Music(System.getProperty("user.dir") + "/resource/audio/bg/bg.ogg");
-        	bgMusic = new Music(System.getProperty("user.dir") + "/resource/audio/bg/Hydrogen.ogg");
+            bgMusic = new Music(System.getProperty("user.dir") + "/resource/audio/bg/bg.ogg");
+//        	bgMusic = new Music(System.getProperty("user.dir") + "/resource/audio/bg/Hydrogen.ogg");
         }
         return bgMusic;
     }

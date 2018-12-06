@@ -15,7 +15,7 @@ public class MusicManager extends Thread
     public void run()
     {
 		if(!this.musicToPlay.playing()){
-			this.musicToPlay.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
+			this.musicToPlay.loop(1.0f, SoundStore.get().getMusicVolume() * 0.1f);
 		}
         while(true) {
 //           System.out.println("Music started");

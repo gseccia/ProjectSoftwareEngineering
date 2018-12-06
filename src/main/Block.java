@@ -58,7 +58,6 @@ public class Block extends BasicGameState
 	private Sound endLevel, deadEnd;
 	private Music bgMusic;
 	private MusicManager musicManager;
-	private int count = 0;
 	
 	public Block(int state,String mapName)
 	{
@@ -143,8 +142,8 @@ public class Block extends BasicGameState
 				y = Integer.parseInt(map.getMapProperty("spawnY1","25"));
 				n = 1;
 			}
-			x += (r.nextBoolean())? r.nextInt(3):-r.nextInt(3);
-			y += (r.nextBoolean())? r.nextInt(3):-r.nextInt(3);
+			x += (r.nextBoolean())? r.nextInt(1):-r.nextInt(1);
+			y += (r.nextBoolean())? r.nextInt(1):-r.nextInt(1);
 			n++;
 			i.setLocation((x)*map.getTileWidth(),y*map.getTileHeight());
 		}
@@ -210,7 +209,7 @@ public class Block extends BasicGameState
 			this.musicManager.end();
 			bgMusic.stop();
 			if(!deadEnd.playing()){
-				deadEnd.loop();
+				deadEnd.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
 			}
 			/*try {
 				TimeUnit.SECONDS.sleep(5);
@@ -228,7 +227,7 @@ public class Block extends BasicGameState
                 g.drawImage(new Image(System.getProperty("user.dir") + "/resource/textures/transitions/toBeCont.png"), player.getX()-85, player.getY()-25);
 				bgMusic.stop();
                 if(!endLevel.playing()) {
-					endLevel.loop();
+					endLevel.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
 				}
             } catch (SlickException e) {
                 e.printStackTrace();
@@ -242,6 +241,7 @@ public class Block extends BasicGameState
 		
 		// Stampo i cuoricini <3
 		lpao.renderHearts(g, (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue()));
+		g.drawString(String.valueOf(player.getHp()), (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-18*7, 30);
 		
 //		int currentHealth = 30;
 //		int maxHealth = 100;
@@ -373,7 +373,7 @@ public class Block extends BasicGameState
 			if(itemCollision.detectCollision(mapX, mapY, player)) {
 				if (itemCollision.getItemID() != "") {
 					this.itemCollision.getCollidedItem().setID(this.itemCollision.getItemID());
-//					System.out.println("Stai prendendo una "+itemCollision.getItemID());
+					System.out.println("Stai prendendo una "+itemCollision.getItemID());
 					//TODO pezza cuori
 					if (itemCollision.getItemID() == "heart") {
 						this.scoreManager.decrease(0);
@@ -394,7 +394,7 @@ public class Block extends BasicGameState
 			}
 			if (enemyCollision.detectCollision(mapX, mapY, player)){
 				player.damage(enemyCollision.getAttackDamage());
-				System.out.println("Collisione");
+//				System.out.println("Collisione");
 //				Usare subject per modificare l'observer
 //				Inserire in decrease() i punti di vita da togliere per la collisione con lo zombo
 				scoreManager.decrease(enemyCollision.getAttackDamage());

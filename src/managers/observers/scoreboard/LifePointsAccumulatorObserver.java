@@ -1,7 +1,5 @@
 package managers.observers.scoreboard;
 
-import javax.naming.InitialContext;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
@@ -26,6 +24,8 @@ public class LifePointsAccumulatorObserver extends Observer{
 
 	public void setHp(int hp) {
 		this.hp += hp;
+		if (this.hp > 100) this.hp = 100;
+		else if(this.hp < 0) this.hp = 0;
 	}
 	
 	private int getNumberOfHearts() {
