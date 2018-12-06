@@ -19,11 +19,17 @@ public class RandomCollection<E> extends LinkedList<E> {
 
     public RandomCollection(Collection<? extends E> c) {
         super(c);
+        this.seed = Instant.now().toEpochMilli();
     }
 
     public RandomCollection(Collection<? extends E> c, long seed) {
         super(c);
         this.seed = seed;
+    }
+
+    public E getRandom(){
+        int index = new Random(seed).nextInt(size());
+        return get(index);
     }
 
     @Override

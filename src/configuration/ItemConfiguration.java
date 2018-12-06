@@ -54,7 +54,7 @@ public class ItemConfiguration extends Configuration {
     }
     
     /*
-     * Metodo per il PointsAccumulator cosicchè ogni oggetto conserva nel file di configurazione
+     * Metodo per il PointsAccumulator cosicche' ogni oggetto conserva nel file di configurazione
      * i punti associati al tipo di item
      */
     public int getItemPoints(String id) throws NoSuchElementInConfigurationException {

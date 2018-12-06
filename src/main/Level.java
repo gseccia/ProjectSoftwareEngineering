@@ -16,6 +16,7 @@ import java.util.*;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import utils.RandomCollection;
 
 public class Level extends StateBasedGame{
 	private String charname;
@@ -143,12 +144,12 @@ public class Level extends StateBasedGame{
 			spm = ScorePointsManager.getScorePointsManagerInstance();
 
 			mission_generated = missions.generateMissions();
-			
+			RandomCollection<String> itemNames = new RandomCollection<>(ItemConfiguration.getInstance().getItemNames());
 			distribute(player);
 			for(Block block: block_list)
 			{
 				for(int i=0;i<population.get(block).size()/2;i++) {
-					items.get(block).add(new Item(ItemConfiguration.getInstance(),"heart"));
+					items.get(block).add(new Item(ItemConfiguration.getInstance(),itemNames.getRandom()));
 				}
 				block.initBlock(player, population, items,map,mission_generated, spm);
 				this.addState(block);
