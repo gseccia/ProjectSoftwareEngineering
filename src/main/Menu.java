@@ -18,7 +18,7 @@ public class Menu extends BasicGameState {
     private String[] playersOptions = new String[NOCHOICES];
     private boolean exit = false;
     private Font font;
-    private TrueTypeFont playersOptionsTTF, foo;
+    private TrueTypeFont playersOptionsTTF;
     private Color notChosen = new Color(153, 204, 255);
 
 
@@ -39,7 +39,6 @@ public class Menu extends BasicGameState {
         font = new Font("TimesNewRoman", Font.BOLD, 40);
         playersOptionsTTF = new TrueTypeFont(font, true);
         font = new Font ("TimesNewRoman", Font.PLAIN, 20);
-        foo = new TrueTypeFont(font, true);
         playersOptions[0] = "Start";
         playersOptions[1] = "Demo";
         playersOptions[2] = "Options";
