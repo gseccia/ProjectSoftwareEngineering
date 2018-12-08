@@ -18,12 +18,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import utils.RandomCollection;
 
-public class Level extends StateBasedGame{
+public class Level{
 	private String charname;
 	private int level_difficulty;
 
-	private Menu menu;
-	
 	private List<Block> block_list;
 	private MapGraph map;
 	private Map<Block,Set<Enemy>> population;
@@ -35,11 +33,8 @@ public class Level extends StateBasedGame{
 	/**
 	 * This class is the manager of a level
 	*/
-	public Level(String gamename,String charname,int level_difficulty) {
-		super(gamename);
+	public Level(String charname,int level_difficulty) {
 
-		menu = Menu.getInstance();
-		
 		population = new HashMap<>();
 		items = new HashMap<>();
 		
@@ -60,7 +55,32 @@ public class Level extends StateBasedGame{
 
 		this.charname = charname;
 		this.level_difficulty = level_difficulty;
+
+
+		try {
+			Player player = new Player(PlayerConfiguration.getInstance(), charname);
+			generatePopulation(level_difficulty,player); // level_difficulty
+			generateItems();
+			spm = ScorePointsManager.getScorePointsManagerInstance();
+
+			mission_generated = missions.generateMissions();
+			RandomCollection<String> itemNames = new RandomCollection<>(ItemConfiguration.getInstance().getItemNames());
+			distribute(player);
+			for(Block block: block_list) {
+				for(int i=0;i<population.get(block).size()/2;i++) {
+					items.get(block).add(new Item(ItemConfiguration.getInstance(),itemNames.getRandom()));
+				}
+				block.initBlock(player, population, items,map,mission_generated, spm);
+			}
+		} catch (NoSuchElementInConfigurationException | NullAnimationException | SlickException | NotEnoughMissionsException e) {
+			e.printStackTrace();
+			System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
+
+		}
+
 	}
+
+
 	
 	
 	private void distribute(Player player) {
@@ -137,40 +157,8 @@ public class Level extends StateBasedGame{
 		}
 	}
 
-
-	@Override
-	public void initStatesList(GameContainer arg0) throws SlickException {
-		try {
-			Player player = new Player(PlayerConfiguration.getInstance(), charname);
-			generatePopulation(1,player); // level_difficulty
-			generateItems();
-			spm = ScorePointsManager.getScorePointsManagerInstance();
-
-			this.addState(menu);
-
-			mission_generated = missions.generateMissions();
-			RandomCollection<String> itemNames = new RandomCollection<>(ItemConfiguration.getInstance().getItemNames());
-			distribute(player);
-			for(Block block: block_list)
-			{
-				for(int i=0;i<population.get(block).size()/2;i++) {
-					items.get(block).add(new Item(ItemConfiguration.getInstance(),itemNames.getRandom()));
-				}
-				block.initBlock(player, population, items,map,mission_generated, spm);
-				this.addState(block);
-			}
-
-
-
-			this.enterState(0); //always enter in menu block
-		} catch (NullAnimationException | NoSuchElementInConfigurationException | NotEnoughMissionsException e) {
-			e.printStackTrace();
-			System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
-		}
-
+	public List<Block> getBlocks(){
+		return this.block_list;
 	}
-
-
-
 
 }

@@ -17,7 +17,7 @@ public class GameMain{
         System.setProperty("net.java.games.input.librarypath",System.getProperty("user.dir")+"/lib/native/"+LWJGLUtil.getPlatformName());
        
 		try {
-			 AppGameContainer app = new AppGameContainer(new Level("UNI:ZA","guntan",2));
+			 AppGameContainer app = new AppGameContainer(new Game("UNI:ZA","guntan"));
 			 app.setDisplayMode(800, 700, false);
 			 app.setShowFPS(true);
 			 app.setTargetFrameRate(Constants.framerate);
