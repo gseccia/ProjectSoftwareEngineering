@@ -21,7 +21,8 @@ import utils.RandomCollection;
 public class Level extends StateBasedGame{
 	private String charname;
 	private int level_difficulty;
-	
+
+	private Menu menu;
 	
 	private List<Block> block_list;
 	private MapGraph map;
@@ -36,6 +37,8 @@ public class Level extends StateBasedGame{
 	*/
 	public Level(String gamename,String charname,int level_difficulty) {
 		super(gamename);
+
+		menu = Menu.getInstance();
 		
 		population = new HashMap<>();
 		items = new HashMap<>();
@@ -143,6 +146,8 @@ public class Level extends StateBasedGame{
 			generateItems();
 			spm = ScorePointsManager.getScorePointsManagerInstance();
 
+			this.addState(menu);
+
 			mission_generated = missions.generateMissions();
 			RandomCollection<String> itemNames = new RandomCollection<>(ItemConfiguration.getInstance().getItemNames());
 			distribute(player);
@@ -155,11 +160,14 @@ public class Level extends StateBasedGame{
 				this.addState(block);
 			}
 
-			this.enterState(1); //always enter in first block
+
+
+			this.enterState(0); //always enter in menu block
 		} catch (NullAnimationException | NoSuchElementInConfigurationException | NotEnoughMissionsException e) {
 			e.printStackTrace();
 			System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
 		}
+
 	}
 
 

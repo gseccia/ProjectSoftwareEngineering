@@ -62,7 +62,7 @@ public class MapGraph {
             max = tiledMaps.size()-1;
             min = tiledMaps.size()-4;
             vertexNumber = random.nextInt((max-min+1))+min;  //genera un numero di vertici compreso tra min e max
-            for (int i = 0; i < vertexNumber; i++) {
+            for (int i = 1; i <= vertexNumber; i++) {
                 //doorNumber = random.nextInt(3) + 1;  //genera un numero di porte compreso tra 1 e 3
                 doorNumber = conf.getDoors(tiledMaps.get(i));
                 v = new Vertex(i, tiledMaps.get(i), false, doorNumber);  //crea un nuovo vertice e aggiungilo al grafico e alla lista dei vertici
