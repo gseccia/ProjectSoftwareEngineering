@@ -3,7 +3,7 @@ package elements;
 import attacks.Attack;
 import attacks.PointBlankRangeAttack;
 import configuration.EnemyConfiguration;
-import configuration.MobConfiguration;
+import org.newdawn.slick.util.pathfinding.*;
 import configuration.NoSuchElementInConfigurationException;
 import main.Block;
 import managers.CollisionDetectionDoor;
@@ -23,7 +23,7 @@ public class Enemy extends Mob implements MissionItem {
 
     private String id;
     private Block map;
-    private int direction, imposed_direction,untilNextAttack;
+    private int direction,untilNextAttack;
     private Rectangle vision;
     private int directVision;
     private int lateralVision;
@@ -31,9 +31,11 @@ public class Enemy extends Mob implements MissionItem {
     private Player player;
     private CollisionDetectionWall wallCollision;
     private CollisionDetectionDoor doorCollision;
-    private boolean attack,obstacle,favorY,favorX;
+    private boolean attack;
     private int points;
     private Color bossFilter;
+    private AStarPathFinder pf;
+    
     
     private final int RELOADING_TIME = Constants.framerate;
     private final int SPEED = 8;
@@ -71,10 +73,9 @@ public class Enemy extends Mob implements MissionItem {
     	doorCollision = new CollisionDetectionDoor(map.getHitbox());
     	surrendTime = SURREND_TIME;
     	attack = false;
-    	obstacle= false;
-    	favorX = favorY = false;
     	untilNextAttack = 0;
-    	imposed_direction = -1;
+    	pf = new AStarPathFinder(new EncapsulateMap(map.getMap()),1000,false);
+		
     }
     
     public void draw() {
@@ -101,216 +102,160 @@ public class Enemy extends Mob implements MissionItem {
 	public int getMobPoints() {
 		return this.points;
 	}
+	
+	public void visionUpdate() {
+			switch(direction) {
+			case Directions.LEFT:
+				vision.setBounds(getX()-directVision + getWidth(), getY(),directVision,lateralVision);
+				break;
+			case Directions.RIGHT:
+				vision.setBounds(getX(), getY(),directVision,lateralVision);
+				break;
+			case Directions.UP:
+				vision.setBounds(getX(), getY() + getHeight()-directVision,lateralVision,directVision);
+				break;
+			case Directions.DOWN:
+				vision.setBounds(getX(), getY(),lateralVision,directVision);
+				break;
+		}
+	}
     
-    public void update() throws NullAnimationException {
-    	float x,y;
-		 // Until I'm alive
+	private int toTile(float x,boolean xaxis) {
+		int value = (int)(x/map.getMap().getTileWidth());
+		value = (value<0)?0:value;
+		System.out.println(map.getMap().getWidth()+" "+map.getMap().getHeight());;
+		if(xaxis)
+			value=(value>=map.getMap().getWidth())?map.getMap().getWidth()-1:value;
+		else
+			value=(value>=map.getMap().getHeight())?map.getMap().getHeight()-1:value;
+		return value;
+	}
+	
+	private int attackMode() throws NullAnimationException {
+		float x,mx,y,my;
+		int dir;
+		x = player.getX();
+		y = player.getY();
+		mx = getX();
+		my = getY();
+		
+		player.setLocation(x + map.getShiftX()*map.getMap().getTileWidth(), y+map.getShiftY()*map.getMap().getTileHeight());
+		setLocation(mx + map.getShiftX()*map.getMap().getTileWidth(), my+map.getShiftY()*map.getMap().getTileHeight());
+		
+		
+		Path p = pf.findPath(this, toTile(getX(),true), toTile(getY(),false), toTile(player.getX(),true), toTile(player.getY(),false));
+		if(p!=null) {
+			int goX = p.getX(1)*map.getMap().getTileWidth();
+			int goY = p.getY(1)*map.getMap().getTileHeight();
+			if(getX()>goX) dir=Directions.LEFT;
+			else if(getX()<goX) dir=Directions.RIGHT;
+			else if(getY()>goY) dir=Directions.UP;
+			else if(getY()<goY) dir=Directions.DOWN;
+			else dir = -1;
+		}
+		else dir = -1;
+		
+		setLocation(mx,my);
+		player.setLocation(x,y);
+		return dir;
+	}
+	
+	public void update() throws NullAnimationException{
+		float x,y;
 		if(getHp()>0) {
 			x = getX();
 			y = getY();
 			
-			
 			setLocation((int)(getX())-map.getShiftX()*map.getMap().getTileWidth(),(int)(getY())-map.getShiftY()*map.getMap().getTileHeight()); // Alignment
 			
 			// Vision Alignment
-			switch(direction) {
-				case Directions.LEFT:
-					vision.setBounds(getX()-directVision + getWidth(), getY(),directVision,lateralVision);
-					break;
-				case Directions.RIGHT:
-					vision.setBounds(getX(), getY(),directVision,lateralVision);
-					break;
-				case Directions.UP:
-					vision.setBounds(getX(), getY() + getHeight()-directVision,lateralVision,directVision);
-					break;
-				case Directions.DOWN:
-					vision.setBounds(getX(), getY(),lateralVision,directVision);
-					break;
-			}
+			visionUpdate();
 			
 			// Vision Logic
 			if(vision.intersects(player)) {
 				// Attack him!
 				attack = true;
 				surrendTime = SURREND_TIME;
-				//System.out.println(id+" "+map.getID()+" ATTACK!");
 			}
 			else if(attack) {
 				surrendTime--;
-				//System.out.println(id+" "+map.getID()+" SURREDING "+surrendTime);
 			}
 			
-			// Attack Mode Logic
+			int choosen;	
 			if(attack) {
-				//System.out.println(id+" "+map.getID()+" ATTACK MODE ");
-				
-				float px,py,dirX,dirY;
-				px = player.getX();
-				py = player.getY();
-				dirX = (px - getX());
-				dirY = (py - getY());
-				
-				if(obstacle) {
-					// Obstacle management
-					boolean collideX,collideY;
-					wallCollision.setKey( (dirX > 0)?  Directions.RIGHT: Directions.LEFT);
-					collideX = !wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this);
-					wallCollision.setKey( (dirY > 0)?  Directions.DOWN: Directions.UP);
-					collideY = !wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this);
-					if(!collideX && !collideY){
-						
-						boolean tmp =favorX;
-						favorX = favorY;
-						favorY = tmp;
-						
-						obstacle = false;
-						imposed_direction = -1;
-						//System.out.println(id+" "+map.getID()+" NOT COLLISION AROUND");
-					}
-					else if(!collideX) {
-						favorX = true;
-						favorY = false;
-						//System.out.println(id+" "+map.getID()+"  NOT COLLISION X");
-					}
-					else if(!collideY) {
-						favorX = false;
-						favorY = true;
-						//System.out.println(id+" "+map.getID()+"  NOT COLLISION Y");
-					}
-					else {
-						attack = false;
-						favorX = favorY = false;
-						obstacle = false;
-						//System.out.println(id+" "+map.getID()+"  I QUIT ");
-					}
-					
-				}
-				
-				else if((Math.abs(dirX) > player.getWidth()-getWidth() && !favorY) || favorX) {
-					// X movements
-					//System.out.println(id+" "+map.getID()+" MOVE X");
-					direction = (dirX > 0)?  Directions.RIGHT: Directions.LEFT;
-					favorX = Math.abs(dirX) > player.getWidth()-getWidth(); //map.getMap().getTileWidth();(dirX < -player.getWidth() && dirX<0) || (dirX>0 && dirX > getWidth());
-				}
-				
-				else if((Math.abs(dirY) > player.getHeight()-1 && !favorX) || favorY) {
-					// Y movements
-					//System.out.println(id+" "+map.getID()+" MOVE Y");
-					direction = (dirY > 0)?  Directions.DOWN: Directions.UP;
-					favorY = Math.abs(dirY) > player.getHeight()-1; //map.getMap().getTileHeight() Math.abs(dirY) > player.getHeight() + getHeight();
-				}
-				else {
-					// On player! Not needed movements
-					//System.out.println(id+" "+map.getID()+" ON PLAYER");
-					direction = -1;
-					favorX = favorY = false;
-				}
-				
-				 if(surrendTime == 0) attack = false; // Surrend to attack him ---> NEVER GIVE UP!
+				choosen = attackMode();
+				if(surrendTime <= 0) attack = false;
 			}
-			
-			// Movements' logic  after a wall collision!
-			wallCollision.setKey(direction);
-			if(direction!=-1 && (!wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this) || doorCollision.detectCollision(map.getShiftX(), map.getShiftY(), this)) ) {
-					//System.out.println(id+" "+map.getID()+" COLLIDE");
-					
-					int choosen = direction;
-					if(attack) {
-						// Attack Mode Movements Logic if there is an obstacle!
-						if(obstacle) {
-							
-							if(direction == Directions.LEFT || direction == Directions.RIGHT) {
-								choosen = (player.getY() - getY() >0) ? Directions.DOWN : Directions.UP;
-							}
-							else {
-								choosen = (player.getX() - getX() >0) ? Directions.RIGHT : Directions.LEFT;
-							}
-							imposed_direction = choosen;
-							
-							//System.out.println(id+" "+map.getID()+" DEVIATION ---> IMPOSED MOVE "+imposed_direction);
-						}
-						else {
-							//System.out.println(id+" "+map.getID()+" OBSTACLE MODE");
-							obstacle = true;
-							if(direction == Directions.LEFT || direction == Directions.RIGHT) {
-								choosen = (direction == Directions.RIGHT) ? Directions.LEFT : Directions.RIGHT;
-							}
-							else {
-								choosen = (direction == Directions.UP) ? Directions.DOWN : Directions.UP;
-							}
-						}
-						
-					}
-					else {
+			else {
+				choosen = direction;
+				wallCollision.setKey(direction);
+				if(!wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this) || doorCollision.detectCollision(map.getShiftX(), map.getShiftY(), this)) {
 						//  Choose a random free direction 
 						Random r = new Random();
 						while(choosen == direction) {
 							switch(r.nextInt(4)) {
-								case 0:
-									choosen = Directions.UP;
-									break;
-								case 1:
-									choosen = Directions.RIGHT;
-									break;
-								case 2:
-									choosen = Directions.DOWN;
-									break;
-								case 3:
-									choosen = Directions.LEFT;
-									break;
+									case 0:
+										choosen = Directions.UP;
+										break;
+									case 1:
+										choosen = Directions.RIGHT;
+										break;
+									case 2:
+										choosen = Directions.DOWN;
+										break;
+									case 3:
+										choosen = Directions.LEFT;
+										break;
 							}
 						}
-					}
-					
-					if(imposed_direction ==-1) direction = choosen;
-					else direction = imposed_direction;
+				}
 			}
-			
+			direction = choosen;
 			setLocation(x,y); // Restore Correct Position
-			
+				
 			// Movements Action!
 			switch(direction) {
-					case Directions.LEFT:
-						x = x - SPEED;
-						//System.out.println(id+" "+map.getID()+" LEFT");
-						faceLeft();
-						break;
-					case Directions.RIGHT:
-						x = x + SPEED;
-						//System.out.println(id+" "+map.getID()+" RIGHT");
-						faceRight();
-						break;
-					case Directions.UP:
-						y = y - SPEED;
-						//System.out.println(id+" "+map.getID()+" UP");
-						faceUp();
-						break;
-					case Directions.DOWN:
-						y = y + SPEED;
-						//System.out.println(id+" "+map.getID()+" DOWN");
-						faceDown();
-						break;
-					default: // No movements animation
-						switch(getCurrentDirection()) {
-							case Directions.LEFT:
-								faceStillLeft();
-								break;
-							case Directions.RIGHT:
-								faceStillRight();
-								break;
-							case Directions.UP:
-								faceStillUp();
-								break;
-							case Directions.DOWN:
-								faceStillDown();
-								break;
-						}
-				}
-				
+						case Directions.LEFT:
+							x = x - SPEED;
+							//System.out.println(id+" "+map.getID()+" LEFT");
+							faceLeft();
+							break;
+						case Directions.RIGHT:
+							x = x + SPEED;
+							//System.out.println(id+" "+map.getID()+" RIGHT");
+							faceRight();
+							break;
+						case Directions.UP:
+							y = y - SPEED;
+							//System.out.println(id+" "+map.getID()+" UP");
+							faceUp();
+							break;
+						case Directions.DOWN:
+							y = y + SPEED;
+							//System.out.println(id+" "+map.getID()+" DOWN");
+							faceDown();
+							break;
+						default: // No movements animation
+							switch(getCurrentDirection()) {
+								case Directions.LEFT:
+									faceStillLeft();
+									break;
+								case Directions.RIGHT:
+									faceStillRight();
+									break;
+								case Directions.UP:
+									faceStillUp();
+									break;
+								case Directions.DOWN:
+									faceStillDown();
+									break;
+							}
+			}
+					
 			setLocation(x,y); // Position Updating
 		}
 	}
-    
+	
     public Rectangle getVision() {
     	return vision;
     }
