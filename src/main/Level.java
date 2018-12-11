@@ -1,5 +1,7 @@
 package main;
 
+import blocks.Block;
+import blocks.ConcreteBlockFactory;
 import configuration.*;
 import elements.Enemy;
 import elements.Item;
@@ -13,9 +15,7 @@ import missions.NotEnoughMissionsException;
 
 import java.util.*;
 
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.StateBasedGame;
 import utils.RandomCollection;
 
 public class Level{
@@ -38,7 +38,7 @@ public class Level{
 		population = new HashMap<>();
 		items = new HashMap<>();
 		
-		map = new MapGraph(level_difficulty, new DoorsConfiguration());
+		map = new MapGraph(level_difficulty, new DoorsConfiguration(), new ConcreteBlockFactory());
 		try {
 			map.generateGraph();
 		} catch (NoSuchElementInConfigurationException e) {

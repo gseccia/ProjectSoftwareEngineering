@@ -1,4 +1,4 @@
-package main;
+package blocks;
 
 import java.awt.Font;
 import org.newdawn.slick.*;

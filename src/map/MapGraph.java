@@ -1,25 +1,30 @@
 package map;
 
+import blocks.BlockFactory;
 import configuration.DoorsConfiguration;
 import configuration.NoSuchElementInConfigurationException;
-import main.Block;
+import blocks.Block;
 
+import blocks.ConcreteBlock;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 
 import java.util.*;
 
 public class MapGraph {
+
+    private BlockFactory factory;
     private DefaultUndirectedGraph<Vertex, Edge> graph;
     private DoorsConfiguration conf;
     private int mapChosen;
 
-    public MapGraph(int mapChosen, DoorsConfiguration conf){
+    public MapGraph(int mapChosen, DoorsConfiguration conf, BlockFactory factory){
 
         if (mapChosen <= 6)
             this.mapChosen = 6;
         else
             this.mapChosen = mapChosen;
         this.conf = conf;
+        this.factory = factory;
         this.graph = new DefaultUndirectedGraph<>(Edge.class);
     }
 
@@ -129,7 +134,7 @@ public class MapGraph {
         List<Block> block = new ArrayList<>();
         Block tmp;
         for (Vertex v: vertex()){
-        	tmp = new Block(v.getId(),v.getEl());
+        	tmp = factory.generateBlock(v.getId(),v.getEl());
             block.add(tmp);
             v.setBlock(tmp);
         }

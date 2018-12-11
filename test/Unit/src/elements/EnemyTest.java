@@ -14,7 +14,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 
 import configuration.NoSuchElementInConfigurationException;
-import main.Block;
+import blocks.Block;
 
 import static org.junit.Assert.assertEquals;
 

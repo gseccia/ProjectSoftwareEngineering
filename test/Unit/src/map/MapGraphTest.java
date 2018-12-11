@@ -1,7 +1,9 @@
 package Unit.src.map;
 
+import blocks.ConcreteBlockFactory;
 import configuration.*;
-import main.Block;
+import blocks.Block;
+import blocks.ConcreteBlock;
 import map.*;
 import org.jgrapht.GraphTests;
 import org.junit.*;
@@ -12,7 +14,7 @@ public class MapGraphTest {
 
     @Before
     public  void initialize() throws NoSuchElementInConfigurationException {
-        map = new MapGraph(8, new DoorsConfiguration());
+        map = new MapGraph(8, new DoorsConfiguration(), new ConcreteBlockFactory());
         map.generateGraph();
     }
 
@@ -29,14 +31,14 @@ public class MapGraphTest {
     @Test
     public void testThatGivenABlockTheReturnVertexHasSameId(){
         Vertex v = new Vertex(1,"cucina", true ,2);
-        Block block = new Block(v.getId(), v.getEl());
+        Block block = new ConcreteBlockFactory().generateBlock(v.getId(), v.getEl());
         assertEquals(map.getVertex(block).getId(), 1);
     }
 
     @Test
     public void testThatGivenABlockTheReturnVertexIsNotNull(){
         Vertex v = new Vertex(1,"cucina", true ,2);
-        Block block = new Block(v.getId(), v.getEl());
+        Block block = new ConcreteBlockFactory().generateBlock(v.getId(), v.getEl());
         assertNotNull(map.getVertex(block));
     }
 

@@ -5,7 +5,7 @@ import attacks.PointBlankRangeAttack;
 import configuration.EnemyConfiguration;
 import org.newdawn.slick.util.pathfinding.*;
 import configuration.NoSuchElementInConfigurationException;
-import main.Block;
+import blocks.Block;
 import managers.CollisionDetectionDoor;
 import managers.CollisionDetectionWall;
 import managers.Directions;

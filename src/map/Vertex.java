@@ -1,6 +1,6 @@
 package map;
 
-import main.Block;
+import blocks.Block;
 
 public class Vertex implements Comparable<Vertex>{
     private String el;

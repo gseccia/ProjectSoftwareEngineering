@@ -1,7 +1,6 @@
-package main;
+package blocks;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 import managers.*;
 import map.Edge;
@@ -31,7 +30,7 @@ import elements.Mob;
 import elements.Player;
 import elements.NullAnimationException;
 
-public class Block extends BasicGameState
+public abstract class Block extends BasicGameState
 {
 	private CollisionDetectionWall wallCollision;
 	private CollisionDetectionDoor doorCollision;
@@ -59,7 +58,7 @@ public class Block extends BasicGameState
 	private Music bgMusic;
 	private MusicManager musicManager;
 	
-	public Block(int state,String mapName)
+	protected Block(int state,String mapName)
 	{
 		this.state=state;
 		this.mapName = mapName;
@@ -255,14 +254,56 @@ public class Block extends BasicGameState
 //		g.fillRect(x, y, currentHealth, 15);
 	}
 
+	/**
+	 * Check if the game is to be paused
+	 * @param in the Input object
+	 * @return true if the game has to enter in the paused state
+	 */
+	protected abstract boolean isPaused(Input in);
+
+	/**
+	 * Check if the user wants to go down
+	 * @param in the Input object
+	 * @return true if the player wants to go down
+	 */
+	protected abstract boolean goDown(Input in);
+
+	/**
+	 * Check if the user wants to go up
+	 * @param in the Input object
+	 * @return true if the player wants to go up
+	 */
+	protected abstract boolean goUp(Input in);
+
+	/**
+	 * Check if the user wants to go right
+	 * @param in the Input object
+	 * @return true if the player wants to go right
+	 */
+	protected abstract boolean goRight(Input in);
+
+	/**
+	 * Check if the user wants to go left
+	 * @param in the Input object
+	 * @return true if the player wants to go left
+	 */
+	protected abstract boolean goLeft(Input in);
+
+	/**
+	 * Check if the user wants to attack
+	 * @param in the Input object
+	 * @return true if the player wants to attack
+	 */
+	protected abstract boolean attack(Input in);
+
 	@Override
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
-		if(gc.getInput().isKeyPressed(Input.KEY_P)) paused = !paused;
+		if(isPaused(gc.getInput())) paused = !paused;
 		
 		if(!paused && !dead && !mission.completed()) {
 		try {
 			boolean pressed =false;
-			if(gc.getInput().isKeyDown(Directions.RIGHT)){
+			if(goRight(gc.getInput())){
 				player.faceRight();
 				wallCollision.setKey(Directions.RIGHT);
 				if(wallCollision.detectCollision(mapX, mapY, player)) {
@@ -272,7 +313,7 @@ public class Block extends BasicGameState
 					pressed =true;
 				}
 			}
-			else if(gc.getInput().isKeyDown(Directions.LEFT)){
+			else if(goLeft(gc.getInput())){
 				player.faceLeft();
 				wallCollision.setKey(Directions.LEFT);
 				if(wallCollision.detectCollision(mapX, mapY, player)){
@@ -282,7 +323,7 @@ public class Block extends BasicGameState
 					pressed =true;
 				}
 			}
-			else if(gc.getInput().isKeyDown(Directions.DOWN)){
+			else if(goDown(gc.getInput())){
 				player.faceDown();
 				wallCollision.setKey(Directions.DOWN);
 				if(wallCollision.detectCollision(mapX, mapY, player)){
@@ -292,7 +333,7 @@ public class Block extends BasicGameState
 					pressed =true;
 				}
 			}
-			else if(gc.getInput().isKeyDown(Directions.UP)){
+			else if(goUp(gc.getInput())){
 				player.faceUp();
 				wallCollision.setKey(Directions.UP);
 				if(wallCollision.detectCollision(mapX, mapY, player)){
@@ -302,7 +343,7 @@ public class Block extends BasicGameState
 					pressed =true;
 				}
 			}
-			else if(gc.getInput().isKeyDown(Directions.KEY_M)) {
+			else if(attack(gc.getInput())) {
 				if(key == Directions.UP) {
 					player.attackUp();
 					if(player.isReadyToAttack()) {
@@ -328,7 +369,7 @@ public class Block extends BasicGameState
 					}
 				}
 			}
-			else if(player.isReadyToAttack() && !gc.getInput().isKeyDown((Directions.KEY_M))) {
+			else if(player.isReadyToAttack() && !attack(gc.getInput())) {
 //				System.out.println("Non sto premendo tasti");
 				if(key == Directions.UP) {
 					player.faceStillUp();
@@ -373,7 +414,7 @@ public class Block extends BasicGameState
 			if(itemCollision.detectCollision(mapX, mapY, player)) {
 				if (itemCollision.getItemID() != "") {
 					this.itemCollision.getCollidedItem().setID(this.itemCollision.getItemID());
-					System.out.println("Stai prendendo una "+itemCollision.getItemID());
+					//System.out.println("Stai prendendo una "+itemCollision.getItemID());
 					//TODO pezza cuori
 					if (itemCollision.getItemID() == "heart") {
 						this.scoreManager.decrease(0);
@@ -394,9 +435,6 @@ public class Block extends BasicGameState
 			}
 			if (enemyCollision.detectCollision(mapX, mapY, player)){
 				player.damage(enemyCollision.getAttackDamage());
-//				System.out.println("Collisione");
-//				Usare subject per modificare l'observer
-//				Inserire in decrease() i punti di vita da togliere per la collisione con lo zombo
 				scoreManager.decrease(enemyCollision.getAttackDamage());
 				scoreManager.increase(0);
 				scoreManager.setState(States.LifePointsAccumulator);

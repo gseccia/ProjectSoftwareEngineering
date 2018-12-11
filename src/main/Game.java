@@ -1,17 +1,10 @@
 package main;
 
-import configuration.ItemConfiguration;
-import configuration.NoSuchElementInConfigurationException;
-import configuration.PlayerConfiguration;
-import elements.Item;
-import elements.NullAnimationException;
-import elements.Player;
-import managers.observers.scoreboard.ScorePointsManager;
-import missions.NotEnoughMissionsException;
+import blocks.Block;
+import blocks.Menu;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-import utils.RandomCollection;
 
 import java.util.List;
 
