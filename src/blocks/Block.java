@@ -8,14 +8,14 @@ import map.MapGraph;
 import map.Vertex;
 import missions.Mission;
 import managers.observers.scoreboard.LifePointsAccumulatorObserver;
+import managers.observers.scoreboard.Observer;
 import managers.observers.scoreboard.PointsAccumulatorObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 import managers.observers.scoreboard.States;
-
+import managers.observers.scoreboard.SubjectInterface;
 import music.BgMusic;
 import music.DeadMusic;
 import music.LevelCompletedMusic;
-import music.MusicManager;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -28,6 +28,8 @@ import elements.Enemy;
 import elements.Item;
 import elements.Mob;
 import elements.Player;
+import main.GameOver;
+import main.ResourceManager;
 import elements.NullAnimationException;
 
 public abstract class Block extends BasicGameState
@@ -54,9 +56,11 @@ public abstract class Block extends BasicGameState
 	private ScorePointsManager scoreManager;
 	private PointsAccumulatorObserver pao;
 	private LifePointsAccumulatorObserver lpao;
-	private Sound endLevel, deadEnd;
-	private Music bgMusic;
-	private MusicManager musicManager;
+	private ResourceManager rs;
+	private MusicManager mm;
+	private boolean levelMusicMustBeStarted;
+	private boolean deathMusicMustBeStarted;
+	private boolean completedMusicMustBeStarted;
 	
 	protected Block(int state,String mapName)
 	{
@@ -98,18 +102,25 @@ public abstract class Block extends BasicGameState
 		lpao = new LifePointsAccumulatorObserver(this.scoreManager);
 //				ScoreFileObserver sfo = new ScoreFileObserver(this.scoreManager);
 		this.scoreManager.setNamePlayer("Armando");
+		
+//		Initialize Resource Manager
+        this.rs = ResourceManager.getInstance();
+        mm = MusicManager.getInstance(this.rs);
 	}
 	
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
-		try {
-			endLevel = LevelCompletedMusic.getLevelCompletedMusic();
-			deadEnd = DeadMusic.getDeadMusic();
-			bgMusic = BgMusic.getBgMusic();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		levelMusicMustBeStarted = true;
+		deathMusicMustBeStarted = true;
+		completedMusicMustBeStarted = true;
+//		try {
+//			endLevel = LevelCompletedMusic.getLevelCompletedMusic();
+//			deadEnd = DeadMusic.getDeadMusic();
+//			bgMusic = BgMusic.getBgMusic();
+//		} catch (SlickException e) {
+//			e.printStackTrace();
+//		}
 		setCharacterSpawn(1);
 		int x, y, n;
 		paused = false;
@@ -153,8 +164,6 @@ public abstract class Block extends BasicGameState
 //		if(!bgMusic.playing()){
 //			bgMusic.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
 //		}
-		this.musicManager = new MusicManager(bgMusic);
-		musicManager.start();
 	}
 
 
@@ -167,6 +176,14 @@ public abstract class Block extends BasicGameState
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) {
+		if (levelMusicMustBeStarted) {
+			if (arg1.getCurrentStateID()==1) {
+				rs.setState(1);
+				System.out.println("starting block");
+				levelMusicMustBeStarted = false;
+			}
+		}
+		
 		g.scale(1.5f, 1.5f);
 		map.render(0,0, mapX,mapY,mapX+50,mapY+50);
 		//TESTING ZONE BEGIN
@@ -199,29 +216,33 @@ public abstract class Block extends BasicGameState
 		{
 			i.draw();
 		}
-
 		if(paused) {
 			g.setColor(Color.green);
 			g.drawString(mission.toString(), 0, 0);
 			g.drawString("PAUSE", player.getX(), player.getY());
 		}
 		if(dead) {
-			g.setColor(Color.red);
-			g.drawString("You died!", 
-					(Long.valueOf(Math.round(gc.getWidth()*0.3)).intValue()),
-					(Long.valueOf(Math.round(gc.getHeight()*0.3)).intValue())
-					);
+//			g.setColor(Color.red);
+			arg1.enterState(-2);
+//			g.drawString("You died!", 
+//					(Long.valueOf(Math.round(gc.getWidth()*0.3)).intValue()),
+//					(Long.valueOf(Math.round(gc.getHeight()*0.3)).intValue())
+//					);
 			// TODO Finest music management
-			this.musicManager.end();
-			bgMusic.stop();
+//			this.musicManager.end();
+//			bgMusic.stop();
 
-			if(!deadEnd.playing()) deadEnd.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
+//			if(!deadEnd.playing()) deadEnd.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
 			/*try {
 				TimeUnit.SECONDS.sleep(5);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
 			System.exit(0);*/
+//			if(deathMusicMustBeStarted) {
+//        		rs.setState(3);
+//        		deathMusicMustBeStarted = false;
+//        	}
 		}
 
 
@@ -232,13 +253,19 @@ public abstract class Block extends BasicGameState
                 g.drawString("LEVEL COMPLETED!", player.getX()-35, player.getY()-30);
                 g.drawImage(new Image(System.getProperty("user.dir") + "/resource/textures/transitions/toBeCont.png"), player.getX()-85, player.getY()-25);
 				g.drawString("Press ENTER to continue", player.getX()-35, player.getY()-22);
-				bgMusic.stop();
-                if(!endLevel.playing()) endLevel.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
+//				bgMusic.stop();
+//                if(!endLevel.playing()) endLevel.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
+            	if(completedMusicMustBeStarted) {
+            		rs.setState(2);
+            		completedMusicMustBeStarted = false;
+            	}
+				
             } catch (SlickException e) {
                 e.printStackTrace();
             }
             if(gc.getInput().isKeyDown(Input.KEY_ENTER)){
-            	if(endLevel.playing()) endLevel.stop();
+//            	if(endLevel.playing()) endLevel.stop();
+//            	levelMusicMustBeStarted = true;
             	generateNextLevel(gc, arg1);
 			}
 
@@ -250,15 +277,6 @@ public abstract class Block extends BasicGameState
 		lpao.renderHearts(g, (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue()));
 		g.drawString(String.valueOf(player.getHp()), (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-18*7, 30);
 		
-//		int currentHealth = 30;
-//		int maxHealth = 100;
-//		int x = 400;
-//		int y = 30;
-//
-//		g.setColor(Color.pink);
-//		g.fillRect(x, y, maxHealth, 15);
-//		g.setColor(Color.green);
-//		g.fillRect(x, y, currentHealth, 15);
 	}
 
 	/**
@@ -420,8 +438,9 @@ public abstract class Block extends BasicGameState
 				if (itemCollision.getItemID() != "") {
 					this.itemCollision.getCollidedItem().setID(this.itemCollision.getItemID());
 					if (itemCollision.getItemID() == "heart") {
+						System.out.println("heart taken, points: {}".format(String.valueOf(itemCollision.getCollidedItem().getItemPoints())));
 						this.scoreManager.decrease(0);
-						this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
+						this.scoreManager.increase(20);
 						player.setHp(player.getHp() + player.getMaxHp() / 5);
 						if (player.getHp() > player.getMaxHp()) player.setHp(player.getMaxHp());
 						this.scoreManager.setState(States.LifePointsAccumulator);
@@ -540,4 +559,5 @@ public abstract class Block extends BasicGameState
 		enemy = null;
 		item = null;
 	}
+
 }
