@@ -19,23 +19,30 @@ The IDs are internal to this class (not defined anywhere else)
 public class MissionsFactory {
 
     private final static int numMissions = 3;
-    private int capacity, difficulty, recallDifficulty;
+    private int itemCapacity, mobCapacity, difficulty, recallDifficulty;
     private EnemyConfiguration enemyConfiguration;
     private ItemConfiguration itemConf;
+    private Map<Integer, RandomCollection<String>> availableTargets = new HashMap<>();
+    private RandomCollection<Integer> itemMissionsIDs = new RandomCollection<>(List.of(1));
+    private RandomCollection<Integer> mobsMissionsIDs = new RandomCollection<>(List.of(0, 2));
+    private Mission manager;
 
     /**
      * Constructor of the factory
-     * @param capacity the number of items/mobs that can be generated
+     * @param itemCapacity the number of items that can be generated
+     * @param mobCapacity the number of mobs that can be generated
      * @param difficulty the number of missions to generate
      * @param enemyConfiguration the instance of EnemyConfiguration
      * @param itemConf the instance of ItemConfiguration
      */
-    public MissionsFactory(int capacity, int difficulty, EnemyConfiguration enemyConfiguration, ItemConfiguration itemConf) {
-        this.capacity = capacity;
-        this.difficulty = difficulty;
+    public MissionsFactory(int itemCapacity, int mobCapacity, int difficulty, EnemyConfiguration enemyConfiguration, ItemConfiguration itemConf) {
+        this.itemCapacity = itemCapacity;
+        this.mobCapacity = mobCapacity;
+        this.difficulty = difficulty/3 + 2;
         recallDifficulty = difficulty;
         this.enemyConfiguration = enemyConfiguration;
         this.itemConf = itemConf;
+        this.manager = new MissionManager(enemyConfiguration, itemConf);
     }
 
     /**
@@ -44,44 +51,51 @@ public class MissionsFactory {
      * @throws NotEnoughMissionsException if there are no more missions available
      */
     public Mission generateMissions() throws NotEnoughMissionsException {
-        Mission manager = new MissionManager(enemyConfiguration, itemConf);
-        Set<Integer> excluded = new HashSet<>();
-        while(difficulty > 0){      //Continue until a number of missions equals to difficulty is created
-            int ran = generateRandomId(excluded);   //Generate a random number x so that 0 < x < types of mission available and excludes the unavailable missions (explained later)
-            List<String> targetSet = getMissionIDs(ran);    //Returns all the possible items/enemies associated to that mission
-            Iterator<String> it = targetSet.iterator();
-            int used = getMissionCapacity(ran, capacity, difficulty);   //Returns how many mob/items that mission will need
-            boolean flag = true;
-            while (it.hasNext() && flag) {                                      //Tries to instantiate the mission with a target
-                flag = !manager.add(instantiateMission(ran, it.next(), used));  //If the mission already exists, tries to change target
-            }                                                                   //Exits if there are no more targets available
-            if(!flag){      //If the mission was added, reduce capacity and number of missions to be generated
-                capacity -= used;
-                difficulty--;
-            }
-            else{                   //If the mission was not added, mark it as unavailable so it won't be chosen anymore
-                excluded.add(ran);
-            }
-        }
+
+        //Generates items mission
+        generation(itemMissionsIDs, itemCapacity, difficulty/2);
+        difficulty -= difficulty/2;
+
+        //Generates mobs missions
+        generation(mobsMissionsIDs, mobCapacity, difficulty);
 
         return manager;
     }
 
+
     /**
-     * Generate a mission ID
-     * @param excluded the ID not to be generated
-     * @return the mission ID
-     * @throws NotEnoughMissionsException if there are no more missions available
+     * Generate a set of missions, adding them to the mission manager
+     * @param targetIDs a RandomCollection of mission ID
+     * @param targetCapacity the total number of target to generate
+     * @param limit the number of missions to generate
+     * @throws NotEnoughMissionsException
      */
-    private int generateRandomId(Set<Integer> excluded) throws NotEnoughMissionsException {
-        int ran = new Random().nextInt(numMissions); //Generates a random int x so that 0 < x < types of mission available
-        if(excluded.size() >= numMissions){     //If the unavailable missions are more than the available one
-            throw new NotEnoughMissionsException("");
+    private void generation(RandomCollection<Integer> targetIDs, int targetCapacity, int limit) throws NotEnoughMissionsException {
+        int generated = 0;
+        while (generated < limit){
+            if (targetIDs.size() == 0) throw new NotEnoughMissionsException("Not enough missions!");
+            Integer ran = targetIDs.getRandom();
+
+            List<String> targetSet = getMissionIDs(ran);
+            Iterator<String> it = targetSet.iterator();
+            int used = getMissionCapacity(ran, targetCapacity, (limit-generated));
+            boolean flag = true;
+            String targetId = "";
+            while (it.hasNext() && flag){
+                targetId = it.next();
+                flag = !manager.add(instantiateMission(ran, targetId, used));
+                System.out.println(manager);
+            }
+            if (!flag) {
+                targetCapacity -= used;
+                generated++;
+                targetSet.remove(targetId);
+            }
+            else{
+                targetIDs.remove(ran);
+            }
         }
-        while(excluded.contains(ran)){ //If the random ID generated corresponds to an unavailable mission, choose the first available
-            ran = (ran+1)%numMissions;
-        }
-        return ran;
+
     }
 
     /**
@@ -91,13 +105,22 @@ public class MissionsFactory {
     private List<String> getMissionIDs(int mID){
         switch (mID){
             case 0:
-                return new RandomCollection<>(enemyConfiguration.getMobNames());
+                if(availableTargets.get(0) == null){
+                    availableTargets.put(0, new RandomCollection<>(enemyConfiguration.getMobNames()));
+                }
+                return availableTargets.get(0);
 
             case 1:
-                return new RandomCollection<>(itemConf.getItemNames());
+                if(availableTargets.get(1) == null){
+                    availableTargets.put(1, new RandomCollection<>(itemConf.getMissionItemNames()));
+                }
+                return availableTargets.get(1);
 
             case 2:
-                return new RandomCollection<>(enemyConfiguration.getMobNames());
+                if(availableTargets.get(2) == null){
+                    availableTargets.put(2, new RandomCollection<>(enemyConfiguration.getMobNames()));
+                }
+                return availableTargets.get(2);
 
             default:
                 return null;

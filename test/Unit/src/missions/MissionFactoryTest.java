@@ -60,26 +60,26 @@ public class MissionFactoryTest {
 
     @Test
     public void testMissionFactoryCanCreateMissions() throws NotEnoughMissionsException {
-        MissionsFactory factory = new MissionsFactory(defaultCapacity, defaultDifficulty, mobconf, itemconf);
+        MissionsFactory factory = new MissionsFactory(defaultCapacity, defaultCapacity, defaultDifficulty, mobconf, itemconf);
         Mission manager = factory.generateMissions();
         assertEquals(defaultDifficulty, manager.numMissions());
     }
 
     @Test
     public void testCapacityCanBeAReallyBigNumber() throws NotEnoughMissionsException {
-        MissionsFactory factory = new MissionsFactory(100000000, defaultDifficulty, mobconf, itemconf);
+        MissionsFactory factory = new MissionsFactory(100000000, 100000000, defaultDifficulty, mobconf, itemconf);
         factory.generateMissions();
     }
 
     @Test(expected = NotEnoughMissionsException.class)
     public void testIfDifficultyIsTooHighThenExceptionIsRaised() throws NotEnoughMissionsException {
-        MissionsFactory factory = new MissionsFactory(defaultCapacity, 10, mobconf, itemconf);
+        MissionsFactory factory = new MissionsFactory(defaultCapacity, defaultCapacity, 10, mobconf, itemconf);
         factory.generateMissions();
     }
 
     @Test
     public void testNumberOfInteractionsIsEqualToCapacity() throws NotEnoughMissionsException {
-        MissionsFactory factory = new MissionsFactory(defaultCapacity, defaultDifficulty, mobconf, itemconf);
+        MissionsFactory factory = new MissionsFactory(defaultCapacity, defaultCapacity, defaultDifficulty, mobconf, itemconf);
         Mission manager = factory.generateMissions();
         assertEquals(defaultDifficulty, manager.numMissions());
     }

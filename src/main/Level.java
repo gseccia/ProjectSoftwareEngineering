@@ -3,10 +3,7 @@ package main;
 import blocks.Block;
 import blocks.ConcreteBlockFactory;
 import configuration.*;
-import elements.Enemy;
-import elements.Item;
-import elements.NullAnimationException;
-import elements.Player;
+import elements.*;
 import managers.observers.scoreboard.ScorePointsManager;
 import map.MapGraph;
 import missions.Mission;
@@ -20,8 +17,10 @@ import utils.RandomCollection;
 
 public class Level{
 
-	private int level_difficulty;
+	private int level_difficulty, itemCapacity = 0;
 	private List<Block> block_list;
+	private Map<Block, Integer> itemsRemainingCapacity;
+	private Map<Block, Integer> mobsRemainingCapacity;
 	private Map<Block,Set<Enemy>> population;
 	private Map<Block,Set<Item>> items;
 	private Mission mission_generated;
@@ -31,6 +30,8 @@ public class Level{
 	*/
 	Level(String charname, int level_difficulty) {
 
+		itemsRemainingCapacity = new HashMap<>();
+		mobsRemainingCapacity = new HashMap<>();
 		population = new HashMap<>();
 		items = new HashMap<>();
 
@@ -44,36 +45,36 @@ public class Level{
 		block_list = map.generateBlock();
 		MapConfiguration conf = MapConfiguration.getInstance();
 
-		int mobCapacity = 0, itemCapacity = 0;
+		int mobCapacity = 0, tmpItem, tmpMobs;
 		for(Block b : block_list) {
 			try {
-				itemCapacity += conf.getItemCapacity(b.getMapName());
-				mobCapacity += conf.getMobCapacity(b.getMapName());
+				tmpItem = conf.getItemCapacity(b.getMapName());
+				tmpMobs = conf.getMobCapacity(b.getMapName());
+
+				itemCapacity += tmpItem;
+				itemsRemainingCapacity.put(b, tmpItem);
+
+				mobCapacity += tmpMobs;
+				mobsRemainingCapacity.put(b, tmpMobs);
+
 			} catch (NoSuchElementInConfigurationException e) {
 				e.printStackTrace();
 			}
 		}
 
-		int capacity = mobCapacity + itemCapacity;
-
-		MissionsFactory missions = new MissionsFactory(capacity * 3 / 4, level_difficulty, EnemyConfiguration.getInstance(), ItemConfiguration.getInstance());
+		MissionsFactory missions = new MissionsFactory(itemCapacity*3/4, mobCapacity*3/4, level_difficulty, EnemyConfiguration.getInstance(), ItemConfiguration.getInstance());
 
 		this.level_difficulty = level_difficulty;
 
 		try {
+			ScorePointsManager spm = ScorePointsManager.getScorePointsManagerInstance();
+
 			Player player = new Player(PlayerConfiguration.getInstance(), charname);
 
 			mission_generated = missions.generateMissions();
-			int extra_mobs = mobCapacity - mission_generated.getEnemySet().size();
-			int extra_items = itemCapacity - mission_generated.getItemSet().size();
 
-			System.out.println(mission_generated.getEnemySet().size() + " " + mobCapacity);
-
-			generatePopulation(extra_mobs, player); // level_difficulty
-			generateItems(extra_items);
-			ScorePointsManager spm = ScorePointsManager.getScorePointsManagerInstance();
-
-			distribute(player);
+			distributeItems(player);
+			distributeMobs(player);
 
 			for(Block block: block_list) {
 				block.initBlock(player, population, items, map, mission_generated, spm);
@@ -86,78 +87,90 @@ public class Level{
 
 	}
 
-	private void distribute(Player player) {
-
-		int b;
-		Iterator<Enemy> i = mission_generated.getEnemySet().iterator();
-		b = 0;
-		Enemy e;
-		while(i.hasNext()){
-			e = i.next();
-			e.setMap(block_list.get(b));
+	private void distributeMobs(Player player) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
+		RandomCollection<Block> blocks = new RandomCollection<>(block_list);
+		Block b;
+		for(Enemy e : mission_generated.getEnemySet()){
+			b = blocks.getRandom();
+			e.setMap(b);
 			e.setPlayer(player);
-			population.get(block_list.get(b)).add(e);
-			b = (b+1)%block_list.size();
+
+			addEnemyToBlock(b, e);
+			updateCapacity(b, blocks, mobsRemainingCapacity);
 		}
 
-		Iterator<Item> iter_item = mission_generated.getItemSet().iterator();
-		b = 0;
-		while(iter_item.hasNext()){
-			items.get(block_list.get(b)).add(iter_item.next());
-			b = (b+1)%block_list.size();
-		}
-		
-	}
-	
-	/**
-	 * This function automatically generate Mobs and put them into blocks
-	 * @param difficulty parameter to define the hardness of the level
-	 * @throws SlickException slick exception
-	 */
-	private void generatePopulation(int difficulty,Player player) throws SlickException
-	{
-		for(Block block: block_list)
-		{
-			population.put(block, generateMob(difficulty,block,player));
-		}
-	}
-	
-	/**
-	 * This function automatically generate a set of Mobs
-	 * @param difficulty parameter to define the hardness of the level
-	 * @return A set of Mob that are generated at random
-	 */
-	private Set<Enemy> generateMob(int difficulty,Block b,Player player) throws SlickException
-	{
-		Set<Enemy> mobs=new HashSet<>();
-		Enemy mob;
-		for(int i=0;i<difficulty;i++)
-		{
-			try {
-				mob = new Enemy(EnemyConfiguration.getInstance(),"zombo", b, player);  //Retrieve other String id
-				mobs.add(mob);
-			} catch (NullAnimationException | NoSuchElementInConfigurationException e) {
-				e.printStackTrace();
-				System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
-			}
-		}
-		return mobs;
-	}
-	
-	private Set<Item> generateItem(int difficulty) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException{
-		HashSet<Item> item = new HashSet<>();
-		RandomCollection<String> itemNames = new RandomCollection<>(ItemConfiguration.getInstance().getItemNames());
+		RandomCollection<String> mobNames = new RandomCollection<>(EnemyConfiguration.getInstance().getMobNames());
+		Enemy e;
+		while(blocks.size() > 0){
+			b = blocks.getRandom();
+			e = new Enemy(EnemyConfiguration.getInstance(), mobNames.getRandom(), b, player);
 
-		for(int i=0;i<difficulty;i++) {
-			item.add(new Item(ItemConfiguration.getInstance(), itemNames.getRandom()));
+			addEnemyToBlock(b, e);
+			updateCapacity(b, blocks, mobsRemainingCapacity);
 		}
-		return item;
 	}
-	
-	private void generateItems(int difficulty) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
-		for(Block block: block_list)
-		{
-			items.put(block, generateItem(difficulty/block_list.size()));
+
+	private void distributeItems(Player player) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
+		RandomCollection<Block> blocks = new RandomCollection<>(block_list);
+		Block b;
+		for(Item i : mission_generated.getItemSet()){
+			b = blocks.getRandom();
+			addItemToBlock(b, i);
+			updateCapacity(b, blocks, itemsRemainingCapacity);
+
+		}
+
+		int numHearts = (itemCapacity-mission_generated.getItemSet().size())/level_difficulty;
+		for(int i=0; i<numHearts; i++){
+			b = blocks.getRandom();
+			addItemToBlock(b, new Item(ItemConfiguration.getInstance(), "heart"));
+			updateCapacity(b, blocks, itemsRemainingCapacity);
+		}
+
+		RandomCollection<String> itemNames = new RandomCollection<>(ItemConfiguration.getInstance().getMissionItemNames());
+		Item i;
+		while(blocks.size() > 0){
+			b = blocks.getRandom();
+			i = new Item(ItemConfiguration.getInstance(), itemNames.getRandom());
+
+			addItemToBlock(b, i);
+			updateCapacity(b, blocks, mobsRemainingCapacity);
+		}
+	}
+
+	private void updateCapacity(Block b, List<Block> blocks, Map<Block, Integer> remainingCapacity){
+		int remaining = remainingCapacity.get(b);
+		if(remaining <= 1){
+			blocks.remove(b);
+		}
+		else{
+			remaining--;
+			remainingCapacity.put(b, remaining);
+		}
+	}
+
+	private void addItemToBlock(Block b, Item i){
+		if(items.get(b) == null){
+			Set<Item> tmp = new HashSet<>();
+			tmp.add(i);
+			items.put(b, tmp);
+		}
+
+		else{
+			items.get(b).add(i);
+		}
+
+	}
+
+	private void addEnemyToBlock(Block b, Enemy e){
+		if(population.get(b) == null){
+			Set<Enemy> tmp = new HashSet<>();
+			tmp.add(e);
+			population.put(b, tmp);
+		}
+
+		else{
+			population.get(b).add(e);
 		}
 	}
 

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class ItemConfiguration extends Configuration {
@@ -33,6 +34,16 @@ public class ItemConfiguration extends Configuration {
 
     public Set<String> getItemNames(){
         return configuration.keySet();
+    }
+
+    public Set<String> getMissionItemNames() {
+        Set<String> ret = new HashSet<>();
+        for(String name : configuration.keySet()){
+            if(configuration.getAsJsonObject(name).get("mission").getAsInt() == 1){
+                ret.add(name);
+            }
+        }
+        return ret;
     }
 
     public Animation getItemAnimation(String id) throws SlickException, NoSuchElementInConfigurationException {
