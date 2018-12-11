@@ -1,11 +1,10 @@
 package map;
 
 import blocks.BlockFactory;
-import configuration.DoorsConfiguration;
+import configuration.MapConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import blocks.Block;
 
-import blocks.ConcreteBlock;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 
 import java.util.*;
@@ -14,10 +13,10 @@ public class MapGraph {
 
     private BlockFactory factory;
     private DefaultUndirectedGraph<Vertex, Edge> graph;
-    private DoorsConfiguration conf;
+    private MapConfiguration conf;
     private int mapChosen;
 
-    public MapGraph(int mapChosen, DoorsConfiguration conf, BlockFactory factory){
+    public MapGraph(int mapChosen, MapConfiguration conf, BlockFactory factory){
 
         if (mapChosen <= 6)
             this.mapChosen = 6;
@@ -56,7 +55,7 @@ public class MapGraph {
         int totalDoor; //numero totale di porte
         int max, min;
         Vertex v;
-        DoorsConfiguration conf = new DoorsConfiguration();
+        MapConfiguration conf = MapConfiguration.getInstance();
         List<Vertex> listVertex= new ArrayList<>();
         List<String> tiledMaps ;
         Random random = new Random();

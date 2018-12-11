@@ -3,10 +3,8 @@ package managers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
-import configuration.DoorsConfiguration;
 import elements.Item;
 import elements.Mob;
 

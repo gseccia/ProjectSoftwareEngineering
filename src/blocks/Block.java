@@ -79,11 +79,10 @@ public abstract class Block extends BasicGameState
 		enemy = population.get(this);
 		item = items.get(this);
 		mission = missionGenerated;
-		System.out.println(mission);
 		
 		this.player = player;
 		
-		hitbox = new HitboxMaker(map, new LinkedList<Mob>(enemy));
+		hitbox = new HitboxMaker(map, new LinkedList<>(enemy));
 		hitbox.initiateHitbox();
 		hitbox.setItems(new ArrayList<>(item));
 		
@@ -93,7 +92,7 @@ public abstract class Block extends BasicGameState
 		enemyCollision = new CollisionDetectionEnemyAttacksPlayer(hitbox);
 		attackCollision = new CollisionDetectionPlayerAttacksEnemy(hitbox);
 
-		// initialize scoremanager and observers
+		// initialize score manager and observers
 		this.scoreManager = spm;
 		pao = new PointsAccumulatorObserver(this.scoreManager);
 		lpao = new LifePointsAccumulatorObserver(this.scoreManager);
@@ -156,7 +155,15 @@ public abstract class Block extends BasicGameState
 //		}
 		this.musicManager = new MusicManager(bgMusic);
 		musicManager.start();
-	 }
+	}
+
+
+	/**
+	 * Generate the next level
+	 * @param gc the game container object
+	 * @param currentGame the current game
+	 */
+	public abstract void generateNextLevel(GameContainer gc, StateBasedGame currentGame);
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) {
@@ -207,9 +214,8 @@ public abstract class Block extends BasicGameState
 			// TODO Finest music management
 			this.musicManager.end();
 			bgMusic.stop();
-			if(!deadEnd.playing()){
-				deadEnd.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
-			}
+
+			if(!deadEnd.playing()) deadEnd.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
 			/*try {
 				TimeUnit.SECONDS.sleep(5);
 			} catch (InterruptedException e1) {
@@ -217,28 +223,30 @@ public abstract class Block extends BasicGameState
 			}
 			System.exit(0);*/
 		}
-		//TEMPORARY, just to show something
+
+
 		if(mission.completed()){
 			g.setColor(Color.white);
             try {
                 g.fillRect(0, 0, gc.getWidth(), gc.getHeight(), new Image(System.getProperty("user.dir") + "/resource/textures/transitions/background.png"), 0, 0);
                 g.drawString("LEVEL COMPLETED!", player.getX()-35, player.getY()-30);
                 g.drawImage(new Image(System.getProperty("user.dir") + "/resource/textures/transitions/toBeCont.png"), player.getX()-85, player.getY()-25);
+				g.drawString("Press ENTER to continue", player.getX()-35, player.getY()-22);
 				bgMusic.stop();
-                if(!endLevel.playing()) {
-					endLevel.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
-				}
+                if(!endLevel.playing()) endLevel.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
+            if(gc.getInput().isKeyDown(Input.KEY_ENTER)){
+            	if(endLevel.playing()) endLevel.stop();
+            	generateNextLevel(gc, arg1);
+			}
 
         }
-		
-		// Qua viene stampato il punteggio
+
 		g.setColor(Color.green);
 		g.drawString(String.valueOf(this.pao.getPoints()), (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-5*18, 0);
-		
-		// Stampo i cuoricini <3
+
 		lpao.renderHearts(g, (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue()));
 		g.drawString(String.valueOf(player.getHp()), (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-18*7, 30);
 		
@@ -246,8 +254,7 @@ public abstract class Block extends BasicGameState
 //		int maxHealth = 100;
 //		int x = 400;
 //		int y = 30;
-//		
-//		// Barra della vita
+//
 //		g.setColor(Color.pink);
 //		g.fillRect(x, y, maxHealth, 15);
 //		g.setColor(Color.green);
@@ -370,7 +377,6 @@ public abstract class Block extends BasicGameState
 				}
 			}
 			else if(player.isReadyToAttack() && !attack(gc.getInput())) {
-//				System.out.println("Non sto premendo tasti");
 				if(key == Directions.UP) {
 					player.faceStillUp();
 				}
@@ -401,7 +407,6 @@ public abstract class Block extends BasicGameState
 //			}
 			if(doorCollision.detectCollision(mapX, mapY, player)) {
 				if(doorCollision.getCollidedDoor() != -1 && pressed) {
-					//System.out.println("Collisione con la porta "+doorCollision.getCollidedDoor());
 					for(Edge e:graph.getEdges(this)) {
 						if(e.getPortSource(vertex) == doorCollision.getCollidedDoor()) {
 							e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));
@@ -414,16 +419,13 @@ public abstract class Block extends BasicGameState
 			if(itemCollision.detectCollision(mapX, mapY, player)) {
 				if (itemCollision.getItemID() != "") {
 					this.itemCollision.getCollidedItem().setID(this.itemCollision.getItemID());
-					//System.out.println("Stai prendendo una "+itemCollision.getItemID());
-					//TODO pezza cuori
 					if (itemCollision.getItemID() == "heart") {
 						this.scoreManager.decrease(0);
 						this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
-						player.setHp(player.getHp() + player.getMaxHp()/5);
-						if(player.getHp() > player.getMaxHp()) player.setHp(player.getMaxHp());
+						player.setHp(player.getHp() + player.getMaxHp() / 5);
+						if (player.getHp() > player.getMaxHp()) player.setHp(player.getMaxHp());
 						this.scoreManager.setState(States.LifePointsAccumulator);
 					}
-					//TODO pezza punti 
 					else {
 						this.scoreManager.decrease(0);
 						this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
@@ -441,7 +443,6 @@ public abstract class Block extends BasicGameState
 //				lpao.setHp(-enemyCollision.getAttackDamage());
 			}
 			if (attackCollision.detectCollision(mapX, mapY, player)  /*&& (gc.getInput().isKeyPressed(Directions.KEY_M))*/){
-//				System.out.println("Attacco del player");
 				for (Mob target : attackCollision.getEnemy()) {
 					target.damage(player.getAttackDamage());
 					//System.out.println(target + " "+ target.getHp());
@@ -471,12 +472,12 @@ public abstract class Block extends BasicGameState
 			for(Item i:item) {
 				i.setLocation((int)(i.getX())+(prevMapX-mapX)*map.getTileWidth(),(int)(i.getY())+(prevMapY-mapY)*map.getTileHeight());
 			}
-			
+
 
 		} catch (NullAnimationException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		prevMapX = mapX;
 		prevMapY = mapY;
 		}
@@ -529,5 +530,14 @@ public abstract class Block extends BasicGameState
 	
 	public TiledMap getMap() {
 		return map;
+	}
+
+	public String getMapName() {
+		return mapName;
+	}
+
+	public void clearBlock(){
+		enemy = null;
+		item = null;
 	}
 }

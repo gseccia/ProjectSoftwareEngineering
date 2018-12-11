@@ -1,18 +1,18 @@
 package Unit.src.configuration;
 
-import configuration.DoorsConfiguration;
+import configuration.MapConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import org.junit.*;
 
 
 import static org.junit.Assert.*;
 
-public class DoorsConfigurationTest {
-    private DoorsConfiguration d;
+public class MapConfigurationTest {
+    private MapConfiguration d;
 
     @Before
     public void setUp(){
-        this.d = new DoorsConfiguration();
+        this.d = MapConfiguration.getInstance();
     }
 
     @Test

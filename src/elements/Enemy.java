@@ -123,7 +123,6 @@ public class Enemy extends Mob implements MissionItem {
 	private int toTile(float x,boolean xaxis) {
 		int value = (int)(x/map.getMap().getTileWidth());
 		value = (value<0)?0:value;
-		System.out.println(map.getMap().getWidth()+" "+map.getMap().getHeight());;
 		if(xaxis)
 			value=(value>=map.getMap().getWidth())?map.getMap().getWidth()-1:value;
 		else

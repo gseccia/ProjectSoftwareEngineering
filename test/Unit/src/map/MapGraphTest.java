@@ -3,7 +3,6 @@ package Unit.src.map;
 import blocks.ConcreteBlockFactory;
 import configuration.*;
 import blocks.Block;
-import blocks.ConcreteBlock;
 import map.*;
 import org.jgrapht.GraphTests;
 import org.junit.*;
@@ -14,7 +13,7 @@ public class MapGraphTest {
 
     @Before
     public  void initialize() throws NoSuchElementInConfigurationException {
-        map = new MapGraph(8, new DoorsConfiguration(), new ConcreteBlockFactory());
+        map = new MapGraph(8, MapConfiguration.getInstance(), new ConcreteBlockFactory());
         map.generateGraph();
     }
 

@@ -19,58 +19,64 @@ import org.newdawn.slick.SlickException;
 import utils.RandomCollection;
 
 public class Level{
-	private String charname;
-	private int level_difficulty;
 
+	private int level_difficulty;
 	private List<Block> block_list;
-	private MapGraph map;
 	private Map<Block,Set<Enemy>> population;
 	private Map<Block,Set<Item>> items;
-	private MissionsFactory missions;
 	private Mission mission_generated;
-	private ScorePointsManager spm;
-	
+
 	/**
 	 * This class is the manager of a level
 	*/
-	public Level(String charname,int level_difficulty) {
+	Level(String charname, int level_difficulty) {
 
 		population = new HashMap<>();
 		items = new HashMap<>();
-		
-		map = new MapGraph(level_difficulty, new DoorsConfiguration(), new ConcreteBlockFactory());
+
+		MapGraph map = new MapGraph(level_difficulty, MapConfiguration.getInstance(), new ConcreteBlockFactory());
 		try {
 			map.generateGraph();
 		} catch (NoSuchElementInConfigurationException e) {
 			e.printStackTrace();
 		}
+
 		block_list = map.generateBlock();
-		
-		int capacity = 10;
-		/*for(Block e: block_list) {
-			capacity += Integer.parseInt(e.getMap().getMapProperty("capacity","1"));
-		}*/
-		
-		missions = new MissionsFactory(capacity,level_difficulty, EnemyConfiguration.getInstance() ,ItemConfiguration.getInstance());
+		MapConfiguration conf = MapConfiguration.getInstance();
 
-		this.charname = charname;
+		int mobCapacity = 0, itemCapacity = 0;
+		for(Block b : block_list) {
+			try {
+				itemCapacity += conf.getItemCapacity(b.getMapName());
+				mobCapacity += conf.getMobCapacity(b.getMapName());
+			} catch (NoSuchElementInConfigurationException e) {
+				e.printStackTrace();
+			}
+		}
+
+		int capacity = mobCapacity + itemCapacity;
+
+		MissionsFactory missions = new MissionsFactory(capacity * 3 / 4, level_difficulty, EnemyConfiguration.getInstance(), ItemConfiguration.getInstance());
+
 		this.level_difficulty = level_difficulty;
-
 
 		try {
 			Player player = new Player(PlayerConfiguration.getInstance(), charname);
-			generatePopulation(level_difficulty,player); // level_difficulty
-			generateItems();
-			spm = ScorePointsManager.getScorePointsManagerInstance();
 
 			mission_generated = missions.generateMissions();
-			RandomCollection<String> itemNames = new RandomCollection<>(ItemConfiguration.getInstance().getItemNames());
+			int extra_mobs = mobCapacity - mission_generated.getEnemySet().size();
+			int extra_items = itemCapacity - mission_generated.getItemSet().size();
+
+			System.out.println(mission_generated.getEnemySet().size() + " " + mobCapacity);
+
+			generatePopulation(extra_mobs, player); // level_difficulty
+			generateItems(extra_items);
+			ScorePointsManager spm = ScorePointsManager.getScorePointsManagerInstance();
+
 			distribute(player);
+
 			for(Block block: block_list) {
-				for(int i=0;i<population.get(block).size()/2;i++) {
-					items.get(block).add(new Item(ItemConfiguration.getInstance(),itemNames.getRandom()));
-				}
-				block.initBlock(player, population, items,map,mission_generated, spm);
+				block.initBlock(player, population, items, map, mission_generated, spm);
 			}
 		} catch (NoSuchElementInConfigurationException | NullAnimationException | SlickException | NotEnoughMissionsException e) {
 			e.printStackTrace();
@@ -80,9 +86,6 @@ public class Level{
 
 	}
 
-
-	
-	
 	private void distribute(Player player) {
 
 		int b;
@@ -131,7 +134,7 @@ public class Level{
 		for(int i=0;i<difficulty;i++)
 		{
 			try {
-				mob = new Enemy(EnemyConfiguration.getInstance(),"zombo",b,player);  //Retrieve other String id
+				mob = new Enemy(EnemyConfiguration.getInstance(),"zombo", b, player);  //Retrieve other String id
 				mobs.add(mob);
 			} catch (NullAnimationException | NoSuchElementInConfigurationException e) {
 				e.printStackTrace();
@@ -141,19 +144,20 @@ public class Level{
 		return mobs;
 	}
 	
-	private Set<Item> generateItem() throws NullAnimationException, SlickException, NoSuchElementInConfigurationException{
+	private Set<Item> generateItem(int difficulty) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException{
 		HashSet<Item> item = new HashSet<>();
-		
-		for(int i=0;i<level_difficulty/3;i++) {
-			item.add(new Item(ItemConfiguration.getInstance(),"pizza"));
+		RandomCollection<String> itemNames = new RandomCollection<>(ItemConfiguration.getInstance().getItemNames());
+
+		for(int i=0;i<difficulty;i++) {
+			item.add(new Item(ItemConfiguration.getInstance(), itemNames.getRandom()));
 		}
 		return item;
 	}
 	
-	private void generateItems() throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
+	private void generateItems(int difficulty) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
 		for(Block block: block_list)
 		{
-			items.put(block, generateItem());
+			items.put(block, generateItem(difficulty/block_list.size()));
 		}
 	}
 

@@ -1,29 +1,16 @@
 package configuration;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TiledMap;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
-import converter.XMLToHashMapConverter;
+import java.util.LinkedList;
+import java.util.Random;
+import java.util.Set;
 
 public class MapConfiguration extends Configuration {
-	private static final String filename = System.getProperty("user.dir") + "/resource/configurations/maps.conf";
+
+    private static final String filename = System.getProperty("user.dir") + "/resource/configurations/maps.conf";
     private static MapConfiguration instance = null;
-    private JsonObject configuration = null;
+    private JsonObject configuration;
 
     public static MapConfiguration getInstance(){
         if(instance == null){
@@ -31,84 +18,88 @@ public class MapConfiguration extends Configuration {
         }
         return instance;
     }
-    
-    private MapConfiguration() 
-    {
-    	// instance configuration
-    	// try to open the file if it does not exist create it using createConfigurationFile()
-    	// the methods assumes the maps are in "/resource/maps/" directory
-    	
-    	try {
-			createConfigurationFile();
-			this.configuration = super.uploadConfiguration(filename);
-		} catch (ParserConfigurationException | SAXException | IOException e) {
-			e.printStackTrace();
-		}
-    	
+
+    private MapConfiguration(){
+        configuration = super.uploadConfiguration(filename);
     }
 
-    public void createConfigurationFile() throws ParserConfigurationException, SAXException, IOException {
-    	HashMap<String,ArrayList<String>> dataMap = prepareJsonObject();
-
-        //1. Create a Gson instance with pretty format
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        //2. Convert object to JSON string and save into a file directly
-        try (FileWriter writer = new FileWriter(MapConfiguration.filename, false)) {
-            gson.toJson(dataMap, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
+    @Override
+    protected JsonObject getConfiguration(String id) throws NoSuchElementInConfigurationException {
+        if(configuration.get(id) == null){
+            throw new NoSuchElementInConfigurationException();
         }
-    }
-    
-    private HashMap<String,ArrayList<String>> prepareJsonObject() throws ParserConfigurationException, SAXException, IOException {
-    	HashMap<String,ArrayList<String>> new_data = new HashMap<>();
-    	
-    	HashMap<String,ArrayList<String>> data = XMLToHashMapConverter.getLayersFromXml();
-    	for(HashMap.Entry<String, ArrayList<String>> entry: data.entrySet()) {
-    		if (entry.getKey().matches(".*/.*")) {
-    			new_data.put(
-    					entry.getKey().split("/")[1].split("\\.")[0], 
-    					entry.getValue()
-    						);
-    		} else
-    		{
-    			new_data.put(
-    					entry.getKey().split("\\.")[0], 
-    					entry.getValue()
-    						);
-    		}
-    	}
-		System.out.println(new_data);
-    	return new_data;
+        return this.configuration.getAsJsonObject(id);
     }
 
-	@Override
-	protected JsonObject getConfiguration(String id) {
-		// carica il conf file da nome mappa=id
-		return this.configuration.getAsJsonObject(id);
-	}
+    /**
+     * Get all the map names in the configuration
+     * @return a set with the map names
+     */
+    public Set<String> getMapNames() {
+        return configuration.keySet();
+    }
 
-	public TiledMap getMapTiled(String id) {
-		/* Get MapTiled object from file name
-		 @param id is the name of the file without extension 
-		 */
-		TiledMap tm = null;
-        try {
-			tm = new TiledMap(id);
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		return tm;
-	}
-	
-	public ArrayList<String> getLayers(String id){
-        JsonArray ja = this.configuration.getAsJsonArray();
-        ArrayList<String> listLayers = new ArrayList<>();
-        for (JsonElement e : ja)
-        {
-        	listLayers.add(e.getAsString());
+    /**
+     * Given a map, returns the number of doors
+     * @param map the map name
+     * @return the number of doors
+     * @throws NoSuchElementInConfigurationException throws if there is no such name
+     */
+    public int getDoors(String map) throws NoSuchElementInConfigurationException {
+        if(configuration.get(map) == null){
+            throw new NoSuchElementInConfigurationException();
         }
-        return listLayers;
+        return configuration.getAsJsonObject(map).get("doors").getAsInt();
+    }
+
+    /**
+     * Given a map, returns the capacity of items
+     * @param map the map name
+     * @return the item capacity
+     * @throws NoSuchElementInConfigurationException throws if there is no such name
+     */
+    public int getItemCapacity(String map) throws NoSuchElementInConfigurationException {
+        if(configuration.get(map) == null){
+            throw new NoSuchElementInConfigurationException();
+        }
+        return configuration.getAsJsonObject(map).get("items").getAsInt();
+    }
+
+    /**
+     * Given a map, returns the mob capacity
+     * @param map the map name
+     * @return the mob capacity
+     * @throws NoSuchElementInConfigurationException throws if there is no such name
+     */
+    public int getMobCapacity(String map) throws NoSuchElementInConfigurationException {
+        if(configuration.get(map) == null){
+            throw new NoSuchElementInConfigurationException();
+        }
+        return configuration.getAsJsonObject(map).get("mobs").getAsInt();
+    }
+
+    /**
+     * Given the doors number, returns a map with that doors number
+     * @param doors the doors number
+     * @return the map name
+     */
+    public String getRandomGivenDoors(int doors){
+        LinkedList<String> tmp = new LinkedList<>();
+        int index = 0;
+        try{
+            for(String name : getMapNames()){
+                if(getDoors(name) == doors){
+                    tmp.add(name);
+                    index++;
+                }
+            }
+        }catch (NoSuchElementInConfigurationException ex){
+            ex.printStackTrace();
+        }
+        if(index > 0) {
+            int getIndex = new Random().nextInt(index);
+            return tmp.get(getIndex);
+        }
+        return null;
     }
 }

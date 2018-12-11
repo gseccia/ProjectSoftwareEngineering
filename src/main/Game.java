@@ -3,35 +3,35 @@ package main;
 import blocks.Block;
 import blocks.Menu;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.List;
 
 public class Game extends StateBasedGame {
 
-    private Menu menu;
-    private Level level;
+    private Level current;
     private int current_difficulty;
     private String charname;
 
     public Game(String name, String charname) {
         super(name);
-        current_difficulty = 1;
         this.charname = charname;
-
+        current_difficulty = 1;
     }
 
     @Override
-    public void initStatesList(GameContainer gameContainer) throws SlickException {
-        menu = Menu.getInstance();
+    public void initStatesList(GameContainer gameContainer){
+        Menu menu = Menu.getInstance();
 
-        level = new Level(charname,current_difficulty);
+        if(current != null) clearLevel();
+
+        current = new Level(charname, current_difficulty);
+        current_difficulty++;
 
         // for menu
         this.addState(menu);
         //
-        List<Block> blocks = level.getBlocks();
+        List<Block> blocks = current.getBlocks();
         for(Block block: blocks) {
             this.addState(block);
         }
@@ -39,6 +39,11 @@ public class Game extends StateBasedGame {
 
         // for menu
         this.enterState(0); //always enter in menu block
+    }
 
+    private void clearLevel(){
+        for(Block block : current.getBlocks()){
+            block.clearBlock();
+        }
     }
 }

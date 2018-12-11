@@ -2,7 +2,10 @@ package blocks;
 
 import blocks.Block;
 import managers.Directions;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class ConcreteBlock extends Block {
 
@@ -74,5 +77,21 @@ public class ConcreteBlock extends Block {
     @Override
     protected boolean attack(Input in) {
         return in.isKeyDown(Input.KEY_M);
+    }
+
+    /**
+     * Generate the next level
+     *
+     * @param gc the game container object
+     * @param currentGame the current game
+     */
+    @Override
+    public void generateNextLevel(GameContainer gc, StateBasedGame currentGame) {
+        try {
+            currentGame.init(gc);
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+        currentGame.enterState(1);
     }
 }
