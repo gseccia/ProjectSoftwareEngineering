@@ -2,6 +2,7 @@ package main;
 
 import blocks.Block;
 import blocks.Menu;
+import blocks.Pause;
 import managers.MusicManager;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
@@ -33,10 +34,13 @@ public class Game extends StateBasedGame{
         	for(Block block: blocks) {
         		this.addState(block);
         	}
+
+            // for pause
+            this.addState(Pause.getInstance());
         }
         
         current_difficulty++;
-        
+
         // for menu
         this.addState(Menu.getInstance());
         // for splash

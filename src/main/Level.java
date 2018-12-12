@@ -2,6 +2,7 @@ package main;
 
 import blocks.Block;
 import blocks.ConcreteBlockFactory;
+import blocks.Pause;
 import configuration.*;
 import elements.*;
 import managers.observers.scoreboard.ScorePointsManager;
@@ -79,11 +80,15 @@ public class Level{
 			for(Block block: block_list) {
 				block.initBlock(player, population, items, map, mission_generated, spm);
 			}
+
+			Pause.setMission(mission_generated);
+
 		} catch (NoSuchElementInConfigurationException | NullAnimationException | SlickException | NotEnoughMissionsException e) {
 			e.printStackTrace();
 			System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
 
 		}
+
 
 	}
 

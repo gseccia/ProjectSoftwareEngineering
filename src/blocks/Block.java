@@ -47,7 +47,6 @@ public abstract class Block extends BasicGameState
 	private Set<Item> item;
 	private int state;
 	private int mapX, mapY, prevMapX, prevMapY;
-	private boolean paused;
 	private boolean dead;
 	private HitboxMaker hitbox;
 	private String mapName;
@@ -66,7 +65,7 @@ public abstract class Block extends BasicGameState
 	
 	protected Block(int state,String mapName)
 	{
-		this.state=state;
+		this.state = state;
 		this.mapName = mapName;
 	}
 	
@@ -125,7 +124,6 @@ public abstract class Block extends BasicGameState
 //		}
 		setCharacterSpawn(1);
 		int x, y, n;
-		paused = false;
 		dead = false;
 		
 		// Enemies spawn from a set of a random spawn points
@@ -218,11 +216,7 @@ public abstract class Block extends BasicGameState
 		{
 			i.draw();
 		}
-		if(paused) {
-			g.setColor(Color.green);
-			g.drawString(mission.toString(), 0, 0);
-			g.drawString("PAUSE", player.getX(), player.getY());
-		}
+
 		if(dead) {
 //			g.setColor(Color.red);
 			arg1.enterState(GameStates.GAMEOVER.getState());
@@ -325,9 +319,12 @@ public abstract class Block extends BasicGameState
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
-		if(isPaused(gc.getInput())) paused = !paused;
+		if(isPaused(gc.getInput())){
+			Pause.setOriginState(getID());
+			gs.enterState(GameStates.PAUSE.getState());
+		}
 		
-		if(!paused && !dead && !mission.completed()) {
+		if(!dead && !mission.completed()) {
 		try {
 			boolean pressed =false;
 			if(goRight(gc.getInput())){

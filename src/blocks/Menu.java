@@ -1,5 +1,6 @@
 package blocks;
 
+import java.awt.*;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,6 +9,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
