@@ -1,6 +1,7 @@
 package blocks;
 
 import blocks.Block;
+import main.GameStates;
 import managers.Directions;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -92,6 +93,6 @@ public class ConcreteBlock extends Block {
         } catch (SlickException e) {
             e.printStackTrace();
         }
-        currentGame.enterState(1);
+        currentGame.enterState(GameStates.PLAY.getState());
     }
 }

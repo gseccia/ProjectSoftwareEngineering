@@ -17,6 +17,7 @@ import music.BgMusic;
 import music.DeadMusic;
 import music.LevelCompletedMusic;
 
+import org.lwjgl.openal.AL;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.openal.SoundStore;
@@ -29,11 +30,13 @@ import elements.Item;
 import elements.Mob;
 import elements.Player;
 import main.GameOver;
+import main.GameStates;
 import main.ResourceManager;
 import elements.NullAnimationException;
 
 public abstract class Block extends BasicGameState
 {
+//    private final int id = 1;
 	private CollisionDetectionWall wallCollision;
 	private CollisionDetectionDoor doorCollision;
 	private CollisionDetectionItem itemCollision;
@@ -223,7 +226,7 @@ public abstract class Block extends BasicGameState
 		}
 		if(dead) {
 //			g.setColor(Color.red);
-			arg1.enterState(-2);
+			arg1.enterState(GameStates.GAMEOVER.getState());
 //			g.drawString("You died!", 
 //					(Long.valueOf(Math.round(gc.getWidth()*0.3)).intValue()),
 //					(Long.valueOf(Math.round(gc.getHeight()*0.3)).intValue())
@@ -250,7 +253,7 @@ public abstract class Block extends BasicGameState
 			g.setColor(Color.white);
             try {
                 g.fillRect(0, 0, gc.getWidth(), gc.getHeight(), new Image(System.getProperty("user.dir") + "/resource/textures/transitions/background.png"), 0, 0);
-                g.drawString("LEVEL COMPLETED!", player.getX()-35, player.getY()-30);
+                g.drawString("LEVEL COMPLETED!", player.getX()-35, player.getY()-50);
                 g.drawImage(new Image(System.getProperty("user.dir") + "/resource/textures/transitions/toBeCont.png"), player.getX()-85, player.getY()-25);
 				g.drawString("Press ENTER to continue", player.getX()-35, player.getY()-22);
 //				bgMusic.stop();
@@ -428,7 +431,6 @@ public abstract class Block extends BasicGameState
 					for(Edge e:graph.getEdges(this)) {
 						if(e.getPortSource(vertex) == doorCollision.getCollidedDoor()) {
 							e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));
-							
 							gs.enterState(e.opposite(vertex).getId());
 						}
 					}
@@ -501,7 +503,7 @@ public abstract class Block extends BasicGameState
 		prevMapY = mapY;
 		}
 	}
-
+	
 	@Override
 	public int getID() {
 		return state;

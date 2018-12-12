@@ -3,7 +3,7 @@ package managers.observers.scoreboard;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Subject {
+public abstract class Subject implements SubjectInterface{
 	
    protected List<Observer> observers = new ArrayList<Observer>();
    protected int state;

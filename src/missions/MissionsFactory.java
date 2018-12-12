@@ -84,7 +84,6 @@ public class MissionsFactory {
             while (it.hasNext() && flag){
                 targetId = it.next();
                 flag = !manager.add(instantiateMission(ran, targetId, used));
-                System.out.println(manager);
             }
             if (!flag) {
                 targetCapacity -= used;
