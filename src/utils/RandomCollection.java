@@ -1,50 +1,47 @@
 package utils;
 
-import java.time.Instant;
 import java.util.*;
 
 public class RandomCollection<E> extends LinkedList<E> {
 
-    private long seed;
+    private Random ran;
 
     public RandomCollection() {
         super();
-        this.seed = Instant.now().toEpochMilli();
+        ran = new Random();
     }
 
     public RandomCollection(long seed){
         super();
-        this.seed = seed;
+        ran = new Random(seed);
     }
 
     public RandomCollection(Collection<? extends E> c) {
         super(c);
-        this.seed = Instant.now().toEpochMilli();
+        ran = new Random();
     }
 
     public RandomCollection(Collection<? extends E> c, long seed) {
         super(c);
-        this.seed = seed;
+        ran = new Random(seed);
     }
 
     public E getRandom(){
-        int index = new Random(seed).nextInt(size());
+        int index = ran.nextInt(size());
         return get(index);
     }
 
     @Override
     public Iterator<E> iterator(){
-        return new RandomIterator<>(new LinkedList<>(this), seed);
+        return new RandomIterator<>(new LinkedList<>(this));
     }
 
     private class RandomIterator<T> implements Iterator<T>{
 
         private List<T> remains;
-        private long seed;
 
-        public RandomIterator(List<T> toIter, long seed){
+        public RandomIterator(List<T> toIter){
             remains = toIter;
-            this.seed = seed;
         }
 
         @Override
@@ -54,7 +51,7 @@ public class RandomCollection<E> extends LinkedList<E> {
 
         @Override
         public T next() {
-            int index = new Random(seed).nextInt(remains.size());
+            int index = ran.nextInt(remains.size());
             T ret = remains.get(index);
             remains.remove(index);
             return ret;
