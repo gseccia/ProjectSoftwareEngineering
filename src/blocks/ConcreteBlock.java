@@ -90,9 +90,9 @@ public class ConcreteBlock extends Block {
     public void generateNextLevel(GameContainer gc, StateBasedGame currentGame) {
         try {
             currentGame.init(gc);
+            currentGame.enterState(GameStates.STARTING_POINT.getState());
         } catch (SlickException e) {
             e.printStackTrace();
         }
-        currentGame.enterState(GameStates.PLAY.getState());
     }
 }

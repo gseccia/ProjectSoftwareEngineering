@@ -54,6 +54,7 @@ public class GameOver extends BasicGameState{
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		if (sbg.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
+			((Game)sbg).resetDifficulty();
 			g.drawImage(image, 0, 0);
 			g.drawString("Dumb ass press ENTER to continue.", 
 					(Long.valueOf(Math.round(gc.getWidth()/2)).intValue()), 

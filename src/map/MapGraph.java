@@ -5,6 +5,7 @@ import configuration.MapConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import blocks.Block;
 
+import main.GameStates;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 
 import java.util.*;
@@ -53,28 +54,23 @@ public class MapGraph {
         boolean condition = false;
         int doorNumber;             //numero di porta per ogni tiledMap
         int totalDoor; //numero totale di porte
-        int max, min;
         Vertex v;
         MapConfiguration conf = MapConfiguration.getInstance();
         List<Vertex> listVertex= new ArrayList<>();
         List<String> tiledMaps ;
-        Random random = new Random();
-        int vertexNumber;
         while (!condition){
             totalDoor=0;    //reset ogni ciclo del numero totale di porte
             tiledMaps = mapSubSet();  //genera una sottoinsieme casuale di tiledMaps
-            max = tiledMaps.size()-1;
-            min = tiledMaps.size()-4;
-            vertexNumber = random.nextInt((max-min+1))+min;  //genera un numero di vertici compreso tra min e max
-            for (int i = 1; i <= vertexNumber; i++) {
+            System.out.println("GENERO "+ tiledMaps.size()+" BLOCCHI");
+            for (int i = 0; i < tiledMaps.size(); i++) {
                 //doorNumber = random.nextInt(3) + 1;  //genera un numero di porte compreso tra 1 e 3
                 doorNumber = conf.getDoors(tiledMaps.get(i));
-                v = new Vertex(i, tiledMaps.get(i), false, doorNumber);  //crea un nuovo vertice e aggiungilo al grafico e alla lista dei vertici
+                v = new Vertex(i + GameStates.STARTING_POINT.getState(), tiledMaps.get(i), false, doorNumber);  //crea un nuovo vertice e aggiungilo al grafico e alla lista dei vertici
                 listVertex.add(v);
                 graph.addVertex(v);
                 totalDoor += doorNumber;
             }
-            if (totalDoor %2 ==0 && vertexNumber==(totalDoor/2+1))   //verifica constrain
+            if (totalDoor %2 ==0 && tiledMaps.size()==(totalDoor/2+1))   //verifica constrain
                 condition = true;
             else {
                 graph.removeAllVertices(listVertex);

@@ -1,12 +1,13 @@
 package main;
 
 public enum GameStates {
-	MENU(200),
-	PLAY(1),
-//	SCORES(202),
-//	SETTINGS(203),
-	GAMEOVER(204),
-	SPLASHSCREEN(205)
+	MENU(0),
+//	SCORES(1),
+//	SETTINGS(2),
+	GAMEOVER(3),
+	SPLASHSCREEN(4),
+	PAUSE(5),
+	STARTING_POINT(6)
 	;
 	
 	

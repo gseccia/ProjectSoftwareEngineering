@@ -31,7 +31,7 @@ public class Game extends StateBasedGame{
 
     @Override
     public void initStatesList(GameContainer gameContainer){
-
+        System.out.println(current_difficulty);
         if(current != null) clearLevel();
         // Instantiate block only when the level is instantiated
         if (current_difficulty > 0) {
@@ -59,5 +59,12 @@ public class Game extends StateBasedGame{
         for(Block block : current.getBlocks()){
             block.clearBlock();
         }
+    }
+
+    /**
+     * Resets the difficulty to 1
+     */
+    public void resetDifficulty(){
+        current_difficulty = 1;
     }
 }

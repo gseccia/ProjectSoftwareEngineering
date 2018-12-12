@@ -73,11 +73,16 @@ public class Level{
 
 			Mission mission_generated = missions.generateMissions();
 
-			distributeItems();
+			distributeItems();psa
+
+
 			distributeMobs(player);
 
 			for(Block block: block_list) {
+				System.out.println("INIT DI BLOCCO " +block.getID());
 				block.initBlock(player, population, items, map, mission_generated, spm);
+				System.out.println("FINE" +
+						);
 			}
 		} catch (NoSuchElementInConfigurationException | NullAnimationException | SlickException | NotEnoughMissionsException e) {
 			e.printStackTrace();
