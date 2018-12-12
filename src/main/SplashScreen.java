@@ -11,7 +11,7 @@ import managers.MusicManager;
 
 public class SplashScreen extends BasicGameState{
 
-    private final int id = 5;
+    private final int id = GameStates.SPLASHSCREEN.getState();
     /** The background image to be displayed */
     private Image image;
     private long initTime;
@@ -41,7 +41,7 @@ public class SplashScreen extends BasicGameState{
 		long delta = System.currentTimeMillis() - initTime;
 		if (delta > 3000) {
 			this.rs.setState(0);
-			arg1.enterState(0);
+			arg1.enterState(GameStates.MENU.getState());
 		}
 	}
 

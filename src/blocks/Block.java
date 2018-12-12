@@ -36,7 +36,6 @@ import elements.NullAnimationException;
 
 public abstract class Block extends BasicGameState
 {
-//    private final int id = 1;
 	private CollisionDetectionWall wallCollision;
 	private CollisionDetectionDoor doorCollision;
 	private CollisionDetectionItem itemCollision;

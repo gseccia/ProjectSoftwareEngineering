@@ -16,7 +16,7 @@ import org.newdawn.slick.util.BufferedImageUtil;
 import main.GameStates;
 
 public class Menu extends BasicGameState {
-    private final int id = 0;
+    private final int id = GameStates.MENU.getState();
     private static Menu ourInstance = new Menu();
 
     private int playersChoice = 0;
@@ -68,7 +68,7 @@ public class Menu extends BasicGameState {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-    	if (stateBasedGame.getCurrentStateID() == 0) {
+    	if (stateBasedGame.getCurrentStateID() == this.id) {
     		graphics.drawImage(image, 0, 0);
         this.renderPlayersOptions(gameContainer);
         if (exit) {

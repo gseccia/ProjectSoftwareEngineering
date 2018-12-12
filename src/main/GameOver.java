@@ -22,7 +22,7 @@ import managers.MusicManager;
 
 public class GameOver extends BasicGameState{
 
-    private final int id = 4;
+    private final int id = GameStates.GAMEOVER.getState();
     /** The background image to be displayed */
     private Image image;
     private long initTime;
