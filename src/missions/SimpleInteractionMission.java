@@ -1,19 +1,13 @@
 package missions;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public abstract class SimpleInteractionMission extends Mission{
 
     private int numInteractions, total;
-    private Map<String, Integer> needed;
 
-    public SimpleInteractionMission(String targetId, int numInteractions) {
+    SimpleInteractionMission(String targetId, int numInteractions) {
         super(targetId);
         this.numInteractions = numInteractions;
         this.total = numInteractions;
-        needed = new HashMap<>();
-        needed.put(targetId, numInteractions);
     }
 
     /**
@@ -41,14 +35,10 @@ public abstract class SimpleInteractionMission extends Mission{
      * @param item the item to check
      */
     @Override
-    public void check(MissionItem item) {
-        if(numInteractions > 0 && getTargetId() == item.getID()){
+    public void check(MissionTarget item) {
+        if(numInteractions > 0 && getTargetId().equals(item.getID())){
             numInteractions--;
         }
-    }
-
-    protected Map<String, Integer> getNeeded(){
-        return needed;
     }
 
     /**
@@ -66,7 +56,10 @@ public abstract class SimpleInteractionMission extends Mission{
         return 0;
     }
 
-    public int getTotal() {
+    /**
+     * @return total number of interactions
+     */
+    int getTotal() {
         return total;
     }
 }

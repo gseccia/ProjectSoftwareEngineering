@@ -2,6 +2,8 @@ package missions;
 
 import configuration.EnemyConfiguration;
 import configuration.ItemConfiguration;
+import elements.Enemy;
+import elements.Item;
 import utils.RandomCollection;
 
 import java.util.*;
@@ -18,7 +20,6 @@ The IDs are internal to this class (not defined anywhere else)
 
 public class MissionsFactory {
 
-    private final static int numMissions = 3;
     private int itemCapacity, mobCapacity, difficulty, recallDifficulty;
     private EnemyConfiguration enemyConfiguration;
     private ItemConfiguration itemConf;
@@ -26,6 +27,7 @@ public class MissionsFactory {
     private RandomCollection<Integer> itemMissionsIDs = new RandomCollection<>(List.of(1));
     private RandomCollection<Integer> mobsMissionsIDs = new RandomCollection<>(List.of(0, 2));
     private Mission manager;
+    private SetStorageRoom targets;
 
     /**
      * Constructor of the factory
@@ -42,7 +44,8 @@ public class MissionsFactory {
         recallDifficulty = difficulty;
         this.enemyConfiguration = enemyConfiguration;
         this.itemConf = itemConf;
-        this.manager = new MissionManager(enemyConfiguration, itemConf);
+        this.manager = new MissionManager();
+        targets = new SetStorageRoom();
     }
 
     /**
@@ -59,9 +62,24 @@ public class MissionsFactory {
         //Generates mobs missions
         generation(mobsMissionsIDs, mobCapacity, difficulty);
 
+        manager.produceTargets(targets);
+
         return manager;
     }
 
+    /**
+     * @return the items needed by the missions
+     */
+    public Set<Item> targetItems(){
+        return targets.getItemSet();
+    }
+
+    /**
+     * @return the enemies needed by the missions
+     */
+    public Set<Enemy> targetEnemies(){
+        return targets.getEnemySet();
+    }
 
     /**
      * Generate a set of missions, adding them to the mission manager

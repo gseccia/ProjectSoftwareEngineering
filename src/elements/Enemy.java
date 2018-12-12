@@ -9,7 +9,7 @@ import blocks.Block;
 import managers.CollisionDetectionDoor;
 import managers.CollisionDetectionWall;
 import managers.Directions;
-import missions.MissionItem;
+import missions.MissionTarget;
 
 import java.util.Random;
 
@@ -19,7 +19,7 @@ import org.newdawn.slick.geom.Rectangle;
 import utils.Constants;
 
 
-public class Enemy extends Mob implements MissionItem {
+public class Enemy extends Mob implements MissionTarget {
 
     private String id;
     private Block map;

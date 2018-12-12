@@ -31,7 +31,7 @@ public class GameOver extends BasicGameState{
 	private boolean startCoolDown;
 	
 	public GameOver() {
-//		TODO Chiamare il music manager da questa classe anzichè dal blocco
+//		TODO Chiamare il music manager da questa classe anziche' dal blocco
         this.rs = ResourceManager.getInstance();
         this.mm = MusicManager.getInstance(this.rs);
 	}

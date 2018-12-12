@@ -2,11 +2,11 @@ package elements;
 
 import configuration.ItemConfiguration;
 import configuration.NoSuchElementInConfigurationException;
-import missions.MissionItem;
+import missions.MissionTarget;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Item extends AnimatedElement implements MissionItem {
+public class Item extends AnimatedElement implements MissionTarget {
 
     private String id;
     private int itemPoints;

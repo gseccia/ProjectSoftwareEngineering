@@ -1,6 +1,10 @@
 package missions;
 
-import java.util.Map;
+import configuration.ItemConfiguration;
+import configuration.NoSuchElementInConfigurationException;
+import elements.Item;
+import elements.NullAnimationException;
+import org.newdawn.slick.SlickException;
 
 public class CollectNItemsMission extends SimpleInteractionMission {
 
@@ -10,12 +14,15 @@ public class CollectNItemsMission extends SimpleInteractionMission {
         super(targetId, numInteractions);
     }
 
-    /**
-     * @return the items population needed by the mission (id, number)
-     */
     @Override
-    public Map<String, Integer> getItemPopulation() {
-        return getNeeded();
+    public void produceTargets(StorageRoom acceptor) {
+        for(int i=0; i<getTotal(); i++){
+            try {
+                acceptor.collectItem(new Item(ItemConfiguration.getInstance(), getTargetId()));
+            } catch (NullAnimationException | SlickException | NoSuchElementInConfigurationException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

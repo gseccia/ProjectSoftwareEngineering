@@ -1,6 +1,10 @@
 package missions;
 
-import java.util.Map;
+import configuration.EnemyConfiguration;
+import configuration.NoSuchElementInConfigurationException;
+import elements.Enemy;
+import elements.NullAnimationException;
+import org.newdawn.slick.SlickException;
 
 public class KillNEnemiesMission extends SimpleInteractionMission {
 
@@ -10,12 +14,15 @@ public class KillNEnemiesMission extends SimpleInteractionMission {
         super(targetId, numKill);
     }
 
-    /**
-     * @return the enemies population needed by the mission (id, number)
-     */
     @Override
-    public Map<String, Integer> getEnemyPopulation() {
-        return getNeeded();
+    public void produceTargets(StorageRoom acceptor) {
+        for(int i=0; i<getTotal(); i++){
+            try {
+                acceptor.collectEnemy(new Enemy(EnemyConfiguration.getInstance(), getTargetId()));
+            } catch (NoSuchElementInConfigurationException | SlickException | NullAnimationException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

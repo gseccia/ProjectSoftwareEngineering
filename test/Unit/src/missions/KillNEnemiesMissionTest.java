@@ -2,7 +2,7 @@ package Unit.src.missions;
 
 import missions.KillNEnemiesMission;
 import missions.Mission;
-import missions.MissionItem;
+import missions.MissionTarget;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -15,8 +15,8 @@ import static org.junit.Assert.*;
 
 public class KillNEnemiesMissionTest {
 
-    @Mock private MissionItem correctmob;
-    @Mock private MissionItem wrongmob;
+    @Mock private MissionTarget correctmob;
+    @Mock private MissionTarget wrongmob;
     @Mock private Mission samplemission;
 
     private static final String correctMobID = "correct";
@@ -30,8 +30,8 @@ public class KillNEnemiesMissionTest {
 
         samplemission = Mockito.mock(Mission.class);
 
-        correctmob = Mockito.mock(MissionItem.class);
-        wrongmob = Mockito.mock(MissionItem.class);
+        correctmob = Mockito.mock(MissionTarget.class);
+        wrongmob = Mockito.mock(MissionTarget.class);
         Mockito.when(correctmob.getID()).thenReturn(correctMobID);
         Mockito.when(wrongmob.getID()).thenReturn(wrongMobID);
     }
@@ -90,32 +90,5 @@ public class KillNEnemiesMissionTest {
     public void testGetNumInteractionsIsUpdatedWithCorrectItems() {
         mission.check(correctmob);
         assertEquals(mission.getNumInteractions(), numInteractions-1);
-    }
-
-    //END OF SUPERCLASS TESTS
-
-    @Test
-    public void testGetEnemyPopulationReturnsTheIDAndTheNumberOfItems() {
-        Map<String, Integer> ret = mission.getEnemyPopulation();
-        Set<String> keys = ret.keySet();
-        for(String key : keys){
-            assertEquals(key, correctMobID);
-            assertEquals((int)ret.get(key), numInteractions);
-        }
-    }
-
-    @Test
-    public void testGetItemPopulationReturnsAnEmptyMap() {
-        assertEquals(0, mission.getItemPopulation().entrySet().size());
-    }
-
-    @Test
-    public void testGetEnemySetReturnsAnEmptySet() {
-        assertEquals(0, mission.getEnemySet().size());
-    }
-
-    @Test
-    public void testGetItemSetReturnsAnEmptySet() {
-        assertEquals(0, mission.getItemSet().size());
     }
 }

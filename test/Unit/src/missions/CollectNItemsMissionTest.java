@@ -2,7 +2,7 @@ package Unit.src.missions;
 
 import missions.CollectNItemsMission;
 import missions.Mission;
-import missions.MissionItem;
+import missions.MissionTarget;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -15,8 +15,8 @@ import static org.junit.Assert.*;
 
 public class CollectNItemsMissionTest {
 
-    @Mock private MissionItem correctitem;
-    @Mock private MissionItem wrongitem;
+    @Mock private MissionTarget correctitem;
+    @Mock private MissionTarget wrongitem;
     @Mock private Mission samplemission;
 
     private static final String correctItemID = "correct";
@@ -30,8 +30,8 @@ public class CollectNItemsMissionTest {
 
         samplemission = Mockito.mock(Mission.class);
 
-        correctitem = Mockito.mock(MissionItem.class);
-        wrongitem = Mockito.mock(MissionItem.class);
+        correctitem = Mockito.mock(MissionTarget.class);
+        wrongitem = Mockito.mock(MissionTarget.class);
         Mockito.when(correctitem.getID()).thenReturn(correctItemID);
         Mockito.when(wrongitem.getID()).thenReturn(wrongItemID);
     }
@@ -92,31 +92,5 @@ public class CollectNItemsMissionTest {
         assertEquals(mission.getNumInteractions(), numInteractions-1);
     }
 
-    //END OF SUPERCLASS TESTS
-
-    @Test
-    public void testGetItemPopulationReturnsTheIDAndTheNumberOfItems() {
-        Map<String, Integer> ret = mission.getItemPopulation();
-        Set<String> keys = ret.keySet();
-        for(String key : keys){
-            assertEquals(key, correctItemID);
-            assertEquals((int)ret.get(key), numInteractions);
-        }
-    }
-
-    @Test
-    public void testGetEnemyPopulationReturnsAnEmptyMap() {
-        assertEquals(0, mission.getEnemyPopulation().entrySet().size());
-    }
-
-    @Test
-    public void testGetEnemySetReturnsAnEmptySet() {
-        assertEquals(0, mission.getEnemySet().size());
-    }
-
-    @Test
-    public void testGetItemSetReturnsAnEmptySet() {
-        assertEquals(0, mission.getItemSet().size());
-    }
 
 }

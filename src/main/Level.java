@@ -23,7 +23,7 @@ public class Level{
 	private Map<Block, Integer> mobsRemainingCapacity;
 	private Map<Block,Set<Enemy>> population;
 	private Map<Block,Set<Item>> items;
-	private Mission mission_generated;
+	private MissionsFactory missions;
 
 	/**
 	 * This class is the manager of a level
@@ -62,7 +62,7 @@ public class Level{
 			}
 		}
 
-		MissionsFactory missions = new MissionsFactory(itemCapacity*3/4, mobCapacity*3/4, level_difficulty, EnemyConfiguration.getInstance(), ItemConfiguration.getInstance());
+		missions = new MissionsFactory(itemCapacity/2, mobCapacity/2, level_difficulty, EnemyConfiguration.getInstance(), ItemConfiguration.getInstance());
 
 		this.level_difficulty = level_difficulty;
 
@@ -71,9 +71,9 @@ public class Level{
 
 			Player player = new Player(PlayerConfiguration.getInstance(), charname);
 
-			mission_generated = missions.generateMissions();
+			Mission mission_generated = missions.generateMissions();
 
-			distributeItems(player);
+			distributeItems();
 			distributeMobs(player);
 
 			for(Block block: block_list) {
@@ -90,7 +90,7 @@ public class Level{
 	private void distributeMobs(Player player) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
 		RandomCollection<Block> blocks = new RandomCollection<>(block_list);
 		Block b;
-		for(Enemy e : mission_generated.getEnemySet()){
+		for(Enemy e : missions.targetEnemies()){
 			b = blocks.getRandom();
 			e.setMap(b);
 			e.setPlayer(player);
@@ -110,17 +110,17 @@ public class Level{
 		}
 	}
 
-	private void distributeItems(Player player) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
+	private void distributeItems() throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
 		RandomCollection<Block> blocks = new RandomCollection<>(block_list);
 		Block b;
-		for(Item i : mission_generated.getItemSet()){
+		for(Item i : missions.targetItems()){
 			b = blocks.getRandom();
 			addItemToBlock(b, i);
 			updateCapacity(b, blocks, itemsRemainingCapacity);
 
 		}
 
-		int numHearts = (itemCapacity-mission_generated.getItemSet().size())/level_difficulty;
+		int numHearts = (itemCapacity-missions.targetItems().size())/level_difficulty;
 		for(int i=0; i<numHearts; i++){
 			b = blocks.getRandom();
 			addItemToBlock(b, new Item(ItemConfiguration.getInstance(), "heart"));
