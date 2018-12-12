@@ -1,6 +1,5 @@
 package blocks;
 
-import blocks.Block;
 import main.GameStates;
 import managers.Directions;
 import org.newdawn.slick.GameContainer;

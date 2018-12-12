@@ -556,9 +556,4 @@ public abstract class Block extends BasicGameState
 		return mapName;
 	}
 
-	public void clearBlock(){
-		enemy = null;
-		item = null;
-	}
-
 }
