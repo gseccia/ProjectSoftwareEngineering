@@ -61,21 +61,25 @@ public class MusicManager extends Observer{
 
 	@Override
 	public void update() {
-		if (currentMusic.playing()) currentMusic.stop();
-		if (currentSound.playing()) currentSound.stop();
 		switch(this.subject.getState()) {
 			case 0:
 //				menu
+				if (currentMusic.playing()) currentMusic.stop();
+				if (currentSound.playing()) currentSound.stop();
 				this.menuMusic.loop(1.0f,  SoundStore.get().getMusicVolume() * 0.3f);
 				this.currentMusic = this.menuMusic;
 				break;
 			case 1:
 //				new level
+				if (currentMusic.playing()) currentMusic.stop();
+				if (currentSound.playing()) currentSound.stop();
 				this.gameMusic.get(indexLevel).loop(1.0f,  SoundStore.get().getMusicVolume() * 0.3f);
 				this.currentMusic = this.gameMusic.get(indexLevel);
 				break;
 			case 2:
 //				level completed
+				if (currentMusic.playing()) currentMusic.stop();
+				if (currentSound.playing()) currentSound.stop();
 				this.levelCompletedSound.loop(1.0f,  SoundStore.get().getMusicVolume() * 0.3f);
 				this.currentSound = this.levelCompletedSound;
 				if (this.indexLevel < gameMusic.size()) this.indexLevel += 1;
@@ -83,9 +87,21 @@ public class MusicManager extends Observer{
 				break;
 			case 3:
 //				rip
+				if (currentMusic.playing()) currentMusic.stop();
+				if (currentSound.playing()) currentSound.stop();
 				this.ripSound.loop(1.0f,  SoundStore.get().getMusicVolume() * 0.3f);
 				this.currentSound = this.ripSound;
 				this.indexLevel = 0;
+				break;
+			case 4:
+//				pause enter
+				System.out.println("Pause");
+				if (currentMusic.playing()) currentMusic.pause();
+				break;
+			case 5:
+//				pause resume
+				System.out.println("Resume");
+				if (!currentMusic.playing()) currentMusic.resume();
 				break;
 			default:
 				break;
