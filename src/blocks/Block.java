@@ -42,9 +42,9 @@ public abstract class Block extends BasicGameState
 	private CollisionDetectionEnemyAttacksPlayer enemyCollision;
 	private CollisionDetectionPlayerAttacksEnemy attackCollision;
 	private TiledMap map;
-	private Player player;
-	private Set<Enemy> enemy;
-	private Set<Item> item;
+	protected Player player;
+	protected Set<Enemy> enemy;
+	protected Set<Item> item;
 	private int state;
 	private int mapX, mapY, prevMapX, prevMapY;
 	private boolean paused;
@@ -108,6 +108,7 @@ public abstract class Block extends BasicGameState
 //		Initialize Resource Manager
         this.rs = ResourceManager.getInstance();
         mm = MusicManager.getInstance(this.rs);
+        
 	}
 	
 
@@ -175,7 +176,7 @@ public abstract class Block extends BasicGameState
 	 * @param currentGame the current game
 	 */
 	public abstract void generateNextLevel(GameContainer gc, StateBasedGame currentGame);
-
+	
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) {
 		if (levelMusicMustBeStarted) {
@@ -189,11 +190,11 @@ public abstract class Block extends BasicGameState
 		g.scale(1.5f, 1.5f);
 		map.render(0,0, mapX,mapY,mapX+50,mapY+50);
 		//TESTING ZONE BEGIN
-		/*
-		for(Rectangle b: mapCollision.getCollidingBlocks())
+		
+		for(Rectangle b: getHitbox().getWalls())
 		{
-			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getWidth());
-		}*/
+			g.drawRect(b.getX()-mapX*map.getTileWidth(),b.getY()-mapY*map.getTileHeight(),b.getWidth(),b.getWidth());
+		}
 		List<Wall> doors = doorCollision.getDoors();
 		for(Rectangle b: doors) {
 			g.setColor(Color.blue);
@@ -213,6 +214,7 @@ public abstract class Block extends BasicGameState
 			//g.draw(e.getVision());  //TESTING LINE
 		}
 		player.draw();
+		g.draw(player);
 		
 		for(Item i: item) 
 		{

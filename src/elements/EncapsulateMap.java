@@ -9,7 +9,6 @@ public class EncapsulateMap implements TileBasedMap{
 	private TiledMap map;
 	private int wallIndex;
 	
-	
 	public EncapsulateMap(TiledMap map) {
 		this.map=map;
 		wallIndex=map.getLayerIndex("Mask");
@@ -17,7 +16,7 @@ public class EncapsulateMap implements TileBasedMap{
 	
 	@Override
 	public boolean blocked(PathFindingContext pf, int x, int y) {
-		if(x<0 || x>=getWidthInTiles()) return false;
+		if(x<0 || x>getWidthInTiles()) return false;
 		if(y<0 || y>=getHeightInTiles()-1) return false;
 		return map.getTileId(x, y, wallIndex) != 0 || map.getTileId(x, y+1, wallIndex) != 0;
 	}
