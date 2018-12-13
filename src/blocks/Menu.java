@@ -116,6 +116,11 @@ public class Menu extends BasicGameState {
                 	stateBasedGame.init(gameContainer);
                     stateBasedGame.enterState(GameStates.STARTING_POINT.getState());
                     break;
+                case DEMO:
+                	this.rs.setState(1);
+                	((main.Game)stateBasedGame).setDemo();
+                	stateBasedGame.init(gameContainer);
+                    stateBasedGame.enterState(GameStates.STARTING_POINT.getState());
                 default:
                     break;
 
