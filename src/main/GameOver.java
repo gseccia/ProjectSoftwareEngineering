@@ -13,6 +13,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -25,13 +26,11 @@ public class GameOver extends BasicGameState{
     private final int id = GameStates.GAMEOVER.getState();
     /** The background image to be displayed */
     private Image image;
-    private long initTime;
     private ResourceManager rs;
 	private MusicManager mm;
 	private boolean startCoolDown;
 	
 	public GameOver() {
-//		TODO Chiamare il music manager da questa classe anziche' dal blocco
         this.rs = ResourceManager.getInstance();
         this.mm = MusicManager.getInstance(this.rs);
 	}
@@ -43,12 +42,8 @@ public class GameOver extends BasicGameState{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.initTime = System.currentTimeMillis();
-//		if (arg1.getCurrentStateID()==-2) {
-//			rs.setState(3);
-//			System.out.println("starting game over music");
-//		}
 		startCoolDown = true;
+		initFont();
 	}
 
 	@Override
@@ -56,19 +51,16 @@ public class GameOver extends BasicGameState{
 		if (sbg.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
 			((Game)sbg).resetDifficulty();
 			g.drawImage(image, 0, 0);
-			g.drawString("Dumb ass press ENTER to continue.", 
-					(Long.valueOf(Math.round(gc.getWidth()/2)).intValue()), 
-					(Long.valueOf(Math.round(gc.getHeight()/2)).intValue()));
-			
+			uniFont.drawString(
+					0, 
+					(Long.valueOf(Math.round(gc.getHeight()*3/4)).intValue()), 
+					"Dumb ass press ENTER to continue.",
+					new Color(201, 2, 2));
 		}
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		long delta = System.currentTimeMillis() - this.initTime;
-//		if (delta >= 5000) {
-//			System.exit(0);
-//		}
 //		Executors.newSingleThreadScheduledExecutor().schedule(() -> System.exit(0) , 5, TimeUnit.SECONDS); 
 		if (startCoolDown && arg1.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
 			startCoolDown = false;
@@ -99,5 +91,28 @@ public class GameOver extends BasicGameState{
 		}
 		return image; 
 	}
+	
+//	Fonts
+	java.awt.Font UIFont1;
+	org.newdawn.slick.UnicodeFont uniFont;
+    @SuppressWarnings("unchecked")
+    public void initFont() {
+    	try{
+    		UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+    				org.newdawn.slick.util.ResourceLoader.getResourceAsStream(
+    						System.getProperty("user.dir") + "/resource/font/joystix_monospace.ttf"
+    						));
+    		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 20.f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 30.f is the size of your font
+
+    		uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
+    		uniFont.addAsciiGlyphs();
+    		uniFont.getEffects().add(new ColorEffect(java.awt.Color.white)); //You can change your color here, but you can also change it in the render{ ... }
+    		uniFont.addAsciiGlyphs();
+    		uniFont.loadGlyphs();
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    }
+
 }
 

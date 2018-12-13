@@ -19,6 +19,7 @@ import music.LevelCompletedMusic;
 
 import org.lwjgl.openal.AL;
 import org.newdawn.slick.*;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.state.BasicGameState;
@@ -60,13 +61,18 @@ public abstract class Block extends BasicGameState
 	private ResourceManager rs;
 	private MusicManager mm;
 	private boolean levelMusicMustBeStarted;
-	private boolean deathMusicMustBeStarted;
 	private boolean completedMusicMustBeStarted;
 	
 	protected Block(int state,String mapName)
 	{
 		this.state = state;
 		this.mapName = mapName;
+	}
+	
+	public void initMusicManager() {
+		System.out.println("Started music manager");
+//		levelMusicMustBeStarted = true;
+		completedMusicMustBeStarted = true;
 	}
 	
 	/**
@@ -104,17 +110,12 @@ public abstract class Block extends BasicGameState
 //				ScoreFileObserver sfo = new ScoreFileObserver(this.scoreManager);
 		this.scoreManager.setNamePlayer("Armando");
 		
-//		Initialize Resource Manager
-        this.rs = ResourceManager.getInstance();
-        mm = MusicManager.getInstance(this.rs);
+		initMusicManager();
 	}
 	
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
-		levelMusicMustBeStarted = true;
-		deathMusicMustBeStarted = true;
-		completedMusicMustBeStarted = true;
 //		try {
 //			endLevel = LevelCompletedMusic.getLevelCompletedMusic();
 //			deadEnd = DeadMusic.getDeadMusic();
@@ -159,11 +160,7 @@ public abstract class Block extends BasicGameState
 		
 		prevMapX = 0;
 		prevMapY = 0;
-		
-		// TODO finest management of music
-//		if(!bgMusic.playing()){
-//			bgMusic.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
-//		}
+		initFont();
 	}
 
 
@@ -176,13 +173,13 @@ public abstract class Block extends BasicGameState
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) {
-		if (levelMusicMustBeStarted) {
-			if (arg1.getCurrentStateID()==1) {
-				rs.setState(1);
-				System.out.println("starting block");
-				levelMusicMustBeStarted = false;
-			}
-		}
+//		if (levelMusicMustBeStarted) {
+//			if (arg1.getCurrentStateID()==this.getID()) {
+//				rs.setState(1);
+//				System.out.println("starting block");
+//				levelMusicMustBeStarted = false;
+//			}
+//		}
 		
 		g.scale(1.5f, 1.5f);
 		map.render(0,0, mapX,mapY,mapX+50,mapY+50);
@@ -246,9 +243,9 @@ public abstract class Block extends BasicGameState
 			g.setColor(Color.white);
             try {
                 g.fillRect(0, 0, gc.getWidth(), gc.getHeight(), new Image(System.getProperty("user.dir") + "/resource/textures/transitions/background.png"), 0, 0);
-                g.drawString("LEVEL COMPLETED!", player.getX()-35, player.getY()-50);
+                uniFont.drawString(player.getX()-35, player.getY()-50, "LEVEL COMPLETED!");
                 g.drawImage(new Image(System.getProperty("user.dir") + "/resource/textures/transitions/toBeCont.png"), player.getX()-85, player.getY()-25);
-				g.drawString("Press ENTER to continue", player.getX()-35, player.getY()-22);
+				uniFont.drawString(player.getX()-35, player.getY()-22, "Press Enter to continue");
 //				bgMusic.stop();
 //                if(!endLevel.playing()) endLevel.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
             	if(completedMusicMustBeStarted) {
@@ -552,5 +549,26 @@ public abstract class Block extends BasicGameState
 	public String getMapName() {
 		return mapName;
 	}
+	
+	//Fonts
+	java.awt.Font UIFont1;
+	org.newdawn.slick.UnicodeFont uniFont;
+	 @SuppressWarnings("unchecked")
+	    public void initFont() {
+	    	try{
+	    		UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+	    				org.newdawn.slick.util.ResourceLoader.getResourceAsStream(
+	    						System.getProperty("user.dir") + "/resource/font/joystix_monospace.ttf"
+	    						));
+	    		UIFont1 = UIFont1.deriveFont(java.awt.Font.ITALIC, 20.f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 30.f is the size of your font
 
+	    		uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
+	    		uniFont.addAsciiGlyphs();
+	    		uniFont.getEffects().add(new ColorEffect(java.awt.Color.green)); //You can change your color here, but you can also change it in the render{ ... }
+	    		uniFont.addAsciiGlyphs();
+	    		uniFont.loadGlyphs();
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
+	    }
 }

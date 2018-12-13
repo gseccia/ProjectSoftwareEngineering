@@ -12,12 +12,15 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.BufferedImageUtil;
 
 import main.GameStates;
+import main.ResourceManager;
+import managers.MusicManager;
 
 public class Menu extends BasicGameState {
     private final int id = GameStates.MENU.getState();
@@ -34,10 +37,12 @@ public class Menu extends BasicGameState {
     private boolean exit = false;
     private Font font;
     private TrueTypeFont playersOptionsTTF;
-    private Color notChosen = new Color(255, 0, 0);
+    private Color notChosen = new Color(201, 2, 2);
     private Color chosen = new Color(0,0,0);
     /** The background image to be displayed */
     private Image image;
+    private ResourceManager rs;
+	private MusicManager mm;
 
 
     public static Menu getInstance() {
@@ -45,6 +50,8 @@ public class Menu extends BasicGameState {
     }
 
     private Menu() {
+        this.rs = ResourceManager.getInstance();
+        this.mm = MusicManager.getInstance(this.rs);
     }
 
     @Override
@@ -54,9 +61,10 @@ public class Menu extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        font = new Font("Jokerman", Font.BOLD, 40);
-        playersOptionsTTF = new TrueTypeFont(font, true);
-        font = new Font ("Jokerman", Font.PLAIN, 20);
+//        font = new Font("Jokerman", Font.BOLD, 40);
+//        playersOptionsTTF = new TrueTypeFont(font, true);
+//        font = new Font ("Jokerman", Font.PLAIN, 20);
+    	initFont();
         playersOptions[0] = "Start";
         playersOptions[1] = "Demo";
         playersOptions[2] = "Scores";
@@ -104,6 +112,7 @@ public class Menu extends BasicGameState {
                     exit = true;
                     break;
                 case START:
+                	this.rs.setState(1);
                 	stateBasedGame.init(gameContainer);
                     stateBasedGame.enterState(GameStates.STARTING_POINT.getState());
                     break;
@@ -116,15 +125,17 @@ public class Menu extends BasicGameState {
     }
 
     private void renderPlayersOptions(GameContainer gc){
-    	int width = (Long.valueOf(Math.round(gc.getWidth()*0.5)).intValue())-50;
+    	int width = 60;
     	int height = (Long.valueOf(Math.round(gc.getHeight()*0.5)).intValue())+70;
         for (int i = 0; i < NOCHOICES; i++) {
             if (playersChoice == i) {
                 applyBorder(playersOptions[i], width, i * 50 + height, new Color(0, 255, 255));
-                playersOptionsTTF.drawString(width, i * 50 + height, playersOptions[i], chosen);
+//                playersOptionsTTF.drawString(width, i * 50 + height, playersOptions[i], chosen);
+                uniFont.drawString(width, i * 50 + height, playersOptions[i], chosen);
             } else {
-                applyBorder(playersOptions[i], width, i * 50 + height, new Color(0, 255, 0));
-                playersOptionsTTF.drawString(width, i * 50 + height, playersOptions[i], notChosen);
+                applyBorder(playersOptions[i], width, i * 50 + height, new Color(105, 2, 2));
+//                playersOptionsTTF.drawString(width, i * 50 + height, playersOptions[i], notChosen);
+                uniFont.drawString(width, i * 50 + height, playersOptions[i], notChosen);
             }
         }
     }
@@ -142,10 +153,16 @@ public class Menu extends BasicGameState {
 		return image; 
 	}
     private void applyBorder(String s, int x, int y, Color c) {
-        playersOptionsTTF.drawString(ShiftWest(x, 1), ShiftNorth(y, 1), s, c);
-        playersOptionsTTF.drawString(ShiftWest(x, 1), ShiftSouth(y, 1), s, c);
-        playersOptionsTTF.drawString(ShiftEast(x, 1), ShiftNorth(y, 1), s, c);
-        playersOptionsTTF.drawString(ShiftEast(x, 1), ShiftSouth(y, 1), s, c);
+//        playersOptionsTTF.drawString(ShiftWest(x, 1), ShiftNorth(y, 1), s, c);
+//        playersOptionsTTF.drawString(ShiftWest(x, 1), ShiftSouth(y, 1), s, c);
+//        playersOptionsTTF.drawString(ShiftEast(x, 1), ShiftNorth(y, 1), s, c);
+//        playersOptionsTTF.drawString(ShiftEast(x, 1), ShiftSouth(y, 1), s, c);
+    	
+//    	uniFont.drawString(x, y, text, col);
+        uniFont.drawString(ShiftWest(x, 2), ShiftNorth(y, 2), s, c);
+        uniFont.drawString(ShiftWest(x, 2), ShiftSouth(y, 2), s, c);
+        uniFont.drawString(ShiftEast(x, 2), ShiftNorth(y, 2), s, c);
+        uniFont.drawString(ShiftEast(x, 2), ShiftSouth(y, 2), s, c);
     }
     
     private int ShiftNorth(int p, int distance) {
@@ -159,5 +176,28 @@ public class Menu extends BasicGameState {
     }
     private int ShiftWest(int p, int distance) {
     	return (p - distance);
+    }
+    
+
+//	Fonts
+	java.awt.Font UIFont1;
+	org.newdawn.slick.UnicodeFont uniFont;
+    @SuppressWarnings("unchecked")
+    public void initFont() {
+    	try{
+    		UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+    				org.newdawn.slick.util.ResourceLoader.getResourceAsStream(
+    						System.getProperty("user.dir") + "/resource/font/joystix_monospace.ttf"
+    						));
+    		UIFont1 = UIFont1.deriveFont(java.awt.Font.ITALIC, 42.f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 30.f is the size of your font
+
+    		uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
+    		uniFont.addAsciiGlyphs();
+    		uniFont.getEffects().add(new ColorEffect(java.awt.Color.white)); //You can change your color here, but you can also change it in the render{ ... }
+    		uniFont.addAsciiGlyphs();
+    		uniFont.loadGlyphs();
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
     }
 }
