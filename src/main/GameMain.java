@@ -22,7 +22,7 @@ public class GameMain{
 			AppGameContainer app = new AppGameContainer(new Game("UNI:ZA","guntan"));
 //			System.out.println("dopo game");
 			app.setDisplayMode(800, 700, false);
-			app.setShowFPS(true);
+			app.setShowFPS(false);
 			app.setTargetFrameRate(Constants.framerate);
 			app.start();
 		} catch (SlickException e) {

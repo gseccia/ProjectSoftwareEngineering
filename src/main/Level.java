@@ -1,13 +1,14 @@
 package main;
 
 import blocks.Block;
-import blocks.ConcreteBlockFactory;
+import blocks.BlockFactory;
+import blocks.Pause;
 import configuration.*;
 import elements.*;
 import managers.observers.scoreboard.ScorePointsManager;
 import map.MapGraph;
 import missions.Mission;
-import missions.MissionsFactory;
+import missions.MissionFactory;
 import missions.NotEnoughMissionsException;
 
 import java.util.*;
@@ -23,19 +24,20 @@ public class Level{
 	private Map<Block, Integer> mobsRemainingCapacity;
 	private Map<Block,Set<Enemy>> population;
 	private Map<Block,Set<Item>> items;
-	private MissionsFactory missions;
+	private MissionFactory missions;
 
 	/**
 	 * This class is the manager of a level
 	*/
-	Level(String charname, int level_difficulty) {
+	Level(String charname, int level_difficulty, MissionFactory missions, BlockFactory blockFactory) {
 
 		itemsRemainingCapacity = new HashMap<>();
 		mobsRemainingCapacity = new HashMap<>();
 		population = new HashMap<>();
 		items = new HashMap<>();
+		this.missions = missions;
 
-		MapGraph map = new MapGraph(level_difficulty, MapConfiguration.getInstance(), new ConcreteBlockFactory());
+		MapGraph map = new MapGraph(level_difficulty, MapConfiguration.getInstance(), blockFactory);
 		try {
 			map.generateGraph();
 		} catch (NoSuchElementInConfigurationException e) {
@@ -62,8 +64,6 @@ public class Level{
 			}
 		}
 
-		missions = new MissionsFactory(itemCapacity/2, mobCapacity/2, level_difficulty, EnemyConfiguration.getInstance(), ItemConfiguration.getInstance());
-
 		this.level_difficulty = level_difficulty;
 
 		try {
@@ -71,7 +71,7 @@ public class Level{
 
 			Player player = new Player(PlayerConfiguration.getInstance(), charname);
 
-			Mission mission_generated = missions.generateMissions();
+			Mission mission_generated = missions.generateMissions(itemCapacity/2, mobCapacity/2, level_difficulty);
 
 			distributeItems();
 			distributeMobs(player);
@@ -79,11 +79,15 @@ public class Level{
 			for(Block block: block_list) {
 				block.initBlock(player, population, items, map, mission_generated, spm);
 			}
+
+			Pause.setMission(mission_generated);
+
 		} catch (NoSuchElementInConfigurationException | NullAnimationException | SlickException | NotEnoughMissionsException e) {
 			e.printStackTrace();
 			System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
 
 		}
+
 
 	}
 

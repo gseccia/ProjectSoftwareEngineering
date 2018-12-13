@@ -4,7 +4,7 @@ import configuration.EnemyConfiguration;
 import configuration.ItemConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import missions.Mission;
-import missions.MissionsFactory;
+import missions.ConcreteMissionFactory;
 import missions.NotEnoughMissionsException;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,27 +60,27 @@ public class MissionFactoryTest {
 
     @Test
     public void testMissionFactoryCanCreateMissions() throws NotEnoughMissionsException {
-        MissionsFactory factory = new MissionsFactory(defaultCapacity, defaultCapacity, defaultDifficulty, mobconf, itemconf);
-        Mission manager = factory.generateMissions();
+        ConcreteMissionFactory factory = new ConcreteMissionFactory(itemconf, mobconf);
+        Mission manager = factory.generateMissions(defaultCapacity, defaultCapacity, defaultDifficulty);
         assertEquals(defaultDifficulty, manager.numMissions());
     }
 
     @Test
     public void testCapacityCanBeAReallyBigNumber() throws NotEnoughMissionsException {
-        MissionsFactory factory = new MissionsFactory(100000000, 100000000, defaultDifficulty, mobconf, itemconf);
-        factory.generateMissions();
+        ConcreteMissionFactory factory = new ConcreteMissionFactory(itemconf, mobconf);
+        factory.generateMissions(100000000, 100000000, defaultDifficulty);
     }
 
     @Test(expected = NotEnoughMissionsException.class)
     public void testIfDifficultyIsTooHighThenExceptionIsRaised() throws NotEnoughMissionsException {
-        MissionsFactory factory = new MissionsFactory(defaultCapacity, defaultCapacity, 10, mobconf, itemconf);
-        factory.generateMissions();
+        ConcreteMissionFactory factory = new ConcreteMissionFactory(itemconf, mobconf);
+        factory.generateMissions(defaultCapacity, defaultCapacity, 10);
     }
 
     @Test
     public void testNumberOfInteractionsIsEqualToCapacity() throws NotEnoughMissionsException {
-        MissionsFactory factory = new MissionsFactory(defaultCapacity, defaultCapacity, defaultDifficulty, mobconf, itemconf);
-        Mission manager = factory.generateMissions();
+        ConcreteMissionFactory factory = new ConcreteMissionFactory(itemconf, mobconf);
+        Mission manager = factory.generateMissions(defaultCapacity, defaultCapacity, defaultDifficulty);
         assertEquals(defaultDifficulty, manager.numMissions());
     }
 
