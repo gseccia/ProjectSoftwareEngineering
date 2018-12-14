@@ -1,6 +1,5 @@
 package blocks;
 
-import java.awt.*;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -121,6 +120,9 @@ public class Menu extends BasicGameState {
                 	((main.Game)stateBasedGame).setDemo();
                 	stateBasedGame.init(gameContainer);
                     stateBasedGame.enterState(GameStates.STARTING_POINT.getState());
+                case OPTIONS:
+                	this.rs.setState(-1);
+                	stateBasedGame.enterState(GameStates.SETTINGS.getState());
                 default:
                     break;
 
@@ -157,12 +159,7 @@ public class Menu extends BasicGameState {
 		}
 		return image; 
 	}
-    private void applyBorder(String s, int x, int y, Color c) {
-//        playersOptionsTTF.drawString(ShiftWest(x, 1), ShiftNorth(y, 1), s, c);
-//        playersOptionsTTF.drawString(ShiftWest(x, 1), ShiftSouth(y, 1), s, c);
-//        playersOptionsTTF.drawString(ShiftEast(x, 1), ShiftNorth(y, 1), s, c);
-//        playersOptionsTTF.drawString(ShiftEast(x, 1), ShiftSouth(y, 1), s, c);
-    	
+    private void applyBorder(String s, int x, int y, Color c) {    	
 //    	uniFont.drawString(x, y, text, col);
         uniFont.drawString(ShiftWest(x, 2), ShiftNorth(y, 2), s, c);
         uniFont.drawString(ShiftWest(x, 2), ShiftSouth(y, 2), s, c);

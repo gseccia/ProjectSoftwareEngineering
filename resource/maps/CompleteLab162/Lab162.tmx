@@ -55,12 +55,12 @@
    H4sIAAAAAAAACu3DoQ0AAAgDsCn+/xaLhgsQbdIEALi6dgAAAAAA4J8BCffGLfAeAAA=
   </data>
  </layer>
- <layer id="29" name="Base" width="55" height="36">
+ <layer id="29" name="Base" width="55" height="36" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2WQQqAMAwEg5c8Rf+kX/D/Vz0Hj61kt7MQBjy0SQdLI4hy7s2nmE2zmE2zVprtyIg9PVhzvd/O9CDexrHuP3Pdv73Vvmauize8dSP3pCbxpkm8aRJvmnTx1uFdUvty8vZ1vi7/G940vXFP4g1va3jrHvX+R+cBwBl//fAeAAA=
   </data>
  </layer>
- <layer id="30" name="Wall" width="55" height="36">
+ <layer id="30" name="Wall" width="55" height="36" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu3ZMQqAMBBE0U3hLdQU3v+Omk4kKhFBZ/IfLGqRBfl2RnibU8S0zdh4LefyxfNX+8q5/bs5yal+74BumnrqNiztc+bJrjenp25O6KaJbpropolumuimiW6a6KaJbpropolumuimiW6ajt3+/G+x9l3d7XK3AlQZKm/wHgAA
   </data>

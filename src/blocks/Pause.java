@@ -4,6 +4,9 @@ import main.GameStates;
 import main.ResourceManager;
 import managers.MusicManager;
 import missions.Mission;
+
+import java.text.Normalizer.Form;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
@@ -22,6 +25,7 @@ public class Pause extends BasicGameState {
     private ResourceManager rs;
 	private MusicManager mm;
 	private boolean isPaused;
+	private String textPause;
 	
 	//Fonts
 	java.awt.Font UIFont1;
@@ -35,6 +39,7 @@ public class Pause extends BasicGameState {
     }
 
     private Pause() {
+    	textPause = "";
         this.rs = ResourceManager.getInstance();
         this.mm = MusicManager.getInstance(this.rs);
     }
@@ -55,7 +60,12 @@ public class Pause extends BasicGameState {
 //    			this.rs.setState(4);
 //    		}
 	        background.draw(0, 0);
-	        uniFont.drawString(20, 20, mission.toString() + "\nPress Escape to go back to Menu", new Color(201, 2, 2));
+
+	        formatStringIntoCanvas(mission.toString() + "Press Escape to go back to Menu", gameContainer);
+//	        applyBorder(textPause, 20, 20, new Color(105, 2, 2));
+	        
+//	        System.out.println(this.textPause);
+//	        uniFont.drawString(0, 0, this.textPause, new Color(201, 2, 2));
     	}
     }
 
@@ -92,7 +102,7 @@ public class Pause extends BasicGameState {
     				org.newdawn.slick.util.ResourceLoader.getResourceAsStream(
     						System.getProperty("user.dir") + "/resource/font/joystix_monospace.ttf"
     						));
-    		UIFont1 = UIFont1.deriveFont(java.awt.Font.BOLD, 25.f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 30.f is the size of your font
+    		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 25.f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 30.f is the size of your font
 
     		uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
     		uniFont.addAsciiGlyphs();
@@ -102,5 +112,45 @@ public class Pause extends BasicGameState {
     	}catch(Exception e){
     		e.printStackTrace();
     	}
+    }
+    
+    private void applyBorder(String s, int x, int y, Color c) {    	
+//    	uniFont.drawString(x, y, text, col);
+        uniFont.drawString(ShiftWest(x, 2), ShiftNorth(y, 2), s, c);
+        uniFont.drawString(ShiftWest(x, 2), ShiftSouth(y, 2), s, c);
+        uniFont.drawString(ShiftEast(x, 2), ShiftNorth(y, 2), s, c);
+        uniFont.drawString(ShiftEast(x, 2), ShiftSouth(y, 2), s, c);
+    }
+    
+    private int ShiftNorth(int p, int distance) {
+    	return (p - distance);
+    }
+    private int ShiftSouth(int p, int distance) {
+    	return (p + distance);
+    }
+    private int ShiftEast(int p, int distance) {
+    	return (p + distance);
+    }
+    private int ShiftWest(int p, int distance) {
+    	return (p - distance);
+    }
+    
+    private void formatStringIntoCanvas(String s, GameContainer gameContainer) {
+    	System.out.println(s);
+        int width = (Long.valueOf(Math.round(gameContainer.getWidth())).intValue());
+    	String formattedString = "";
+        if (uniFont.getWidth(s) > width) {
+        	for (String subString : s.split(" ")) {
+        		String tempString = formattedString+subString;
+        		if (uniFont.getWidth(tempString) < width) {
+        			formattedString += subString;
+        		}
+        		else {
+        			uniFont.drawString(0, 0, formattedString, new Color(201, 2, 2));
+        			formattedString = "";
+        		}
+        	}
+        }
+//    	System.out.println(formattedString);
     }
 }

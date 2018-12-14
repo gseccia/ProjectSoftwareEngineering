@@ -2,8 +2,8 @@ package main;
 
 public enum GameStates {
 	MENU(0),
-//	SCORES(1),
-//	SETTINGS(2),
+	SCORES(1),
+	SETTINGS(2),
 	GAMEOVER(3),
 	SPLASHSCREEN(4),
 	PAUSE(5),

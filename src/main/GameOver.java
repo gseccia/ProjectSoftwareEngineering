@@ -62,14 +62,17 @@ public class GameOver extends BasicGameState{
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 //		Executors.newSingleThreadScheduledExecutor().schedule(() -> System.exit(0) , 5, TimeUnit.SECONDS); 
-		if (startCoolDown && arg1.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
-			startCoolDown = false;
-			rs.setState(3);
-			System.out.println("starting gameover music");
-		}
-		if (arg0.getInput().isKeyPressed(Input.KEY_ENTER)) {
-			this.rs.setState(0);
-			arg1.enterState(GameStates.MENU.getState());
+		if (arg1.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
+			if (startCoolDown) {
+				startCoolDown = false;
+				rs.setState(3);
+				System.out.println("starting gameover music");
+			}
+			if (arg0.getInput().isKeyPressed(Input.KEY_ENTER)) {
+				startCoolDown = false;
+				this.rs.setState(0);
+				arg1.enterState(GameStates.MENU.getState());
+			}
 		}
 	}
 

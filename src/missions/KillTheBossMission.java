@@ -85,9 +85,9 @@ public class KillTheBossMission extends Mission {
 
     @Override
     public String toString(){
-        String ret = "You have to kill the " + getTargetId() + " boss";
+        String ret = "You have to kill the " + getTargetId() + " boss ";
         if(completed()){
-            return ret + " - COMPLETED!";
+            return ret + "- COMPLETED!";
         }
         return ret;
     }

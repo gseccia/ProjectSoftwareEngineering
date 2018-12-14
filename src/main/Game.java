@@ -8,6 +8,7 @@ import missions.ConcreteMissionFactory;
 import missions.DemoMissionFactory;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
+import main.Settings;
 
 import java.util.List;
 
@@ -55,6 +56,8 @@ public class Game extends StateBasedGame{
         this.addState(new SplashScreen());
         // for game over page
 		this.addState(new GameOver());
+		// for options page
+		this.addState(Settings.getInstance());
         
 //        this.rs.setState(0);
         this.enterState(GameStates.SPLASHSCREEN.getState()); //always enter in splash screen state
