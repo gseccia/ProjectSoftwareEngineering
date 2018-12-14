@@ -14,8 +14,6 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.pathfinding.*;
 
-import com.sun.javafx.scene.traversal.Direction;
-
 import elements.EncapsulateMap;
 import elements.Enemy;
 import elements.Item;

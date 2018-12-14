@@ -2,6 +2,8 @@ package blocks;
 
 import java.util.*;
 
+import configuration.AttackConfiguration;
+import configuration.NoSuchElementInConfigurationException;
 import managers.*;
 import map.Edge;
 import map.MapGraph;
@@ -217,6 +219,13 @@ public abstract class Block extends BasicGameState
 			i.draw();
 		}
 
+		if(player.getUltra().isReady()){
+			g.drawImage(player.getUltra().getIcon(), (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-18*7, 50);
+		}
+		else{
+			g.drawImage(player.getUltra().getIcon(), (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-18*7, 50, Color.gray);
+		}
+
 		if(dead) {
 //			g.setColor(Color.red);
 			arg1.enterState(GameStates.GAMEOVER.getState());
@@ -323,8 +332,15 @@ public abstract class Block extends BasicGameState
 			Pause.setOriginState(getID());
 			gs.enterState(GameStates.PAUSE.getState());
 		}
+
+		boolean block = false;
+
+		if(player.getUltra().isActive()){
+			block = player.getUltra().isBlocking();
+			player.getUltra().iterationStep();
+		}
 		
-		if(!dead && !mission.completed()) {
+		if(!dead && !mission.completed() && !block) {
 		try {
 			boolean pressed =false;
 			if(goRight(gc.getInput())){
@@ -463,19 +479,30 @@ public abstract class Block extends BasicGameState
 				for (Mob target : attackCollision.getEnemy()) {
 					target.damage(player.getAttackDamage());
 					//System.out.println(target + " "+ target.getHp());
-					if(target.getHp() <= 0){
-						enemy.remove(target);
-						Enemy castedTarget = (Enemy)target;
-						mission.check(castedTarget);
-						this.scoreManager.decrease(0);
-						// in increase() must be passed points associated to enemy kill
-						this.scoreManager.increase(castedTarget.getMobPoints());
-						this.scoreManager.setState(States.PointsAccumulator);
-					}
 				}
 			}
+
+			Set<Enemy> toRemove = new HashSet<>();
+			for(Enemy target : enemy) {
+				if (target.getHp() <= 0) {
+					toRemove.add(target);
+					mission.check(target);
+					this.scoreManager.decrease(0);
+					// in increase() must be passed points associated to enemy kill
+					this.scoreManager.increase(target.getMobPoints());
+					this.scoreManager.setState(States.PointsAccumulator);
+				}
+			}
+			enemy.removeAll(toRemove);
+
 			// Life player check, there will be handled death
 			if (player.getHp() <= 0) this.dead = true;
+
+			//Activate ultra
+			if (player.getUltra().isReady() && gc.getInput().isKeyPressed(Input.KEY_SPACE)){
+				System.out.println("ATTIVO LA ULTRA");
+				player.getUltra().activate(this);
+			}
 
 			// Player attack update
 			player.reloadAttack();
@@ -552,7 +579,11 @@ public abstract class Block extends BasicGameState
 	public String getMapName() {
 		return mapName;
 	}
-	
+
+	public Set<Enemy> getEnemy() {
+		return enemy;
+	}
+
 	//Fonts
 	java.awt.Font UIFont1;
 	org.newdawn.slick.UnicodeFont uniFont;

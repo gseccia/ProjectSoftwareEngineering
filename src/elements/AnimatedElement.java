@@ -23,7 +23,7 @@ public abstract class AnimatedElement extends Rectangle{
         this.current = a;
     }
 
-    protected void setCurrent(Animation current) throws NullAnimationException{
+    protected void setCurrent(Animation current){
         //if(current == null){
         //    throw new NullAnimationException("Current animation can't be null!");
         //} MAKES TEST IMPOSSIBLE

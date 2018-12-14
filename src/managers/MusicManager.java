@@ -28,7 +28,7 @@ public class MusicManager extends Observer{
 	
 	private MusicManager(Subject s) {
 		this.subject = s;
-		this.subject.attach((MusicManager)this);
+		this.subject.attach(this);
 		try {
 			levelCompletedSound = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/levelCompleted.ogg");
 			ripSound = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/dead.ogg");
@@ -85,6 +85,10 @@ public class MusicManager extends Observer{
 				this.ripSound.loop(1.0f,  SoundStore.get().getMusicVolume() * 0.3f);
 				this.currentSound = this.ripSound;
 				this.indexLevel = 0;
+				break;
+			case 4:
+//				stop
+				currentMusic.stop();
 				break;
 			default:
 				break;

@@ -52,13 +52,9 @@ public class ShortRangeAttack extends AnimatedElement implements Attack {
                 y = caster.getY();
                 height = caster.getHeight();
                 width = caster.getWidth() * 2;
-                try {
-                    setCurrent(animations.get("left"));
-                    drawX = x + caster.getHeight()/4;
-                    drawY = y;
-                } catch (NullAnimationException e) {
-                    e.printStackTrace();
-                }
+                setCurrent(animations.get("left"));
+                drawX = x + caster.getHeight()/4;
+                drawY = y;
                 break;
 
             case Directions.RIGHT:
@@ -66,13 +62,9 @@ public class ShortRangeAttack extends AnimatedElement implements Attack {
                 y = caster.getY();
                 height = caster.getHeight();
                 width = caster.getWidth() * 2;
-                try {
-                    setCurrent(animations.get("right"));
-                    drawX = x + caster.getWidth()*3/4;
-                    drawY = y;
-                } catch (NullAnimationException e) {
-                    e.printStackTrace();
-                }
+                setCurrent(animations.get("right"));
+                drawX = x + caster.getWidth()*3/4;
+                drawY = y;
                 break;
 
             case Directions.UP:
@@ -80,13 +72,9 @@ public class ShortRangeAttack extends AnimatedElement implements Attack {
                 y = caster.getY() - caster.getHeight();
                 height = caster.getHeight() * 2;
                 width = caster.getWidth();
-                try {
-                    setCurrent(animations.get("up"));
-                    drawX = x;
-                    drawY = y + caster.getHeight()/4;
-                } catch (NullAnimationException e) {
-                    e.printStackTrace();
-                }
+                setCurrent(animations.get("up"));
+                drawX = x;
+                drawY = y + caster.getHeight()/4;
                 break;
 
             case Directions.DOWN:
@@ -94,13 +82,9 @@ public class ShortRangeAttack extends AnimatedElement implements Attack {
                 y = caster.getY();
                 height = caster.getHeight() * 2;
                 width = caster.getWidth();
-                try {
-                    setCurrent(animations.get("down"));
-                    drawX = x;
-                    drawY = y + caster.getHeight();
-                } catch (NullAnimationException e) {
-                    e.printStackTrace();
-                }
+                setCurrent(animations.get("down"));
+                drawX = x;
+                drawY = y + caster.getHeight();
                 break;
 
             default:

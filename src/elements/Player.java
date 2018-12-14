@@ -1,7 +1,9 @@
 package elements;
 
 import attacks.Attack;
+import attacks.HoraHora;
 import attacks.ShortRangeAttack;
+import attacks.SpecialAttack;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import org.newdawn.slick.Animation;
@@ -19,11 +21,13 @@ public class Player extends Mob {
     private final int RELOADING_TIME = Constants.framerate;
     private int attackDuration;
     private Sound step;
+    private SpecialAttack ultra;
 
     public Player(MobConfiguration configuration, String id) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
         super(configuration, id);
         setAttack(new ShortRangeAttack(this));
         step = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/step.ogg");
+        ultra = new HoraHora(this);
     }
 
     @Override
@@ -31,6 +35,10 @@ public class Player extends Mob {
         Attack tmp = super.getAttack();
         tmp.setHitbox();
         return tmp;
+    }
+
+    public SpecialAttack getUltra() {
+        return ultra;
     }
 
     @Override
@@ -50,6 +58,7 @@ public class Player extends Mob {
         }else{
             isAttacking=false;
         }
+        ultra.reload();
     }
 
     private void playStep(){
@@ -67,6 +76,9 @@ public class Player extends Mob {
     public void draw() {
         if(isAttacking){
             getAttack().draw();
+        }
+        if(ultra.isDrawable()){
+            ultra.draw();
         }
         super.draw();
     }
