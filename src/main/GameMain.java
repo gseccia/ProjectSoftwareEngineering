@@ -19,7 +19,7 @@ public class GameMain{
 		try {
 			//			 AppGameContainer app = new AppGameContainer(main.Game.getGameInstance("UNI:ZA","guntan"));
 //			System.out.println("prima game");
-			AppGameContainer app = new AppGameContainer(new Game("UNI:ZA","guntan"));
+			AppGameContainer app = new AppGameContainer(new Game("UNI:ZA","rinaldo"));
 //			System.out.println("dopo game");
 			app.setDisplayMode(800, 700, false);
 			app.setShowFPS(false);
