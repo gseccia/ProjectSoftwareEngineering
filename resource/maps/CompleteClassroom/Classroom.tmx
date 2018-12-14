@@ -24,7 +24,7 @@
  <tileset firstgid="20333" source="../CompleteLibrary2/zombie_tileb.tsx"/>
  <layer id="32" name="Mask" width="50" height="35">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3USwqAMAwA0V6oO720p3QllGAIwTamYQayqT8e2PaztV5krmPvwZFrLIfMep/3fhzvjqgst/f5XR1a0Y5V4ciVPK88af/56nUcOGava+f2l32OY57juYYDB466+xzHvw4tHHUc47ei12U4coUjVzhyVc1RYW4bWKcFWBsAAA==
+   H4sIAAAAAAAACu3VSwqAMAwA0V6oO720p3QlSCCVYNqm6QxkU388sFrPUmqSuY61B0es2cUh+7qf9Xxvx8habsu1Kzu0Zjh6hCNW8ntlSXvPe6/jwOG9rv13/+xzHH6O5xgOHDjy7nMccx1aOPI43s8avS7DESscscIRq2yODHMDrapovFgbAAA=
   </data>
  </layer>
  <layer id="35" name="Door2" width="50" height="35">
@@ -37,27 +37,27 @@
    H4sIAAAAAAAACu3DsQkAAAgDsA7+P3qvs+AHJpAE+KxrBwAAAAAAbgMoFOceWBsAAA==
   </data>
  </layer>
- <layer id="33" name="Base" width="50" height="35">
+ <layer id="33" name="Base" width="50" height="35" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu3RsRGAQAzEwKvqA7cMPUEXTwgJPcgeXbJOPUrmbK/kWX31D5bT/jgqOauv/67vvquv9mBpD5b2YGkPlvZgaQ+W9mBpD5b2YGkPlvZgaQ+W9mA5rceEvdft/M1YGwAA
   </data>
  </layer>
- <layer id="36" name="Wall" width="50" height="35">
+ <layer id="36" name="Wall" width="50" height="35" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2YwU7CQBCG5yRntibyAlqvqAkm3SvoY3BBeCzu+gZ68IIF4VhO+AZ6EUz06N/QhsmaBSlEBzJf8mennelOJ3972cRQtxRQM4T+ai36rC+XGHo8CGgt3iOiabS4niH+iPz1bv4T8deS+iJgFjphc9xj/wfW49giD4XQqZ3fK2M1dlETID60/nqeTzlCXGHXKbfoebfBbO4cE+z1wvaro18DuoKus95VrGfsPc4RX1h/Pc+n1BBfOnMM0XO0wRz4vmjZd9VCvxuoDXWsv65ofc4rZnjbgh9PhiiG+pkG0LP5WR87+SE0gnpmvoeLm1/1vC/Pc3nM763yY1dw/49dRf2QhfohC/VDFuqHLNQPWagfslA/ZLEvfpT2xI9Q/RCF+iEL9UMW6ocs1A9ZpH4k2Tnxfys/d/5N7J5jj6Fv3oakylgbAAA=
   </data>
  </layer>
- <layer id="38" name="Dirt" width="50" height="35">
+ <layer id="38" name="Dirt" width="50" height="35" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2XS07CUBiFzwZ04mNEqxsAZc61LKFdgNINtCDbUFDZh49F+BjoMnyMQBOVmY9jLKGSqCn39t626Zd86ajNObn/3wJQUlLyF88u8OJOr6907JpOlZwlD1j2ptcVuuolf855A7igl/SqoT6nLm6Z/Y7e04cc95ClagM123QKeQJ2CAvQwwRHAs0BNZ1Dll126Cbo8ca9f6cfkRDpZUsTi7ntmE0B36emcyVFxDqsUYcdWop7DHnOo5Tf99vMvhXpRF3WFc/WAp+3qGFeRayH8z1bueTrTHZoK9I33EPHHOpA1xyqos2snZm8k7Mw3SPJTBww6+FM3slZqJgrmflUMROq5ipv81nyk+MKcEJP6VnFdJr/+W1vhsw+oo/0KcUe/A2MbgH2hv9JMCjQ3pbf++xStYAa3aCbluk08xMwe0jbtJPjHjrZqwP79fnvD7gLYQb24ZodbiR69Nihn4EeReAT9juYW1gbAAA=
   </data>
  </layer>
- <layer id="39" name="Obstacle2" width="50" height="35">
+ <layer id="39" name="Obstacle2" width="50" height="35" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2Uyw2CQBRFXx9AAfhLdI0F6MI+wE8ibWgbLhS0Bvbahgs+WoN340qFDIyO0XuSs3lhMnMSZkQI+W+2lsgORjCGe3iwzJ1n5YmsPfV1Kc6cwRwW8AKvBjsiNMQ1OlxbpAXbsAO7sGfrP18Vo6HIGB7RcKrR4ePMAZzCGZzDhYEOHw0BzNFQ1OggxAQp7kqmeF82EzPzMlwH75mjtuYbO3w0BOz46Fw37Gg2vxPakiwdScq/qsZ0Rx/v60DxLujYnx3PwT8l4Q906IIdzea6YUezuW7OL/Z595wQQgghj9wAMXgtH1gbAAA=
   </data>
  </layer>
- <layer id="37" name="Obstacle1" width="50" height="35">
+ <layer id="37" name="Obstacle1" width="50" height="35" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2WyQ3CMBBFp4VcE+fM0gTlQIATDXBm6SNhKYIrSx9ZoAj+JRKKbClY9iSR5kn/MrI0/8v6sokEQRAEQRCGTx4SFSH/3ESpiCrV/nzNKCIaR/xzE5OYaBq3P18zx46FZo/vuYkEGZYWOVLceaa5d1/zJIBPaAWtg//9muDuxw7e99ABOjrMwd2PZo6topu1+R+4+9HMMXOUg7sfvnJ03Y+NxVuhg7sfJ3g/Qxfo6rDn3P24w/sDekIvhzm4+1HCewW9oc+A3w9f9O1/ZUvf/le2pNiRafb4nrsmx45Cs8f3XBAEQeieLyjtK4xYGwAA
   </data>

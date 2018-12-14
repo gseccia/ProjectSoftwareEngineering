@@ -33,7 +33,7 @@
  <tileset firstgid="11477" source="../CompleteHallway/build_atlas.tsx"/>
  <layer id="70" name="Mask" width="65" height="55">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3USw6AIAxAQfT+h/CobjRxgaQfLEVek24aUspEWwqxb1PlceXoOTAgycUycv9+0TOzgaSm7YkBBtEG3h4Y2K16zhT1zXtDY/DXwCC3QdR/Fm3ATow3sNQyGXgDAwxqb5PWMLAZaOeS9vA6YoCB9L21GgYYPO/1zv8WGPTpobnLUsMglwH/AgatsysZeAMDDO67LDUMchmwEzHoERhgcN9lqWUyYB9g0Dq7koE3pAbanhhgMJOBdnd4+/aczbr7RicGGGCAAQY2gxMJhGMN3DcAAA==
+   H4sIAAAAAAAACu3UQQ6AMAhEUfX+h/CobjRxUQ0MbcH4SdigofQlZVmIbf1U7mdmz4EBSf4sZ+7fET0rG1hq3p4YYDDbINoDA92q50xZb8AbHgO1PwYYRAxmvatsA3bieAOlVskgGhhg0LqbtYaBZuCdy9oj6ogBBtb7tmqVDZTvSg0DDO59o/M/RY8enrOUGga1DJ7+tfbAAAPrfVu1SgbRwACD6yylhkEtA3YiBj0CAwyus5RaJQP2AQZv//7JIBpWA29PDDD4koF3d0T79pxN3X3ZiQEGGOQYVEwMfAYH0FaYq9w3AAA=
   </data>
  </layer>
  <layer id="71" name="Door1" width="65" height="55">
@@ -51,22 +51,22 @@
    H4sIAAAAAAAACu3DQQkAAAgEsLN/Mlv5NsLBBksAAAAAAAAAAAAAAAAAeuz80OgAqf4SsNw3AAA=
   </data>
  </layer>
- <layer id="74" name="Base" width="65" height="55">
+ <layer id="74" name="Base" width="65" height="55" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2WSQ7DIAxFUbvoMXKedLpLx2Wnm7Unq6W2m6gBAwYM+UhfjpCwyPcDc5kZc524+rluLUkr0pq0IW1H5vvvd4h2yrUnHUhH0ol0Hpkfzvno3hnz6KYdn6TXxKOGOpSOGurwi7eFXSU4cO2JK049UuWN5UDKA1cdpfNp5MBVt5R8gQNwwI3S/5lTufpRjO//cmjwPYaDVhhLfe+VrCf6AvoCOAAHtXOQ2oMaOEh9FjijdQ44AxyAA3Dgz4Fv322RA9++y11f2gNXPVNzoOEsuHwEB7J3YiwHIVxKcxArcNDGfQAOwAE4AAfgAByk9qA2Dji+29b/22NtHHB8t62vkQPJc1ArB9IegANwYNtzaQ9Kc6DhLOTiIIXXOTiQeif69lROTm6+WA5C9zy880LeVlJRggNOtDEq4XFMBAfgABx8lIsDWyxVfx8P3gtqp6ncNwAA
   </data>
  </layer>
- <layer id="75" name="Wall" width="65" height="55">
+ <layer id="75" name="Wall" width="65" height="55" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2bS27CMBBAbViRVTliygraHgSxAspBoEdpLkBX5Rb1oCAl1iCMGKO4ek8aJbHsieflI2/sXJ/5yLlFiLeRu0pKn5JZh7o2IbZtfVq9cZ/fcDxFPo7h+qfT9h7OPxKcablu9YvvZU1cr8bL2LnpuN82CddVp+0zjN8lzFPLdatffC8LDj5fvBrHzNvWfmGZIe+3fcozq4IcNG1Yg4NyHDQOBzjAQW4sHEx8PypfnoP6wTXGM8j5LZQCDnAgDN0B/0Q9by4HJa4Prs059d1ulLDmGQ60+Wu1pYY1OGCtLOAABwIOcCDgAAcCDnAg4AAHAg5wIOAABwIOcCDgAAcCDnAg4AAHAg5wIOAABwIOcCDgIJ+DvU/fj6DtH6jvGP/oPoevATwv7TmU9B5ZgIP/4eAPYeMhCNw3AAA=
   </data>
  </layer>
- <layer id="76" name="Road" width="65" height="55">
+ <layer id="76" name="Road" width="65" height="55" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2Xaw7CIBCE+e/zAj7uYeIJ9Agcod7/pxAlElLoLowvOpNMWrXsLF8spcZQFEVRlEwL56XzxXnjvFUcb86r51h/XDfkhHNpPaSu5jGXFvsaO+c9KEdSDykUg2BEjqQeUnFezfytsGdpjrQeUlfTllnDoHQdGbyPwSbjraK3nNKeW3Mk9dLnicTS9QfBoDVHWg/puTA4OB+TYzhHMwh1a3Ny9cZ6z/029n1Jc1kTS/o1Bq391CjNHBTW3Odk8F8M0vWUDMosemWgVY9rolZ8NpKBZnzP9wIZkIFmPBmQwTuuQ4oMyGAsc1C41/cFMtAzGIQ998ygx/+BVnx35nujFxmQgRcZkIFXbwxuFeOtee0TLCBHWg+pkBV6m3K8P4o/SxhM5QxGXg8pa17sWxzqoHKm6iGFmH/cNzLnUwxOFb3lfAbnlOp9QzbxHEUGZOBFBmTgFc//U3tYpO7hC5Yh3DcAAA==
   </data>
  </layer>
- <layer id="77" name="Stripes" width="65" height="55">
+ <layer id="77" name="Stripes" width="65" height="55" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu3ZUQqAIBBF0TZQLbzf9lTLikGkkAJLG155D4j0kzU81LLrAAAAgDL9eK9/ah5DW/rQ4rUCrxpEsQZKyMH+TNbWjL7WeEpy3720Bso5mIbzvqX54KoGV7V46os5qF2DSDEHXpRz4I0ckAOjmAP2iXwvGHIQ9r93WinFHKSO31A1n1U5B6m3apDeX1mLOcj9f/Dn+YB1gf2BIQf+FHPghRzsyIFmDlgXWBcMOfA7a1POgddZ23E8tRwwHzAfGHIAAACAlmyIy9Qn3DcAAA==
   </data>

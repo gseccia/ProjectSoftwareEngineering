@@ -3,7 +3,7 @@
  <properties>
   <property name="charWidthDoor1" type="int" value="2"/>
   <property name="charXDoor1" type="int" value="16"/>
-  <property name="charYDoor1" type="int" value="5"/>
+  <property name="charYDoor1" type="int" value="4"/>
   <property name="itemCapacity" type="int" value="8"/>
   <property name="mobCapacity" type="int" value="6"/>
   <property name="spawnX1" type="int" value="12"/>
@@ -20,15 +20,15 @@
  <tileset firstgid="13997" source="apocalypse.tsx"/>
  <layer id="27" name="Mask" width="33" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACltnxsCwbhSP4mGC0QG97CEHjLph1A3kuoGegJ5u2GuGwMS4YTDExagbRt0wFNxADwwAyyrkOlAKAAA=
+   H4sIAAAAAAAACltnxsCwbhSPYiphGBho+2ntDmqAUTeMuoFcN9AT0NMNe80QmBg3DIa4GHXDqBuGghvogQFE+gyfUAoAAA==
   </data>
  </layer>
  <layer id="28" name="Door1" width="33" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgGAWjYHiBa2YQPApGwSgYBaNgFIwC+gAAbrxFz1AKAAA=
+   H4sIAAAAAAAACmNgGAWjgHrgmhkEj4JRMApGwSgYBaNg5AAA2IDTIVAKAAA=
   </data>
  </layer>
- <layer id="29" name="Base" width="33" height="20">
+ <layer id="29" name="Base" width="33" height="20" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACquQZmCoBOIKKtIVZKinthvIcTMlZpgKMzCYCQ+sG0KB9ocNsBtKgfaXUeiGh2IIvEZ8YPCoG0bdMOqGwe+Gl2h4pIbDYHDDW6jYW3EEGxmji2FTQw03EIuR3UGuW2B6B1tcDJQbACTzhoRQCgAA
   </data>

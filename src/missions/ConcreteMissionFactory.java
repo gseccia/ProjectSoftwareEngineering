@@ -8,6 +8,8 @@ import utils.RandomCollection;
 
 import java.util.*;
 
+import com.google.common.primitives.Ints;
+
 /*
 The ID of the missions are:
 0 -> KillNEnemies
@@ -18,30 +20,23 @@ More will be added...
 The IDs are internal to this class (not defined anywhere else)
  */
 
-public class MissionsFactory {
+public class ConcreteMissionFactory implements MissionFactory{
 
     private int itemCapacity, mobCapacity, difficulty, recallDifficulty;
     private EnemyConfiguration enemyConfiguration;
     private ItemConfiguration itemConf;
     private Map<Integer, RandomCollection<String>> availableTargets = new HashMap<>();
-    private RandomCollection<Integer> itemMissionsIDs = new RandomCollection<>(List.of(1));
-    private RandomCollection<Integer> mobsMissionsIDs = new RandomCollection<>(List.of(0, 2));
+    private RandomCollection<Integer> itemMissionsIDs = new RandomCollection<>(Ints.asList(1));
+    private RandomCollection<Integer> mobsMissionsIDs = new RandomCollection<>(Ints.asList(0, 2));
     private Mission manager;
     private SetStorageRoom targets;
 
     /**
      * Constructor of the factory
-     * @param itemCapacity the number of items that can be generated
-     * @param mobCapacity the number of mobs that can be generated
-     * @param difficulty the number of missions to generate
      * @param enemyConfiguration the instance of EnemyConfiguration
      * @param itemConf the instance of ItemConfiguration
      */
-    public MissionsFactory(int itemCapacity, int mobCapacity, int difficulty, EnemyConfiguration enemyConfiguration, ItemConfiguration itemConf) {
-        this.itemCapacity = itemCapacity;
-        this.mobCapacity = mobCapacity;
-        this.difficulty = difficulty/3 + 2;
-        recallDifficulty = difficulty;
+    public ConcreteMissionFactory(ItemConfiguration itemConf, EnemyConfiguration enemyConfiguration) {
         this.enemyConfiguration = enemyConfiguration;
         this.itemConf = itemConf;
         this.manager = new MissionManager();
@@ -50,17 +45,26 @@ public class MissionsFactory {
 
     /**
      * Generates the missions
+     * @param itemCapacity the number of items that can be generated
+     * @param mobCapacity the number of mobs that can be generated
+     * @param difficulty the number of missions to generate
      * @return an instance of Mission
      * @throws NotEnoughMissionsException if there are no more missions available
      */
-    public Mission generateMissions() throws NotEnoughMissionsException {
+    @Override
+    public Mission generateMissions(int itemCapacity, int mobCapacity, int difficulty) throws NotEnoughMissionsException {
+
+        this.itemCapacity = itemCapacity;
+        this.mobCapacity = mobCapacity;
+        this.difficulty = difficulty/3 + 2;
+        recallDifficulty = difficulty;
 
         //Generates items mission
-        generation(itemMissionsIDs, itemCapacity, difficulty/2);
-        difficulty -= difficulty/2;
+        generation(itemMissionsIDs, itemCapacity, this.difficulty/2);
+        this.difficulty -= this.difficulty/2;
 
         //Generates mobs missions
-        generation(mobsMissionsIDs, mobCapacity, difficulty);
+        generation(mobsMissionsIDs, mobCapacity, this.difficulty);
 
         manager.produceTargets(targets);
 
@@ -70,6 +74,7 @@ public class MissionsFactory {
     /**
      * @return the items needed by the missions
      */
+    @Override
     public Set<Item> targetItems(){
         return targets.getItemSet();
     }
@@ -77,6 +82,7 @@ public class MissionsFactory {
     /**
      * @return the enemies needed by the missions
      */
+    @Override
     public Set<Enemy> targetEnemies(){
         return targets.getEnemySet();
     }

@@ -61,7 +61,6 @@ public class MapGraph {
         while (!condition){
             totalDoor=0;    //reset ogni ciclo del numero totale di porte
             tiledMaps = mapSubSet();  //genera una sottoinsieme casuale di tiledMaps
-            System.out.println("GENERO "+ tiledMaps.size()+" BLOCCHI");
             for (int i = 0; i < tiledMaps.size(); i++) {
                 //doorNumber = random.nextInt(3) + 1;  //genera un numero di porte compreso tra 1 e 3
                 doorNumber = conf.getDoors(tiledMaps.get(i));
