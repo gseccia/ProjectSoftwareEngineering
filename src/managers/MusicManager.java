@@ -32,24 +32,47 @@ public class MusicManager extends Observer{
 		try {
 			levelCompletedSound = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/levelCompleted.ogg");
 			ripSound = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/dead.ogg");
-			menuMusic = (new Music(System.getProperty("user.dir") + "/resource/audio/menu/HorseSteppin.ogg"));
-			Files.list(Paths.get(System.getProperty("user.dir") + "/resource/audio/oth/"))
-	        	.filter(Files::isRegularFile)
-	        	.forEach(music->{
-					try {
-						gameMusic.add(new Music(music.toString()));
-					} catch (SlickException e) {
-						e.printStackTrace();
-					}
-				});
-//			gameMusic.add(new Music(System.getProperty("user.dir") + "/resource/audio/menu/HorseSteppin.ogg"));
-		} catch (SlickException | IOException e) {
+			menuMusic = (new Music(System.getProperty("user.dir") + "/resource/audio/menu/HorseSteppin.ogg", true));
+//			Files.list(Paths.get(System.getProperty("user.dir") + "/resource/audio/oth/"))
+//	        	.filter(Files::isRegularFile)
+//	        	.forEach(music->{
+//					try {
+//						gameMusic.add(new Music(music.toString()));
+//					} catch (SlickException e) {
+//						e.printStackTrace();
+//					}
+//				});
+//			gameMusic.add(new Music(System.getProperty("user.dir") + "/resource/audio/menu/HorseSteppin.ogg", true));
+		} catch (SlickException  e) {
 			e.printStackTrace();
 		}
 		// Init class utility fields
 		this.currentMusic = menuMusic;
 		this.currentSound = levelCompletedSound;
 		this.indexLevel = 0;
+		loadMusic();
+	}
+	
+	public void loadMusic() {
+		Thread loader = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Files.list(Paths.get(System.getProperty("user.dir") + "/resource/audio/oth/"))
+					.filter(Files::isRegularFile)
+					.forEach(music->{
+						try {
+							gameMusic.add(new Music(music.toString()));
+						} catch (SlickException e) {
+							e.printStackTrace();
+						}
+					});
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}); 
+		loader.start();
 	}
 
 	public static MusicManager getInstance(Subject s) {
