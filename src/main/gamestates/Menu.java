@@ -1,4 +1,4 @@
-package blocks;
+package main.gamestates;
 
 import java.awt.Font;
 import java.awt.image.BufferedImage;
@@ -17,7 +17,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.BufferedImageUtil;
 
-import main.GameStates;
 import main.ResourceManager;
 import managers.MusicManager;
 
@@ -30,7 +29,7 @@ public class Menu extends BasicGameState {
     private static final int START = 0;
     private static final int DEMO = 1;
     private static final int SCORES = 2;
-    private static final int OPTIONS = 3;
+    private static final int SETTINGS = 3;
     private static final int QUIT = 4;
     private String[] playersOptions = new String[NOCHOICES];
     private boolean exit = false;
@@ -120,8 +119,7 @@ public class Menu extends BasicGameState {
                 	((main.Game)stateBasedGame).setDemo();
                 	stateBasedGame.init(gameContainer);
                     stateBasedGame.enterState(GameStates.STARTING_POINT.getState());
-                case OPTIONS:
-                	this.rs.setState(-1);
+                case SETTINGS:
                 	stateBasedGame.enterState(GameStates.SETTINGS.getState());
                 default:
                     break;

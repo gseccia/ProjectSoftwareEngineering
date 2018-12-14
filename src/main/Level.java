@@ -2,9 +2,9 @@ package main;
 
 import blocks.Block;
 import blocks.BlockFactory;
-import blocks.Pause;
 import configuration.*;
 import elements.*;
+import main.gamestates.Pause;
 import managers.observers.scoreboard.ScorePointsManager;
 import map.MapGraph;
 import missions.Mission;
@@ -87,7 +87,7 @@ public class Level{
 			System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
 
 		}
-
+		
 
 	}
 

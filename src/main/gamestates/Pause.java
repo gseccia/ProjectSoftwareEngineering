@@ -1,6 +1,5 @@
-package blocks;
+package main.gamestates;
 
-import main.GameStates;
 import main.ResourceManager;
 import managers.MusicManager;
 import missions.Mission;
@@ -25,7 +24,6 @@ public class Pause extends BasicGameState {
     private ResourceManager rs;
 	private MusicManager mm;
 	private boolean isPaused;
-	private String textPause;
 	
 	//Fonts
 	java.awt.Font UIFont1;
@@ -39,7 +37,6 @@ public class Pause extends BasicGameState {
     }
 
     private Pause() {
-    	textPause = "";
         this.rs = ResourceManager.getInstance();
         this.mm = MusicManager.getInstance(this.rs);
     }
@@ -48,34 +45,34 @@ public class Pause extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.background = new Image(System.getProperty("user.dir") + "/resource/textures/screens/pauseBg.png");
         initFont();
-//        isPaused = false;
+        isPaused = false;
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-    	if (stateBasedGame.getCurrentStateID() == this.id) {
-//    		TODO fermare la musica durante la pausa
-//    		if (!isPaused) {
-//    			isPaused = true;
-//    			this.rs.setState(4);
-//    		}
+    	if (stateBasedGame.getCurrentStateID() == this.id) {    		
 	        background.draw(0, 0);
+	        String text = mission.toString() + "Press Escape to go back to Menu";
 
-	        formatStringIntoCanvas(mission.toString() + "Press Escape to go back to Menu", gameContainer);
-//	        applyBorder(textPause, 20, 20, new Color(105, 2, 2));
-	        
-//	        System.out.println(this.textPause);
-//	        uniFont.drawString(0, 0, this.textPause, new Color(201, 2, 2));
+//	        formatStringIntoCanvas(text, gameContainer);   non funziona rip
+	        applyBorder(text, 20, 20, new Color(105, 2, 2));
+	        uniFont.drawString(20, 20, text, new Color(201, 2, 2));
     	}
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input input = gameContainer.getInput();
+//        HANDLING PAUSE MUSIC
+        if (!isPaused && stateBasedGame.getCurrentStateID() == GameStates.PAUSE.getState()) {
+			isPaused = true;
+			this.rs.setState(-1);
+		}
         if(input.isKeyPressed(Input.KEY_P)){
-//        	this.rs.setState(5);
-            stateBasedGame.enterState(originState);        	
-//            isPaused=false;
+        	this.rs.setState(-1);        	
+            isPaused=false;
+//          HANDLING PAUSE MUSIC
+            stateBasedGame.enterState(originState);
         }
         if(input.isKeyPressed(Input.KEY_ESCAPE)){
         	this.rs.setState(0);

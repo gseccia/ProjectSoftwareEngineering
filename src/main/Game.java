@@ -3,12 +3,17 @@ package main;
 import blocks.*;
 import configuration.EnemyConfiguration;
 import configuration.ItemConfiguration;
+import main.gamestates.GameOver;
+import main.gamestates.GameStates;
+import main.gamestates.Menu;
+import main.gamestates.Pause;
+import main.gamestates.Settings;
+import main.gamestates.SplashScreen;
 import managers.MusicManager;
 import missions.ConcreteMissionFactory;
 import missions.DemoMissionFactory;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
-import main.Settings;
 
 import java.util.List;
 

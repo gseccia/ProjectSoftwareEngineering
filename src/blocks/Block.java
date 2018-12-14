@@ -32,9 +32,10 @@ import elements.Enemy;
 import elements.Item;
 import elements.Mob;
 import elements.Player;
-import main.GameOver;
-import main.GameStates;
 import main.ResourceManager;
+import main.gamestates.GameOver;
+import main.gamestates.GameStates;
+import main.gamestates.Pause;
 import elements.NullAnimationException;
 
 public abstract class Block extends BasicGameState
@@ -69,6 +70,8 @@ public abstract class Block extends BasicGameState
 	{
 		this.state = state;
 		this.mapName = mapName;
+		this.rs = ResourceManager.getInstance();
+		this.mm = MusicManager.getInstance(this.rs);
 	}
 	
 	public void initMusicManager() {
@@ -113,7 +116,6 @@ public abstract class Block extends BasicGameState
 		this.scoreManager.setNamePlayer("Armando");
 		
 //		Initialize Resource Manager
-
 		initMusicManager();
 	}
 	
@@ -227,41 +229,24 @@ public abstract class Block extends BasicGameState
 		}
 
 		if(dead) {
-//			g.setColor(Color.red);
 			arg1.enterState(GameStates.GAMEOVER.getState());
-//			g.drawString("You died!", 
-//					(Long.valueOf(Math.round(gc.getWidth()*0.3)).intValue()),
-//					(Long.valueOf(Math.round(gc.getHeight()*0.3)).intValue())
-//					);
-			// TODO Finest music management
-//			this.musicManager.end();
-//			bgMusic.stop();
-
-//			if(!deadEnd.playing()) deadEnd.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
-			/*try {
-				TimeUnit.SECONDS.sleep(5);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			System.exit(0);*/
-//			if(deathMusicMustBeStarted) {
-//        		rs.setState(3);
-//        		deathMusicMustBeStarted = false;
-//        	}
 		}
 
 
 		if(mission.completed()){
 			g.setColor(Color.white);
             try {
+            	int width = (gc.getWidth() - uniFont.getWidth("LEVEL COMPLETED!"))/2;
+            	int height = (gc.getWidth())/2;
                 g.fillRect(0, 0, gc.getWidth(), gc.getHeight(), new Image(System.getProperty("user.dir") + "/resource/textures/transitions/background.png"), 0, 0);
-                uniFont.drawString(player.getX()-35, player.getY()-50, "LEVEL COMPLETED!");
-                g.drawImage(new Image(System.getProperty("user.dir") + "/resource/textures/transitions/toBeCont.png"), player.getX()-85, player.getY()-25);
-				uniFont.drawString(player.getX()-35, player.getY()-22, "Press Enter to continue");
+                uniFont.drawString(width, height, "LEVEL COMPLETED!");
+//                g.drawImage(new Image(System.getProperty("user.dir") + "/resource/textures/transitions/toBeCont.png"), player.getX()-85, player.getY()-25);
+                width = (gc.getWidth() - uniFont.getWidth("Press Enter to continue"))/2;
+				uniFont.drawString(width, height, "Press Enter to continue");
 //				bgMusic.stop();
 //                if(!endLevel.playing()) endLevel.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
             	if(completedMusicMustBeStarted) {
-            		rs.setState(2);
+            		this.rs.setState(2);
             		completedMusicMustBeStarted = false;
             	}
 				
@@ -270,7 +255,8 @@ public abstract class Block extends BasicGameState
             }
             if(gc.getInput().isKeyDown(Input.KEY_ENTER)){
 //            	if(endLevel.playing()) endLevel.stop();
-//            	levelMusicMustBeStarted = true;
+            	this.rs.setState(1);
+            	levelMusicMustBeStarted = true;
             	generateNextLevel(gc, arg1);
 			}
 
@@ -500,6 +486,7 @@ public abstract class Block extends BasicGameState
 
 			//Activate ultra
 			if (player.getUltra().isReady() && gc.getInput().isKeyPressed(Input.KEY_SPACE)){
+				this.rs.setState(-1);
 				player.getUltra().activate(this);
 			}
 
@@ -593,7 +580,7 @@ public abstract class Block extends BasicGameState
 	    				org.newdawn.slick.util.ResourceLoader.getResourceAsStream(
 	    						System.getProperty("user.dir") + "/resource/font/joystix_monospace.ttf"
 	    						));
-	    		UIFont1 = UIFont1.deriveFont(java.awt.Font.ITALIC, 20.f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 30.f is the size of your font
+	    		UIFont1 = UIFont1.deriveFont(java.awt.Font.ITALIC, 15.f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 30.f is the size of your font
 
 	    		uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
 	    		uniFont.addAsciiGlyphs();

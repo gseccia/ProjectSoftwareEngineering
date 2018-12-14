@@ -18,7 +18,7 @@ import elements.EncapsulateMap;
 import elements.Enemy;
 import elements.Item;
 import elements.Player;
-import main.GameStates;
+import main.gamestates.GameStates;
 import managers.Directions;
 import managers.Wall;
 import managers.observers.scoreboard.ScorePointsManager;

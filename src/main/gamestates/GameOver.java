@@ -1,4 +1,4 @@
-package main;
+package main.gamestates;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -19,6 +19,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.BufferedImageUtil;
 
+import main.Game;
+import main.ResourceManager;
 import managers.MusicManager;
 
 public class GameOver extends BasicGameState{
@@ -28,7 +30,7 @@ public class GameOver extends BasicGameState{
     private Image image;
     private ResourceManager rs;
 	private MusicManager mm;
-	private boolean startCoolDown;
+	private boolean startMusic;
 	
 	public GameOver() {
         this.rs = ResourceManager.getInstance();
@@ -42,19 +44,22 @@ public class GameOver extends BasicGameState{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		startCoolDown = true;
+		startMusic = false;
 		initFont();
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		if (sbg.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
-			((Game)sbg).resetDifficulty();
 			g.drawImage(image, 0, 0);
+			applyBorder("Press Enter", 
+					(gc.getWidth()-uniFont.getWidth("Press Enter"))/2, 
+					(Long.valueOf(Math.round(gc.getHeight()*8/9)).intValue()), 
+					new Color(105, 2, 2));
 			uniFont.drawString(
-					0, 
-					(Long.valueOf(Math.round(gc.getHeight()*3/4)).intValue()), 
-					"Dumb ass press ENTER to continue.",
+					(gc.getWidth()-uniFont.getWidth("Press Enter"))/2, 
+					(Long.valueOf(Math.round(gc.getHeight()*8/9)).intValue()), 
+					"Press Enter",
 					new Color(201, 2, 2));
 		}
 	}
@@ -63,13 +68,14 @@ public class GameOver extends BasicGameState{
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 //		Executors.newSingleThreadScheduledExecutor().schedule(() -> System.exit(0) , 5, TimeUnit.SECONDS); 
 		if (arg1.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
-			if (startCoolDown) {
-				startCoolDown = false;
-				rs.setState(3);
+			if (!startMusic) {
+				startMusic = true;
+				this.rs.setState(3);
 				System.out.println("starting gameover music");
 			}
 			if (arg0.getInput().isKeyPressed(Input.KEY_ENTER)) {
-				startCoolDown = false;
+				startMusic = false;
+				((Game)arg1).resetDifficulty();
 				this.rs.setState(0);
 				arg1.enterState(GameStates.MENU.getState());
 			}
@@ -105,7 +111,7 @@ public class GameOver extends BasicGameState{
     				org.newdawn.slick.util.ResourceLoader.getResourceAsStream(
     						System.getProperty("user.dir") + "/resource/font/joystix_monospace.ttf"
     						));
-    		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 20.f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 30.f is the size of your font
+    		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 30.f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 30.f is the size of your font
 
     		uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
     		uniFont.addAsciiGlyphs();
@@ -116,6 +122,25 @@ public class GameOver extends BasicGameState{
     		e.printStackTrace();
     	}
     }
+    private void applyBorder(String s, int x, int y, Color c) {    	
+    	//    	uniFont.drawString(x, y, text, col);
+    	uniFont.drawString(ShiftWest(x, 2), ShiftNorth(y, 2), s, c);
+    	uniFont.drawString(ShiftWest(x, 2), ShiftSouth(y, 2), s, c);
+    	uniFont.drawString(ShiftEast(x, 2), ShiftNorth(y, 2), s, c);
+    	uniFont.drawString(ShiftEast(x, 2), ShiftSouth(y, 2), s, c);
+    }
 
+    private int ShiftNorth(int p, int distance) {
+    	return (p - distance);
+    }
+    private int ShiftSouth(int p, int distance) {
+    	return (p + distance);
+    }
+    private int ShiftEast(int p, int distance) {
+    	return (p + distance);
+    }
+    private int ShiftWest(int p, int distance) {
+    	return (p - distance);
+    }
 }
 

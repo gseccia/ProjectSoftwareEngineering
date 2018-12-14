@@ -1,4 +1,4 @@
-package main;
+package main.gamestates;
 
 public enum GameStates {
 	MENU(0),

@@ -110,23 +110,22 @@ public class HoraHora extends AnimatedElement implements SpecialAttack {
      */
     @Override
     public void activate(Block b) {
-        if(isReady()){
-            active = true;
-            Set<Enemy> targets = new HashSet<>();
-            SpecialAttackState prev = new KillEnemiesState(targets);
+    	if(isReady()){
+    		active = true;
+    		Set<Enemy> targets = new HashSet<>();
+    		SpecialAttackState prev = new KillEnemiesState(targets);
 
-            prev = new SoundState(ending, new HandleMusicState(ResourceManager.getInstance(), 1, prev));
+    		prev = new SoundState(ending, new HandleMusicState(ResourceManager.getInstance(), -1, prev));
 
-            for(Enemy e : b.getEnemy()){
-                if (enemyIsAtRange(caster.getX(), e.getX()-b.getShiftX()*16, caster.getY(), e.getY()-b.getShiftY()*16)) {
-                    targets.add(e);
-                    prev = new DrawOnTargetWithSoundState(this, e, b.getShiftX(), b.getShiftY(), horaHora, prev);
-                }
-            }
+    		for(Enemy e : b.getEnemy()){
+    			if (enemyIsAtRange(caster.getX(), e.getX()-b.getShiftX()*16, caster.getY(), e.getY()-b.getShiftY()*16)) {
+    				targets.add(e);
+    				prev = new DrawOnTargetWithSoundState(this, e, b.getShiftX(), b.getShiftY(), horaHora, prev);
+    			}
+    		}
 
-            current = new HandleMusicState(ResourceManager.getInstance(), 4, new SoundState(starting, new DrawIntroState(intro, firstHora, caster.getX()-50, caster.getY()-60, prev)));
-
-        }
+    		current = new HandleMusicState(ResourceManager.getInstance(), 4, new SoundState(starting, new DrawIntroState(intro, firstHora, caster.getX()-50, caster.getY()-60, prev)));
+    	}
     }
 
     /**

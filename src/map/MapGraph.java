@@ -3,9 +3,9 @@ package map;
 import blocks.BlockFactory;
 import configuration.MapConfiguration;
 import configuration.NoSuchElementInConfigurationException;
+import main.gamestates.GameStates;
 import blocks.Block;
 
-import main.GameStates;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 
 import java.util.*;

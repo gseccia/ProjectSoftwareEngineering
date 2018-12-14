@@ -81,8 +81,21 @@ public class MusicManager extends Observer{
 		return instance;
 	}
 
+	float pos;
 	@Override
 	public void update() {
+		// TODO PEZZA PAUSA
+		if(this.subject.getState()==-1) {
+			if (currentMusic.playing()) {
+				pos = currentMusic.getPosition();
+				currentMusic.pause();
+			}
+			else {
+				currentMusic.setPosition(pos);
+				currentMusic.loop(1.0f,  SoundStore.get().getMusicVolume() * 0.3f);
+			}
+			return;
+		}
 		if (currentMusic.playing()) currentMusic.stop();
 		if (currentSound.playing()) currentSound.stop();
 		switch(this.subject.getState()) {

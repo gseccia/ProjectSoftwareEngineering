@@ -1,11 +1,12 @@
 package blocks;
 
-import main.GameStates;
 import managers.Directions;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import main.gamestates.GameStates;
 
 public class ConcreteBlock extends Block {
 
