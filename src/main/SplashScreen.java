@@ -19,7 +19,7 @@ public class SplashScreen extends BasicGameState{
 	private MusicManager mm;
 	
 	public SplashScreen() {
-        this.rs = ResourceManager.getInstance();
+		this.rs = ResourceManager.getInstance();
         this.mm = MusicManager.getInstance(this.rs);
 	}
 	
