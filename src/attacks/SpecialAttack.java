@@ -1,10 +1,9 @@
 package attacks;
 
 import blocks.Block;
-import elements.AnimatedElement;
+import elements.Intro;
 import org.newdawn.slick.Image;
 
-import java.util.Set;
 
 public interface SpecialAttack {
 
@@ -55,4 +54,5 @@ public interface SpecialAttack {
 
     void setLocation(float x, float y);
 
+    Intro getIntro();
 }

@@ -81,6 +81,9 @@ public class Player extends Mob {
             ultra.draw();
         }
         super.draw();
+        if(ultra.getIntro().playing()){
+            ultra.getIntro().draw();
+        }
     }
 
     /**

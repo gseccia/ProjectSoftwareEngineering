@@ -4,10 +4,7 @@ import attacks.states.*;
 import blocks.Block;
 import configuration.AttackConfiguration;
 import configuration.NoSuchElementInConfigurationException;
-import elements.AnimatedElement;
-import elements.Enemy;
-import elements.NullAnimationException;
-import elements.Player;
+import elements.*;
 import main.ResourceManager;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
@@ -28,22 +25,28 @@ public class HoraHora extends AnimatedElement implements SpecialAttack {
     private SpecialAttackState current;
     private Player caster;
     private Sound starting, firstHora, horaHora, ending;
+    private Intro intro;
 
     public HoraHora(Player caster) {
         super();
         this.caster = caster;
-        Animation tmp = null;
         try {
             icon = new Image(System.getProperty("user.dir") + "/resource/textures/attack/horahora/icon.png");
 
+            Animation tmp;
             tmp = AttackConfiguration.getInstance().getRightAnimation("horahora");
             setCurrent(tmp);
+
+            Image[] frames = new Image[2];
+            frames[0] = new Image(System.getProperty("user.dir") + "/resource/textures/attack/horahora/intro/0.png");
+            frames[1] = new Image(System.getProperty("user.dir") + "/resource/textures/attack/horahora/intro/1.png");
+            intro = new Intro(new Animation(frames, new int[]{500, 500}));
 
             starting = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/horahora/begin.ogg");
             firstHora = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/horahora/StartingHora.ogg");
             horaHora = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/horahora/Hora.ogg");
             ending = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/horahora/end.ogg");
-        } catch (SlickException | NoSuchElementInConfigurationException e) {
+        } catch (SlickException | NoSuchElementInConfigurationException | NullAnimationException e) {
             e.printStackTrace();
         }
     }
@@ -117,12 +120,11 @@ public class HoraHora extends AnimatedElement implements SpecialAttack {
             for(Enemy e : b.getEnemy()){
                 if (enemyIsAtRange(caster.getX(), e.getX()-b.getShiftX()*16, caster.getY(), e.getY()-b.getShiftY()*16)) {
                     targets.add(e);
-                    SpecialAttackState tmp = new DrawOnTargetWithSoundState(this, e, b.getShiftX(), b.getShiftY(), horaHora, prev);
-                    prev = tmp;
+                    prev = new DrawOnTargetWithSoundState(this, e, b.getShiftX(), b.getShiftY(), horaHora, prev);
                 }
             }
 
-            current = new HandleMusicState(ResourceManager.getInstance(), 4, new SoundState(starting, new SoundState(firstHora, prev)));
+            current = new HandleMusicState(ResourceManager.getInstance(), 4, new SoundState(starting, new DrawIntroState(intro, firstHora, caster.getX()-50, caster.getY()-60, prev)));
 
         }
     }
@@ -146,5 +148,10 @@ public class HoraHora extends AnimatedElement implements SpecialAttack {
 
     private boolean enemyIsAtRange(float x1, float x2, float y1, float y2){
         return Math.abs(x1-x2) < MAXIMUM_DISTANCE && Math.abs(y1-y2) < MAXIMUM_DISTANCE;
+    }
+
+    @Override
+    public Intro getIntro() {
+        return intro;
     }
 }

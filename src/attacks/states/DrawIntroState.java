@@ -1,19 +1,18 @@
 package attacks.states;
 
-import elements.AnimatedElement;
-import org.newdawn.slick.Animation;
+import elements.Intro;
 import org.newdawn.slick.Sound;
 
-public class DrawAnimationWithMusicState implements SpecialAttackState {
+public class DrawIntroState implements SpecialAttackState {
 
-    private AnimatedElement animation;
+    private Intro intro;
     private Sound sfx;
     private boolean executed = false;
     private float x, y;
     private SpecialAttackState next;
 
-    public DrawAnimationWithMusicState(AnimatedElement animation, Sound sfx, float x, float y, SpecialAttackState next) {
-        this.animation = animation;
+    public DrawIntroState(Intro intro, Sound sfx, float x, float y, SpecialAttackState next) {
+        this.intro = intro;
         this.sfx = sfx;
         this.x = x;
         this.y = y;
@@ -27,8 +26,10 @@ public class DrawAnimationWithMusicState implements SpecialAttackState {
     public void execute() {
         if(!sfx.playing()){
             sfx.play();
-            animation.setLocation(x, y);
+            intro.setLocation(x, y);
+            intro.setPlaying(true);
             executed = true;
+
         }
     }
 
@@ -45,6 +46,7 @@ public class DrawAnimationWithMusicState implements SpecialAttackState {
      */
     @Override
     public SpecialAttackState next() {
+        intro.setPlaying(false);
         return next;
     }
 

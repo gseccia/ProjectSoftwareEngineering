@@ -213,7 +213,7 @@ public abstract class Block extends BasicGameState
 		}
 		player.draw();
 		g.draw(player);
-		
+
 		for(Item i: item) 
 		{
 			i.draw();
@@ -500,7 +500,6 @@ public abstract class Block extends BasicGameState
 
 			//Activate ultra
 			if (player.getUltra().isReady() && gc.getInput().isKeyPressed(Input.KEY_SPACE)){
-				System.out.println("ATTIVO LA ULTRA");
 				player.getUltra().activate(this);
 			}
 
