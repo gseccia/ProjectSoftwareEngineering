@@ -1,15 +1,11 @@
 package main.gamestates;
 
-import java.awt.Font;
-import java.util.ArrayList;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -19,22 +15,35 @@ public class Settings extends BasicGameState  {
 	private static Settings ourInstance = new Settings();
 	
 	private int playerChoice = 0;
-	// final list di stringhe 
-	private final String[] descriptions = new String[NOCHOICES];
-	private final Image[] redRightTriangles = new Image[NOCHOICES];
-	private final Image[] blackRightTriangles = new Image[NOCHOICES];
-	private final Image[] redLeftTriangles = new Image[NOCHOICES];
-	private final Image[] blackLeftTriangles = new Image[NOCHOICES];
+	// final list di stringhe e immagini 
+	private String[] Settings = new String[NOCHOICES];
+	private String[] descriptions = new String[NOCHOICES];
+	private Image[] redRightTriangles = new Image[NOCHOICES];
+	private Image[] blackRightTriangles = new Image[NOCHOICES];
+	private Image[] redLeftTriangles = new Image[NOCHOICES];
+	private Image[] blackLeftTriangles = new Image[NOCHOICES];
 	
-	private static final int NOCHOICES = 6;
+	private static final int NOCHOICES = 8;
 	private static final int W = 0;
 	private static final int A = 1;
 	private static final int S = 2;
 	private static final int D = 3;
-	private static final int VOLUME = 4;
-	private static final int BACK = 5;
-	private String[] Settings = new String[NOCHOICES];
-//    private Color notChosen = new Color(153, 204, 255);
+	private static final int ATTACK = 4;
+	private static final int SPECIAL = 5;
+	private static final int VOLUME = 6;
+	private static final int BACK = 7;
+	
+	// choices for right
+	private static final String right = "KEY_RIGHT";
+	// choices for left
+	private static final String left = "KEY_LEFT";
+	// choices for up
+	private static final String up = "KEY_UP";
+	// choices for right
+	private static final String down = "KEY_DOWN";
+	// choices for exit
+	private static final String reset = "Reset";
+	
     private Color notChosen = new Color(201, 2, 2);
     private Color chosen = new Color(0,0,0);
     private boolean exit = false;
@@ -65,19 +74,23 @@ public class Settings extends BasicGameState  {
 		for (int i=0; i<NOCHOICES; i++)
 			blackLeftTriangles[i] = new Image(System.getProperty("user.dir") + "\\resource\\textures\\arrows\\leftArrowBlack.png");
 		
-		descriptions[0]="Top";
+		descriptions[0]="Up";
 		descriptions[1]="Left";
 		descriptions[2]="Down";
 		descriptions[3]="Right";
-		descriptions[4]="Volume";
-		descriptions[5]="";
+		descriptions[4]="Attack1";
+		descriptions[5]="Attack2";
+		descriptions[6]="Volume";
+		descriptions[7]="";
 		
         Settings[0] = "W";
         Settings[1] = "A";
         Settings[2] = "S";
         Settings[3] = "D";
-        Settings[4] = "42";
-        Settings[5] = "Back";
+        Settings[4] = "M";
+        Settings[5] = "SPACE";
+        Settings[6] = "42";
+        Settings[7] = "Back";
 	}
 
 	@Override
@@ -110,11 +123,21 @@ public class Settings extends BasicGameState  {
             	playerChoice--;
             }
         }
+        if (input.isKeyPressed(Input.KEY_LEFT)) {
+        	changeValue(true);
+        }
+        if (input.isKeyPressed(Input.KEY_RIGHT)) {
+
+        	changeValue(false);
+        }
         if (input.isKeyPressed(Input.KEY_ENTER)) {
             switch (playerChoice) {
                 case BACK:
                 	if (Settings[BACK] == "Back")
                 		stateBasedGame.enterState(0);
+                	else if (Settings[BACK] == reset) {
+                		init(gameContainer, stateBasedGame);
+                	}
                     break;
                 default:
                     break;
@@ -122,6 +145,63 @@ public class Settings extends BasicGameState  {
         }
 	}
 
+	// Handle logic of selection
+	
+	private void changeValue(boolean leftKey) {
+		switch(playerChoice) {
+			case 0:
+				if (Settings[playerChoice]=="W")
+					Settings[playerChoice] = up;
+				else Settings[playerChoice] = "W";
+				break;
+			case 1:
+				if (Settings[playerChoice]=="A")
+					Settings[playerChoice] = left;
+				else Settings[playerChoice] = "A";
+				break;
+			case 2:
+				if (Settings[playerChoice]=="S")
+					Settings[playerChoice] = down;
+				else Settings[playerChoice] = "S";
+				break;
+			case 3:
+				if (Settings[playerChoice]=="D")
+					Settings[playerChoice] = right;
+				else Settings[playerChoice] = "D";
+				break;
+			case 4:
+				if (leftKey) Settings[playerChoice] = String.valueOf( (char) (Settings[playerChoice].charAt(0) - 1));
+				else Settings[playerChoice] = String.valueOf( (char) (Settings[playerChoice].charAt(0) + 1));
+				break;
+			case 5:
+				if (leftKey) Settings[playerChoice] = String.valueOf( (char) (Settings[playerChoice].charAt(0) - 1));
+				else Settings[playerChoice] = String.valueOf( (char) (Settings[playerChoice].charAt(0) + 1));
+				break;
+			case 6:
+				if (leftKey) {
+					String t = String.valueOf( Integer.valueOf(Settings[playerChoice]) - 1);
+					if(Integer.valueOf(t )== -1) Settings[playerChoice] = "0";
+					else Settings[playerChoice] = t;
+				}
+				else {
+					String t = String.valueOf( Integer.valueOf(Settings[playerChoice]) + 1);
+					if(Integer.valueOf(t) == 101) Settings[playerChoice] = "100";
+					else Settings[playerChoice] = t;
+				}
+				break;
+			case 7:
+				if (Settings[playerChoice]=="Back")
+					Settings[playerChoice] = reset;
+				else Settings[playerChoice] = "Back";
+				break;
+			default:
+				break;
+		}
+	}
+	
+	// Handle logic of update
+	
+	
 	@Override
 	public int getID() {
 		return id;
@@ -131,10 +211,10 @@ public class Settings extends BasicGameState  {
 		for (int i = 0; i < NOCHOICES; i++) {
 			if (playerChoice == i) {
 				g.drawImage(blackLeftTriangles[i], 300, i * 50 + 200);
-				g.drawImage(blackRightTriangles[i], 600, i * 50 + 200);
+				g.drawImage(blackRightTriangles[i], 700, i * 50 + 200);
 			} else {
 				g.drawImage(redLeftTriangles[i], 300, i * 50 + 200);
-				g.drawImage(redRightTriangles[i], 600, i * 50 + 200);
+				g.drawImage(redRightTriangles[i], 700, i * 50 + 200);
 			}
 		}
     }
@@ -153,7 +233,7 @@ public class Settings extends BasicGameState  {
 	
 	private void renderPlayersOptions(){
         for (int i = 0; i < NOCHOICES; i++) {
-    		int center = ((600-300)/2)+300-uniFont.getWidth(Settings[i])/2 +redLeftTriangles[i].getWidth()/2;
+    		int center = ((700-300)/2)+300-uniFont.getWidth(Settings[i])/2 +redLeftTriangles[i].getWidth()/2;
             if (playerChoice == i) {
             	 applyBorder(Settings[i], center, i * 50 + 200, new Color(0, 255, 255));
             	 uniFont.drawString(center, i * 50 + 200, Settings[i], chosen);
