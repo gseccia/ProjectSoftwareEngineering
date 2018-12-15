@@ -33,7 +33,7 @@
  <tileset firstgid="11477" source="../CompleteHallway/build_atlas.tsx"/>
  <layer id="70" name="Mask" width="65" height="55">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3UQQ6AMAhEUfX+h/CobjRxUQ0MbcH4SdigofQlZVmIbf1U7mdmz4EBSf4sZ+7fET0rG1hq3p4YYDDbINoDA92q50xZb8AbHgO1PwYYRAxmvatsA3bieAOlVskgGhhg0LqbtYaBZuCdy9oj6ogBBtb7tmqVDZTvSg0DDO59o/M/RY8enrOUGga1DJ7+tfbAAAPrfVu1SgbRwACD6yylhkEtA3YiBj0CAwyus5RaJQP2AQZv//7JIBpWA29PDDD4koF3d0T79pxN3X3ZiQEGGOQYVEwMfAYH0FaYq9w3AAA=
+   H4sIAAAAAAAACu2Yaw6DIBCEbS/iWe1JehU4Wf/0QbZrEzrAojObTGqibuDrOILLorpeDqX7U9HjEANJItPI/O3RUwzEQAz6MkB7iEHddd59oxjMUDUM/u0vBmKAMBj1XEUzUCaKQe9cEAMx+DVe7zrvvpqeYvA5v62+bsVvDQOUYwSDtH6LjcGeD0oODAzK/9wKZYCej2CQC7EykA9wH6A1C4MkBm8GeYL3gjffkQxY343J4cDOIJPlgbdXqPUBWtEMWuwX0IpisBVzR/eNaEUxSA19cMRMtPPPhAzs/BnzwM4f9QFaUQzsmsh6gZEB23ek1j44AwMvF8/OwFsbHyEPWvbc2zuXmcDGwFsvsjFIgT6ozQ6076sQH/TIvpHaY+CtmcWAg4F9DtgY2G8nvRjMqNIHySib4+ixzuCDB66Kef/cNwAA
   </data>
  </layer>
  <layer id="71" name="Door1" width="65" height="55">
@@ -51,7 +51,7 @@
    H4sIAAAAAAAACu3DQQkAAAgEsLN/Mlv5NsLBBksAAAAAAAAAAAAAAAAAeuz80OgAqf4SsNw3AAA=
   </data>
  </layer>
- <layer id="74" name="Base" width="65" height="55" visible="0">
+ <layer id="74" name="Base" width="65" height="55">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2WSQ7DIAxFUbvoMXKedLpLx2Wnm7Unq6W2m6gBAwYM+UhfjpCwyPcDc5kZc524+rluLUkr0pq0IW1H5vvvd4h2yrUnHUhH0ol0Hpkfzvno3hnz6KYdn6TXxKOGOpSOGurwi7eFXSU4cO2JK049UuWN5UDKA1cdpfNp5MBVt5R8gQNwwI3S/5lTufpRjO//cmjwPYaDVhhLfe+VrCf6AvoCOAAHtXOQ2oMaOEh9FjijdQ44AxyAA3Dgz4Fv322RA9++y11f2gNXPVNzoOEsuHwEB7J3YiwHIVxKcxArcNDGfQAOwAE4AAfgAByk9qA2Dji+29b/22NtHHB8t62vkQPJc1ArB9IegANwYNtzaQ9Kc6DhLOTiIIXXOTiQeif69lROTm6+WA5C9zy880LeVlJRggNOtDEq4XFMBAfgABx8lIsDWyxVfx8P3gtqp6ncNwAA
   </data>

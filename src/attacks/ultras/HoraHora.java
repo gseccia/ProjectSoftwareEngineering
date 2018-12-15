@@ -1,8 +1,8 @@
-package attacks;
+package attacks.ultras;
 
+import attacks.SpecialAttack;
 import attacks.states.*;
 import blocks.Block;
-import configuration.AttackConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import configuration.SpecialAttackConfiguration;
 import elements.*;
@@ -20,7 +20,7 @@ public class HoraHora extends AnimatedElement implements SpecialAttack {
 
     private final static String id = "horahora";
 
-    private final int RELOADING_TIME = Constants.framerate*10;
+    private final int RELOADING_TIME = Constants.framerate*15;
     private final float MAXIMUM_DISTANCE = 128;
     private int remaining = 0;
     private Image icon;
@@ -58,6 +58,19 @@ public class HoraHora extends AnimatedElement implements SpecialAttack {
     public void reload() {
         if(remaining > 0){
             remaining--;
+        }
+    }
+
+    /**
+     * Draw the current animation at a defined point.
+     */
+    @Override
+    public void draw() {
+        if(intro.playing()){
+            intro.draw();
+        }
+        if(isDrawable()) {
+            super.draw();
         }
     }
 

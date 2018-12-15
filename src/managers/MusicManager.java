@@ -24,6 +24,7 @@ public class MusicManager extends Observer{
 	private Music currentMusic;
 	private Sound currentSound;
 	private int indexLevel;
+	private float volume;
 	
 	
 	private MusicManager(Subject s) {
@@ -50,6 +51,7 @@ public class MusicManager extends Observer{
 		this.currentMusic = menuMusic;
 		this.currentSound = levelCompletedSound;
 		this.indexLevel = 0;
+		this.volume = SoundStore.get().getMusicVolume() * 0.3f;
 		loadMusic();
 	}
 	
@@ -92,7 +94,7 @@ public class MusicManager extends Observer{
 			}
 			else {
 				currentMusic.setPosition(pos);
-				currentMusic.loop(1.0f,  SoundStore.get().getMusicVolume() * 0.3f);
+				currentMusic.loop(1.0f,  this.volume);
 			}
 			return;
 		}
@@ -101,24 +103,24 @@ public class MusicManager extends Observer{
 		switch(this.subject.getState()) {
 			case 0:
 //				menu
-				this.menuMusic.loop(1.0f,  SoundStore.get().getMusicVolume() * 0.3f);
+				this.menuMusic.loop(1.0f,  this.volume);
 				this.currentMusic = this.menuMusic;
 				break;
 			case 1:
 //				new level
-				this.gameMusic.get(indexLevel).loop(1.0f,  SoundStore.get().getMusicVolume() * 0.3f);
+				this.gameMusic.get(indexLevel).loop(1.0f, this.volume);
 				this.currentMusic = this.gameMusic.get(indexLevel);
 				break;
 			case 2:
 //				level completed
-				this.levelCompletedSound.loop(1.0f,  SoundStore.get().getMusicVolume() * 0.3f);
+				this.levelCompletedSound.loop(1.0f,  this.volume);
 				this.currentSound = this.levelCompletedSound;
 				if (this.indexLevel < gameMusic.size()) this.indexLevel += 1;
 				else this.indexLevel = 0;
 				break;
 			case 3:
 //				rip
-				this.ripSound.loop(1.0f,  SoundStore.get().getMusicVolume() * 0.3f);
+				this.ripSound.loop(1.0f, this.volume);
 				this.currentSound = this.ripSound;
 				this.indexLevel = 0;
 				break;
@@ -130,5 +132,15 @@ public class MusicManager extends Observer{
 				break;
 		}
 	}
+
+	public float getVolume() {
+		return volume;
+	}
+
+	public void setVolume(float volume) {
+		this.volume = volume;
+		if (currentMusic.playing()) currentMusic.setVolume(volume);
+	}
+	
 
 }

@@ -81,6 +81,17 @@ public class ConcreteBlock extends Block {
     }
 
     /**
+     * Check if the user wants to perform the special attack
+     *
+     * @param in the Input object
+     * @return true if the player wants to perform the special attack
+     */
+    @Override
+    protected boolean special(Input in) {
+        return in.isKeyDown(Input.KEY_SPACE);
+    }
+
+    /**
      * Generate the next level
      *
      * @param gc the game container object

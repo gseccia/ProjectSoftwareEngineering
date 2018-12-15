@@ -22,7 +22,7 @@
  <tileset firstgid="6095" source="zombie_tileb.tsx"/>
  <layer id="33" name="Mask" width="46" height="32">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu2VUQrAIAxD/dghdv+T+i+DdTZJXUnBvzZ5KqRj9K770h1zm9vccW5FmZujp/Ixt9bnNG5GPq39X+arcjWrUZX1LJ/qvYrUVfBmPTtxI9iruFF+mfksW/ad1l7UnXf/C509Kn1za/XR2fmkz9L9OzdrXzHK3FzNN4/oXmDu/87c0VLwTDZaXukAFwAA
+   H4sIAAAAAAAACu3SQQrAIAxE0Sw8RO5/UvfSQjGZpLVfmIWg5kX1YeaEEFKcioEbN27cV7Xv5m90R8/o+gOqOup/+zW3+n1PcmfYu9xZ9SL7o7boPa1rs3pWu3cH7nPcSj9uvb3KirvP/bSnbssf3OpMbJjPowAXAAA=
   </data>
  </layer>
  <layer id="34" name="Door2" width="46" height="32">

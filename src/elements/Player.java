@@ -1,13 +1,9 @@
 package elements;
 
-import attacks.Attack;
-import attacks.HoraHora;
-import attacks.ShortRangeAttack;
-import attacks.SpecialAttack;
+import attacks.*;
+import attacks.ultras.Sparagmos;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.openal.SoundStore;
@@ -27,7 +23,8 @@ public class Player extends Mob {
         super(configuration, id);
         setAttack(new ShortRangeAttack(this));
         step = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/step.ogg");
-        ultra = new HoraHora(this);
+        ultra = new Sparagmos(this);
+        //ultra = new HoraHora(this);
     }
 
     @Override
@@ -77,13 +74,8 @@ public class Player extends Mob {
         if(isAttacking){
             getAttack().draw();
         }
-        if(ultra.isDrawable()){
-            ultra.draw();
-        }
         super.draw();
-        if(ultra.getIntro().playing()){
-            ultra.getIntro().draw();
-        }
+        ultra.draw();
     }
 
     /**
