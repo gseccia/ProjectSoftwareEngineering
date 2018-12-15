@@ -19,10 +19,7 @@ public class MapGraph {
 
     public MapGraph(int mapChosen, MapConfiguration conf, BlockFactory factory){
 
-        if (mapChosen <= 6)
-            this.mapChosen = 6;
-        else
-            this.mapChosen = mapChosen;
+        this.mapChosen = mapChosen;
         this.conf = conf;
         this.factory = factory;
         this.graph = new DefaultUndirectedGraph<>(Edge.class);
@@ -35,7 +32,7 @@ public class MapGraph {
        int i=0;
        int rand = 0;
        Random random = new Random();
-       int numeroCasuale = random.nextInt(6)+mapChosen-3;
+       int numeroCasuale = random.nextInt(2)+mapChosen+2;
        List<String> listTiledMaps = new ArrayList<>();
        while (i < numeroCasuale && tiledMaps.size() > 0) {
            rand = random.nextInt(tiledMaps.size()); // seleziona un elemento casuale tra tutte le tiledMaps

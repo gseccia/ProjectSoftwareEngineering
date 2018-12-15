@@ -66,13 +66,13 @@ public class Settings extends BasicGameState  {
 		initFont();
 		
 		for (int i=0; i<NOCHOICES; i++)
-			redRightTriangles[i] = new Image(System.getProperty("user.dir") + "\\resource\\textures\\arrows\\rightArrowRed.png");
+			redRightTriangles[i] = new Image(System.getProperty("user.dir") + "/resource/textures/arrows/rightArrowRed.png");
 		for (int i=0; i<NOCHOICES; i++)
-			blackRightTriangles[i] = new Image(System.getProperty("user.dir") + "\\resource\\textures\\arrows\\rightArrowBlack.png");
+			blackRightTriangles[i] = new Image(System.getProperty("user.dir") + "/resource/textures/arrows/rightArrowBlack.png");
 		for (int i=0; i<NOCHOICES; i++)
-			redLeftTriangles[i] = new Image(System.getProperty("user.dir") + "\\resource\\textures\\arrows\\leftArrowRed.png");
+			redLeftTriangles[i] = new Image(System.getProperty("user.dir") + "/resource/textures/arrows/leftArrowRed.png");
 		for (int i=0; i<NOCHOICES; i++)
-			blackLeftTriangles[i] = new Image(System.getProperty("user.dir") + "\\resource\\textures\\arrows\\leftArrowBlack.png");
+			blackLeftTriangles[i] = new Image(System.getProperty("user.dir") + "/resource/textures/arrows/leftArrowBlack.png");
 		
 		descriptions[0]="Up";
 		descriptions[1]="Left";
