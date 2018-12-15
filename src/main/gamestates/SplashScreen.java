@@ -1,5 +1,7 @@
 package main.gamestates;
 
+import java.io.IOException;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -27,7 +29,11 @@ public class SplashScreen extends BasicGameState{
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 //		rs.execute();
-		this.image = new Image(System.getProperty("user.dir") + "/resource/textures/screens/LoadingScreen.png");
+		try {
+			this.image = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/screens/LoadingScreen.png");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		this.initTime = System.currentTimeMillis();
 	}
 

@@ -4,6 +4,7 @@ import main.ResourceManager;
 import managers.MusicManager;
 import missions.Mission;
 
+import java.io.IOException;
 import java.text.Normalizer.Form;
 
 import org.newdawn.slick.*;
@@ -39,7 +40,11 @@ public class Pause extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.background = new Image(System.getProperty("user.dir") + "/resource/textures/screens/pauseBg.png");
+        try {
+			this.background = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/screens/pauseBg.png");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         uniFont = StatesUtils.initFont();
         isPaused = false;
     }
@@ -49,7 +54,6 @@ public class Pause extends BasicGameState {
     	if (stateBasedGame.getCurrentStateID() == this.id) {    		
 	        background.draw(0, 0);
 	        String text = mission.toString() + "Press Escape to go back to Menu";
-//	        formatStringIntoCanvas(text, gameContainer);   non funziona rip
 	        StatesUtils.applyBorder(uniFont, text, 20, 20, new Color(105, 2, 2));
 	        uniFont.drawString(20, 20, text, new Color(201, 2, 2));
     	}
@@ -88,22 +92,4 @@ public class Pause extends BasicGameState {
         Pause.mission = mission;
     }
     
-    private void formatStringIntoCanvas(String s, GameContainer gameContainer) {
-    	System.out.println(s);
-        int width = (Long.valueOf(Math.round(gameContainer.getWidth())).intValue());
-    	String formattedString = "";
-        if (uniFont.getWidth(s) > width) {
-        	for (String subString : s.split(" ")) {
-        		String tempString = formattedString+subString;
-        		if (uniFont.getWidth(tempString) < width) {
-        			formattedString += subString;
-        		}
-        		else {
-        			uniFont.drawString(0, 0, formattedString, new Color(201, 2, 2));
-        			formattedString = "";
-        		}
-        	}
-        }
-//    	System.out.println(formattedString);
-    }
 }

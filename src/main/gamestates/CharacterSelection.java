@@ -1,5 +1,7 @@
 package main.gamestates;
 
+import java.io.IOException;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -44,10 +46,14 @@ public class CharacterSelection extends BasicGameState {
 
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
-		this.background = new Image(System.getProperty("user.dir") + "/resource/textures/screens/charSelect.png");
-		this.char1Img = new Image(System.getProperty("user.dir") + "/resource/textures/characters/vegeta.png");
-		this.char2Img = new Image(System.getProperty("user.dir") + "/resource/textures/characters/fumiko.png");
-		this.char3Img = new Image(System.getProperty("user.dir") + "/resource/textures/characters/ark.png");
+		try {
+			this.background = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/screens/charSelect.png");
+			this.char1Img = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/characters/vegeta.png");
+			this.char2Img = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/characters/fumiko.png");
+			this.char3Img = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/characters/ark.png");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
 		uniFont = StatesUtils.initFont();
 	}
 

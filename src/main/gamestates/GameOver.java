@@ -42,7 +42,7 @@ public class GameOver extends BasicGameState{
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		try {
-			this.image = loadImage(System.getProperty("user.dir") + "/resource/textures/screens/gameOver.png");
+			this.image = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/screens/gameOver.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -87,20 +87,6 @@ public class GameOver extends BasicGameState{
 	@Override
 	public int getID() {
 		return id;
-	}
-	
-	private static Image loadImage(String path) throws IOException
-	{
-	    BufferedImage bufferedImage = ImageIO.read(new File(path));
-	    Texture texture = BufferedImageUtil.getTexture("", bufferedImage);
-	    Image image = null;
-		try {
-			image = new Image(texture.getImageWidth(), texture.getImageHeight());
-		    image.setTexture(texture);
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		return image; 
 	}
 	
 }

@@ -1,5 +1,7 @@
 package main.gamestates;
 
+import java.io.IOException;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -71,7 +73,11 @@ public class Settings extends BasicGameState  {
 	
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.background = new Image(System.getProperty("user.dir") + "/resource/textures/screens/settings.png");
+        try {
+			this.background = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/screens/settings.png");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		uniFont = StatesUtils.initFont();
 		
 		for (int i=0; i<NOCHOICES; i++)

@@ -1,19 +1,13 @@
 package main.gamestates;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.util.BufferedImageUtil;
 
 import main.ResourceManager;
 import managers.MusicManager;
@@ -56,9 +50,6 @@ public class Menu extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-//        font = new Font("Jokerman", Font.BOLD, 40);
-//        playersOptionsTTF = new TrueTypeFont(font, true);
-//        font = new Font ("Jokerman", Font.PLAIN, 20);
     	uniFont = StatesUtils.initFont();
         playersOptions[0] = "Start";
         playersOptions[1] = "Demo";
@@ -67,7 +58,7 @@ public class Menu extends BasicGameState {
         playersOptions[4] = "Quit";
         
         try {
-			this.image = loadImage(System.getProperty("user.dir") + "/resource/textures/screens/mainMenu.png");
+			this.image = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/screens/mainMenu.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -107,8 +98,6 @@ public class Menu extends BasicGameState {
                     exit = true;
                     break;
                 case START:
-                	//this.rs.setState(1);
-                	//stateBasedGame.init(gameContainer);
                     stateBasedGame.enterState(GameStates.CHAR_SELECTION.getState());
                     break;
                 case DEMO:
@@ -122,9 +111,7 @@ public class Menu extends BasicGameState {
                 	break;
                 default:
                     break;
-
             }
-
         }
     }
 
@@ -134,28 +121,12 @@ public class Menu extends BasicGameState {
         for (int i = 0; i < NOCHOICES; i++) {
             if (playersChoice == i) {
                 StatesUtils.applyBorder(uniFont, playersOptions[i], width, i * 50 + height, new Color(0, 255, 255));
-//                playersOptionsTTF.drawString(width, i * 50 + height, playersOptions[i], chosen);
                 uniFont.drawString(width, i * 50 + height, playersOptions[i], chosen);
             } else {
                 StatesUtils.applyBorder(uniFont, playersOptions[i], width, i * 50 + height, new Color(105, 2, 2));
-//                playersOptionsTTF.drawString(width, i * 50 + height, playersOptions[i], notChosen);
                 uniFont.drawString(width, i * 50 + height, playersOptions[i], notChosen);
             }
         }
     }
     
-    private Image loadImage(String path) throws IOException
-	{
-	    BufferedImage bufferedImage = ImageIO.read(new File(path));
-	    Texture texture = BufferedImageUtil.getTexture("", bufferedImage);
-	    Image image = null;
-		try {
-			image = new Image(texture.getImageWidth(), texture.getImageHeight());
-		    image.setTexture(texture);
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		return image; 
-	}
-	
 }
