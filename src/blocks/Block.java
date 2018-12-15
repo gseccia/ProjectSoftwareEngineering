@@ -146,10 +146,14 @@ public abstract class Block extends BasicGameState
 				tempWall.setX(x);
 				tempWall.setY(y);
 				for(Item j : item) {
-					if(j.getX() == tempWall.getX() && j.getY() == tempWall.getY()) {
+					if(j.intersects(tempWall)) {
 						tempWall.setX(x+r.nextInt(10));
 						tempWall.setY(y+r.nextInt(10));
 					}
+//					if(j.getX() == tempWall.getMinX() && j.getY() == tempWall.getMinY()) {
+//						tempWall.setX(x+r.nextInt(10));
+//						tempWall.setY(y+r.nextInt(10));
+//					}
 				}
 			}
 			i.setLocation((x)*map.getTileWidth(),y*map.getTileHeight());
@@ -429,20 +433,7 @@ public abstract class Block extends BasicGameState
 				}
 				
 			}
-//			else if(!gc.getInput().isKeyPressed(Directions.KEY_M)){
-//				if(key == Directions.UP) {
-//					player.faceStillUp();
-//				}
-//				else if(key == Directions.DOWN) {
-//					player.faceStillDown();
-//				}
-//				else if(key == Directions.LEFT) {
-//					player.faceStillLeft();
-//				}
-//				else if(key == Directions.RIGHT) {
-//					player.faceStillRight();
-//				}
-//			}
+
 			if(doorCollision.detectCollision(mapX, mapY, player)) {
 				if(doorCollision.getCollidedDoor() != -1 && pressed) {
 					for(Edge e:graph.getEdges(this)) {
@@ -454,8 +445,9 @@ public abstract class Block extends BasicGameState
 				}
 			}
 			if(itemCollision.detectCollision(mapX, mapY, player)) {
+				Item collidedItem = itemCollision.getCollidedItem();
 				this.scoreManager.decrease(0);
-				this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
+				this.scoreManager.increase(collidedItem.getItemPoints());
 
 				if (itemCollision.getItemID() == "heart") {
 					this.scoreManager.setState(States.LifePointsAccumulator);
@@ -464,16 +456,17 @@ public abstract class Block extends BasicGameState
 					this.scoreManager.setState(States.PointsAccumulator);
 				}
 
-				for(Enemy e : itemCollision.getCollidedItem().getSpawns()){
+				for(Enemy e : collidedItem.getSpawns()){
 					e.setPlayer(player);
 					e.setMap(this);
 				}
-				enemy.addAll(itemCollision.getCollidedItem().getSpawns());
-				setEnemiesSpawn(itemCollision.getCollidedItem().getSpawns());
+				enemy.addAll(collidedItem.getSpawns());
+				setEnemiesSpawn(collidedItem.getSpawns());
+				hitbox.updateMobs(new LinkedList<>(collidedItem.getSpawns()));
 
-				itemCollision.getCollidedItem().accept(player);
-				mission.check(itemCollision.getCollidedItem());
-				item.remove(itemCollision.getCollidedItem());
+				collidedItem.accept(player);
+				mission.check(collidedItem);
+				item.remove(collidedItem);
 			}
 
 			if(trapCollision.detectCollision(mapX, mapY, player)) {
@@ -493,6 +486,7 @@ public abstract class Block extends BasicGameState
 					}
 					enemy.addAll(i.getSpawns());
 					setEnemiesSpawn(i.getSpawns());
+					hitbox.updateMobs(new LinkedList<>(i.getSpawns()));
 
 					if(!i.isTrap()) {
 						i.accept(player);

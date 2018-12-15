@@ -28,7 +28,7 @@ public class ConcreteMissionFactory implements MissionFactory{
     private EnemyConfiguration enemyConfiguration;
     private ItemConfiguration itemConf;
     private Map<Integer, RandomCollection<String>> availableTargets = new HashMap<>();
-    private RandomCollection<Integer> itemMissionsIDs = new RandomCollection<>(Ints.asList(1, 3, 4));
+    private RandomCollection<Integer> itemMissionsIDs = new RandomCollection<>(Ints.asList(4));
     private RandomCollection<Integer> mobsMissionsIDs = new RandomCollection<>(Ints.asList(0, 2));
     private Mission manager;
     private SetStorageRoom targets;
