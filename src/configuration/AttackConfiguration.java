@@ -25,7 +25,7 @@ public class AttackConfiguration extends Configuration {
         return instance;
     }
 
-    private AttackConfiguration(String filename){
+    AttackConfiguration(String filename){
         this.configuration = super.uploadConfiguration(filename);
     }
 
