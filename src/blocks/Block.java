@@ -500,7 +500,6 @@ public abstract class Block extends BasicGameState
 
 			//Activate ultra
 			if (player.getUltra().isReady() && gc.getInput().isKeyDown(Input.KEY_SPACE)){
-				System.out.println("QUI");
 				this.rs.setState(-1);
 				player.getUltra().activate(this);
 			}

@@ -1,23 +1,24 @@
 package attacks;
 
+import attacks.states.DamageEnemiesState;
 import attacks.states.DrawOnCoordinatesWithSoundState;
 import attacks.states.SpecialAttackState;
 import blocks.Block;
 import configuration.NoSuchElementInConfigurationException;
 import configuration.SpecialAttackConfiguration;
-import elements.AnimatedElement;
-import elements.Intro;
-import elements.NullAnimationException;
-import elements.Player;
+import elements.*;
 import managers.Directions;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.geom.Rectangle;
 import utils.Constants;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Sparagmos extends AnimatedElement implements SpecialAttack {
 
@@ -33,6 +34,7 @@ public class Sparagmos extends AnimatedElement implements SpecialAttack {
     private Player caster;
     private Map<Integer, Animation> animations;
     private Sound laser;
+    float x, y, width, height;
 
     public Sparagmos(Player caster) {
         super();
@@ -108,34 +110,62 @@ public class Sparagmos extends AnimatedElement implements SpecialAttack {
         if(isReady()){
             active = true;
             int direction = caster.getCurrentDirection();
+            float shiftX = b.getShiftX()*16;
+            float shiftY = b.getShiftY()*16;
             int sx, sy;
             switch (direction){
                 case Directions.UP:
                     sx = 4;
                     sy = -1000;
+                    x = caster.getX() + shiftX;
+                    y = caster.getY() - 1000 + shiftY;
+                    width = 16;
+                    height = 1000;
                     break;
 
                 case Directions.DOWN:
                     sx = 4;
                     sy = 32;
+                    x = caster.getX() + shiftX;
+                    y = caster.getY() + shiftY;
+                    width = 16;
+                    height = 1000;
                     break;
 
                 case Directions.RIGHT:
                     sx = 17;
                     sy = 8;
+                    x = caster.getX() + shiftX;
+                    y = caster.getY() + shiftY;
+                    width = 1000;
+                    height = 16;
                     break;
 
                 case Directions.LEFT:
                     sx = -999;
                     sy = 8;
+                    x = caster.getX() - 1000 + shiftX;
+                    y = caster.getY() + shiftY;
+                    width = 1000;
+                    height = 16;
                     break;
 
                 default:
                     sx = 0;
                     sy = 0;
+                    x = 0;
+                    y = 0;
+                    width = 0;
+                    height = 0;
             }
             setCurrent(animations.get(caster.getCurrentDirection()));
-            current = new DrawOnCoordinatesWithSoundState(this, laser, caster.getX()+sx, caster.getY()+sy);
+            Set<Enemy> targets = new HashSet<>();
+            for(Enemy e : b.getEnemy()){
+                if(isAtRange(e)){
+                    targets.add(e);
+                }
+            }
+            current = new DrawOnCoordinatesWithSoundState(this, laser, caster.getX()+sx, caster.getY()+sy, new DamageEnemiesState(targets, DAMAGE));
         }
 
     }
@@ -170,5 +200,10 @@ public class Sparagmos extends AnimatedElement implements SpecialAttack {
     @Override
     public Intro getIntro() {
         return intro;
+    }
+
+    private boolean isAtRange(Enemy e){
+        Rectangle hitbox = new Rectangle(x, y, width, height);
+        return hitbox.intersects(e);
     }
 }
