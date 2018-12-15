@@ -18,19 +18,12 @@ public class CollisionDetectionMob extends CollisionDetectionStrategy{
 	@Override
 	public boolean detectCollision(int shiftX, int shiftY, Mob player) {
         boolean collision = false;
-        if(player == null) aligner(shiftX, shiftY, me, true);
-        else aligner(shiftX, shiftY, player, true);
         for (Mob mob : mobs){
             if (me.intersects(mob)){ 
             		collision = true;
             		break;
             }
         }
-        if(player != null) {
-        	collision = collision || player.intersects(me);
-        	player.setLocation(px,py);
-        }
-        else me.setLocation(px,py);
         return !collision;
 	}
 
