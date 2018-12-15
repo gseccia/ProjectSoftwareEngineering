@@ -35,6 +35,7 @@ public class DemoBlock extends Block{
 	private Wall lastDoor;
 	private boolean discovery;
 	private boolean firstTime;
+	private EncapsulateMap tmp;
 	
 	protected DemoBlock(int state, String mapName) {
 		super(state, mapName);
@@ -46,12 +47,14 @@ public class DemoBlock extends Block{
 	{
 		firstTime = true;
 		super.initBlock(player, population, items, graph, missionGenerated, spm);
-		EncapsulateMap tmp = new EncapsulateMap(getMap(),getHitbox().getDoors());
+		tmp = new EncapsulateMap(getMap(),getHitbox().getDoors());
 		pf = new AStarPathFinder(tmp,5000,false);
 		currentPath = null;
+		currentStep = 1;
 		doorLabel = new HashMap<>();
 		for(Wall door:getHitbox().getDoors()) {
 			doorLabel.put(door, UNEXPLORED);
+			System.out.println((tmp.blocked(null, tileConversion(door.getX(),true,false), tileConversion(door.getY(),true,false))? "NOT VALID":"VALID"));
 		}
 		lastDoor = null;
 		discovery = true;
@@ -73,7 +76,8 @@ public class DemoBlock extends Block{
 		playerTileY = tileConversion(player.getY(),false,true);
 		targetTileX = tileConversion(targetElement.getX(),true,align);
 		targetTileY = tileConversion(targetElement.getY(),false,align);
-		// System.out.println("TARGET TILE "+targetTileX+" "+targetTileY);
+		System.out.println("TARGET TILE "+targetTileX+" "+targetTileY);
+		System.out.println((tmp.blocked(null, targetTileX, targetTileY))?"BLOCKED":"FREE");
 		// System.out.println("PLAYER TILE "+playerTileX+" "+playerTileY);
 		currentPath = pf.findPath(player, playerTileX, playerTileY, targetTileX, targetTileY);
 		currentStep = 1;
@@ -87,8 +91,13 @@ public class DemoBlock extends Block{
 		if(discovery && !firstTime) {
 			lastDoor = getHitbox().getDoors().get(d-1);
 			doorLabel.put(lastDoor, EXPLORED);
-			// System.out.println("BLOCCO " + super.getMapName() + " PORTA DISCOVERY -> "+tileConversion(lastDoor.getX(),true,false)+", "+tileConversion(lastDoor.getY(),false,false)+" <--> "+doorLabel.get(lastDoor));
+			//System.out.println("BLOCCO " + super.getMapName() + " PORTA DISCOVERY -> "+tileConversion(lastDoor.getX(),true,false)+", "+tileConversion(lastDoor.getY(),false,false)+" <--> "+doorLabel.get(lastDoor));
 			discovery = false;
+		}
+		System.out.println("STATE");
+		for(Wall door:doorLabel.keySet()) {
+			System.out.println("BLOCCO " + super.getMapName() + " PORTA "+((door == lastDoor)?"DISCOVERY":"")+" -> "+tileConversion(door.getX(),true,false)+", "+tileConversion(door.getY(),false,false)+" <--> "+doorLabel.get(door));
+			
 		}
 		firstTime = false;
 	}
@@ -101,18 +110,18 @@ public class DemoBlock extends Block{
 			while(iter.hasNext() && doorSelected==null) {
 				Wall door = iter.next();
 				if(doorLabel.get(door)==UNEXPLORED) {
-					// System.out.println("PORTA TROVATA");
+					System.out.println("PORTA TROVATA");
 					doorLabel.put(door, EXPLORED);					
 					doorSelected = door;
 				}
 			}
 			if(doorSelected == null) {
 				doorSelected = lastDoor;
-				// System.out.println("ASSIGNED LAST DOOR");
+			    System.out.println("ASSIGNED LAST DOOR");
 			}
 			if(doorSelected != null) {
 				generateTPath(doorSelected,false);
-				// if(currentPath==null)System.out.println("NON PATH - "+getMap().getWidth()+" "+getMap().getHeight());
+				if(currentPath==null)System.out.println("NON PATH - "+getMap().getWidth()+" "+getMap().getHeight());
 			}
 			else {
 				System.out.println("Impossible errore");
@@ -135,7 +144,7 @@ public class DemoBlock extends Block{
 		
 		int direction;
 		
-		if(currentPath != null) {
+		if(currentPath != null && currentStep<currentPath.getLength()) {
 			int x,y,px,py;
 			
 			x =currentPath.getX(currentStep);
@@ -148,17 +157,14 @@ public class DemoBlock extends Block{
 			else if(py < y) direction = Directions.DOWN;
 			else if(py > y) direction = Directions.UP;
 			else direction = Directions.KEY_M;
+
+			
 		}
 		else direction = Directions.KEY_M;
 		
 		
 		return direction;
 	}
-	
-	private void updateStep() {
-		currentStep ++;
-	}
-	
 
 	@Override
 	public void generateNextLevel(GameContainer gc, StateBasedGame currentGame) {
@@ -190,7 +196,7 @@ public class DemoBlock extends Block{
 	private boolean check(int direction) {
 		boolean result = logicMovements() == direction;
 		if(result) {
-			updateStep();
+			currentStep ++;
 		}
 		return result;
 	}

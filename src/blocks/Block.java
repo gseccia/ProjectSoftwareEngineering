@@ -45,7 +45,6 @@ public abstract class Block extends BasicGameState
 	private CollisionDetectionItem itemCollision;
 	private CollisionDetectionEnemyAttacksPlayer enemyCollision;
 	private CollisionDetectionPlayerAttacksEnemy attackCollision;
-	private CollisionDetectionMob mobCollision;
 	private CollisionDetectionTrap trapCollision;
 	private TiledMap map;
 	protected Player player;
@@ -109,8 +108,8 @@ public abstract class Block extends BasicGameState
 		itemCollision = new CollisionDetectionItem(hitbox);
 		enemyCollision = new CollisionDetectionEnemyAttacksPlayer(hitbox);
 		attackCollision = new CollisionDetectionPlayerAttacksEnemy(hitbox);
-		mobCollision = new CollisionDetectionMob(hitbox);
 		trapCollision = new CollisionDetectionTrap(hitbox);
+
 		
 		// initialize score manager and observers
 		this.scoreManager = spm;
@@ -352,8 +351,7 @@ public abstract class Block extends BasicGameState
 			if(goRight(gc.getInput())){
 				player.faceRight();
 				wallCollision.setKey(Directions.RIGHT);
-				mobCollision.setKey(Directions.RIGHT);
-				if(wallCollision.detectCollision(mapX, mapY, player) && mobCollision.detectCollision(mapX, mapY, player)) {
+				if(wallCollision.detectCollision(mapX, mapY, player)) {
 					mapX += 1;
 					key = Directions.RIGHT;
 					player.setCurrentDirection(Directions.RIGHT);
@@ -363,8 +361,7 @@ public abstract class Block extends BasicGameState
 			else if(goLeft(gc.getInput())){
 				player.faceLeft();
 				wallCollision.setKey(Directions.LEFT);
-				mobCollision.setKey(Directions.LEFT);
-				if(wallCollision.detectCollision(mapX, mapY, player) && mobCollision.detectCollision(mapX, mapY, player)){
+				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapX -= 1;
 					key = Directions.LEFT;
 					player.setCurrentDirection(Directions.LEFT);
@@ -374,8 +371,7 @@ public abstract class Block extends BasicGameState
 			else if(goDown(gc.getInput())){
 				player.faceDown();
 				wallCollision.setKey(Directions.DOWN);
-				mobCollision.setKey(Directions.DOWN);
-				if(wallCollision.detectCollision(mapX, mapY, player) && mobCollision.detectCollision(mapX, mapY, player)){
+				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapY += 1;
 					key = Directions.DOWN;
 					player.setCurrentDirection(Directions.DOWN);
@@ -385,8 +381,7 @@ public abstract class Block extends BasicGameState
 			else if(goUp(gc.getInput())){
 				player.faceUp();
 				wallCollision.setKey(Directions.UP);
-				mobCollision.setKey(Directions.UP);
-				if(wallCollision.detectCollision(mapX, mapY, player) && mobCollision.detectCollision(mapX, mapY, player)){
+				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapY -= 1;
 					key = Directions.UP;
 					player.setCurrentDirection(Directions.UP);
