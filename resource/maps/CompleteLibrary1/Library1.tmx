@@ -20,7 +20,7 @@
  <tileset firstgid="13997" source="apocalypse.tsx"/>
  <layer id="27" name="Mask" width="33" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACltnxsCwbhSPYiphGBho+2ntDmqAUTeMuoFcN9AT0NMNe80QmBg3DIa4GHXDqBuGghvogQFE+gyfUAoAAA==
+   H4sIAAAAAAAACltnxsCwbhSPYiphGBho+2ntDmqAUTeMuoFcN9ATDGY3DIa4GHXDqBuGghvogQGMEmliUAoAAA==
   </data>
  </layer>
  <layer id="28" name="Door1" width="33" height="20">

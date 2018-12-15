@@ -40,6 +40,10 @@ public class HitboxMaker {
 					walls.add(new Wall(i*map.getTileWidth(), j*map.getTileHeight(),
 							map.getTileWidth(), map.getTileHeight()));
 					occupiedTiles[i][j] = true;
+					if(i != map.getWidth()-1) 
+						occupiedTiles[i+1][j] = true;
+					if(i != 0)
+						occupiedTiles[i-1][j] = true;
 				}
 				else
 					occupiedTiles[i][j] = false;

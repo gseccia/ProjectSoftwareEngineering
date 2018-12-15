@@ -163,10 +163,14 @@ public abstract class Block extends BasicGameState
 				tempWall.setX(x);
 				tempWall.setY(y);
 				for(Item j : item) {
-					if(j.getX() == tempWall.getX() && j.getY() == tempWall.getY()) {
+					if(j.intersects(tempWall)) {
 						tempWall.setX(x+r.nextInt(10));
 						tempWall.setY(y+r.nextInt(10));
 					}
+//					if(j.getX() == tempWall.getMinX() && j.getY() == tempWall.getMinY()) {
+//						tempWall.setX(x+r.nextInt(10));
+//						tempWall.setY(y+r.nextInt(10));
+//					}
 				}
 			}
 			i.setLocation((x)*map.getTileWidth(),y*map.getTileHeight());

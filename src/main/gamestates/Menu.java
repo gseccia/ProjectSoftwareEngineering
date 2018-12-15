@@ -110,9 +110,9 @@ public class Menu extends BasicGameState {
                     exit = true;
                     break;
                 case START:
-                	this.rs.setState(1);
-                	stateBasedGame.init(gameContainer);
-                    stateBasedGame.enterState(GameStates.STARTING_POINT.getState());
+                	//this.rs.setState(1);
+                	//stateBasedGame.init(gameContainer);
+                    stateBasedGame.enterState(GameStates.CHAR_SELECTION.getState());
                     break;
                 case DEMO:
                 	this.rs.setState(1);

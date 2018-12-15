@@ -3,6 +3,7 @@ package main;
 import blocks.*;
 import configuration.EnemyConfiguration;
 import configuration.ItemConfiguration;
+import main.gamestates.CharacterSelection;
 import main.gamestates.GameOver;
 import main.gamestates.GameStates;
 import main.gamestates.Menu;
@@ -32,6 +33,10 @@ public class Game extends StateBasedGame{
         current_difficulty = 0;
         this.rs = ResourceManager.getInstance();
         mm = MusicManager.getInstance(this.rs);
+    }
+    
+    public void setCharacter(String charname) {
+    	this.charname = charname;
     }
 
     @Override
@@ -63,7 +68,8 @@ public class Game extends StateBasedGame{
 		this.addState(new GameOver());
 		// for options page
 		this.addState(Settings.getInstance());
-        
+		// for character selection page
+		this.addState(new CharacterSelection(rs));
 //        this.rs.setState(0);
         this.enterState(GameStates.SPLASHSCREEN.getState()); //always enter in splash screen state
     }
