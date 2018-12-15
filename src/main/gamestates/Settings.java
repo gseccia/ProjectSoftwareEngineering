@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -19,6 +20,7 @@ import managers.command.IncreaseVolumeCommand;
 public class Settings extends BasicGameState  {
 	private final int id = 2;
 	private static Settings ourInstance = new Settings();
+	private UnicodeFont uniFont;
 	
 	private int playerChoice = 0;
 	// final list di stringhe e immagini 
@@ -60,10 +62,6 @@ public class Settings extends BasicGameState  {
     private final IncreaseVolumeCommand increaseVolume = IncreaseVolumeCommand.getInstance();
     private final DecreaseVolumeCommand decreaseVolume = DecreaseVolumeCommand.getInstance();
 
-    //Fonts
-    java.awt.Font UIFont1;
-    org.newdawn.slick.UnicodeFont uniFont;
-
 	public static Settings getInstance() {
         return ourInstance;
     }
@@ -74,7 +72,7 @@ public class Settings extends BasicGameState  {
 	@Override
 	public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.background = new Image(System.getProperty("user.dir") + "/resource/textures/screens/settings.png");
-		initFont();
+		uniFont = StatesUtils.initFont();
 		
 		for (int i=0; i<NOCHOICES; i++)
 			redRightTriangles[i] = new Image(System.getProperty("user.dir") + "/resource/textures/arrows/rightArrowRed.png");
@@ -232,10 +230,10 @@ public class Settings extends BasicGameState  {
 	private void renderDescriptions(){
 		for (int i = 0; i < NOCHOICES; i++) {
 			if (playerChoice == i) {
-				applyBorder(descriptions[i], 60, i * 50 + 200, new Color(0, 255, 255));
+				StatesUtils.applyBorder(uniFont, descriptions[i], 60, i * 50 + 200, new Color(0, 255, 255));
 				uniFont.drawString(60, i * 50 + 200, descriptions[i], chosen);
 			} else {
-				applyBorder(descriptions[i], 60, i * 50 + 200, new Color(105, 2, 2));
+				StatesUtils.applyBorder(uniFont, descriptions[i], 60, i * 50 + 200, new Color(105, 2, 2));
 				uniFont.drawString(60, i * 50 + 200, descriptions[i], notChosen);
 			}
 		}
@@ -245,51 +243,13 @@ public class Settings extends BasicGameState  {
         for (int i = 0; i < NOCHOICES; i++) {
     		int center = ((700-300)/2)+300-uniFont.getWidth(Settings[i])/2 +redLeftTriangles[i].getWidth()/2;
             if (playerChoice == i) {
-            	 applyBorder(Settings[i], center, i * 50 + 200, new Color(0, 255, 255));
+            	 StatesUtils.applyBorder(uniFont, Settings[i], center, i * 50 + 200, new Color(0, 255, 255));
             	 uniFont.drawString(center, i * 50 + 200, Settings[i], chosen);
             } else {
-            	applyBorder(Settings[i], center, i * 50 + 200, new Color(105, 2, 2));
+            	StatesUtils.applyBorder(uniFont, Settings[i], center, i * 50 + 200, new Color(105, 2, 2));
             	uniFont.drawString(center, i * 50 + 200, Settings[i], notChosen);
             }
         }
-    }
-	@SuppressWarnings("unchecked")
-    public void initFont() {
-    	try{
-    		UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
-    				org.newdawn.slick.util.ResourceLoader.getResourceAsStream(
-    						System.getProperty("user.dir") + "/resource/font/joystix_monospace.ttf"
-    						));
-    		UIFont1 = UIFont1.deriveFont(java.awt.Font.ITALIC, 42.f); 
-
-    		uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
-    		uniFont.addAsciiGlyphs();
-    		uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
-    		uniFont.addAsciiGlyphs();
-    		uniFont.loadGlyphs();
-    	}catch(Exception e){
-    		e.printStackTrace();
-    	}
-    }
-    
-    private void applyBorder(String s, int x, int y, Color c) {    	
-        uniFont.drawString(ShiftWest(x, 2), ShiftNorth(y, 2), s, c);
-        uniFont.drawString(ShiftWest(x, 2), ShiftSouth(y, 2), s, c);
-        uniFont.drawString(ShiftEast(x, 2), ShiftNorth(y, 2), s, c);
-        uniFont.drawString(ShiftEast(x, 2), ShiftSouth(y, 2), s, c);
-    }
-    
-    private int ShiftNorth(int p, int distance) {
-    	return (p - distance);
-    }
-    private int ShiftSouth(int p, int distance) {
-    	return (p + distance);
-    }
-    private int ShiftEast(int p, int distance) {
-    	return (p + distance);
-    }
-    private int ShiftWest(int p, int distance) {
-    	return (p - distance);
     }
 	
 }
