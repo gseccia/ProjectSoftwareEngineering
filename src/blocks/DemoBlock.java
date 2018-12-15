@@ -144,7 +144,7 @@ public class DemoBlock extends Block{
 		
 		int direction;
 		
-		if(currentPath != null) {
+		if(currentPath != null && currentStep<currentPath.getLength()) {
 			int x,y,px,py;
 			
 			x =currentPath.getX(currentStep);
