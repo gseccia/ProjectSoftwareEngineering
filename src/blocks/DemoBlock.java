@@ -144,7 +144,7 @@ public class DemoBlock extends Block{
 		
 		int direction;
 		
-		if(currentPath != null && currentStep<currentPath.getLength()) {
+		if(currentPath != null) {
 			int x,y,px,py;
 			
 			x =currentPath.getX(currentStep);
@@ -158,7 +158,7 @@ public class DemoBlock extends Block{
 			else if(py > y) direction = Directions.UP;
 			else direction = Directions.KEY_M;
 
-			
+			//if(Math.abs(px-x) + Math.abs(py-y) <= 1)direction = Directions.KEY_M;
 		}
 		else direction = Directions.KEY_M;
 		

@@ -32,7 +32,6 @@ public class Enemy extends Mob implements MissionTarget {
     private Player player;
     private CollisionDetectionWall wallCollision;
     private CollisionDetectionDoor doorCollision;
-    private CollisionDetectionMob enemyCollision;
     private boolean attack;
     private int points;
     private Color bossFilter;
@@ -73,7 +72,6 @@ public class Enemy extends Mob implements MissionTarget {
     	vision = new Rectangle(getX(), getY(),directVision,lateralVision);  // Vision
     	wallCollision = new CollisionDetectionWall(map.getHitbox());
     	doorCollision = new CollisionDetectionDoor(map.getHitbox());
-    	enemyCollision = new CollisionDetectionMob(map.getHitbox(),this);
     	surrendTime = SURREND_TIME;
     	attack = false;
     	untilNextAttack = 0;
@@ -146,7 +144,7 @@ public class Enemy extends Mob implements MissionTarget {
 		
 		
 		Path p = pf.findPath(this, toTile(getX(),true), toTile(getY(),false), toTile(player.getX(),true), toTile(player.getY(),false));
-		if(p!=null && p.getLength()>1) {
+		if(p!=null && p.getLength()>1 && !this.intersects(player)) {
 			int goX = p.getX(1)*map.getMap().getTileWidth();
 			int goY = p.getY(1)*map.getMap().getTileHeight();
 			if(getX()>goX) dir=Directions.LEFT;
@@ -191,8 +189,7 @@ public class Enemy extends Mob implements MissionTarget {
 			else {
 				choosen = direction;
 				wallCollision.setKey(direction);
-				enemyCollision.setKey(direction);
-				if(!wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this) || enemyCollision.detectCollision(map.getShiftX(), map.getShiftY(), player) ||doorCollision.detectCollision(map.getShiftX(), map.getShiftY(), this)) {
+				if(!wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this) ||doorCollision.detectCollision(map.getShiftX(), map.getShiftY(), this)) {
 						//  Choose a random free direction 
 						Random r = new Random();
 						while(choosen == direction) {
