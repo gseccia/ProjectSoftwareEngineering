@@ -4,6 +4,7 @@ import attacks.states.*;
 import blocks.Block;
 import configuration.AttackConfiguration;
 import configuration.NoSuchElementInConfigurationException;
+import configuration.SpecialAttackConfiguration;
 import elements.*;
 import main.ResourceManager;
 import org.newdawn.slick.Animation;
@@ -16,6 +17,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class HoraHora extends AnimatedElement implements SpecialAttack {
+
+    private final static String id = "horahora";
 
     private final int RELOADING_TIME = Constants.framerate*10;
     private final float MAXIMUM_DISTANCE = 128;
@@ -31,16 +34,13 @@ public class HoraHora extends AnimatedElement implements SpecialAttack {
         super();
         this.caster = caster;
         try {
-            icon = new Image(System.getProperty("user.dir") + "/resource/textures/attack/horahora/icon.png");
+            icon = SpecialAttackConfiguration.getInstance().getIcon(id);
 
             Animation tmp;
-            tmp = AttackConfiguration.getInstance().getRightAnimation("horahora");
+            tmp = SpecialAttackConfiguration.getInstance().getRightAnimation(id);
             setCurrent(tmp);
 
-            Image[] frames = new Image[2];
-            frames[0] = new Image(System.getProperty("user.dir") + "/resource/textures/attack/horahora/intro/0.png");
-            frames[1] = new Image(System.getProperty("user.dir") + "/resource/textures/attack/horahora/intro/1.png");
-            intro = new Intro(new Animation(frames, new int[]{500, 500}));
+            intro = new Intro(SpecialAttackConfiguration.getInstance().getIntro(id));
 
             starting = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/horahora/begin.ogg");
             firstHora = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/horahora/StartingHora.ogg");
