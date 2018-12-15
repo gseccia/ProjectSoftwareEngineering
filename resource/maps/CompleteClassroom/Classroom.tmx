@@ -24,7 +24,7 @@
  <tileset firstgid="20333" source="../CompleteLibrary2/zombie_tileb.tsx"/>
  <layer id="32" name="Mask" width="50" height="35">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3VSwqAMAwA0V6oO720p3QlSCCVYNqm6QxkU388sFrPUmqSuY61B0es2cUh+7qf9Xxvx8habsu1Kzu0Zjh6hCNW8ntlSXvPe6/jwOG9rv13/+xzHH6O5xgOHDjy7nMccx1aOPI43s8avS7DESscscIRq2yODHMDrapovFgbAAA=
+   H4sIAAAAAAAACu3XSQqAMAxA0V6oO720p3QlSCBKMG2T+D9kUyceOGDfW+tF5thyD45Y8xeH7O181v29HTN7cluOzezQWuEYEY5YyfeVJe0+H72OA4f3uvbd/fKc4/BzXNtw4MBR9znHsdahhaOO436t2euyav9R2cMRKxyxquaoMCdx1KXaWBsAAA==
   </data>
  </layer>
  <layer id="35" name="Door2" width="50" height="35">
@@ -57,7 +57,7 @@
    H4sIAAAAAAAACu2Uyw2CQBRFXx9AAfhLdI0F6MI+wE8ibWgbLhS0Bvbahgs+WoN340qFDIyO0XuSs3lhMnMSZkQI+W+2lsgORjCGe3iwzJ1n5YmsPfV1Kc6cwRwW8AKvBjsiNMQ1OlxbpAXbsAO7sGfrP18Vo6HIGB7RcKrR4ePMAZzCGZzDhYEOHw0BzNFQ1OggxAQp7kqmeF82EzPzMlwH75mjtuYbO3w0BOz46Fw37Gg2vxPakiwdScq/qsZ0Rx/v60DxLujYnx3PwT8l4Q906IIdzea6YUezuW7OL/Z595wQQgghj9wAMXgtH1gbAAA=
   </data>
  </layer>
- <layer id="37" name="Obstacle1" width="50" height="35" visible="0">
+ <layer id="37" name="Obstacle1" width="50" height="35">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2WyQ3CMBBFp4VcE+fM0gTlQIATDXBm6SNhKYIrSx9ZoAj+JRKKbClY9iSR5kn/MrI0/8v6sokEQRAEQRCGTx4SFSH/3ESpiCrV/nzNKCIaR/xzE5OYaBq3P18zx46FZo/vuYkEGZYWOVLceaa5d1/zJIBPaAWtg//9muDuxw7e99ABOjrMwd2PZo6topu1+R+4+9HMMXOUg7sfvnJ03Y+NxVuhg7sfJ3g/Qxfo6rDn3P24w/sDekIvhzm4+1HCewW9oc+A3w9f9O1/ZUvf/le2pNiRafb4nrsmx45Cs8f3XBAEQeieLyjtK4xYGwAA
   </data>
