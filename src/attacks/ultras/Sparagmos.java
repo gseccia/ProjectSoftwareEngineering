@@ -130,7 +130,7 @@ public class Sparagmos extends AnimatedElement implements SpecialAttack {
                     sy = -1000;
                     x = caster.getX() + shiftX;
                     y = caster.getY() - 1000 + shiftY;
-                    width = 16;
+                    width = 14;
                     height = 1000;
                     break;
 
@@ -139,7 +139,7 @@ public class Sparagmos extends AnimatedElement implements SpecialAttack {
                     sy = 32;
                     x = caster.getX() + shiftX;
                     y = caster.getY() + shiftY;
-                    width = 16;
+                    width = 14;
                     height = 1000;
                     break;
 
@@ -149,7 +149,7 @@ public class Sparagmos extends AnimatedElement implements SpecialAttack {
                     x = caster.getX() + shiftX;
                     y = caster.getY() + shiftY;
                     width = 1000;
-                    height = 16;
+                    height = 14;
                     break;
 
                 case Directions.LEFT:
@@ -158,7 +158,7 @@ public class Sparagmos extends AnimatedElement implements SpecialAttack {
                     x = caster.getX() - 1000 + shiftX;
                     y = caster.getY() + shiftY;
                     width = 1000;
-                    height = 16;
+                    height = 14;
                     break;
 
                 default:
