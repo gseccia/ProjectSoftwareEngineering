@@ -459,7 +459,6 @@ public abstract class Block extends BasicGameState
 				if (itemCollision.getItemID() != "") {
 					this.itemCollision.getCollidedItem().setID(this.itemCollision.getItemID());
 					if (itemCollision.getItemID() == "heart") {
-						//System.out.println("heart taken, points: {}".format(String.valueOf(itemCollision.getCollidedItem().getItemPoints())));
 						this.scoreManager.decrease(0);
 						this.scoreManager.increase(20);
 						player.setHp(player.getHp() + player.getMaxHp() / 5);

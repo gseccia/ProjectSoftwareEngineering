@@ -1,8 +1,8 @@
-package attacks;
+package attacks.ultras;
 
+import attacks.SpecialAttack;
 import attacks.states.*;
 import blocks.Block;
-import configuration.AttackConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import configuration.SpecialAttackConfiguration;
 import elements.*;

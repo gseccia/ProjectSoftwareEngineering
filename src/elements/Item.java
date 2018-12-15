@@ -17,8 +17,6 @@ public class Item extends AnimatedElement implements MissionTarget {
                 configuration.getHeight(id),
                 0, 0);
         this.id = id;
-//        TODO rotto id per colpa di vincenzo
-//        this.itemPoints = configuration.getItemPoints(id);
     }
     
     /**
@@ -64,4 +62,6 @@ public class Item extends AnimatedElement implements MissionTarget {
 	public int getItemPoints() {
 		return this.itemPoints;
 	}
+
+
 }

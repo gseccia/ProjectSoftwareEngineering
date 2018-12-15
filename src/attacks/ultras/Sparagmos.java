@@ -1,5 +1,6 @@
-package attacks;
+package attacks.ultras;
 
+import attacks.SpecialAttack;
 import attacks.states.DamageEnemiesState;
 import attacks.states.DrawOnCoordinatesWithSoundState;
 import attacks.states.SpecialAttackState;
