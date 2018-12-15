@@ -214,4 +214,15 @@ public class DemoBlock extends Block{
 	protected boolean attack(Input in) {
 		return check(Directions.KEY_M);
 	}
+
+	/**
+	 * Check if the user wants to perform the special attack
+	 *
+	 * @param in the Input object
+	 * @return true if the player wants to perform the special attack
+	 */
+	@Override
+	protected boolean special(Input in) {
+		return false;
+	}
 }

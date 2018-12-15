@@ -25,6 +25,7 @@ public class Player extends Mob {
         setAttack(new ShortRangeAttack(this));
         step = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/step.ogg");
         ultra = new Sparagmos(this);
+        //ultra = new HoraHora(this);
     }
 
     @Override
@@ -74,13 +75,8 @@ public class Player extends Mob {
         if(isAttacking){
             getAttack().draw();
         }
-        if(ultra.isDrawable()){
-            ultra.draw();
-        }
         super.draw();
-        if(ultra.getIntro().playing()){
-            ultra.getIntro().draw();
-        }
+        ultra.draw();
     }
 
     /**

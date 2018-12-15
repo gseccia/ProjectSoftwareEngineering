@@ -62,6 +62,19 @@ public class HoraHora extends AnimatedElement implements SpecialAttack {
     }
 
     /**
+     * Draw the current animation at a defined point.
+     */
+    @Override
+    public void draw() {
+        if(intro.playing()){
+            intro.draw();
+        }
+        if(isDrawable()) {
+            super.draw();
+        }
+    }
+
+    /**
      * @return true if the SpecialAttack is ready to be used
      */
     @Override

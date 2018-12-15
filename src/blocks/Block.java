@@ -326,6 +326,13 @@ public abstract class Block extends BasicGameState
 	 */
 	protected abstract boolean attack(Input in);
 
+	/**
+	 * Check if the user wants to perform the special attack
+	 * @param in the Input object
+	 * @return true if the player wants to perform the special attack
+	 */
+	protected abstract boolean special(Input in);
+
 	@Override
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
 		if(isPaused(gc.getInput())){
@@ -499,7 +506,7 @@ public abstract class Block extends BasicGameState
 			if (player.getHp() <= 0) this.dead = true;
 
 			//Activate ultra
-			if (player.getUltra().isReady() && gc.getInput().isKeyDown(Input.KEY_SPACE)){
+			if (player.getUltra().isReady() && special(gc.getInput())){
 				this.rs.setState(-1);
 				player.getUltra().activate(this);
 			}
