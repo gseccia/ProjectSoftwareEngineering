@@ -2,6 +2,7 @@ package managers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import elements.Mob;
 import org.newdawn.slick.tiled.TiledMap;
@@ -91,5 +92,5 @@ public class HitboxMaker {
 	public boolean[][] getOccupiedTiles() {
 		return occupiedTiles;
 	}
-	
+
 }

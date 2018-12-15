@@ -1,29 +1,43 @@
 package missions;
 
+import configuration.EnemyConfiguration;
 import configuration.ItemConfiguration;
 import configuration.NoSuchElementInConfigurationException;
+import elements.Enemy;
 import elements.Item;
 import elements.NullAnimationException;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
-import visitors.DamagePlayerModifier;
+import utils.RandomCollection;
 
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
-public class FindNTrapsMission extends Mission {
+public class SaveTheNPCMission extends Mission {
 
-    private Set<Item> targets;
     private String id;
-    private int numTraps, difficulty;
+    private Item npc = null;
+    private Set<Enemy> spawns;
 
-    public FindNTrapsMission(String id, int numTraps, int difficulty) {
-        super(id);
-        this.id = id;
-        this.numTraps = numTraps;
-        this.difficulty = difficulty;
-        targets = new HashSet<>();
+    public SaveTheNPCMission(String targetId, int numSpawn) {
+        super(targetId);
+        this.id = targetId;
+        spawns = new HashSet<>();
+
+        RandomCollection<String> mobNames = new RandomCollection<>(EnemyConfiguration.getInstance().getMobNames());
+        String spawnId = mobNames.getRandom();
+
+        try {
+            for(int i=0; i<numSpawn; i++){
+                    Enemy e = new Enemy(EnemyConfiguration.getInstance(), spawnId);
+                    spawns.add(e);
+            }
+
+            npc = new Item(ItemConfiguration.getInstance(), targetId);
+            npc.setSpawns(spawns);
+        } catch (NoSuchElementInConfigurationException | SlickException | NullAnimationException e1) {
+            e1.printStackTrace();
+        }
+
     }
 
     /**
@@ -42,7 +56,7 @@ public class FindNTrapsMission extends Mission {
      */
     @Override
     public int numMissions() {
-        return 1;
+        return 0;
     }
 
     /**
@@ -50,7 +64,7 @@ public class FindNTrapsMission extends Mission {
      */
     @Override
     public boolean completed() {
-        return targets.isEmpty();
+        return npc == null;
     }
 
     /**
@@ -60,27 +74,14 @@ public class FindNTrapsMission extends Mission {
      */
     @Override
     public void check(MissionTarget item) {
-        targets.remove(item);
+        if(item.equals(npc)){
+            npc = null;
+        }
     }
 
     @Override
     public void produceTargets(StorageRoom acceptor) {
-        ItemConfiguration conf = ItemConfiguration.getInstance();
-        int damage = difficulty*5;
-        int green = new Random().nextInt(127)+128;
-        int red = 255 - green;
-        int blue = red/2;
-        Color filter = new Color(red, green, blue);
-
-        for(int i=0; i<numTraps; i++) {
-            try {
-                Item target = new Item(conf, id, new DamagePlayerModifier(damage), filter, true);
-                acceptor.collectItem(target);
-                targets.add(target);
-            } catch (NullAnimationException | SlickException | NoSuchElementInConfigurationException e) {
-                e.printStackTrace();
-            }
-        }
+        acceptor.collectItem(npc);
     }
 
     /**
@@ -88,12 +89,12 @@ public class FindNTrapsMission extends Mission {
      */
     @Override
     public int getNumInteractions() {
-        return numTraps;
+        return 1;
     }
 
     @Override
     public String toString(){
-        String ret = "You have to find " + numTraps + " traps [" + (numTraps-targets.size()) + "/" + numTraps +"]";
+        String ret = "Save "+id+"!";
         if(completed()){
             return ret + "\n- COMPLETED!";
         }

@@ -3,7 +3,6 @@ package managers;
 import elements.Mob;
 
 public class CollisionDetectionEnemyAttacksPlayer extends CollisionDetectionStrategy {
-    private Mob collidedMob;
     private int attackDamage;
 
     public CollisionDetectionEnemyAttacksPlayer(HitboxMaker hitbox){
@@ -20,16 +19,11 @@ public class CollisionDetectionEnemyAttacksPlayer extends CollisionDetectionStra
             if (mob.getAttack().intersects(player) && mob.isReadyToAttack()){
                 mob.hasAttacked();
                 collision = true;
-                this.collidedMob = mob;
                 attackDamage += mob.getAttackDamage();
             }
         }
         player.setLocation(px,py);
         return collision;
-    }
-
-    public Mob getCollidedMob(){
-        return this.collidedMob;
     }
 
     public int getAttackDamage(){

@@ -6,15 +6,21 @@ import missions.MissionTarget;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import spawns.Spawner;
+import visitors.NullModifier;
 import visitors.PlayerModifier;
 
-public class Item extends AnimatedElement implements MissionTarget, PlayerModifier {
+import java.util.HashSet;
+import java.util.Set;
+
+public class Item extends AnimatedElement implements MissionTarget, PlayerModifier, Spawner {
 
     private String id;
     private int itemPoints;
-    private PlayerModifier visitor = null;
+    private PlayerModifier visitor = new NullModifier();
     private Color filter;
     private boolean trap;
+    private Set<Enemy> spawns = new HashSet<>();
 
     public Item(ItemConfiguration configuration, String id) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
         super(configuration.getItemAnimation(id),
@@ -93,9 +99,7 @@ public class Item extends AnimatedElement implements MissionTarget, PlayerModifi
      */
     @Override
     public void accept(Player player) {
-        if(visitor != null){
-            visitor.accept(player);
-        }
+        visitor.accept(player);
     }
 
     /**
@@ -108,5 +112,21 @@ public class Item extends AnimatedElement implements MissionTarget, PlayerModifi
 
     public boolean isTrap(){
         return trap;
+    }
+
+    /**
+     * @return a set of enemy to spawn
+     */
+    @Override
+    public Set<Enemy> getSpawns() {
+        return spawns;
+    }
+
+    /**
+     * @param target the spawns
+     */
+    @Override
+    public void setSpawns(Set<Enemy> target) {
+        spawns = target;
     }
 }

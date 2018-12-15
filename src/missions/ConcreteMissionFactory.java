@@ -15,7 +15,8 @@ The ID of the missions are:
 0 -> KillNEnemies
 1 -> CollectNItems
 2 -> KillTheBoss
-3 -> Find the  traps
+3 -> Find the traps
+4 -> Save the NPC
 More will be added...
 
 The IDs are internal to this class (not defined anywhere else)
@@ -27,7 +28,7 @@ public class ConcreteMissionFactory implements MissionFactory{
     private EnemyConfiguration enemyConfiguration;
     private ItemConfiguration itemConf;
     private Map<Integer, RandomCollection<String>> availableTargets = new HashMap<>();
-    private RandomCollection<Integer> itemMissionsIDs = new RandomCollection<>(Ints.asList(1, 3));
+    private RandomCollection<Integer> itemMissionsIDs = new RandomCollection<>(Ints.asList(1, 3, 4));
     private RandomCollection<Integer> mobsMissionsIDs = new RandomCollection<>(Ints.asList(0, 2));
     private Mission manager;
     private SetStorageRoom targets;
@@ -152,6 +153,12 @@ public class ConcreteMissionFactory implements MissionFactory{
                 }
                 return availableTargets.get(3);
 
+            case 4:
+                if(availableTargets.get(4) == null){
+                    availableTargets.put(4, new RandomCollection<>(itemConf.getNPCNames()));
+                }
+                return availableTargets.get(4);
+
             default:
                 return null;
         }
@@ -179,6 +186,9 @@ public class ConcreteMissionFactory implements MissionFactory{
             case 3:
                 return new FindNTrapsMission(targetID, targetNum, recallDifficulty);
 
+            case 4:
+                return new SaveTheNPCMission(targetID, targetNum);
+
             default:
                 return null;
         }
@@ -203,6 +213,9 @@ public class ConcreteMissionFactory implements MissionFactory{
 
             case 3:
                 return capacity/difficulty;
+
+            case 4:
+                return 1;
 
             default:
                 return 0;

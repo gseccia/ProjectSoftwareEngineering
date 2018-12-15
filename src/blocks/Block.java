@@ -126,33 +126,13 @@ public abstract class Block extends BasicGameState
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
-//		try {
-//			endLevel = LevelCompletedMusic.getLevelCompletedMusic();
-//			deadEnd = DeadMusic.getDeadMusic();
-//			bgMusic = BgMusic.getBgMusic();
-//		} catch (SlickException e) {
-//			e.printStackTrace();
-//		}
 		setCharacterSpawn(1);
-		int x, y, n;
+		int x, y;
 		dead = false;
 		
 		// Enemies spawn from a set of a random spawn points
-		n = 1;
-		for(Enemy e : enemy)
-		{
-			x = Integer.parseInt(map.getMapProperty("spawnX"+n,"-1"));
-			y = Integer.parseInt(map.getMapProperty("spawnY"+n,"-1"));
-			if(x==-1 || y==-1) {
-				x = Integer.parseInt(map.getMapProperty("spawnX1","-1"));
-				y = Integer.parseInt(map.getMapProperty("spawnY1","-1"));
-				n = 1;
-			}
-			n++;
-			e.init(x,y);
-		}
-		
-		n = 1;
+		setEnemiesSpawn(enemy);
+
 		Random r = new Random();
 		boolean[][] occupied = hitbox.getOccupiedTiles();
 		Wall tempWall = new Wall(0, 0, map.getTileWidth(), map.getTileHeight());
@@ -181,6 +161,21 @@ public abstract class Block extends BasicGameState
 		initFont();
 	}
 
+
+	private void setEnemiesSpawn(Iterable<Enemy> enemies){
+		int x, y, n = 1;
+		for(Enemy e : enemies) {
+			x = Integer.parseInt(map.getMapProperty("spawnX" + n, "-1"));
+			y = Integer.parseInt(map.getMapProperty("spawnY" + n, "-1"));
+			if (x == -1 || y == -1) {
+				x = Integer.parseInt(map.getMapProperty("spawnX1", "-1"));
+				y = Integer.parseInt(map.getMapProperty("spawnY1", "-1"));
+				n = 1;
+			}
+			n++;
+			e.init(x, y);
+		}
+	}
 
 	/**
 	 * Generate the next level
@@ -474,6 +469,13 @@ public abstract class Block extends BasicGameState
 					this.scoreManager.setState(States.PointsAccumulator);
 				}
 
+				for(Enemy e : itemCollision.getCollidedItem().getSpawns()){
+					e.setPlayer(player);
+					e.setMap(this);
+				}
+				enemy.addAll(itemCollision.getCollidedItem().getSpawns());
+				setEnemiesSpawn(itemCollision.getCollidedItem().getSpawns());
+
 				itemCollision.getCollidedItem().accept(player);
 				mission.check(itemCollision.getCollidedItem());
 				item.remove(itemCollision.getCollidedItem());
@@ -489,6 +491,13 @@ public abstract class Block extends BasicGameState
 					} else {
 						this.scoreManager.setState(States.PointsAccumulator);
 					}
+
+					for(Enemy e : i.getSpawns()){
+						e.setPlayer(player);
+						e.setMap(this);
+					}
+					enemy.addAll(i.getSpawns());
+					setEnemiesSpawn(i.getSpawns());
 
 					if(!i.isTrap()) {
 						i.accept(player);

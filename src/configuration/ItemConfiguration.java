@@ -39,7 +39,17 @@ public class ItemConfiguration extends Configuration {
     public Set<String> getMissionItemNames() {
         Set<String> ret = new HashSet<>();
         for(String name : configuration.keySet()){
-            if(configuration.getAsJsonObject(name).get("mission").getAsInt() == 1){
+            if(configuration.getAsJsonObject(name).get("class").getAsString().equals("mission")){
+                ret.add(name);
+            }
+        }
+        return ret;
+    }
+
+    public Set<String> getNPCNames() {
+        Set<String> ret = new HashSet<>();
+        for(String name : configuration.keySet()){
+            if(configuration.getAsJsonObject(name).get("class").getAsString().equals("npc")){
                 ret.add(name);
             }
         }
@@ -74,14 +84,5 @@ public class ItemConfiguration extends Configuration {
         }
         return this.getConfiguration(id).get("points").getAsInt();
     }
-    /*
-     * Metodo per check inserimento item nelle missioni, vale 0 o 1,
-     * restituisce true se l'item va inserito nelle missioni
-     */
-    public boolean getMissionBoolean(String id) throws NoSuchElementInConfigurationException {
-        if(getConfiguration(id).get("mission") == null) {
-            throw new NoSuchElementInConfigurationException();
-        }
-        return this.getConfiguration(id).get("mission").getAsInt() == 1;
-    }
+
 }
