@@ -14,10 +14,12 @@ public class HitboxMaker {
 	private List<Wall> doors;
 	private List<Item> items;
 	private List<Mob> mobs;
+	private boolean[][] occupiedTiles;
 	
 	public HitboxMaker(TiledMap map,List<Mob> mobs) {
 		this.map = map;
 		this.mobs = mobs;
+		this.occupiedTiles = new boolean[map.getWidth()][map.getHeight()];
 	}
 	
 	/**
@@ -37,7 +39,10 @@ public class HitboxMaker {
 				if(tileID != 0) {
 					walls.add(new Wall(i*map.getTileWidth(), j*map.getTileHeight(),
 							map.getTileWidth(), map.getTileHeight()));
+					occupiedTiles[i][j] = true;
 				}
+				else
+					occupiedTiles[i][j] = false;
 			}
 		}
 		
