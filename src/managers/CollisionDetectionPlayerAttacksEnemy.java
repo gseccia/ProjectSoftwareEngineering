@@ -16,7 +16,6 @@ public class CollisionDetectionPlayerAttacksEnemy extends CollisionDetectionStra
 
     @Override
     public boolean detectCollision(int shiftX, int shiftY, Mob player){
-        boolean condition = false;
         enemy = new LinkedList<>();
         aligner(shiftX, shiftY, player,false);
         for(int i=0; i<mobs.size(); i++){
@@ -24,12 +23,11 @@ public class CollisionDetectionPlayerAttacksEnemy extends CollisionDetectionStra
                 mobs.remove(i);
             }
             else if(player.getAttack().intersects(mobs.get(i)) && !player.isReadyToAttack()){
-                condition = true;
                 enemy.add(mobs.get(i));
             }
         }
         player.setLocation(px,py);
-        return condition;
+        return !enemy.isEmpty();
     }
 
     public List<Mob> getEnemy() {

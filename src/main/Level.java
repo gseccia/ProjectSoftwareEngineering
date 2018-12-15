@@ -129,7 +129,7 @@ public class Level{
 		int numHearts = (itemCapacity-missions.targetItems().size())/level_difficulty;
 		for(int i=0; i<numHearts; i++){
 			b = blocks.getRandom();
-			addItemToBlock(b, new Item(conf, "heart", new HealPlayerModifier(conf.getItemPoints("heart"))));
+			addItemToBlock(b, new Item(conf, "heart", new HealPlayerModifier(conf.getItemPoints("heart")), false));
 			updateCapacity(b, blocks, itemsRemainingCapacity);
 		}
 

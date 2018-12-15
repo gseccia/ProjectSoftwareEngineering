@@ -46,6 +46,7 @@ public abstract class Block extends BasicGameState
 	private CollisionDetectionEnemyAttacksPlayer enemyCollision;
 	private CollisionDetectionPlayerAttacksEnemy attackCollision;
 	private CollisionDetectionMob mobCollision;
+	private CollisionDetectionTrap trapCollision;
 	private TiledMap map;
 	protected Player player;
 	protected Set<Enemy> enemy;
@@ -109,6 +110,7 @@ public abstract class Block extends BasicGameState
 		enemyCollision = new CollisionDetectionEnemyAttacksPlayer(hitbox);
 		attackCollision = new CollisionDetectionPlayerAttacksEnemy(hitbox);
 		mobCollision = new CollisionDetectionMob(hitbox);
+		trapCollision = new CollisionDetectionTrap(hitbox);
 		
 		// initialize score manager and observers
 		this.scoreManager = spm;
@@ -475,6 +477,25 @@ public abstract class Block extends BasicGameState
 				itemCollision.getCollidedItem().accept(player);
 				mission.check(itemCollision.getCollidedItem());
 				item.remove(itemCollision.getCollidedItem());
+			}
+
+			if(trapCollision.detectCollision(mapX, mapY, player)) {
+				this.scoreManager.decrease(0);
+				for(Item i : trapCollision.getCollisions()) {
+					this.scoreManager.increase(i.getItemPoints());
+
+					if (i.getID() == "heart") {
+						this.scoreManager.setState(States.LifePointsAccumulator);
+					} else {
+						this.scoreManager.setState(States.PointsAccumulator);
+					}
+
+					if(!i.isTrap()) {
+						i.accept(player);
+					}
+					mission.check(i);
+					item.remove(i);
+				}
 			}
 
 			if (enemyCollision.detectCollision(mapX, mapY, player)){

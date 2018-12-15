@@ -66,14 +66,16 @@ public class FindNTrapsMission extends Mission {
     public void produceTargets(StorageRoom acceptor) {
         ItemConfiguration conf = ItemConfiguration.getInstance();
         int damage = difficulty*5;
-        int blue = new Random().nextInt(255);
-        int red = 255 - blue;
-        int green = red/2;
+        int green = new Random().nextInt(127)+128;
+        int red = 255 - green;
+        int blue = red/2;
         Color filter = new Color(red, green, blue);
 
         for(int i=0; i<numTraps; i++) {
             try {
-                acceptor.collectItem(new Item(conf, id, new DamagePlayerModifier(damage), filter));
+                Item target = new Item(conf, id, new DamagePlayerModifier(damage), filter, true);
+                acceptor.collectItem(target);
+                targets.add(target);
             } catch (NullAnimationException | SlickException | NoSuchElementInConfigurationException e) {
                 e.printStackTrace();
             }
@@ -90,7 +92,7 @@ public class FindNTrapsMission extends Mission {
 
     @Override
     public String toString(){
-        String ret = "You have to find " + numTraps + "traps [" + targets.size() + "/" + numTraps +"]";
+        String ret = "You have to find " + numTraps + " traps [" + (numTraps-targets.size()) + "/" + numTraps +"]";
         if(completed()){
             return ret + "\n- COMPLETED!";
         }

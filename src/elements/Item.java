@@ -14,6 +14,7 @@ public class Item extends AnimatedElement implements MissionTarget, PlayerModifi
     private int itemPoints;
     private PlayerModifier visitor = null;
     private Color filter;
+    private boolean trap;
 
     public Item(ItemConfiguration configuration, String id) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
         super(configuration.getItemAnimation(id),
@@ -23,9 +24,10 @@ public class Item extends AnimatedElement implements MissionTarget, PlayerModifi
         this.id = id;
         this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
         this.filter = null;
+        trap = false;
     }
 
-    public Item(ItemConfiguration configuration, String id, PlayerModifier visitor, Color filter) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
+    public Item(ItemConfiguration configuration, String id, PlayerModifier visitor, Color filter, boolean trap) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
         super(configuration.getItemAnimation(id),
                 configuration.getWidth(id),
                 configuration.getHeight(id),
@@ -34,9 +36,10 @@ public class Item extends AnimatedElement implements MissionTarget, PlayerModifi
         this.visitor = visitor;
         this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
         this.filter = filter;
+        this.trap = trap;
     }
 
-    public Item(ItemConfiguration configuration, String id, PlayerModifier visitor) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
+    public Item(ItemConfiguration configuration, String id, PlayerModifier visitor, boolean trap) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
         super(configuration.getItemAnimation(id),
                 configuration.getWidth(id),
                 configuration.getHeight(id),
@@ -45,6 +48,7 @@ public class Item extends AnimatedElement implements MissionTarget, PlayerModifi
         this.visitor = visitor;
         this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
         this.filter = null;
+        this.trap = trap;
     }
     
     /**
@@ -100,5 +104,9 @@ public class Item extends AnimatedElement implements MissionTarget, PlayerModifi
     @Override
     public void draw() {
         super.draw(filter);
+    }
+
+    public boolean isTrap(){
+        return trap;
     }
 }
