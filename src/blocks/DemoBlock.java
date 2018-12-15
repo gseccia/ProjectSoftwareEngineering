@@ -52,17 +52,6 @@ public class DemoBlock extends Block{
 		doorLabel = new HashMap<>();
 		for(Wall door:getHitbox().getDoors()) {
 			doorLabel.put(door, UNEXPLORED);
-			System.out.println("BLOCCO " + super.getMapName() + " PORTA -> "+tileConversion(door.getX(),true,false)+", "+tileConversion(door.getY(),false,false)+" <--> "+doorLabel.get(door));
-			int wallIndex = getMap().getLayerIndex("Mask");
-			int x,y;
-			x = tileConversion(door.getX(),true,false);
-			y = tileConversion(door.getY(),false,false);
-			System.out.println("X "+x+" - Y "+y);
-			if(getMap().getTileId(x, y, wallIndex) != 0 || getMap().getTileId(x, y+1, wallIndex) !=0 ){
-				System.out.println("NOT VALID "+ ((getMap().getTileId(x, y, wallIndex) != 0)?"NEVER":"CASE"));
-				System.out.println("SAYS "+ ((tmp.blocked(null, x, y))?"BLOCKED":"FREE"));
-			}
-			else System.out.println("VALID");
 		}
 		lastDoor = null;
 		discovery = true;
@@ -98,7 +87,7 @@ public class DemoBlock extends Block{
 		if(discovery && !firstTime) {
 			lastDoor = getHitbox().getDoors().get(d-1);
 			doorLabel.put(lastDoor, EXPLORED);
-			System.out.println("BLOCCO " + super.getMapName() + " PORTA DISCOVERY -> "+tileConversion(lastDoor.getX(),true,false)+", "+tileConversion(lastDoor.getY(),false,false)+" <--> "+doorLabel.get(lastDoor));
+			// System.out.println("BLOCCO " + super.getMapName() + " PORTA DISCOVERY -> "+tileConversion(lastDoor.getX(),true,false)+", "+tileConversion(lastDoor.getY(),false,false)+" <--> "+doorLabel.get(lastDoor));
 			discovery = false;
 		}
 		firstTime = false;
@@ -112,23 +101,18 @@ public class DemoBlock extends Block{
 			while(iter.hasNext() && doorSelected==null) {
 				Wall door = iter.next();
 				if(doorLabel.get(door)==UNEXPLORED) {
-					System.out.println("PORTA TROVATA");
+					// System.out.println("PORTA TROVATA");
 					doorLabel.put(door, EXPLORED);					
 					doorSelected = door;
 				}
 			}
-			/*
-			for(Wall d:doorLabel.keySet()) {
-				System.out.println("BLOCCO " + super.getID() + " PORTA -> "+tileConversion(d.getX(),true,false)+", "+tileConversion(d.getY(),false,false)+" <--> "+doorLabel.get(d));
-			}*/
-			//if(lastDoor!=null)System.out.println("BLOCCO " + super.getID() + " PORTA DISCOVERY -> "+tileConversion(lastDoor.getX(),true,false)+", "+tileConversion(lastDoor.getY(),false,false)+" <--> "+doorLabel.get(lastDoor));
 			if(doorSelected == null) {
 				doorSelected = lastDoor;
-				System.out.println("ASSIGNED LAST DOOR");
+				// System.out.println("ASSIGNED LAST DOOR");
 			}
 			if(doorSelected != null) {
 				generateTPath(doorSelected,false);
-				if(currentPath==null)System.out.println("NON PATH - "+getMap().getWidth()+" "+getMap().getHeight());
+				// if(currentPath==null)System.out.println("NON PATH - "+getMap().getWidth()+" "+getMap().getHeight());
 			}
 			else {
 				System.out.println("Impossible errore");
@@ -196,11 +180,6 @@ public class DemoBlock extends Block{
 		}
 		g.setColor(Color.green);
 		}
-		
-		for(Wall door:getHitbox().getDoors()) {
-			System.out.println("BLOCCO "+((enemy.isEmpty() && item.isEmpty())? "VUOTO":"PIENO"));
-			System.out.println("BLOCCO " + super.getMapName() + " PORTA -> "+tileConversion(door.getX(),true,false)+", "+tileConversion(door.getY(),false,false)+" <--> "+doorLabel.get(door));
-		}
 	}
 
 	@Override
@@ -249,6 +228,6 @@ public class DemoBlock extends Block{
 	 */
 	@Override
 	protected boolean special(Input in) {
-		return false;
+		return check(Directions.KEY_M);
 	}
 }
