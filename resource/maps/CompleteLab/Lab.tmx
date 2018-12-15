@@ -3,7 +3,7 @@
  <properties>
   <property name="charWidthDoor1" type="int" value="2"/>
   <property name="charXDoor1" type="int" value="22"/>
-  <property name="charYDoor1" type="int" value="2"/>
+  <property name="charYDoor1" type="int" value="1"/>
   <property name="itemCapacity" type="int" value="12"/>
   <property name="mobCapacity" type="int" value="8"/>
   <property name="spawnX1" type="int" value="5"/>
@@ -20,9 +20,9 @@
    H4sIAAAAAAAACu3YSw6AIAwEUHacxoT7n84ViYvaH50KppPMRhGfBDaO3toAdAYxN7JZ7lNS7txo3Vfnqx2/Om+km3ruzbiTmzM+75cbdy61bm/QbumaN39zS/tOU8odNWeU23K+55gst+VdnDt7vU9w755y5wbh9u59S7xuzqN1r3yT5F49/1GNWu+vU+7coP9rVOneHhVV/GgTAAA=
   </data>
  </layer>
- <layer id="19" name="Door1" width="46" height="27" visible="0">
+ <layer id="19" name="Door1" width="46" height="27">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3DQQkAAAgEsPvZP4JNfRhCkA2W8EHXBgAAAODGAE357jxoEwAA
+   H4sIAAAAAAAACu3DoQ0AAAgDsDn+P4FPERgsvk2acHVtAAAAAPgYrwHBJmgTAAA=
   </data>
  </layer>
  <layer id="20" name="Base" width="46" height="27" visible="0">
