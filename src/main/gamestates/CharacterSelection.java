@@ -6,7 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -19,6 +19,7 @@ public class CharacterSelection extends BasicGameState {
 	private static final int CHAR1 = 0;
     private static final int CHAR2 = 1;
     private static final int CHAR3 = 2;
+    private UnicodeFont uniFont;
 	private String char1Descr, char2Descr, char3Descr;
 	private String charname1, charname2, charname3, selectedChar;
 	private Image background, char1Img, char2Img, char3Img;
@@ -47,7 +48,7 @@ public class CharacterSelection extends BasicGameState {
 		this.char1Img = new Image(System.getProperty("user.dir") + "/resource/textures/characters/vegeta.png");
 		this.char2Img = new Image(System.getProperty("user.dir") + "/resource/textures/characters/fumiko.png");
 		this.char3Img = new Image(System.getProperty("user.dir") + "/resource/textures/characters/ark.png");
-		initFont();
+		uniFont = StatesUtils.initFont();
 	}
 
 	@Override
@@ -86,7 +87,7 @@ public class CharacterSelection extends BasicGameState {
 			g.setColor(Color.black);
 			g.draw(char1);
 			g.fillRect(char1.getX(), char1.getY(), char1.getWidth(), char1.getHeight());
-			applyBorder(char1Descr, 20, 600, new Color(105, 2, 2));
+			StatesUtils.applyBorder(uniFont, char1Descr, 20, 600, new Color(105, 2, 2));
 	        uniFont.drawString(20, 600, char1Descr, new Color(201, 2, 2));
 			break;
 		case CHAR2:
@@ -97,7 +98,7 @@ public class CharacterSelection extends BasicGameState {
 			g.setColor(Color.black);
 			g.draw(char2);
 			g.fillRect(char2.getX(), char2.getY(), char2.getWidth(), char2.getHeight());
-			applyBorder(char2Descr, 20, 600, new Color(105, 2, 2));
+			StatesUtils.applyBorder(uniFont, char2Descr, 20, 600, new Color(105, 2, 2));
 	        uniFont.drawString(20, 600, char2Descr, new Color(201, 2, 2));
 			break;
 		case CHAR3:
@@ -108,7 +109,7 @@ public class CharacterSelection extends BasicGameState {
 			g.setColor(Color.black);
 			g.draw(char3);
 			g.fillRect(char3.getX(), char3.getY(), char3.getWidth(), char3.getHeight());
-			applyBorder(char3Descr, 20, 600, new Color(105, 2, 2));
+			StatesUtils.applyBorder(uniFont, char3Descr, 20, 600, new Color(105, 2, 2));
 	        uniFont.drawString(20, 600, char3Descr, new Color(201, 2, 2));
 			break;
 		default:
@@ -168,45 +169,5 @@ public class CharacterSelection extends BasicGameState {
 		return id;
 	}
 	
-//	Fonts
-	java.awt.Font UIFont1;
-	org.newdawn.slick.UnicodeFont uniFont;
-    @SuppressWarnings("unchecked")
-    public void initFont() {
-    	try{
-    		UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
-    				org.newdawn.slick.util.ResourceLoader.getResourceAsStream(
-    						System.getProperty("user.dir") + "/resource/font/joystix_monospace.ttf"
-    						));
-    		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 30.f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 30.f is the size of your font
 
-    		uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
-    		uniFont.addAsciiGlyphs();
-    		uniFont.getEffects().add(new ColorEffect(java.awt.Color.white)); //You can change your color here, but you can also change it in the render{ ... }
-    		uniFont.addAsciiGlyphs();
-    		uniFont.loadGlyphs();
-    	}catch(Exception e){
-    		e.printStackTrace();
-    	}
-    }
-    private void applyBorder(String s, int x, int y, Color c) {    	
-    	//    	uniFont.drawString(x, y, text, col);
-    	uniFont.drawString(ShiftWest(x, 2), ShiftNorth(y, 2), s, c);
-    	uniFont.drawString(ShiftWest(x, 2), ShiftSouth(y, 2), s, c);
-    	uniFont.drawString(ShiftEast(x, 2), ShiftNorth(y, 2), s, c);
-    	uniFont.drawString(ShiftEast(x, 2), ShiftSouth(y, 2), s, c);
-    }
-
-    private int ShiftNorth(int p, int distance) {
-    	return (p - distance);
-    }
-    private int ShiftSouth(int p, int distance) {
-    	return (p + distance);
-    }
-    private int ShiftEast(int p, int distance) {
-    	return (p + distance);
-    }
-    private int ShiftWest(int p, int distance) {
-    	return (p - distance);
-    }
 }
