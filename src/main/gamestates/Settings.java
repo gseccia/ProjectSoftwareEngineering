@@ -10,6 +10,12 @@ import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import main.ResourceManager;
+import managers.MusicManager;
+import managers.command.Broker;
+import managers.command.DecreaseVolumeCommand;
+import managers.command.IncreaseVolumeCommand;
+
 public class Settings extends BasicGameState  {
 	private final int id = 2;
 	private static Settings ourInstance = new Settings();
@@ -48,6 +54,11 @@ public class Settings extends BasicGameState  {
     private Color chosen = new Color(0,0,0);
     private boolean exit = false;
     private Image background;
+    
+//    Command design pattern usage
+    private final Broker broker = new Broker();
+    private final IncreaseVolumeCommand increaseVolume = IncreaseVolumeCommand.getInstance();
+    private final DecreaseVolumeCommand decreaseVolume = DecreaseVolumeCommand.getInstance();
 
     //Fonts
     java.awt.Font UIFont1;
@@ -89,7 +100,7 @@ public class Settings extends BasicGameState  {
         Settings[3] = "D";
         Settings[4] = "M";
         Settings[5] = "SPACE";
-        Settings[6] = "42";
+        Settings[6] = String.valueOf(Math.round(MusicManager.getInstance(ResourceManager.getInstance()).getVolume()*100));
         Settings[7] = "Back";
 	}
 
@@ -179,15 +190,14 @@ public class Settings extends BasicGameState  {
 				break;
 			case 6:
 				if (leftKey) {
-					String t = String.valueOf( Integer.valueOf(Settings[playerChoice]) - 1);
-					if(Integer.valueOf(t )== -1) Settings[playerChoice] = "0";
-					else Settings[playerChoice] = t;
+					broker.takeCommand(decreaseVolume);
 				}
 				else {
-					String t = String.valueOf( Integer.valueOf(Settings[playerChoice]) + 1);
-					if(Integer.valueOf(t) == 101) Settings[playerChoice] = "100";
-					else Settings[playerChoice] = t;
+					broker.takeCommand(increaseVolume);
 				}
+				broker.executeCommand();
+				String t = String.valueOf( Math.round(MusicManager.getInstance(ResourceManager.getInstance()).getVolume()*100));
+				Settings[playerChoice] = t;
 				break;
 			case 7:
 				if (Settings[playerChoice]=="Back")
