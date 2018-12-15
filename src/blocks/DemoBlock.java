@@ -141,24 +141,27 @@ public class DemoBlock extends Block{
 			x =currentPath.getX(currentStep);
 			y =currentPath.getY(currentStep);
 			
-			px = tileConversion(player.getX(),true,true);
-			py = tileConversion(player.getY(),false,true);
-			if(px < x) direction = Directions.RIGHT;
-			else if(px > x) direction = Directions.LEFT;
-			else if(py < y) direction = Directions.DOWN;
-			else if(py > y) direction = Directions.UP;
-			else direction = Directions.KEY_M;
+			if(mobCollision.detectCollision(getShiftX(), getShiftY(), null)) {
+				px = tileConversion(player.getX(),true,true);
+				py = tileConversion(player.getY(),false,true);
+				if(px < x) direction = Directions.RIGHT;
+				else if(px > x) direction = Directions.LEFT;
+				else if(py < y) direction = Directions.DOWN;
+				else if(py > y) direction = Directions.UP;
+				else direction = Directions.KEY_M;
+			}
+			else {
+				direction = Directions.KEY_M;
+				currentPath = null;
+				currentStep = 1;
+			}
+			
 		}
 		else direction = Directions.KEY_M;
 		
 		
 		return direction;
 	}
-	
-	private void updateStep() {
-		currentStep ++;
-	}
-	
 
 	@Override
 	public void generateNextLevel(GameContainer gc, StateBasedGame currentGame) {
@@ -190,7 +193,7 @@ public class DemoBlock extends Block{
 	private boolean check(int direction) {
 		boolean result = logicMovements() == direction;
 		if(result) {
-			updateStep();
+			currentStep ++;
 		}
 		return result;
 	}
