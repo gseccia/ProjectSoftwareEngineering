@@ -97,4 +97,8 @@ public class HitboxMaker {
 		return occupiedTiles;
 	}
 
+	public void updateMobs(List<Mob> update){
+		mobs.addAll(update);
+	}
+
 }
