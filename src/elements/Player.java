@@ -1,9 +1,6 @@
 package elements;
 
-import attacks.Attack;
-import attacks.HoraHora;
-import attacks.ShortRangeAttack;
-import attacks.SpecialAttack;
+import attacks.*;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import org.newdawn.slick.Animation;
@@ -27,7 +24,7 @@ public class Player extends Mob {
         super(configuration, id);
         setAttack(new ShortRangeAttack(this));
         step = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/step.ogg");
-        ultra = new HoraHora(this);
+        ultra = new Sparagmos(this);
     }
 
     @Override

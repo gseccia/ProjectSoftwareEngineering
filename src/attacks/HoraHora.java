@@ -20,7 +20,7 @@ public class HoraHora extends AnimatedElement implements SpecialAttack {
 
     private final static String id = "horahora";
 
-    private final int RELOADING_TIME = Constants.framerate*10;
+    private final int RELOADING_TIME = Constants.framerate*15;
     private final float MAXIMUM_DISTANCE = 128;
     private int remaining = 0;
     private Image icon;
