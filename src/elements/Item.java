@@ -5,11 +5,13 @@ import configuration.NoSuchElementInConfigurationException;
 import missions.MissionTarget;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import visitors.PlayerModifier;
 
-public class Item extends AnimatedElement implements MissionTarget {
+public class Item extends AnimatedElement implements MissionTarget, PlayerModifier {
 
     private String id;
     private int itemPoints;
+    private PlayerModifier visitor = null;
 
     public Item(ItemConfiguration configuration, String id) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
         super(configuration.getItemAnimation(id),
@@ -17,6 +19,17 @@ public class Item extends AnimatedElement implements MissionTarget {
                 configuration.getHeight(id),
                 0, 0);
         this.id = id;
+        this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
+    }
+
+    public Item(ItemConfiguration configuration, String id, PlayerModifier visitor) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
+        super(configuration.getItemAnimation(id),
+                configuration.getWidth(id),
+                configuration.getHeight(id),
+                0, 0);
+        this.id = id;
+        this.visitor = visitor;
+        this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
     }
     
     /**
@@ -49,19 +62,20 @@ public class Item extends AnimatedElement implements MissionTarget {
     public String getID() {
         return id;
     }
-    
-    public void setID(String name) {
-        this.id = name;
-        try {
-			this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
-		} catch (NoSuchElementInConfigurationException e) {
-			e.printStackTrace();
-		}
-    }
 
 	public int getItemPoints() {
 		return this.itemPoints;
 	}
 
-
+    /**
+     * Does something to the player
+     *
+     * @param player the player
+     */
+    @Override
+    public void accept(Player player) {
+        if(visitor != null){
+            visitor.accept(player);
+        }
+    }
 }

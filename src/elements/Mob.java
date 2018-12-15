@@ -132,6 +132,13 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
         this.maxHp = maxHp;
     }
 
+    public void heal(int amount){
+        hp += amount;
+        if(hp > maxHp){
+            hp = maxHp;
+        }
+    }
+
     public int getAttackDamage() {
         return attackDamage;
     }

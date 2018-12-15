@@ -456,24 +456,21 @@ public abstract class Block extends BasicGameState
 				}
 			}
 			if(itemCollision.detectCollision(mapX, mapY, player)) {
-				if (itemCollision.getItemID() != "") {
-					this.itemCollision.getCollidedItem().setID(this.itemCollision.getItemID());
-					if (itemCollision.getItemID() == "heart") {
-						this.scoreManager.decrease(0);
-						this.scoreManager.increase(20);
-						player.setHp(player.getHp() + player.getMaxHp() / 5);
-						if (player.getHp() > player.getMaxHp()) player.setHp(player.getMaxHp());
-						this.scoreManager.setState(States.LifePointsAccumulator);
-					}
-					else {
-						this.scoreManager.decrease(0);
-						this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
-						this.scoreManager.setState(States.PointsAccumulator);
-					}
-					mission.check(itemCollision.getCollidedItem());
-					item.remove(itemCollision.getCollidedItem());
+				this.scoreManager.decrease(0);
+				this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
+
+				if (itemCollision.getItemID() == "heart") {
+					this.scoreManager.setState(States.LifePointsAccumulator);
 				}
+				else {
+					this.scoreManager.setState(States.PointsAccumulator);
+				}
+
+				itemCollision.getCollidedItem().accept(player);
+				mission.check(itemCollision.getCollidedItem());
+				item.remove(itemCollision.getCollidedItem());
 			}
+
 			if (enemyCollision.detectCollision(mapX, mapY, player)){
 				player.damage(enemyCollision.getAttackDamage());
 				scoreManager.decrease(enemyCollision.getAttackDamage());
