@@ -45,6 +45,7 @@ public abstract class Block extends BasicGameState
 	private CollisionDetectionItem itemCollision;
 	private CollisionDetectionEnemyAttacksPlayer enemyCollision;
 	private CollisionDetectionPlayerAttacksEnemy attackCollision;
+	private CollisionDetectionTrap trapCollision;
 	private TiledMap map;
 	protected Player player;
 	protected Set<Enemy> enemy;
@@ -107,7 +108,9 @@ public abstract class Block extends BasicGameState
 		itemCollision = new CollisionDetectionItem(hitbox);
 		enemyCollision = new CollisionDetectionEnemyAttacksPlayer(hitbox);
 		attackCollision = new CollisionDetectionPlayerAttacksEnemy(hitbox);
+		trapCollision = new CollisionDetectionTrap(hitbox);
 
+		
 		// initialize score manager and observers
 		this.scoreManager = spm;
 		pao = new PointsAccumulatorObserver(this.scoreManager);
@@ -122,33 +125,13 @@ public abstract class Block extends BasicGameState
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
-//		try {
-//			endLevel = LevelCompletedMusic.getLevelCompletedMusic();
-//			deadEnd = DeadMusic.getDeadMusic();
-//			bgMusic = BgMusic.getBgMusic();
-//		} catch (SlickException e) {
-//			e.printStackTrace();
-//		}
 		setCharacterSpawn(1);
-		int x, y, n;
+		int x, y;
 		dead = false;
 		
 		// Enemies spawn from a set of a random spawn points
-		n = 1;
-		for(Enemy e : enemy)
-		{
-			x = Integer.parseInt(map.getMapProperty("spawnX"+n,"-1"));
-			y = Integer.parseInt(map.getMapProperty("spawnY"+n,"-1"));
-			if(x==-1 || y==-1) {
-				x = Integer.parseInt(map.getMapProperty("spawnX1","-1"));
-				y = Integer.parseInt(map.getMapProperty("spawnY1","-1"));
-				n = 1;
-			}
-			n++;
-			e.init(x,y);
-		}
-		
-		n = 1;
+		setEnemiesSpawn(enemy);
+
 		Random r = new Random();
 		boolean[][] occupied = hitbox.getOccupiedTiles();
 		Wall tempWall = new Wall(0, 0, map.getTileWidth(), map.getTileHeight());
@@ -181,6 +164,21 @@ public abstract class Block extends BasicGameState
 		initFont();
 	}
 
+
+	private void setEnemiesSpawn(Iterable<Enemy> enemies){
+		int x, y, n = 1;
+		for(Enemy e : enemies) {
+			x = Integer.parseInt(map.getMapProperty("spawnX" + n, "-1"));
+			y = Integer.parseInt(map.getMapProperty("spawnY" + n, "-1"));
+			if (x == -1 || y == -1) {
+				x = Integer.parseInt(map.getMapProperty("spawnX1", "-1"));
+				y = Integer.parseInt(map.getMapProperty("spawnY1", "-1"));
+				n = 1;
+			}
+			n++;
+			e.init(x, y);
+		}
+	}
 
 	/**
 	 * Generate the next level
@@ -330,6 +328,13 @@ public abstract class Block extends BasicGameState
 	 */
 	protected abstract boolean attack(Input in);
 
+	/**
+	 * Check if the user wants to perform the special attack
+	 * @param in the Input object
+	 * @return true if the player wants to perform the special attack
+	 */
+	protected abstract boolean special(Input in);
+
 	@Override
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
 		if(isPaused(gc.getInput())){
@@ -453,25 +458,54 @@ public abstract class Block extends BasicGameState
 				}
 			}
 			if(itemCollision.detectCollision(mapX, mapY, player)) {
-				if (itemCollision.getItemID() != "") {
-					this.itemCollision.getCollidedItem().setID(this.itemCollision.getItemID());
-					if (itemCollision.getItemID() == "heart") {
-						//System.out.println("heart taken, points: {}".format(String.valueOf(itemCollision.getCollidedItem().getItemPoints())));
-						this.scoreManager.decrease(0);
-						this.scoreManager.increase(20);
-						player.setHp(player.getHp() + player.getMaxHp() / 5);
-						if (player.getHp() > player.getMaxHp()) player.setHp(player.getMaxHp());
+				this.scoreManager.decrease(0);
+				this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
+
+				if (itemCollision.getItemID() == "heart") {
+					this.scoreManager.setState(States.LifePointsAccumulator);
+				}
+				else {
+					this.scoreManager.setState(States.PointsAccumulator);
+				}
+
+				for(Enemy e : itemCollision.getCollidedItem().getSpawns()){
+					e.setPlayer(player);
+					e.setMap(this);
+				}
+				enemy.addAll(itemCollision.getCollidedItem().getSpawns());
+				setEnemiesSpawn(itemCollision.getCollidedItem().getSpawns());
+
+				itemCollision.getCollidedItem().accept(player);
+				mission.check(itemCollision.getCollidedItem());
+				item.remove(itemCollision.getCollidedItem());
+			}
+
+			if(trapCollision.detectCollision(mapX, mapY, player)) {
+				this.scoreManager.decrease(0);
+				for(Item i : trapCollision.getCollisions()) {
+					this.scoreManager.increase(i.getItemPoints());
+
+					if (i.getID() == "heart") {
 						this.scoreManager.setState(States.LifePointsAccumulator);
-					}
-					else {
-						this.scoreManager.decrease(0);
-						this.scoreManager.increase(itemCollision.getCollidedItem().getItemPoints());
+					} else {
 						this.scoreManager.setState(States.PointsAccumulator);
 					}
-					mission.check(itemCollision.getCollidedItem());
-					item.remove(itemCollision.getCollidedItem());
+
+					for(Enemy e : i.getSpawns()){
+						e.setPlayer(player);
+						e.setMap(this);
+					}
+					enemy.addAll(i.getSpawns());
+					setEnemiesSpawn(i.getSpawns());
+
+					if(!i.isTrap()) {
+						i.accept(player);
+					}
+					mission.check(i);
+					item.remove(i);
 				}
 			}
+
 			if (enemyCollision.detectCollision(mapX, mapY, player)){
 				player.damage(enemyCollision.getAttackDamage());
 				scoreManager.decrease(enemyCollision.getAttackDamage());
@@ -503,7 +537,7 @@ public abstract class Block extends BasicGameState
 			if (player.getHp() <= 0) this.dead = true;
 
 			//Activate ultra
-			if (player.getUltra().isReady() && gc.getInput().isKeyDown(Input.KEY_SPACE)){
+			if (player.getUltra().isReady() && special(gc.getInput())){
 				this.rs.setState(-1);
 				player.getUltra().activate(this);
 			}

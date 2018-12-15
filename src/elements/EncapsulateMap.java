@@ -1,24 +1,37 @@
 package elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.pathfinding.*;
 
+import managers.Wall;
 
 public class EncapsulateMap implements TileBasedMap{
 	
 	private TiledMap map;
 	private int wallIndex;
+	private List<Wall> doors;
 	
-	public EncapsulateMap(TiledMap map) {
+	public EncapsulateMap(TiledMap map, List<Wall> doors) {
 		this.map=map;
 		wallIndex=map.getLayerIndex("Mask");
+		this.doors = doors;
 	}
 	
 	@Override
 	public boolean blocked(PathFindingContext pf, int x, int y) {
-		if(x<0 || x>getWidthInTiles()) return false;
+		boolean result = false;
+		for(Wall door:doors) {
+			result = (int)(door.getX()/map.getTileWidth()) == x && (int)(door.getY()/map.getTileHeight()) == y;
+			if(result) return false;
+		}
+		
+		if(x<0 || x>getWidthInTiles()-1) return false;
 		if(y<0 || y>=getHeightInTiles()-1) return false;
-		return map.getTileId(x, y, wallIndex) != 0 || map.getTileId(x, y+1, wallIndex) != 0;
+		
+		return map.getTileId(x, y, wallIndex) != 0 || map.getTileId(x, y+1, wallIndex) != 0 ;
 	}
 
 	@Override

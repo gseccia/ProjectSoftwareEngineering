@@ -15,6 +15,7 @@ import java.util.*;
 
 import org.newdawn.slick.SlickException;
 import utils.RandomCollection;
+import visitors.HealPlayerModifier;
 
 public class Level{
 
@@ -114,6 +115,8 @@ public class Level{
 	}
 
 	private void distributeItems() throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
+		ItemConfiguration conf = ItemConfiguration.getInstance();
+
 		RandomCollection<Block> blocks = new RandomCollection<>(block_list);
 		Block b;
 		for(Item i : missions.targetItems()){
@@ -126,15 +129,15 @@ public class Level{
 		int numHearts = (itemCapacity-missions.targetItems().size())/level_difficulty;
 		for(int i=0; i<numHearts; i++){
 			b = blocks.getRandom();
-			addItemToBlock(b, new Item(ItemConfiguration.getInstance(), "heart"));
+			addItemToBlock(b, new Item(conf, "heart", new HealPlayerModifier(conf.getItemPoints("heart")), false));
 			updateCapacity(b, blocks, itemsRemainingCapacity);
 		}
 
-		RandomCollection<String> itemNames = new RandomCollection<>(ItemConfiguration.getInstance().getMissionItemNames());
+		RandomCollection<String> itemNames = new RandomCollection<>(conf.getMissionItemNames());
 		Item i;
 		while(blocks.size() > 0){
 			b = blocks.getRandom();
-			i = new Item(ItemConfiguration.getInstance(), itemNames.getRandom());
+			i = new Item(conf, itemNames.getRandom());
 
 			addItemToBlock(b, i);
 			updateCapacity(b, blocks, mobsRemainingCapacity);

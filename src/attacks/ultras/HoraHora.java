@@ -1,8 +1,8 @@
-package attacks;
+package attacks.ultras;
 
+import attacks.SpecialAttack;
 import attacks.states.*;
 import blocks.Block;
-import configuration.AttackConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import configuration.SpecialAttackConfiguration;
 import elements.*;
@@ -58,6 +58,19 @@ public class HoraHora extends AnimatedElement implements SpecialAttack {
     public void reload() {
         if(remaining > 0){
             remaining--;
+        }
+    }
+
+    /**
+     * Draw the current animation at a defined point.
+     */
+    @Override
+    public void draw() {
+        if(intro.playing()){
+            intro.draw();
+        }
+        if(isDrawable()) {
+            super.draw();
         }
     }
 

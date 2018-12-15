@@ -3,13 +3,24 @@ package elements;
 import configuration.ItemConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import missions.MissionTarget;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import spawns.Spawner;
+import visitors.NullModifier;
+import visitors.PlayerModifier;
 
-public class Item extends AnimatedElement implements MissionTarget {
+import java.util.HashSet;
+import java.util.Set;
+
+public class Item extends AnimatedElement implements MissionTarget, PlayerModifier, Spawner {
 
     private String id;
     private int itemPoints;
+    private PlayerModifier visitor = new NullModifier();
+    private Color filter;
+    private boolean trap;
+    private Set<Enemy> spawns = new HashSet<>();
 
     public Item(ItemConfiguration configuration, String id) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
         super(configuration.getItemAnimation(id),
@@ -17,8 +28,33 @@ public class Item extends AnimatedElement implements MissionTarget {
                 configuration.getHeight(id),
                 0, 0);
         this.id = id;
-//        TODO rotto id per colpa di vincenzo
-//        this.itemPoints = configuration.getItemPoints(id);
+        this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
+        this.filter = null;
+        trap = false;
+    }
+
+    public Item(ItemConfiguration configuration, String id, PlayerModifier visitor, Color filter, boolean trap) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
+        super(configuration.getItemAnimation(id),
+                configuration.getWidth(id),
+                configuration.getHeight(id),
+                0, 0);
+        this.id = id;
+        this.visitor = visitor;
+        this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
+        this.filter = filter;
+        this.trap = trap;
+    }
+
+    public Item(ItemConfiguration configuration, String id, PlayerModifier visitor, boolean trap) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
+        super(configuration.getItemAnimation(id),
+                configuration.getWidth(id),
+                configuration.getHeight(id),
+                0, 0);
+        this.id = id;
+        this.visitor = visitor;
+        this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
+        this.filter = null;
+        this.trap = trap;
     }
     
     /**
@@ -51,17 +87,46 @@ public class Item extends AnimatedElement implements MissionTarget {
     public String getID() {
         return id;
     }
-    
-    public void setID(String name) {
-        this.id = name;
-        try {
-			this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
-		} catch (NoSuchElementInConfigurationException e) {
-			e.printStackTrace();
-		}
-    }
 
 	public int getItemPoints() {
 		return this.itemPoints;
 	}
+
+    /**
+     * Does something to the player
+     *
+     * @param player the player
+     */
+    @Override
+    public void accept(Player player) {
+        visitor.accept(player);
+    }
+
+    /**
+     * Draw the current animation at a defined point.
+     */
+    @Override
+    public void draw() {
+        super.draw(filter);
+    }
+
+    public boolean isTrap(){
+        return trap;
+    }
+
+    /**
+     * @return a set of enemy to spawn
+     */
+    @Override
+    public Set<Enemy> getSpawns() {
+        return spawns;
+    }
+
+    /**
+     * @param target the spawns
+     */
+    @Override
+    public void setSpawns(Set<Enemy> target) {
+        spawns = target;
+    }
 }
