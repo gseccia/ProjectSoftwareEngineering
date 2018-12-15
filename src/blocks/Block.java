@@ -150,17 +150,25 @@ public abstract class Block extends BasicGameState
 		
 		n = 1;
 		Random r = new Random();
-		for(Item i:item) {
-			x = Integer.parseInt(map.getMapProperty("spawnX"+n,"-1"));
-			y = Integer.parseInt(map.getMapProperty("spawnY"+n,"-1"));
-			if(x==-1 || y==-1) {
-				x = Integer.parseInt(map.getMapProperty("spawnX1","25"));
-				y = Integer.parseInt(map.getMapProperty("spawnY1","25"));
-				n = 1;
+		boolean[][] occupied = hitbox.getOccupiedTiles();
+		Wall tempWall = new Wall(0, 0, map.getTileWidth(), map.getTileHeight());
+		for(Item i : item) {
+			y = r.nextInt(map.getHeight());
+			x = r.nextInt(map.getWidth());
+			tempWall.setX(x);
+			tempWall.setY(y);
+			while(occupied[x][y]) {
+				y = r.nextInt(map.getHeight());
+				x = r.nextInt(map.getWidth());
+				tempWall.setX(x);
+				tempWall.setY(y);
+				for(Item j : item) {
+					if(j.getX() == tempWall.getX() && j.getY() == tempWall.getY()) {
+						tempWall.setX(x+r.nextInt(10));
+						tempWall.setY(y+r.nextInt(10));
+					}
+				}
 			}
-			x += (r.nextBoolean())? r.nextInt(1):-r.nextInt(1);
-			y += (r.nextBoolean())? r.nextInt(1):-r.nextInt(1);
-			n++;
 			i.setLocation((x)*map.getTileWidth(),y*map.getTileHeight());
 		}
 		

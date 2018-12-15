@@ -88,4 +88,8 @@ public class HitboxMaker {
 		this.items = items;
 	}
 	
+	public boolean[][] getOccupiedTiles() {
+		return occupiedTiles;
+	}
+	
 }
