@@ -74,7 +74,7 @@ public class Enemy extends Mob implements MissionTarget {
     	surrendTime = SURREND_TIME;
     	attack = false;
     	untilNextAttack = 0;
-    	pf = new AStarPathFinder(new EncapsulateMap(map.getMap()),1000,false);
+    	pf = new AStarPathFinder(new EncapsulateMap(map.getMap(),map.getHitbox().getDoors()),1000,false);
 		
     }
     
@@ -143,7 +143,7 @@ public class Enemy extends Mob implements MissionTarget {
 		
 		
 		Path p = pf.findPath(this, toTile(getX(),true), toTile(getY(),false), toTile(player.getX(),true), toTile(player.getY(),false));
-		if(p!=null) {
+		if(p!=null && p.getLength()>2) {
 			int goX = p.getX(1)*map.getMap().getTileWidth();
 			int goY = p.getY(1)*map.getMap().getTileHeight();
 			if(getX()>goX) dir=Directions.LEFT;
