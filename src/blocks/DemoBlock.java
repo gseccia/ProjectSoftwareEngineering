@@ -56,7 +56,6 @@ public class DemoBlock extends Block{
 		super.initBlock(player, population, items, graph, missionGenerated, spm);
 		tmp = new EncapsulateMap(getMap(),getHitbox().getDoors());
 		pf = new AStarPathFinder(tmp,5000,false);
-		enemy = new HashSet<>();
 		currentPath = null;
 		currentStep = 1;
 		doorLabel = new HashMap<>();
