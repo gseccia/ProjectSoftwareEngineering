@@ -185,12 +185,14 @@ public class Settings extends BasicGameState  {
 				else Settings[playerChoice] = "D";
 				break;
 			case 4:
-				if (leftKey) Settings[playerChoice] = String.valueOf( (char) (Settings[playerChoice].charAt(0) - 1));
-				else Settings[playerChoice] = String.valueOf( (char) (Settings[playerChoice].charAt(0) + 1));
+				if (Settings[playerChoice]=="M")
+					Settings[playerChoice] = "Z";
+				else Settings[playerChoice] = "M";
 				break;
 			case 5:
-				if (leftKey) Settings[playerChoice] = String.valueOf( (char) (Settings[playerChoice].charAt(0) - 1));
-				else Settings[playerChoice] = String.valueOf( (char) (Settings[playerChoice].charAt(0) + 1));
+				if (Settings[playerChoice]=="X")
+					Settings[playerChoice] = "SPACE";
+				else Settings[playerChoice] = "X";
 				break;
 			case 6:
 				if (leftKey) {
