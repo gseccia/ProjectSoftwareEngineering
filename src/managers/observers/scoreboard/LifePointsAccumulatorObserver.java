@@ -52,7 +52,7 @@ public class LifePointsAccumulatorObserver extends Observer{
 		}
 	}
 	
-	public void renderHearts(Graphics g, int width) {
+	public void renderHearts(Graphics g, int width, int height) {
 
 		int initialWidthHearts = width - 90;
 		try {
@@ -61,7 +61,7 @@ public class LifePointsAccumulatorObserver extends Observer{
 			e.printStackTrace();
 		}
 		for (int i=0; i < this.getNumberOfHearts(); i++) {
-			heart.draw(initialWidthHearts+18*i, 30);
+			heart.draw(initialWidthHearts+18*i, height);
 		}
 		
 	}

@@ -39,7 +39,7 @@ public class GameOver extends BasicGameState{
 	private Image[] upRedTriangles = new Image[SIZE];
 	private Image[] downBlackTriangles = new Image[SIZE];
 	private Image[] upBlackTriangles = new Image[SIZE];
-	private String[] playerName = new String[SIZE];
+	private char[] playerName = new char[SIZE];
 	private int choice = 0;
 	private Color notChosen = new Color(201, 2, 2);
     private Color chosen = new Color(0,0,0);
@@ -69,9 +69,9 @@ public class GameOver extends BasicGameState{
 		for (int i=0; i<3; i++)
 			upBlackTriangles[i] = new Image(System.getProperty("user.dir") + "/resource/textures/arrows/upArrowBlack.png");
 		
-		playerName[0] = "A";
-		playerName[1] = "A";
-		playerName[2] = "A";
+		playerName[0] = 'A';
+		playerName[1] = 'A';
+		playerName[2] = 'A';
 		
 		startMusic = false;
 		uniFont = StatesUtils.initFont();
@@ -110,7 +110,7 @@ public class GameOver extends BasicGameState{
 			}
 			if (arg0.getInput().isKeyPressed(Input.KEY_ENTER)) {
 				startMusic = false;
-				player = player + playerName[0] + playerName[1] + playerName[2];
+				player = new String(playerName);
 				pointsManager.saveNamePlayer(player);
 				this.pointsManager.setState(2);
 				((Game)arg1).resetDifficulty();
@@ -133,11 +133,11 @@ public class GameOver extends BasicGameState{
 				}
 			}
 			if(arg0.getInput().isKeyPressed(Input.KEY_DOWN)) {
-				this.changeValue(true);
+				this.changeValue(true, this.choice);
 			}
 			
 			if(arg0.getInput().isKeyPressed(Input.KEY_UP)) {
-				this.changeValue(false);
+				this.changeValue(false, this.choice);
 			}
 		}
 	}
@@ -150,11 +150,11 @@ public class GameOver extends BasicGameState{
 	private void renderPlayerName(Graphics g, GameContainer gc) {
     	for (int i = 0; i < SIZE; i++) {
     		if(choice == i) {
-    			StatesUtils.applyBorder(uniFont, playerName[i], (gc.getWidth()/2 - uniFont.getWidth("A")/2 -100) + 100*i, 530, new Color(0,255,255));
-    			uniFont.drawString((gc.getWidth()/2 - uniFont.getWidth("A")/2 -100) + 100*i, 530, playerName[i], chosen);
+    			StatesUtils.applyBorder(uniFont, String.valueOf(playerName[i]), (gc.getWidth()/2 - uniFont.getWidth("A")/2 -100) + 100*i, 530, new Color(0,255,255));
+    			uniFont.drawString((gc.getWidth()/2 - uniFont.getWidth("A")/2 -100) + 100*i, 530, String.valueOf(playerName[i]), chosen);
     		}else {
-    			StatesUtils.applyBorder(uniFont, playerName[i], (gc.getWidth()/2 - uniFont.getWidth("A")/2 -100) + 100*i, 530, new Color(105, 2, 2));
-    			uniFont.drawString((gc.getWidth()/2 - uniFont.getWidth("A")/2 -100) + 100*i, 530, playerName[i], notChosen);
+    			StatesUtils.applyBorder(uniFont, String.valueOf(playerName[i]), (gc.getWidth()/2 - uniFont.getWidth("A")/2 -100) + 100*i, 530, new Color(105, 2, 2));
+    			uniFont.drawString((gc.getWidth()/2 - uniFont.getWidth("A")/2 -100) + 100*i, 530, String.valueOf(playerName[i]), notChosen);
     		}
     		
         }
@@ -181,18 +181,23 @@ public class GameOver extends BasicGameState{
 				String.valueOf("Score: "+points.getPoints()), notChosen);
 	}
 	
-	private void changeValue(boolean leftKey) {
-    	switch(choice) {
-    	case 0:
-			if (leftKey) playerName[choice] = String.valueOf( (char) (playerName[choice].charAt(0) - 1));
-			else playerName[choice] = String.valueOf( (char) (playerName[choice].charAt(0) + 1));
-    	case 1:
-			if (leftKey) playerName[choice] = String.valueOf( (char) (playerName[choice].charAt(0) - 1));
-			else playerName[choice] = String.valueOf( (char) (playerName[choice].charAt(0) + 1));
-    	case 2:
-			if (leftKey) playerName[choice] = String.valueOf( (char) (playerName[choice].charAt(0) - 1));
-			else playerName[choice] = String.valueOf( (char) (playerName[choice].charAt(0) + 1));
-    	}
+	private void changeValue(boolean upKey, int choice) {
+		System.out.println(choice);
+		System.out.println(playerName[choice]);
+		if (playerName[choice] ==  90 && upKey)
+			playerName[choice] = 48;
+		else if (playerName[choice] ==  57 && upKey)
+			playerName[choice] = 65;
+		else if (playerName[choice] ==  65 && !upKey)
+			playerName[choice] = 57;
+		else if (playerName[choice] ==  48 && !upKey)
+			playerName[choice] = 90;
+		else {
+			if (upKey)
+				playerName[choice] = (char)(playerName[choice] + 1);
+			else
+				playerName[choice] = (char)(playerName[choice] - 1);
+		}
     }
 }
 

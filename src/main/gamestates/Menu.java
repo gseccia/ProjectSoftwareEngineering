@@ -51,6 +51,7 @@ public class Menu extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     	uniFont = StatesUtils.initFont();
+    	uniFont = StatesUtils.changeSizeAndStyle(uniFont, 42f, java.awt.Font.ITALIC);
         playersOptions[0] = "Start";
         playersOptions[1] = "Demo";
         playersOptions[2] = "Scores";

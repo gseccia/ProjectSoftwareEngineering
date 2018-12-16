@@ -28,6 +28,9 @@ public class CharacterSelection extends BasicGameState {
 	private ResourceManager rs;
 	private Rectangle char1, char2, char3, char1Border, char2Border, char3Border;
 	
+	private Color selectedBorder = new Color(0, 255, 255);
+	private Color selectedText = new Color(0, 0, 0);
+	
 	public CharacterSelection(ResourceManager rs) {
 		this.rs = rs;
 		this.char1 = new Rectangle(50, 153, 200, 400);
@@ -93,8 +96,8 @@ public class CharacterSelection extends BasicGameState {
 			g.setColor(Color.black);
 			g.draw(char1);
 			g.fillRect(char1.getX(), char1.getY(), char1.getWidth(), char1.getHeight());
-			StatesUtils.applyBorder(uniFont, char1Descr, 20, 600, new Color(105, 2, 2));
-	        uniFont.drawString(20, 600, char1Descr, new Color(201, 2, 2));
+			StatesUtils.applyBorder(uniFont, char1Descr, 20, 600, selectedBorder);
+	        uniFont.drawString(20, 600, char1Descr, selectedText);
 			break;
 		case CHAR2:
 			selectedChar = charname2;

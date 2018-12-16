@@ -82,6 +82,8 @@ public class Level{
 
 			for(Block block: block_list) {
 				block.initBlock(player, population, items, map, mission_generated, spm);
+				block.setLevelNumber(level_difficulty);
+				block.setCharName(charname);
 			}
 
 			Pause.setMission(mission_generated);
@@ -204,5 +206,4 @@ public class Level{
 	public List<Block> getBlocks(){
 		return this.block_list;
 	}
-
 }
