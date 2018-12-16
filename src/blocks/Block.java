@@ -16,7 +16,9 @@ import managers.observers.scoreboard.States;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.geom.Ellipse;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
@@ -120,6 +122,7 @@ public abstract class Block extends BasicGameState
 		resetCompletedLevelMusic();
 //		Init font
 		StatesUtils.initFont();
+		dead = false;
 	}
 	
 
@@ -127,7 +130,6 @@ public abstract class Block extends BasicGameState
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		setCharacterSpawn(1);
 		int x, y;
-		dead = false;
 		
 		// Enemies spawn from a set of a random spawn points
 		setEnemiesSpawn(enemy);
@@ -248,9 +250,10 @@ public abstract class Block extends BasicGameState
 			g.drawImage(player.getUltra().getIcon(), (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-18*7, 50, Color.gray);
 		}
 
-		if(dead) {
-			arg1.enterState(GameStates.GAMEOVER.getState());
-		}
+//		if(dead) {
+//			System.out.println("I'm dead");
+//			arg1.enterState(GameStates.GAMEOVER.getState());
+//		}
 
 
 		if(mission.completed()){
@@ -293,11 +296,13 @@ public abstract class Block extends BasicGameState
 //		custom font settings
 		uniFont = StatesUtils.changeSizeAndStyle(uniFont, 16f, Font.BOLD);
 		Color fontColor = new Color (255, 0, 255);
-		Color borderColor = new Color(105, 2, 2);
+		Color borderColor = new Color(105, 2, 105);
 //		LEFT SIDE OF THE SCREEN
 //		Draw Char name and life
 		int xChar = 10;
 		int yChar = 15;
+//		Shape s = new Ellipse(10, 100, 100, 30);
+//		g.draw(s);
 		StatesUtils.applyBorder(uniFont, charName, xChar, yChar, borderColor);
 		uniFont.drawString(xChar, yChar, charName, fontColor);
 //		Draw hearts below char name
@@ -380,6 +385,11 @@ public abstract class Block extends BasicGameState
 		if(isPaused(gc.getInput()) && !(mission.completed())){
 			Pause.setOriginState(getID());
 			gs.enterState(GameStates.PAUSE.getState());
+		}
+		if(dead) {
+			System.out.println("dead variable is " + dead);
+			System.out.println("I'm dead");
+			gs.enterState(GameStates.GAMEOVER.getState());
 		}
 
 		boolean block = false;
