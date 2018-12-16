@@ -354,11 +354,6 @@ public abstract class Block extends BasicGameState
 		
 		if(!dead && !mission.completed() && !block) {
 		try {
-			// Enemy updating
-			for(Enemy e : enemy) {
-				e.update();
-				e.reloadAttack();
-			}
 
 			boolean pressed =false;
 			if(goRight(gc.getInput())){
@@ -530,6 +525,12 @@ public abstract class Block extends BasicGameState
 
 			// Player attack update
 			player.reloadAttack();
+
+			// Enemy updating
+			for(Enemy e : enemy) {
+				e.update();
+				e.reloadAttack();
+			}
 
 			for(Item i:item) {
 				i.setLocation((int)(i.getX())+(prevMapX-mapX)*map.getTileWidth(),(int)(i.getY())+(prevMapY-mapY)*map.getTileHeight());
