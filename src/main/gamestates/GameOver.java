@@ -34,6 +34,17 @@ public class GameOver extends BasicGameState{
 	private UnicodeFont uniFont;
 	private boolean startMusic;
 	
+	private static final int SIZE = 3;
+	private Image[] downRedTriangles = new Image[SIZE];
+	private Image[] upRedTriangles = new Image[SIZE];
+	private Image[] downBlackTriangles = new Image[SIZE];
+	private Image[] upBlackTriangles = new Image[SIZE];
+	private String[] playerName = new String[SIZE];
+	private int choice = 0;
+	private Color notChosen = new Color(201, 2, 2);
+    private Color chosen = new Color(0,0,0);
+    private String player = "";
+	
 	public GameOver() {
         this.rs = ResourceManager.getInstance();
         this.mm = MusicManager.getInstance(this.rs);
@@ -46,6 +57,20 @@ public class GameOver extends BasicGameState{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		for (int i=0; i<3; i++)
+			downRedTriangles[i] = new Image(System.getProperty("user.dir") + "/resource/textures/arrows/downArrowRed.png");
+		for (int i=0; i<3; i++)
+			upRedTriangles[i] = new Image(System.getProperty("user.dir") + "/resource/textures/arrows/upArrowRed.png");
+		for (int i=0; i<3; i++)
+			downBlackTriangles[i] = new Image(System.getProperty("user.dir") + "/resource/textures/arrows/downArrowBlack.png");
+		for (int i=0; i<3; i++)
+			upBlackTriangles[i] = new Image(System.getProperty("user.dir") + "/resource/textures/arrows/upArrowBlack.png");
+		
+		playerName[0] = "A";
+		playerName[1] = "A";
+		playerName[2] = "A";
+		
 		startMusic = false;
 		uniFont = StatesUtils.initFont();
 	}
@@ -54,6 +79,10 @@ public class GameOver extends BasicGameState{
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		if (sbg.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
 			g.drawImage(image, 0, 0);
+			
+			this.renderTriangles(g, gc);
+			this.renderPlayerName(g, gc);
+			
 			StatesUtils.applyBorder(uniFont, "Press Enter", 
 					(gc.getWidth()-uniFont.getWidth("Press Enter"))/2, 
 					(Long.valueOf(Math.round(gc.getHeight()*8/9)).intValue()), 
@@ -81,6 +110,28 @@ public class GameOver extends BasicGameState{
 				this.rs.setState(0);
 				arg1.enterState(GameStates.MENU.getState());
 			}
+			if(arg0.getInput().isKeyPressed(Input.KEY_RIGHT)) {
+				if (choice == SIZE - 1) {
+					choice = 0;
+				}else {
+					choice++;
+				}
+			}
+			
+			if(arg0.getInput().isKeyPressed(Input.KEY_LEFT)) {
+				if (choice == 0) {
+					choice = SIZE - 1;
+				}else {
+					choice--;
+				}
+			}
+			if(arg0.getInput().isKeyPressed(Input.KEY_DOWN)) {
+				this.changeValue(true);
+			}
+			
+			if(arg0.getInput().isKeyPressed(Input.KEY_UP)) {
+				this.changeValue(false);
+			}
 		}
 	}
 
@@ -89,5 +140,45 @@ public class GameOver extends BasicGameState{
 		return id;
 	}
 	
+	private void renderPlayerName(Graphics g, GameContainer gc) {
+    	for (int i = 0; i < SIZE; i++) {
+    		if(choice == i) {
+    			StatesUtils.applyBorder(uniFont, playerName[i], (gc.getWidth()/2 - uniFont.getWidth("A")/2 -100) + 100*i, 530, new Color(0,255,255));
+    			uniFont.drawString((gc.getWidth()/2 - uniFont.getWidth("A")/2 -100) + 100*i, 530, playerName[i], chosen);
+    		}else {
+    			StatesUtils.applyBorder(uniFont, playerName[i], (gc.getWidth()/2 - uniFont.getWidth("A")/2 -100) + 100*i, 530, new Color(105, 2, 2));
+    			uniFont.drawString((gc.getWidth()/2 - uniFont.getWidth("A")/2 -100) + 100*i, 530, playerName[i], notChosen);
+    		}
+    		
+        }
+    }
+	
+	private void renderTriangles(Graphics g, GameContainer gc) {
+    	for (int i = 0; i <SIZE; i++) {
+    		if(choice == i) {
+    			g.drawImage(upBlackTriangles[i], (gc.getWidth()/2 - upBlackTriangles[i].getWidth()/2 -100) + 100*i, 480);
+        		g.drawImage(downBlackTriangles[i], (gc.getWidth()/2 - downBlackTriangles[i].getWidth()/2 -100) + 100*i, 580);
+    		}
+    		else {
+    			g.drawImage(upRedTriangles[i], (gc.getWidth()/2 - upRedTriangles[i].getWidth()/2 -100) + 100*i, 480);
+        		g.drawImage(downRedTriangles[i], (gc.getWidth()/2 - downRedTriangles[i].getWidth()/2 -100) + 100*i, 580);    			
+    		}
+    		
+    	}
+    }
+	
+	private void changeValue(boolean leftKey) {
+    	switch(choice) {
+    	case 0:
+			if (leftKey) playerName[choice] = String.valueOf( (char) (playerName[choice].charAt(0) - 1));
+			else playerName[choice] = String.valueOf( (char) (playerName[choice].charAt(0) + 1));
+    	case 1:
+			if (leftKey) playerName[choice] = String.valueOf( (char) (playerName[choice].charAt(0) - 1));
+			else playerName[choice] = String.valueOf( (char) (playerName[choice].charAt(0) + 1));
+    	case 2:
+			if (leftKey) playerName[choice] = String.valueOf( (char) (playerName[choice].charAt(0) - 1));
+			else playerName[choice] = String.valueOf( (char) (playerName[choice].charAt(0) + 1));
+    	}
+    }
 }
 
