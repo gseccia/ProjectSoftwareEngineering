@@ -1,10 +1,6 @@
 package main.gamestates;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -23,6 +19,8 @@ import org.newdawn.slick.util.BufferedImageUtil;
 import main.Game;
 import main.ResourceManager;
 import managers.MusicManager;
+import managers.observers.scoreboard.PointsAccumulatorObserver;
+import managers.observers.scoreboard.ScorePointsManager;
 
 public class GameOver extends BasicGameState{
 
@@ -30,8 +28,10 @@ public class GameOver extends BasicGameState{
     /** The background image to be displayed */
     private Image image;
     private ResourceManager rs;
+    private ScorePointsManager pointsManager;
 	private MusicManager mm;
 	private UnicodeFont uniFont;
+	private PointsAccumulatorObserver points;
 	private boolean startMusic;
 	
 	private static final int SIZE = 3;
@@ -46,8 +46,10 @@ public class GameOver extends BasicGameState{
     private String player = "";
 	
 	public GameOver() {
+		this.pointsManager = ScorePointsManager.getScorePointsManagerInstance();
         this.rs = ResourceManager.getInstance();
         this.mm = MusicManager.getInstance(this.rs);
+        points = pointsManager.getPointsAccumulatorObserver();
 	}
 	
 	@Override
@@ -82,6 +84,7 @@ public class GameOver extends BasicGameState{
 			
 			this.renderTriangles(g, gc);
 			this.renderPlayerName(g, gc);
+			this.renderPoints(g, gc);
 			
 			StatesUtils.applyBorder(uniFont, "Press Enter", 
 					(gc.getWidth()-uniFont.getWidth("Press Enter"))/2, 
@@ -101,11 +104,15 @@ public class GameOver extends BasicGameState{
 		if (arg1.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
 			if (!startMusic) {
 				startMusic = true;
+				player = "";
 				this.rs.setState(3);
 				System.out.println("starting gameover music");
 			}
 			if (arg0.getInput().isKeyPressed(Input.KEY_ENTER)) {
 				startMusic = false;
+				player = player + playerName[0] + playerName[1] + playerName[2];
+				pointsManager.saveNamePlayer(player);
+				this.pointsManager.setState(2);
 				((Game)arg1).resetDifficulty();
 				this.rs.setState(0);
 				arg1.enterState(GameStates.MENU.getState());
@@ -166,6 +173,13 @@ public class GameOver extends BasicGameState{
     		
     	}
     }
+	
+	private void renderPoints(Graphics g, GameContainer gc) {
+		StatesUtils.applyBorder(uniFont, "Score: "+String.valueOf(points.getPoints()), 
+				(gc.getWidth()/2 - uniFont.getWidth("Score: "+String.valueOf(points.getPoints()))/2), 120, new Color(105, 2, 2));
+		uniFont.drawString((gc.getWidth()/2 - uniFont.getWidth("Score: "+String.valueOf(points.getPoints()))/2), 120, 
+				String.valueOf("Score: "+points.getPoints()), notChosen);
+	}
 	
 	private void changeValue(boolean leftKey) {
     	switch(choice) {
