@@ -215,41 +215,42 @@ public class Enemy extends Mob implements MissionTarget {
 				
 			// Movements Action!
 			switch(direction) {
+				case Directions.LEFT:
+					x = x - SPEED;
+					//System.out.println(id+" "+map.getID()+" LEFT");
+					faceLeft();
+					break;
+				case Directions.RIGHT:
+					x = x + SPEED;
+					//System.out.println(id+" "+map.getID()+" RIGHT");
+					faceRight();
+					break;
+				case Directions.UP:
+					y = y - SPEED;
+					//System.out.println(id+" "+map.getID()+" UP");
+					faceUp();
+					break;
+				case Directions.DOWN:
+					y = y + SPEED;
+					//System.out.println(id+" "+map.getID()+" DOWN");
+					faceDown();
+					break;
+
+				default: // No movements animation
+					switch(getCurrentDirection()) {
 						case Directions.LEFT:
-							x = x - SPEED;
-							//System.out.println(id+" "+map.getID()+" LEFT");
-							faceLeft();
+							attackLeft();
 							break;
 						case Directions.RIGHT:
-							x = x + SPEED;
-							//System.out.println(id+" "+map.getID()+" RIGHT");
-							faceRight();
+							attackRight();
 							break;
 						case Directions.UP:
-							y = y - SPEED;
-							//System.out.println(id+" "+map.getID()+" UP");
-							faceUp();
+							attackUp();
 							break;
 						case Directions.DOWN:
-							y = y + SPEED;
-							//System.out.println(id+" "+map.getID()+" DOWN");
-							faceDown();
+							attackDown();
 							break;
-						default: // No movements animation
-							switch(getCurrentDirection()) {
-								case Directions.LEFT:
-									faceStillLeft();
-									break;
-								case Directions.RIGHT:
-									faceStillRight();
-									break;
-								case Directions.UP:
-									faceStillUp();
-									break;
-								case Directions.DOWN:
-									faceStillDown();
-									break;
-							}
+					}
 			}
 					
 			setLocation(x,y); // Position Updating
