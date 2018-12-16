@@ -85,7 +85,7 @@ public class Level{
 
 		} catch (NoSuchElementInConfigurationException | NullAnimationException | SlickException | NotEnoughMissionsException e) {
 			e.printStackTrace();
-			System.out.println("CONFIGURATION ERROR"); //TODO: Display a message on screen
+			System.out.println("CONFIGURATION ERROR");
 
 		}
 		
@@ -140,7 +140,7 @@ public class Level{
 			i = new Item(conf, itemNames.getRandom());
 
 			addItemToBlock(b, i);
-			updateCapacity(b, blocks, mobsRemainingCapacity);
+			updateCapacity(b, blocks, itemsRemainingCapacity);
 		}
 	}
 

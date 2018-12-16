@@ -221,6 +221,7 @@ public abstract class Block extends BasicGameState
 		for(Enemy e : enemy)
 		{
 			e.draw();
+			//System.out.println(e.getID() + " " + e.getX() + " "+e.getY());
 			//g.draw(e.getVision());  //TESTING LINE
 		}
 		player.draw();
