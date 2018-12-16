@@ -28,13 +28,12 @@ public class Sparagmos extends AnimatedElement implements SpecialAttack {
     private final int DAMAGE = 400;
     private int remaining = 0;
     private Image icon;
-    private Intro intro;
     private boolean active, drawable;
     private SpecialAttackState current;
     private Player caster;
     private Map<Integer, Animation> animations;
     private Sound laser;
-    float x, y, width, height;
+    private float x, y, width, height;
 
     public Sparagmos(Player caster) {
         super();
@@ -42,8 +41,6 @@ public class Sparagmos extends AnimatedElement implements SpecialAttack {
         try {
             SpecialAttackConfiguration conf = SpecialAttackConfiguration.getInstance();
             icon = conf.getIcon(id);
-
-            intro = new Intro(new Animation());
 
             animations = new HashMap<>();
             animations.put(Directions.UP, conf.getUpAnimation(id));
@@ -53,7 +50,7 @@ public class Sparagmos extends AnimatedElement implements SpecialAttack {
 
             laser = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/sparagmos/laser.ogg");
 
-        } catch (SlickException | NoSuchElementInConfigurationException | NullAnimationException e) {
+        } catch (SlickException | NoSuchElementInConfigurationException e) {
             e.printStackTrace();
         }
     }
@@ -205,11 +202,6 @@ public class Sparagmos extends AnimatedElement implements SpecialAttack {
     @Override
     public boolean isDrawable() {
         return drawable;
-    }
-
-    @Override
-    public Intro getIntro() {
-        return intro;
     }
 
     private boolean isAtRange(Enemy e){

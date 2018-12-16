@@ -53,6 +53,4 @@ public interface SpecialAttack {
     boolean isDrawable();
 
     void setLocation(float x, float y);
-
-    Intro getIntro();
 }
