@@ -21,6 +21,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
+import elements.EncapsulateMap;
 import elements.Enemy;
 import elements.Item;
 import elements.Mob;
@@ -61,7 +62,7 @@ public abstract class Block extends BasicGameState
 	private MusicManager mm;
 	private boolean levelMusicMustBeStarted;
 	private boolean completedMusicMustBeStarted;//Fonts
-	private org.newdawn.slick.UnicodeFont uniFont;
+	protected org.newdawn.slick.UnicodeFont uniFont;
 	private String charName;
 	
 	protected Block(int state,String mapName)
@@ -93,7 +94,6 @@ public abstract class Block extends BasicGameState
 		enemy = population.get(this);
 		item = items.get(this);
 		mission = missionGenerated;
-		
 		this.player = player;
 		
 		hitbox = new HitboxMaker(map, new LinkedList<>(enemy));
@@ -138,13 +138,17 @@ public abstract class Block extends BasicGameState
 		for(Item i : item) {
 			y = r.nextInt(map.getHeight());
 			x = r.nextInt(map.getWidth());
+			
 			tempWall.setX(x);
 			tempWall.setY(y);
+			
 			while(occupied[x][y]) {
+				
 				y = r.nextInt(map.getHeight());
 				x = r.nextInt(map.getWidth());
 				tempWall.setX(x);
 				tempWall.setY(y);
+				
 				for(Item j : item) {
 					if(j.intersects(tempWall)) {
 						tempWall.setX(x+r.nextInt(10));
@@ -602,7 +606,7 @@ public abstract class Block extends BasicGameState
 				mapY += 1;
 			}
 			else{
-				mapY -= 1;
+				mapY -= 2;
 			}
 		}
 		else{

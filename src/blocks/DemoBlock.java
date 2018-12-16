@@ -1,6 +1,8 @@
 package blocks;
 
+import java.awt.Font;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -21,6 +23,7 @@ import elements.Player;
 import managers.Directions;
 import managers.Wall;
 import main.gamestates.GameStates;
+import main.gamestates.StatesUtils;
 import managers.observers.scoreboard.ScorePointsManager;
 import map.MapGraph;
 import missions.Mission;
@@ -36,6 +39,10 @@ public class DemoBlock extends Block{
 	private boolean discovery;
 	private boolean firstTime;
 	private EncapsulateMap tmp;
+	private static int updating = 0;
+	private static int displayMessage = 0;
+	private static boolean blocked = true;
+	private String showString;
 	
 	protected DemoBlock(int state, String mapName) {
 		super(state, mapName);
@@ -49,6 +56,7 @@ public class DemoBlock extends Block{
 		super.initBlock(player, population, items, graph, missionGenerated, spm);
 		tmp = new EncapsulateMap(getMap(),getHitbox().getDoors());
 		pf = new AStarPathFinder(tmp,5000,false);
+		enemy = new HashSet<>();
 		currentPath = null;
 		currentStep = 1;
 		doorLabel = new HashMap<>();
@@ -77,7 +85,10 @@ public class DemoBlock extends Block{
 		targetTileX = tileConversion(targetElement.getX(),true,align);
 		targetTileY = tileConversion(targetElement.getY(),false,align);
 		System.out.println("TARGET TILE "+targetTileX+" "+targetTileY);
-		System.out.println((tmp.blocked(null, targetTileX, targetTileY))?"BLOCKED":"FREE");
+		if(tmp.blocked(null, targetTileX, targetTileY)){
+			System.out.println("BLOCKED");
+		}
+		else System.out.println("FREE");
 		// System.out.println("PLAYER TILE "+playerTileX+" "+playerTileY);
 		currentPath = pf.findPath(player, playerTileX, playerTileY, targetTileX, targetTileY);
 		currentStep = 1;
@@ -103,7 +114,7 @@ public class DemoBlock extends Block{
 	}
 	
 	private void generatePath() {
-		if(item.isEmpty() && enemy.isEmpty()) {
+		if((item.isEmpty() && enemy.isEmpty())) {
 			// change map
 			Wall doorSelected = null;
 			Iterator<Wall> iter = doorLabel.keySet().iterator();
@@ -157,12 +168,11 @@ public class DemoBlock extends Block{
 			else if(py < y) direction = Directions.DOWN;
 			else if(py > y) direction = Directions.UP;
 			else direction = Directions.KEY_M;
-
-			//if(Math.abs(px-x) + Math.abs(py-y) <= 1)direction = Directions.KEY_M;
 		}
-		else direction = Directions.KEY_M;
-		
-		
+		else {
+			direction = Directions.KEY_M;
+			System.out.println("Attacca a caso");
+		}
 		return direction;
 	}
 
@@ -176,16 +186,58 @@ public class DemoBlock extends Block{
         }
 	}
 	
+	private void renderText(String showString,int x,int y) {
+		// custom font settings
+			uniFont = StatesUtils.changeSizeAndStyle(uniFont, 16f, Font.BOLD);
+			Color fontColor = new Color (255, 0, 255);
+			Color borderColor = new Color(105, 2, 2);
+			StatesUtils.applyBorder(uniFont, showString, x, y, borderColor);
+			uniFont.drawString(x, y, showString, fontColor);
+	}
+	
 	@Override
-	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) {
-		super.render(gc, arg1, g);
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
+		super.render(gc, sbg, g);
+		
+		switch(displayMessage) {
+			case 0:
+				showString = "Your name is at top-left corner";
+				break;
+			case 1:
+				showString = "Your life is at left";
+				break;
+			case 2:
+				showString = "Your score is at top-right corner";
+				break;
+			case 3:
+				showString = "Your level is at center";
+				break;
+			case 4:
+				showString = "Let's play!";
+				break;
+			default:
+				showString = "";
+				break;
+		}  
+		renderText(showString,((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-uniFont.getWidth(showString))/2,250);
+		
 		if(currentPath != null) {
 			g.setColor(Color.orange);
-		for(int i=0;i<currentPath.getLength();i++) {
-			g.drawRect((currentPath.getX(i)-getShiftX())*getMap().getTileWidth(),(currentPath.getY(i)-getShiftY())*getMap().getTileHeight(),16,16);
+			for(int i=0;i<currentPath.getLength();i++) {
+				g.drawRect((currentPath.getX(i)-getShiftX())*getMap().getTileWidth(),(currentPath.getY(i)-getShiftY())*getMap().getTileHeight(),16,16);
+			}
+			g.setColor(Color.green);
 		}
-		g.setColor(Color.green);
+	}
+	
+	public void update(GameContainer gc, StateBasedGame gs, int delta) {
+		if(!blocked)super.update(gc, gs, delta);
+		if(displayMessage<5 && updating>50) {
+			displayMessage++;
+			updating = 0;
 		}
+		else if(displayMessage<5) updating++;
+		else blocked = false;
 	}
 
 	@Override
@@ -233,7 +285,7 @@ public class DemoBlock extends Block{
 	 * @return true if the player wants to perform the special attack
 	 */
 	@Override
-	protected boolean special(Input in) {
+	protected boolean special(Input in) { 
 		return check(Directions.KEY_M);
 	}
 }
