@@ -1,5 +1,6 @@
 package blocks;
 
+import java.awt.Font;
 import java.util.*;
 
 import managers.*;
@@ -26,6 +27,7 @@ import elements.Player;
 import main.ResourceManager;
 import main.gamestates.GameStates;
 import main.gamestates.Pause;
+import main.gamestates.StatesUtils;
 import elements.NullAnimationException;
 
 public abstract class Block extends BasicGameState
@@ -48,6 +50,7 @@ public abstract class Block extends BasicGameState
 	private MapGraph graph;
 	private Vertex vertex;
 	private Mission mission;
+	private int levelNumber;
 	private int key = Directions.DOWN;
 	private ScorePointsManager scoreManager;
 	private PointsAccumulatorObserver pao;
@@ -55,7 +58,9 @@ public abstract class Block extends BasicGameState
 	private ResourceManager rs;
 	private MusicManager mm;
 	private boolean levelMusicMustBeStarted;
-	private boolean completedMusicMustBeStarted;
+	private boolean completedMusicMustBeStarted;//Fonts
+	private org.newdawn.slick.UnicodeFont uniFont;
+	private String charName;
 	
 	protected Block(int state,String mapName)
 	{
@@ -108,8 +113,10 @@ public abstract class Block extends BasicGameState
 //				ScoreFileObserver sfo = new ScoreFileObserver(this.scoreManager);
 		this.scoreManager.setNamePlayer("Armando");
 		
-//		Initialize Resource Manager
+//		Initialize Music completed level
 		resetCompletedLevelMusic();
+//		Init font
+		StatesUtils.initFont();
 	}
 	
 
@@ -151,7 +158,7 @@ public abstract class Block extends BasicGameState
 		
 		prevMapX = 0;
 		prevMapY = 0;
-		initFont();
+		uniFont = StatesUtils.initFont();
 	}
 
 
@@ -241,13 +248,13 @@ public abstract class Block extends BasicGameState
             	int height = ((Long.valueOf(Math.round(gc.getHeight()/1.5)).intValue()))/2;
                 g.fillRect(0, 0, gc.getWidth(), gc.getHeight(), new Image(System.getProperty("user.dir") + "/resource/textures/transitions/background.png"), 0, 0);
                 
-                applyBorder("LEVEL COMPLETED!", width, height-15, new Color(105, 2, 2));
+                StatesUtils.applyBorder(uniFont, "LEVEL COMPLETED!", width, height-15, new Color(105, 2, 2));
                 uniFont.drawString(width, height-15, "LEVEL COMPLETED!", new Color(201, 2, 2));
                 
 //                g.drawImage(new Image(System.getProperty("user.dir") + "/resource/textures/transitions/toBeCont.png"), player.getX()-85, player.getY()-25);
                 width = ((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue()) - uniFont.getWidth("Press Enter to continue"))/2;
                 
-                applyBorder("Press Enter to continue", width, height+15, new Color(105, 2, 2));
+                StatesUtils.applyBorder(uniFont, "Press Enter to continue", width, height+15, new Color(105, 2, 2));
 				uniFont.drawString(width, height+15, "Press Enter to continue", new Color(201, 2, 2));
 				
 //				bgMusic.stop();
@@ -269,11 +276,41 @@ public abstract class Block extends BasicGameState
 
         }
 
-		g.setColor(Color.green);
-		g.drawString(String.valueOf(this.pao.getPoints()), (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-5*18, 0);
-
-		lpao.renderHearts(g, (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue()));
-		g.drawString(String.valueOf(player.getHp()), (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-18*7, 30);
+		
+//		g.setColor(new Color(0, 255, 255));
+//		custom font settings
+		uniFont = StatesUtils.changeSizeAndStyle(uniFont, 16f, Font.BOLD);
+		Color fontColor = new Color (255, 0, 255);
+		Color borderColor = new Color(105, 2, 2);
+//		LEFT SIDE OF THE SCREEN
+//		Draw Char name and life
+		int xChar = 10;
+		int yChar = 15;
+		StatesUtils.applyBorder(uniFont, charName, xChar, yChar, borderColor);
+		uniFont.drawString(xChar, yChar, charName, fontColor);
+//		Draw hearts below char name
+		int xHeart = xChar + 90;
+		int yHeart = yChar + uniFont.getHeight(charName)+5;
+		lpao.renderHearts(g, xHeart, yHeart+2);
+//		Draw hp as a number 0-100 for debug
+//		TODO delete in final version
+		StatesUtils.applyBorder(uniFont, String.valueOf(player.getHp()), xHeart + 10, yHeart, borderColor);
+		uniFont.drawString(xHeart + 10, yHeart, String.valueOf(player.getHp()), fontColor);
+		
+		
+//		CENTER SIDE OF THE SCREEN
+//		Draw level
+		int xLevel = ((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-uniFont.getWidth("Level "+this.levelNumber))/2;
+		int yLevel = 15; //	30(height hearts) - 0(points) / 2
+		StatesUtils.applyBorder(uniFont, "Level "+this.levelNumber, xLevel, yLevel, borderColor);
+		uniFont.drawString(xLevel, yLevel, "Level "+this.levelNumber, fontColor);
+		
+//		RIGHT SIDE OF THE SCREEN
+//		Draw points on the screen
+		int xPoints = (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-uniFont.getWidth(String.valueOf(this.pao.getPoints()))-10;
+		int yPoints = 15;
+		StatesUtils.applyBorder(uniFont, String.valueOf(this.pao.getPoints()), xPoints, yPoints, borderColor);
+		uniFont.drawString(xPoints, yPoints, String.valueOf(this.pao.getPoints()), fontColor);
 		
 	}
 
@@ -602,45 +639,18 @@ public abstract class Block extends BasicGameState
 	public Set<Enemy> getEnemy() {
 		return enemy;
 	}
-
-	//Fonts
-	java.awt.Font UIFont1;
-	org.newdawn.slick.UnicodeFont uniFont;
-	@SuppressWarnings("unchecked")
-	public void initFont() {
-		try{
-			UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
-					org.newdawn.slick.util.ResourceLoader.getResourceAsStream(
-							System.getProperty("user.dir") + "/resource/font/joystix_monospace.ttf"
-							));
-			UIFont1 = UIFont1.deriveFont(java.awt.Font.ITALIC, 20.f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 30.f is the size of your font
-
-			uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
-			uniFont.addAsciiGlyphs();
-			uniFont.getEffects().add(new ColorEffect(java.awt.Color.white)); //You can change your color here, but you can also change it in the render{ ... }
-			uniFont.addAsciiGlyphs();
-			uniFont.loadGlyphs();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	private void applyBorder(String s, int x, int y, Color c) {    	
-		uniFont.drawString(ShiftWest(x, 2), ShiftNorth(y, 2), s, c);
-		uniFont.drawString(ShiftWest(x, 2), ShiftSouth(y, 2), s, c);
-		uniFont.drawString(ShiftEast(x, 2), ShiftNorth(y, 2), s, c);
-		uniFont.drawString(ShiftEast(x, 2), ShiftSouth(y, 2), s, c);
+	
+	public int getLevelNumber() {
+		return levelNumber;
 	}
 
-	private int ShiftNorth(int p, int distance) {
-		return (p - distance);
+	public void setLevelNumber(int levelNumber) {
+		this.levelNumber = levelNumber;
 	}
-	private int ShiftSouth(int p, int distance) {
-		return (p + distance);
+
+	public void setCharName(String charName) {
+		this.charName = charName;
 	}
-	private int ShiftEast(int p, int distance) {
-		return (p + distance);
-	}
-	private int ShiftWest(int p, int distance) {
-		return (p - distance);
-	}
+	
+	
 }

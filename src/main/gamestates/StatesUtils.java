@@ -1,5 +1,6 @@
 package main.gamestates;
 
+import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.font.effects.ShadowEffect;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.util.BufferedImageUtil;
 
@@ -21,9 +23,10 @@ import org.newdawn.slick.util.BufferedImageUtil;
  */
 
 public class StatesUtils {
+	private static java.awt.Font UIFont1;
     @SuppressWarnings("unchecked")
     public static UnicodeFont initFont() {
-    	java.awt.Font UIFont1;
+//    	java.awt.Font UIFont1;
     	org.newdawn.slick.UnicodeFont uniFont = null;
     	try{
     		UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
@@ -34,13 +37,28 @@ public class StatesUtils {
 
     		uniFont = new org.newdawn.slick.UnicodeFont(UIFont1);
     		uniFont.addAsciiGlyphs();
-    		uniFont.getEffects().add(new ColorEffect(java.awt.Color.white)); //You can change your color here, but you can also change it in the render{ ... }
+    		uniFont.getEffects().add(new ColorEffect()); //You can change your color here, but you can also change it in the render{ ... }
     		uniFont.addAsciiGlyphs();
     		uniFont.loadGlyphs();
     	}catch(Exception e){
     		e.printStackTrace();
     	}
     	return uniFont;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public static UnicodeFont changeSizeAndStyle(UnicodeFont u, float size, int style) {
+    	try{
+    		UIFont1 = UIFont1.deriveFont(style, size);
+    		u = new org.newdawn.slick.UnicodeFont(UIFont1);
+    		u.addAsciiGlyphs();
+    		u.getEffects().add(new ColorEffect());
+    		u.addAsciiGlyphs();
+    		u.loadGlyphs();
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	return u;
     }
     
     public static void applyBorder(UnicodeFont uniFont, String s, int x, int y, Color c) {    	
