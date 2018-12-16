@@ -7,6 +7,7 @@ import configuration.NoSuchElementInConfigurationException;
 import configuration.SpecialAttackConfiguration;
 import elements.*;
 import main.ResourceManager;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -137,7 +138,7 @@ public class HoraHora extends AnimatedElement implements SpecialAttack {
     			}
     		}
 
-    		current = new HandleMusicState(ResourceManager.getInstance(), 4, new SoundState(starting, new DrawIntroState(intro, firstHora, caster.getX()-50, caster.getY()-60, prev)));
+    		current = new HandleMusicState(ResourceManager.getInstance(), -1, new SoundState(starting, new DrawIntroState(intro, firstHora, caster.getX()-50, caster.getY()-60, prev)));
     	}
     }
 
