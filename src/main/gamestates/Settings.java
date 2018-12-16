@@ -79,6 +79,7 @@ public class Settings extends BasicGameState  {
 			e.printStackTrace();
 		}
 		uniFont = StatesUtils.initFont();
+		uniFont = StatesUtils.changeSizeAndStyle(uniFont, 40f, java.awt.Font.ITALIC);
 		
 		for (int i=0; i<NOCHOICES; i++)
 			redRightTriangles[i] = new Image(System.getProperty("user.dir") + "/resource/textures/arrows/rightArrowRed.png");

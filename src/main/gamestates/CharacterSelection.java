@@ -39,9 +39,9 @@ public class CharacterSelection extends BasicGameState {
 		this.char1Border = new Rectangle(47, 150, 206, 406);
 		this.char2Border = new Rectangle(297, 150, 206, 406);
 		this.char3Border = new Rectangle(547, 150, 206, 406);
-		this.char1Descr = "Don't mess with blond bully";
+		this.char1Descr = "You join the hunt?";
 		this.char2Descr = "So cute, so ruthless";
-		this.char3Descr = "The sword of justice";
+		this.char3Descr = "My sword is sharp and ready";
 		this.charname1 = "vegeta";
 		this.charname2 = "fumiko";
 		this.charname3 = "rinaldo";
@@ -58,6 +58,7 @@ public class CharacterSelection extends BasicGameState {
 			e.printStackTrace();
 		}		
 		uniFont = StatesUtils.initFont();
+		uniFont = StatesUtils.changeSizeAndStyle(uniFont, 34f, java.awt.Font.PLAIN);
 	}
 
 	@Override
@@ -78,14 +79,14 @@ public class CharacterSelection extends BasicGameState {
 	        arg2.fillRect(char2.getX(), char2.getY(), char2.getWidth(), char2.getHeight());
 	        arg2.draw(char3);
 	        arg2.fillRect(char3.getX(), char3.getY(), char3.getWidth(), char3.getHeight());
-	        renderCharSelected(arg2);
+	        renderCharSelected(arg2,arg0);
 			char1Img.draw(60, 283);
 			char2Img.draw(310, 283);
 			char3Img.draw(560, 283);
     	}		
 	}
 	
-	private void renderCharSelected(Graphics g) {
+	private void renderCharSelected(Graphics g, GameContainer gc) {
 		int selectedBlock = 0;
 		switch(playersChoice) {
 		case CHAR1:
@@ -107,8 +108,8 @@ public class CharacterSelection extends BasicGameState {
 			g.setColor(Color.black);
 			g.draw(char2);
 			g.fillRect(char2.getX(), char2.getY(), char2.getWidth(), char2.getHeight());
-			StatesUtils.applyBorder(uniFont, char2Descr, 20, 600, selectedBorder);
-	        uniFont.drawString(20, 600, char2Descr, selectedText);
+			StatesUtils.applyBorder(uniFont, char2Descr, (gc.getWidth()-uniFont.getWidth(char2Descr))/2, 600, selectedBorder);
+	        uniFont.drawString((gc.getWidth()-uniFont.getWidth(char2Descr))/2, 600, char2Descr, selectedText);
 			break;
 		case CHAR3:
 			selectedChar = charname3;
@@ -118,8 +119,8 @@ public class CharacterSelection extends BasicGameState {
 			g.setColor(Color.black);
 			g.draw(char3);
 			g.fillRect(char3.getX(), char3.getY(), char3.getWidth(), char3.getHeight());
-			StatesUtils.applyBorder(uniFont, char3Descr, 20, 600, selectedBorder);
-	        uniFont.drawString(20, 600, char3Descr, selectedText);
+			StatesUtils.applyBorder(uniFont, char3Descr, gc.getWidth()-uniFont.getWidth(char3Descr)-20, 600, selectedBorder);
+	        uniFont.drawString(gc.getWidth()-uniFont.getWidth(char3Descr)-20, 600, char3Descr, selectedText);
 			break;
 		default:
 			break;

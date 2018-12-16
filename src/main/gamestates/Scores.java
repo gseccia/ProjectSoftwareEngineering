@@ -25,6 +25,8 @@ public class Scores extends BasicGameState {
 	private ScoreFileObserver scoreboard;
 	private UnicodeFont uniFont;
     private ResourceManager rs;
+    private Color fontColor = new Color (255, 0, 255);
+	private Color borderColor = new Color(105, 2, 105);
     
     public static Scores getInstance(ScoreFileObserver scoreboard, ResourceManager rs) {
     	if(instance == null)
@@ -45,6 +47,7 @@ public class Scores extends BasicGameState {
 			e.printStackTrace();
 		}
 		uniFont = StatesUtils.initFont();
+		uniFont = StatesUtils.changeSizeAndStyle(uniFont, 40f, java.awt.Font.ITALIC);
 	}
 
 	@Override
@@ -54,9 +57,14 @@ public class Scores extends BasicGameState {
 			background.draw(0, 0);
 			ArrayList<Score> scores = scoreboard.getScores();
 			for(Score s : scores) {
-				StatesUtils.applyBorder(uniFont, s.toString(), arg0.getWidth()/2 - uniFont.getWidth(s.toString())/2, 150+i*100, 
-						new Color(105, 2, 2));
-				uniFont.drawString(arg0.getWidth()/2 - uniFont.getWidth(s.toString())/2, 150+i*100, s.toString(), new Color(201, 2, 2));
+//				CENTER ALIGNMENT
+//				StatesUtils.applyBorder(uniFont, s.toString(), arg0.getWidth()/2 - uniFont.getWidth(s.toString())/2, 150+i*100, 
+//						borderColor);
+//				uniFont.drawString(arg0.getWidth()/2 - uniFont.getWidth(s.toString())/2, 150+i*100, s.toString(), fontColor);
+//				LEFT ALIGNMENT
+				StatesUtils.applyBorder(uniFont, s.toString(), 60, 200+i*50, 
+						borderColor);
+				uniFont.drawString(60, 200+i*50, s.toString(), fontColor);
 				i++;
 			}
 			StatesUtils.applyBorder(uniFont, "Press esc to go back", 44, 600, new Color(105, 2, 2));
