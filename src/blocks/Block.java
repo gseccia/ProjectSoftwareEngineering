@@ -12,6 +12,7 @@ import missions.Mission;
 import managers.observers.scoreboard.LifePointsAccumulatorObserver;
 import managers.observers.scoreboard.Observer;
 import managers.observers.scoreboard.PointsAccumulatorObserver;
+import managers.observers.scoreboard.ScoreFileObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 import managers.observers.scoreboard.States;
 import managers.observers.scoreboard.SubjectInterface;
@@ -60,6 +61,7 @@ public abstract class Block extends BasicGameState
 	private Mission mission;
 	private int key = Directions.DOWN;
 	private ScorePointsManager scoreManager;
+	private ScoreFileObserver sfo;
 	private PointsAccumulatorObserver pao;
 	private LifePointsAccumulatorObserver lpao;
 	private ResourceManager rs;
@@ -113,6 +115,7 @@ public abstract class Block extends BasicGameState
 		
 		// initialize score manager and observers
 		this.scoreManager = spm;
+		sfo = ScoreFileObserver.getInstance(this.scoreManager);
 		pao = new PointsAccumulatorObserver(this.scoreManager);
 		lpao = new LifePointsAccumulatorObserver(this.scoreManager);
 //				ScoreFileObserver sfo = new ScoreFileObserver(this.scoreManager);

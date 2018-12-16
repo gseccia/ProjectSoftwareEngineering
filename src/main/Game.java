@@ -8,9 +8,12 @@ import main.gamestates.GameOver;
 import main.gamestates.GameStates;
 import main.gamestates.Menu;
 import main.gamestates.Pause;
+import main.gamestates.Scores;
 import main.gamestates.Settings;
 import main.gamestates.SplashScreen;
 import managers.MusicManager;
+import managers.observers.scoreboard.ScoreFileObserver;
+import managers.observers.scoreboard.ScorePointsManager;
 import missions.ConcreteMissionFactory;
 import missions.DemoMissionFactory;
 import org.newdawn.slick.GameContainer;
@@ -62,6 +65,8 @@ public class Game extends StateBasedGame{
 
         // for menu
         this.addState(Menu.getInstance());
+        // for scores
+        this.addState(Scores.getInstance(ScoreFileObserver.getInstance(ScorePointsManager.getScorePointsManagerInstance()), rs));
         // for splash
         this.addState(new SplashScreen());
         // for game over page

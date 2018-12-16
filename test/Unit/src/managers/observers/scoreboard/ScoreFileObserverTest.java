@@ -23,7 +23,7 @@ public class ScoreFileObserverTest {
 	// Subjects
 	private ScorePointsManager pm = ScorePointsManager.getScorePointsManagerInstance();
 	// Observer
-	private ScoreFileObserver sfo = new ScoreFileObserver(pm);
+	private ScoreFileObserver sfo = ScoreFileObserver.getInstance(pm);
 	private PointsAccumulatorObserver pao = new PointsAccumulatorObserver(pm);
 		
 	@Test
@@ -101,7 +101,7 @@ public class ScoreFileObserverTest {
 	 * Checks if the observer correctly reads a previous saved file
 	 */
 	public void testF() {
-		ScoreFileObserver sfo1 = new ScoreFileObserver(pm);
+		ScoreFileObserver sfo1 = ScoreFileObserver.getInstance(pm);
 		assertTrue(sfo1.contains(99, "Armando") &&
 				sfo1.contains(103, "Armandinosaur") &&
 				sfo1.contains(109, "Armandone") &&
