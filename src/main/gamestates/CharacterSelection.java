@@ -107,8 +107,8 @@ public class CharacterSelection extends BasicGameState {
 			g.setColor(Color.black);
 			g.draw(char2);
 			g.fillRect(char2.getX(), char2.getY(), char2.getWidth(), char2.getHeight());
-			StatesUtils.applyBorder(uniFont, char2Descr, 20, 600, new Color(105, 2, 2));
-	        uniFont.drawString(20, 600, char2Descr, new Color(201, 2, 2));
+			StatesUtils.applyBorder(uniFont, char2Descr, 20, 600, selectedBorder);
+	        uniFont.drawString(20, 600, char2Descr, selectedText);
 			break;
 		case CHAR3:
 			selectedChar = charname3;
@@ -118,8 +118,8 @@ public class CharacterSelection extends BasicGameState {
 			g.setColor(Color.black);
 			g.draw(char3);
 			g.fillRect(char3.getX(), char3.getY(), char3.getWidth(), char3.getHeight());
-			StatesUtils.applyBorder(uniFont, char3Descr, 20, 600, new Color(105, 2, 2));
-	        uniFont.drawString(20, 600, char3Descr, new Color(201, 2, 2));
+			StatesUtils.applyBorder(uniFont, char3Descr, 20, 600, selectedBorder);
+	        uniFont.drawString(20, 600, char3Descr, selectedText);
 			break;
 		default:
 			break;

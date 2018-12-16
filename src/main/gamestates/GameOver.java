@@ -182,8 +182,6 @@ public class GameOver extends BasicGameState{
 	}
 	
 	private void changeValue(boolean upKey, int choice) {
-		System.out.println(choice);
-		System.out.println(playerName[choice]);
 		if (playerName[choice] ==  90 && upKey)
 			playerName[choice] = 48;
 		else if (playerName[choice] ==  57 && upKey)
