@@ -1,13 +1,12 @@
 package managers.observers.scoreboard;
 
 import java.io.Serializable;
-import java.util.Date;
-
+import java.util.Calendar;
 
 public class Score implements Comparable<Score>, Serializable {
 	private int value;
 	private String id;
-	private Date date;
+	private Calendar date;
 	
 	@Override
 	public int hashCode() {
@@ -37,7 +36,7 @@ public class Score implements Comparable<Score>, Serializable {
 		return true;
 	}
 	
-	public Score(int value, String id, Date date) {
+	public Score(int value, String id, Calendar date) {
 		this.value = value;
 		this.id = id;
 		this.date = date;
@@ -61,5 +60,10 @@ public class Score implements Comparable<Score>, Serializable {
 			return 0;
 		else
 			return -1;
+	}
+	
+	@Override
+	public String toString() {
+		return id+" "+value+" "+date.get(Calendar.MONTH)+"/"+date.get(Calendar.DAY_OF_MONTH)+"/"+date.get(Calendar.YEAR);
 	}
 }

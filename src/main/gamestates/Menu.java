@@ -98,6 +98,9 @@ public class Menu extends BasicGameState {
                 case QUIT:
                     exit = true;
                     break;
+                case SCORES:
+                	stateBasedGame.enterState(GameStates.SCORES.getState());
+                    break;
                 case START:
                     stateBasedGame.enterState(GameStates.CHAR_SELECTION.getState());
                     break;

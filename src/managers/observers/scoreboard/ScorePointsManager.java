@@ -18,6 +18,7 @@ public class ScorePointsManager extends Subject{
 		* Lo stato corrisponde a:
 		*	0 punti
 		*	1 vita
+		*	2 rip update scoreboard
 		*/
 		
 		this.state = state;
@@ -30,7 +31,8 @@ public class ScorePointsManager extends Subject{
 	
 	public void decrease(int v) {
 		setDecreaseValue(v);
-	}	
+	}
+	
 	public void saveNamePlayer(String name) {
 		setNamePlayer(name);
 	}

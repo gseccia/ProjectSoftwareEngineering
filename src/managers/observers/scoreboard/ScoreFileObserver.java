@@ -12,14 +12,23 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ScoreFileObserver extends Observer implements Serializable {
 	
 	private ArrayList<Score> scores;
 	private String filename = System.getProperty("user.dir") + File.separator+"resource"+File.separator+"log"+
 			File.separator+"scoreboard.log";
-
-	public ScoreFileObserver(Subject subject){
+	public static ScoreFileObserver instance;
+	
+	public static ScoreFileObserver getInstance(Subject subject) {
+		if(instance == null) 
+			instance = new ScoreFileObserver(subject);
+		return instance;
+	}
+	
+	private ScoreFileObserver(Subject subject){
       this.subject = subject;
       this.subject.attach(this);
       this.scores = new ArrayList<>();
@@ -78,7 +87,7 @@ public class ScoreFileObserver extends Observer implements Serializable {
 					   id = ((PointsAccumulatorObserver) e).getName();
 				   }
 			   }
-			   Score toAdd = new Score(points, id);
+			   Score toAdd = new Score(points, id, Calendar.getInstance());
 			   if(scores.size() == 0) {
 				   scores.add(toAdd);
 			   }
