@@ -1,6 +1,6 @@
 package attacks.states;
 
-import attacks.SpecialAttack;
+import attacks.ultras.SpecialAttack;
 import org.newdawn.slick.Sound;
 
 public class DrawOnCoordinatesWithSoundState implements SpecialAttackState {

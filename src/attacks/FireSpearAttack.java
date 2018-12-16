@@ -4,6 +4,7 @@ import configuration.AttackConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import elements.AnimatedElement;
 import elements.Mob;
+import elements.NotPositiveValueException;
 import managers.Directions;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
@@ -11,15 +12,15 @@ import org.newdawn.slick.SlickException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ShortRangeAttack extends AnimatedElement implements Attack {
+public class FireSpearAttack extends AnimatedElement implements Attack {
 
-    private final static String id = "shortrange";
+    private final static String id = "firespear";
 
     private Mob caster;
     private Map<String, Animation> animations;
     private float drawX, drawY;
 
-    public ShortRangeAttack(Mob caster) {
+    public FireSpearAttack(Mob caster) {
         animations = new HashMap<>();
         AttackConfiguration attackconf = AttackConfiguration.getInstance();
         try {
@@ -45,16 +46,16 @@ public class ShortRangeAttack extends AnimatedElement implements Attack {
      * Sets the hitbox of the attack
      */
     @Override
-    public void setHitbox(){
+    public void setHitbox() {
         float x, y, height, width;
         switch (caster.getCurrentDirection()){
             case Directions.LEFT:
-                x = caster.getX() - caster.getWidth();
+                x = caster.getX() - caster.getWidth()*4;
                 y = caster.getY();
                 height = caster.getHeight();
-                width = caster.getWidth() * 2;
+                width = caster.getWidth() * 5;
                 setCurrent(animations.get("left"));
-                drawX = x + caster.getHeight()/4;
+                drawX = x;
                 drawY = y;
                 break;
 
@@ -62,7 +63,7 @@ public class ShortRangeAttack extends AnimatedElement implements Attack {
                 x = caster.getX();
                 y = caster.getY();
                 height = caster.getHeight();
-                width = caster.getWidth() * 2;
+                width = caster.getWidth() * 5;
                 setCurrent(animations.get("right"));
                 drawX = x + caster.getWidth()*3/4;
                 drawY = y;
@@ -70,18 +71,18 @@ public class ShortRangeAttack extends AnimatedElement implements Attack {
 
             case Directions.UP:
                 x = caster.getX();
-                y = caster.getY() - caster.getHeight();
-                height = caster.getHeight() * 2;
+                y = caster.getY() - caster.getHeight()*2;
+                height = caster.getHeight() * 3;
                 width = caster.getWidth();
                 setCurrent(animations.get("up"));
                 drawX = x;
-                drawY = y + caster.getHeight()/4;
+                drawY = y;
                 break;
 
             case Directions.DOWN:
                 x = caster.getX();
                 y = caster.getY();
-                height = caster.getHeight() * 2;
+                height = caster.getHeight() * 3;
                 width = caster.getWidth();
                 setCurrent(animations.get("down"));
                 drawX = x;

@@ -1,6 +1,5 @@
 package attacks.ultras;
 
-import attacks.SpecialAttack;
 import attacks.states.*;
 import blocks.Block;
 import configuration.NoSuchElementInConfigurationException;

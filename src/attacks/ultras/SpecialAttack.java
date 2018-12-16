@@ -1,4 +1,4 @@
-package attacks;
+package attacks.ultras;
 
 import blocks.Block;
 import elements.Intro;

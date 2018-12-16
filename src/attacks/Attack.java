@@ -19,4 +19,10 @@ public interface Attack {
      */
     void draw();
 
+    /**
+     * Signal that the attack was used
+     */
+    void attack();
+
+
 }

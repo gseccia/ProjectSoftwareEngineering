@@ -1,5 +1,6 @@
 package main;
 
+import attacks.FireSpearAttack;
 import blocks.Block;
 import blocks.BlockFactory;
 import configuration.*;
@@ -16,6 +17,8 @@ import java.util.*;
 import org.newdawn.slick.SlickException;
 import utils.RandomCollection;
 import visitors.HealPlayerModifier;
+import visitors.PlayerModifier;
+import visitors.SetAttackModifier;
 
 public class Level{
 
@@ -74,7 +77,7 @@ public class Level{
 
 			Mission mission_generated = missions.generateMissions(itemCapacity/2, mobCapacity/2, level_difficulty);
 
-			distributeItems();
+			distributeItems(player);
 			distributeMobs(player);
 
 			for(Block block: block_list) {
@@ -114,7 +117,7 @@ public class Level{
 		}
 	}
 
-	private void distributeItems() throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
+	private void distributeItems(Player player) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
 		ItemConfiguration conf = ItemConfiguration.getInstance();
 
 		RandomCollection<Block> blocks = new RandomCollection<>(block_list);
@@ -126,20 +129,38 @@ public class Level{
 
 		}
 
-		int numHearts = (itemCapacity-missions.targetItems().size())/level_difficulty;
-		for(int i=0; i<numHearts; i++){
+		int numNPC = level_difficulty/3 + 1;
+		int i = 0;
+		RandomCollection<String> NPCNames = new RandomCollection<>(conf.getNPCNames());
+		while(numNPC <= itemCapacity && i < numNPC){
+			PlayerModifier visitor;
+			if(new Random().nextInt()%2 == 0){
+				visitor = new SetAttackModifier(new FireSpearAttack(player), level_difficulty*10, level_difficulty+1);
+			}
+			else {
+				visitor = new HealPlayerModifier(player.getMaxHp()*3/4);
+			}
+			Item npc = new Item(conf, NPCNames.getRandom(), visitor, false);
+			b = blocks.getRandom();
+			addItemToBlock(b, npc);
+			updateCapacity(b, blocks, itemsRemainingCapacity);
+			i++;
+		}
+
+		int numHearts = (itemCapacity - numNPC - missions.targetItems().size())/level_difficulty;
+		for(i=0; i<numHearts; i++){
 			b = blocks.getRandom();
 			addItemToBlock(b, new Item(conf, "heart", new HealPlayerModifier(conf.getItemPoints("heart")), false));
 			updateCapacity(b, blocks, itemsRemainingCapacity);
 		}
 
 		RandomCollection<String> itemNames = new RandomCollection<>(conf.getMissionItemNames());
-		Item i;
+		Item item;
 		while(blocks.size() > 0){
 			b = blocks.getRandom();
-			i = new Item(conf, itemNames.getRandom());
+			item = new Item(conf, itemNames.getRandom());
 
-			addItemToBlock(b, i);
+			addItemToBlock(b, item);
 			updateCapacity(b, blocks, itemsRemainingCapacity);
 		}
 	}

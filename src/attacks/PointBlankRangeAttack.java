@@ -22,4 +22,13 @@ public class PointBlankRangeAttack extends AnimatedElement implements Attack {
         setWidth(caster.getWidth());
         setHeight(caster.getHeight());
     }
+
+    /**
+     * Signal that the attack was used
+     */
+    @Override
+    public void attack() {
+
+    }
+
 }

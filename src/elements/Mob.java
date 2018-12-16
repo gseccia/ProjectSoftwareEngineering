@@ -147,7 +147,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
         return attack;
     }
 
-    protected void setAttack(Attack attack){
+    public void setAttack(Attack attack){
         this.attack = attack;
     }
 

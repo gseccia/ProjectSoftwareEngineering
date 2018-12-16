@@ -2,6 +2,7 @@ package elements;
 
 import attacks.*;
 import attacks.ultras.Sparagmos;
+import attacks.ultras.SpecialAttack;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import org.newdawn.slick.SlickException;
@@ -148,12 +149,14 @@ public class Player extends Mob {
 
     @Override
     public void attackRight() throws NullAnimationException {
+        getAttack().attack();
         this.hasAttacked();
         super.attackRight();
     }
 
     @Override
     public void attackDown() throws NullAnimationException {
+        getAttack().attack();
         this.hasAttacked();
         super.attackDown();
 
@@ -161,12 +164,14 @@ public class Player extends Mob {
 
     @Override
     public void attackUp() throws NullAnimationException {
+        getAttack().attack();
         this.hasAttacked();
         super.attackUp();
     }
 
     @Override
     public void attackLeft() throws NullAnimationException {
+        getAttack().attack();
         this.hasAttacked();
         super.attackLeft();
     }

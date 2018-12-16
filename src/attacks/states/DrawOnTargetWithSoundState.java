@@ -1,6 +1,6 @@
 package attacks.states;
 
-import attacks.SpecialAttack;
+import attacks.ultras.SpecialAttack;
 import elements.Enemy;
 import org.newdawn.slick.Sound;
 
