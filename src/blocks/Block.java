@@ -157,6 +157,15 @@ public abstract class Block extends BasicGameState
 		initFont();
 	}
 
+	private void updateEnemies(Set<Enemy> newSpawns){
+		for(Enemy e : newSpawns){
+			e.setPlayer(player);
+			e.setMap(this);
+		}
+		enemy.addAll(newSpawns);
+		setEnemiesSpawn(newSpawns);
+		hitbox.updateMobs(new LinkedList<>(newSpawns));
+	}
 
 	private void setEnemiesSpawn(Iterable<Enemy> enemies){
 		int x, y, n = 1;
@@ -345,6 +354,12 @@ public abstract class Block extends BasicGameState
 		
 		if(!dead && !mission.completed() && !block) {
 		try {
+			// Enemy updating
+			for(Enemy e : enemy) {
+				e.update();
+				e.reloadAttack();
+			}
+
 			boolean pressed =false;
 			if(goRight(gc.getInput())){
 				player.faceRight();
@@ -443,20 +458,14 @@ public abstract class Block extends BasicGameState
 				this.scoreManager.decrease(0);
 				this.scoreManager.increase(collidedItem.getItemPoints());
 
-				if (itemCollision.getItemID() == "heart") {
+				if (itemCollision.getItemID().equals("heart")) {
 					this.scoreManager.setState(States.LifePointsAccumulator);
 				}
 				else {
 					this.scoreManager.setState(States.PointsAccumulator);
 				}
 
-				for(Enemy e : collidedItem.getSpawns()){
-					e.setPlayer(player);
-					e.setMap(this);
-				}
-				enemy.addAll(collidedItem.getSpawns());
-				setEnemiesSpawn(collidedItem.getSpawns());
-				hitbox.updateMobs(new LinkedList<>(collidedItem.getSpawns()));
+				updateEnemies(collidedItem.getSpawns());
 
 				collidedItem.accept(player);
 				mission.check(collidedItem);
@@ -468,19 +477,13 @@ public abstract class Block extends BasicGameState
 				for(Item i : trapCollision.getCollisions()) {
 					this.scoreManager.increase(i.getItemPoints());
 
-					if (i.getID() == "heart") {
+					if (i.getID().equals("heart")) {
 						this.scoreManager.setState(States.LifePointsAccumulator);
 					} else {
 						this.scoreManager.setState(States.PointsAccumulator);
 					}
 
-					for(Enemy e : i.getSpawns()){
-						e.setPlayer(player);
-						e.setMap(this);
-					}
-					enemy.addAll(i.getSpawns());
-					setEnemiesSpawn(i.getSpawns());
-					hitbox.updateMobs(new LinkedList<>(i.getSpawns()));
+					updateEnemies(i.getSpawns());
 
 					if(!i.isTrap()) {
 						i.accept(player);
@@ -522,19 +525,12 @@ public abstract class Block extends BasicGameState
 
 			//Activate ultra
 			if (player.getUltra().isReady() && special(gc.getInput())){
-//				this.rs.setState(-1);
 				player.getUltra().activate(this);
 			}
 
 			// Player attack update
 			player.reloadAttack();
-			
-			// Enemy updating
-			for(Enemy e:enemy) {
-				e.update();
-				e.reloadAttack();
-			}
-			
+
 			for(Item i:item) {
 				i.setLocation((int)(i.getX())+(prevMapX-mapX)*map.getTileWidth(),(int)(i.getY())+(prevMapY-mapY)*map.getTileHeight());
 			}
