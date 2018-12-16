@@ -2,29 +2,20 @@ package blocks;
 
 import java.util.*;
 
-import configuration.AttackConfiguration;
-import configuration.NoSuchElementInConfigurationException;
 import managers.*;
 import map.Edge;
 import map.MapGraph;
 import map.Vertex;
 import missions.Mission;
 import managers.observers.scoreboard.LifePointsAccumulatorObserver;
-import managers.observers.scoreboard.Observer;
 import managers.observers.scoreboard.PointsAccumulatorObserver;
 import managers.observers.scoreboard.ScoreFileObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 import managers.observers.scoreboard.States;
-import managers.observers.scoreboard.SubjectInterface;
-import music.BgMusic;
-import music.DeadMusic;
-import music.LevelCompletedMusic;
 
-import org.lwjgl.openal.AL;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
@@ -34,7 +25,6 @@ import elements.Item;
 import elements.Mob;
 import elements.Player;
 import main.ResourceManager;
-import main.gamestates.GameOver;
 import main.gamestates.GameStates;
 import main.gamestates.Pause;
 import elements.NullAnimationException;
@@ -77,8 +67,8 @@ public abstract class Block extends BasicGameState
 		this.mm = MusicManager.getInstance(this.rs);
 	}
 	
-	public void initMusicManager() {
-		System.out.println("Started music manager");
+	public void resetCompletedLevelMusic() {
+//		System.out.println("Started music manager");
 //		levelMusicMustBeStarted = true;
 		completedMusicMustBeStarted = true;
 	}
@@ -122,7 +112,7 @@ public abstract class Block extends BasicGameState
 		this.scoreManager.setNamePlayer("Armando");
 		
 //		Initialize Resource Manager
-		initMusicManager();
+		resetCompletedLevelMusic();
 	}
 	
 
@@ -224,6 +214,7 @@ public abstract class Block extends BasicGameState
 		for(Enemy e : enemy)
 		{
 			e.draw();
+			//System.out.println(e.getID() + " " + e.getX() + " "+e.getY());
 			//g.draw(e.getVision());  //TESTING LINE
 		}
 		player.draw();
@@ -340,7 +331,7 @@ public abstract class Block extends BasicGameState
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
-		if(isPaused(gc.getInput())){
+		if(isPaused(gc.getInput()) && !(mission.completed())){
 			Pause.setOriginState(getID());
 			gs.enterState(GameStates.PAUSE.getState());
 		}
@@ -531,7 +522,7 @@ public abstract class Block extends BasicGameState
 
 			//Activate ultra
 			if (player.getUltra().isReady() && special(gc.getInput())){
-				this.rs.setState(-1);
+//				this.rs.setState(-1);
 				player.getUltra().activate(this);
 			}
 

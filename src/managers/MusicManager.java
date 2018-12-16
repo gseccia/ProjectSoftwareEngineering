@@ -124,10 +124,6 @@ public class MusicManager extends Observer{
 				this.currentSound = this.ripSound;
 				this.indexLevel = 0;
 				break;
-			case 4:
-//				stop
-				currentMusic.stop();
-				break;
 			default:
 				break;
 		}
