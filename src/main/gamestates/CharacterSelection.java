@@ -139,6 +139,7 @@ public class CharacterSelection extends BasicGameState {
 		else if(input.isKeyPressed(Input.KEY_ENTER)) {
 				rs.setState(1);
 				((main.Game)arg1).setCharacter(selectedChar);
+				((main.Game)arg1).resetDifficulty();
             	arg1.init(arg0);
                 arg1.enterState(GameStates.STARTING_POINT.getState());
 		}

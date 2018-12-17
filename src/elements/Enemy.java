@@ -189,7 +189,7 @@ public class Enemy extends Mob implements MissionTarget {
 			else {
 				choosen = direction;
 				wallCollision.setKey(direction);
-				if(!wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this) ||doorCollision.detectCollision(map.getShiftX(), map.getShiftY(), this)) {
+				if(!wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this) || doorCollision.detectCollision(map.getShiftX(), map.getShiftY(), this)) {
 						//  Choose a random free direction 
 						Random r = new Random();
 						while(choosen == direction) {
