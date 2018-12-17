@@ -11,14 +11,6 @@ public class DrawOnCoordinatesWithSoundState implements SpecialAttackState {
     private float x, y;
     private SpecialAttackState next;
 
-    public DrawOnCoordinatesWithSoundState(SpecialAttack animation, Sound sfx, float x, float y) {
-        this.animation = animation;
-        this.sfx = sfx;
-        this.x = x;
-        this.y = y;
-        this.next = null;
-    }
-
     public DrawOnCoordinatesWithSoundState(SpecialAttack animation, Sound sfx, float x, float y, SpecialAttackState next) {
         this.animation = animation;
         this.sfx = sfx;
