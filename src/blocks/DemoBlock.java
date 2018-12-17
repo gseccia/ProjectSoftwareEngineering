@@ -213,9 +213,12 @@ public class DemoBlock extends Block{
 				showString = "Your score is at top-right corner";
 				break;
 			case 3:
-				showString = "Your level is at center";
+				showString = "Your special attack is at right";
 				break;
 			case 4:
+				showString = "Your level is at center";
+				break;
+			case 5:
 				showString = "Let's play!";
 				break;
 			default:
@@ -235,11 +238,11 @@ public class DemoBlock extends Block{
 	
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
 		if(!blocked)super.update(gc, gs, delta);
-		if(displayMessage<5 && updating>50) {
+		if(displayMessage<6 && updating>10) {
 			displayMessage++;
 			updating = 0;
 		}
-		else if(displayMessage<5) updating++;
+		else if(displayMessage<6) updating++;
 		else blocked = false;
 	}
 
