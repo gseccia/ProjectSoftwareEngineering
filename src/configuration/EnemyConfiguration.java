@@ -25,6 +25,10 @@ public class EnemyConfiguration extends MobConfiguration {
         return this.getConfiguration(id).get("points").getAsInt();
     }
 
+    public int getAttackLatency(String id) throws NoSuchElementInConfigurationException {
+        return getConfiguration(id).get("delay").getAsInt();
+    }
+
     public Set<String> getMobNames(){
         return getIdSet();
     }

@@ -13,6 +13,7 @@ import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import configuration.PlayerCommands;
 import main.ResourceManager;
 import managers.MusicManager;
 import managers.command.Broker;
@@ -32,6 +33,8 @@ public class Settings extends BasicGameState  {
 	private Image[] blackRightTriangles = new Image[NOCHOICES];
 	private Image[] redLeftTriangles = new Image[NOCHOICES];
 	private Image[] blackLeftTriangles = new Image[NOCHOICES];
+	
+	private PlayerCommands pc = PlayerCommands.getPlayerCommandsInstance();
 	
 	private static final int NOCHOICES = 8;
 	private static final int W = 0;
@@ -166,34 +169,64 @@ public class Settings extends BasicGameState  {
 	private void changeValue(boolean leftKey) {
 		switch(playerChoice) {
 			case 0:
-				if (Settings[playerChoice]=="W")
+				if (Settings[playerChoice]=="W") {
 					Settings[playerChoice] = up;
-				else Settings[playerChoice] = "W";
+					pc.setUp(false);
+				}
+				else {
+					Settings[playerChoice] = "W";
+					pc.setUp(true);
+				}
 				break;
 			case 1:
-				if (Settings[playerChoice]=="A")
+				if (Settings[playerChoice]=="A") {
 					Settings[playerChoice] = left;
-				else Settings[playerChoice] = "A";
+					pc.setLeft(false);
+				}
+				else {
+					Settings[playerChoice] = "A";
+					pc.setLeft(false);
+				}
 				break;
 			case 2:
-				if (Settings[playerChoice]=="S")
+				if (Settings[playerChoice]=="S") {
 					Settings[playerChoice] = down;
-				else Settings[playerChoice] = "S";
+					pc.setDown(false);
+				}
+				else {
+					Settings[playerChoice] = "S";
+					pc.setDown(true);
+				}
 				break;
 			case 3:
-				if (Settings[playerChoice]=="D")
+				if (Settings[playerChoice]=="D") {
 					Settings[playerChoice] = right;
-				else Settings[playerChoice] = "D";
+					pc.setRight(false);
+				}
+				else {
+					Settings[playerChoice] = "D";
+					pc.setRight(true);
+				}
 				break;
 			case 4:
-				if (Settings[playerChoice]=="M")
+				if (Settings[playerChoice]=="M") {
 					Settings[playerChoice] = "Z";
-				else Settings[playerChoice] = "M";
+					pc.setAttack1(false);
+				}
+				else {
+					Settings[playerChoice] = "M";
+					pc.setAttack1(true);
+				}
 				break;
 			case 5:
-				if (Settings[playerChoice]=="X")
-					Settings[playerChoice] = "SPACE";
-				else Settings[playerChoice] = "X";
+				if (Settings[playerChoice]=="SPACE") {
+					Settings[playerChoice] = "X";
+					pc.setAttack2(false);
+				}	
+				else {
+					 Settings[playerChoice] = "SPACE";
+					 pc.setAttack1(true);
+				}
 				break;
 			case 6:
 				if (leftKey) {

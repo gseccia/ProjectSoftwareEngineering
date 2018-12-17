@@ -161,9 +161,4 @@ public class HoraHora extends AnimatedElement implements SpecialAttack {
     private boolean enemyIsAtRange(float x1, float x2, float y1, float y2){
         return Math.abs(x1-x2) < MAXIMUM_DISTANCE && Math.abs(y1-y2) < MAXIMUM_DISTANCE;
     }
-
-    @Override
-    public Intro getIntro() {
-        return intro;
-    }
 }

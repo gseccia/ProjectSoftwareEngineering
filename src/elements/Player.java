@@ -1,6 +1,7 @@
 package elements;
 
 import attacks.*;
+import attacks.ultras.IUF;
 import attacks.ultras.Sparagmos;
 import attacks.ultras.SpecialAttack;
 import configuration.MobConfiguration;
@@ -24,7 +25,7 @@ public class Player extends Mob {
         super(configuration, id);
         setAttack(new ShortRangeAttack(this));
         step = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/step.ogg");
-        ultra = new Sparagmos(this);
+        ultra = new IUF(this);
         //ultra = new HoraHora(this);
     }
 
