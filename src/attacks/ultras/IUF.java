@@ -1,13 +1,11 @@
 package attacks.ultras;
 
-import attacks.states.DamageEnemiesState;
-import attacks.states.DrawIntroState;
-import attacks.states.DrawWithSoundState;
-import attacks.states.SpecialAttackState;
+import attacks.states.*;
 import blocks.Block;
 import configuration.NoSuchElementInConfigurationException;
 import configuration.SpecialAttackConfiguration;
 import elements.*;
+import main.ResourceManager;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -121,9 +119,12 @@ public class IUF extends AnimatedElement implements SpecialAttack {
                     tmp.setY(e.getY()-b.getShiftY()*16-120);
                     flames.add(tmp);
                 }
-                current = new DrawIntroState(intro, introSound, caster.getX()-30, caster.getY()-28,
-                        new DrawWithSoundState(this, blaze,
-                                new DamageEnemiesState(b.getEnemy(), DAMAGE)));
+                current = new HandleMusicState(ResourceManager.getInstance(), -1, new DamageEnemiesState(b.getEnemy(), DAMAGE));
+                if(!b.getEnemy().isEmpty()){
+                    current = new DrawWithSoundState(this, blaze, current);
+                }
+                current = new HandleMusicState(ResourceManager.getInstance(), -1,
+                        new DrawIntroState(intro, introSound, caster.getX()-30, caster.getY()-28, current));
             } catch (NullAnimationException | SlickException | NoSuchElementInConfigurationException e) {
                 e.printStackTrace();
             }
