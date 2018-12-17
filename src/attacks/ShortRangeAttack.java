@@ -7,6 +7,7 @@ import elements.Mob;
 import managers.Directions;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class ShortRangeAttack extends AnimatedElement implements Attack {
     private Mob caster;
     private Map<String, Animation> animations;
     private float drawX, drawY;
+    private Sound sfx;
 
     public ShortRangeAttack(Mob caster) {
         animations = new HashMap<>();
@@ -27,6 +29,8 @@ public class ShortRangeAttack extends AnimatedElement implements Attack {
             animations.put("left", attackconf.getLeftAnimation(id));
             animations.put("down", attackconf.getDownAnimation(id));
             animations.put("up", attackconf.getUpAnimation(id));
+
+            sfx = attackconf.getAttackSound(id);
         } catch (SlickException | NoSuchElementInConfigurationException e) {
             e.printStackTrace();
         }
@@ -105,7 +109,7 @@ public class ShortRangeAttack extends AnimatedElement implements Attack {
      */
     @Override
     public void attack() {
-
+        sfx.play();
     }
 
 }
