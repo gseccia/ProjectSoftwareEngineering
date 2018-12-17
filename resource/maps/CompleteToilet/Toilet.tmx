@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="52" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="73" nextobjectid="1">
  <properties>
-  <property name="charHeightDoor1" type="int" value="3"/>
-  <property name="charXDoor1" type="int" value="1"/>
+  <property name="charHeightDoor1" type="int" value="4"/>
+  <property name="charXDoor1" type="int" value="2"/>
   <property name="charYDoor1" type="int" value="10"/>
   <property name="itemCapacity" type="int" value="7"/>
   <property name="mobCapacity" type="int" value="4"/>
@@ -25,15 +25,15 @@
  <tileset firstgid="7541" source="../CompleteHallway/terrain_atlas.tsx"/>
  <layer id="63" name="Mask" width="52" height="16">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACtsgy8CwYZhhdzZU3MdIN7yAWhjkblz+oaO/Rv0z6h+q+AlmPgFz6O4fcv0FMx8GBpt/SPUvun9wqSHRbJz+wVVekwNwuQPdP9gwMWYTkw+p6R9aAmLTOrp/BisgNk0OFf8QA0aCf4ayn9DTHDXK68GAB7pdTwsMAL6kIHEADQAA
+   H4sIAAAAAAAACtsgy8CwYZhhdzZU3MdIN7yAWhjkblz+oaO/Rv0z6h+q+AlmPgFz6O4fcv0FMx8GBpt/SPUvun9wqSHRbJz+wVVekwNwuQPdP9gwMWYTkw+p6R9aAmLTOrp/BisgNk0OFf8QA0b9M7gBepqjRnk9GPBAt+tpgQGS16xaAA0AAA==
   </data>
  </layer>
  <layer id="64" name="Door1" width="52" height="16">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3PQQ0AQAjEQDj/erCDlTOxCZ8ZBW0VAJCy77oga/q6IMsP8AE9jXQpAA0AAA==
+   H4sIAAAAAAAACu3PAQ0AIAwEsYF/PdjBCiY+2UJaBXdVAEDK3d0FWWd1F2T5me23H2Z6zHZX8AANAAA=
   </data>
  </layer>
- <layer id="65" name="Base" width="52" height="16">
+ <layer id="65" name="Base" width="52" height="16" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNgGJ7gPhMEDxcw6p/BD4abf0bB4AYT6YwnUcmcxTj8s5jOeAkZepD9gIyRASycqBVe1IofSvxDbnjRO35w4cESP7Tyz3CKH3r6gVZ4FAwNAADp4vIdAA0AAA==
   </data>
