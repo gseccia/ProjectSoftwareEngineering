@@ -1,4 +1,4 @@
-package managers.observers.scoreboard;
+package managers.observers;
 
 public interface ObserverInterface {
 	public void update();

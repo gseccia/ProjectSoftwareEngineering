@@ -1,4 +1,4 @@
-package managers.observers.scoreboard;
+package managers.observers;
 
 import java.util.ArrayList;
 import java.util.List;

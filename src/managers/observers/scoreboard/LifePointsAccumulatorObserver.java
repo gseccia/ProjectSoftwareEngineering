@@ -7,6 +7,8 @@ import configuration.ItemConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import elements.Item;
 import elements.NullAnimationException;
+import managers.observers.Observer;
+import managers.observers.Subject;
 
 public class LifePointsAccumulatorObserver extends Observer{
 	private int hp = 100;

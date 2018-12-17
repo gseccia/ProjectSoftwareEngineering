@@ -11,8 +11,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.openal.SoundStore;
 
-import managers.observers.scoreboard.Observer;
-import managers.observers.scoreboard.Subject;
+import managers.observers.Observer;
+import managers.observers.Subject;
 
 public class MusicManager extends Observer{
 	private static MusicManager instance;

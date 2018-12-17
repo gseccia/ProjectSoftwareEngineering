@@ -1,5 +1,8 @@
 package managers.observers.scoreboard;
 
+import managers.observers.Subject;
+import managers.observers.Observer;
+
 public class ScorePointsManager extends Subject{
 	private static ScorePointsManager instance = null;
 	

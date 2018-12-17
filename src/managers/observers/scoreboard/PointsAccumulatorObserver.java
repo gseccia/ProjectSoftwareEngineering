@@ -1,5 +1,8 @@
 package managers.observers.scoreboard;
 
+import managers.observers.Observer;
+import managers.observers.Subject;
+
 public class PointsAccumulatorObserver extends Observer{
 	private int points;
 	

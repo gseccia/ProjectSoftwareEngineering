@@ -1,4 +1,4 @@
-package managers.observers.scoreboard;
+package managers.observers;
 
 public abstract class Observer implements ObserverInterface{
    protected Subject subject;

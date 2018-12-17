@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import elements.Item;
+import managers.observers.Observer;
+import managers.observers.Subject;
 
 public class ItemAccumulatorObserver extends Observer{
 	private List<Item> itemsList;

@@ -1,6 +1,5 @@
 package managers.command;
 
-
 import main.ResourceManager;
 import managers.MusicManager;
 
