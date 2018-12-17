@@ -127,7 +127,6 @@ public abstract class Block extends BasicGameState
 //		dead = false;
 	}
 	
-
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		setCharacterSpawn(1);
@@ -140,15 +139,15 @@ public abstract class Block extends BasicGameState
 		boolean[][] occupied = hitbox.getOccupiedTiles();
 		Wall tempWall = new Wall(0, 0, map.getTileWidth(), map.getTileHeight());
 		for(Item i : item) {
-			y = r.nextInt(map.getHeight());
-			x = r.nextInt(map.getWidth());
+			y = r.nextInt(map.getHeight()-(int)(Math.ceil(i.getWidth()/map.getTileWidth())));
+			x = r.nextInt(map.getWidth()-(int)(Math.ceil(i.getHeight()/map.getTileHeight())));
 
 			tempWall.setCenterX(x);
 			tempWall.setCenterY(y);
-			while(occupied[x][y]) {
+			while(occupied[x][y] || occupied[x][y+ (int) (Math.ceil( i.getWidth()/map.getTileWidth() ))]) {
 				
-				y = r.nextInt(map.getHeight());
-				x = r.nextInt(map.getWidth());
+				y = r.nextInt(map.getHeight()-(int)(Math.ceil(i.getWidth()/map.getTileWidth())));
+				x = r.nextInt(map.getWidth()-(int)(Math.ceil(i.getHeight()/map.getTileHeight())));
 
 				tempWall.setCenterX(x);
 				tempWall.setCenterY(y);
@@ -248,6 +247,8 @@ public abstract class Block extends BasicGameState
 		if(mission.completed()){
 			g.setColor(Color.white);
             try {
+            	uniFont = StatesUtils.changeSizeAndStyle(uniFont, 16f, Font.BOLD);
+            	
             	int width = ((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue()) - uniFont.getWidth("LEVEL COMPLETED!"))/2;
             	int height = ((Long.valueOf(Math.round(gc.getHeight()/1.5)).intValue()))/2;
                 g.fillRect(0, 0, gc.getWidth(), gc.getHeight(), new Image(System.getProperty("user.dir") + "/resource/textures/transitions/background.png"), 0, 0);

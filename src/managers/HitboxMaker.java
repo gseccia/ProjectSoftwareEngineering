@@ -62,6 +62,11 @@ public class HitboxMaker {
 			n++;
 			if(i!=-1) {
 				doors.add(new Wall(i*map.getTileWidth(), j*map.getTileHeight(),w*map.getTileWidth(), h*map.getTileHeight()));
+				for(int k=i;k<i+w;k++) {
+					for(int z=j;z<j+h;z++)
+						occupiedTiles[k][z] = true;
+				}
+				
 			}
 		}
 		
