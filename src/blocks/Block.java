@@ -23,6 +23,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
+import configuration.PlayerCommands;
 import elements.Enemy;
 import elements.Item;
 import elements.Mob;
@@ -65,6 +66,7 @@ public abstract class Block extends BasicGameState
 	private boolean completedMusicMustBeStarted;//Fonts
 	private org.newdawn.slick.UnicodeFont uniFont;
 	private String charName;
+	private PlayerCommands pc = PlayerCommands.getPlayerCommandsInstance();
 	
 	protected Block(int state,String mapName)
 	{
