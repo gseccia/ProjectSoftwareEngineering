@@ -217,8 +217,9 @@ public class DemoBlock extends Block{
 			default:
 				showString = "";
 				break;
-		}  
-		renderText(showString,((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-uniFont.getWidth(showString))/2,250);
+		} 
+		g.drawString(showString,((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-showString.length())/2,250);
+		//renderText(showString,((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-uniFont.getWidth(showString))/2,250);
 		
 		if(currentPath != null) {
 			g.setColor(Color.orange);
