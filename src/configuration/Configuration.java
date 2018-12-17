@@ -26,7 +26,7 @@ abstract class Configuration {
         return null;
     }
 
-    protected Animation generateAnimation(String id, String animation) throws SlickException, NoSuchElementInConfigurationException {
+    public Animation generateAnimation(String id, String animation) throws SlickException, NoSuchElementInConfigurationException {
         // load configuration from id
         JsonObject conf = this.getConfiguration(id);
         // load configuration for movement type
