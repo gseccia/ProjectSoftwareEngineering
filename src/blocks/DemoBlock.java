@@ -55,8 +55,6 @@ public class DemoBlock extends Block{
 		super.initBlock(player, population, items, graph, missionGenerated, spm);
 		//tmp = new EncapsulateMap(getMap(),getHitbox().getDoors());
 		pf = new AStarPathFinder(new EncapsulateMap(getMap(),getHitbox().getDoors()),5000,false);
-		enemy = new HashSet<>();
-		item = new HashSet<>();
 		currentPath = null;
 		currentStep = 1;
 		doorLabel = new HashMap<>();
@@ -67,6 +65,13 @@ public class DemoBlock extends Block{
 		doorSelected = null;
 		lastDoor = null;
 		discovery = true;
+	}
+	
+	
+	protected void reset() {
+		updating = 0;
+		displayMessage = 0;
+		blocked = true;
 	}
 	
 	private int tileConversion(float value, boolean xaxis,boolean player) {
@@ -115,7 +120,7 @@ public class DemoBlock extends Block{
 	}
 	
 	private void generatePath() {
-		if((item.isEmpty() && enemy.isEmpty()) || true) {
+		if((item.isEmpty() && enemy.isEmpty())) {
 			// change map
 			Iterator<Wall> iter = doorLabel.keySet().iterator();
 			while(iter.hasNext() && doorSelected==null) {
