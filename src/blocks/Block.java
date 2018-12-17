@@ -494,13 +494,7 @@ public abstract class Block extends BasicGameState
 				Item collidedItem = itemCollision.getCollidedItem();
 				this.scoreManager.decrease(0);
 				this.scoreManager.increase(collidedItem.getItemPoints());
-
-				if (itemCollision.getItemID().equals("heart")) {
-					this.scoreManager.setState(States.LifePointsAccumulator);
-				}
-				else {
-					this.scoreManager.setState(States.PointsAccumulator);
-				}
+				this.scoreManager.setState(States.PointsAccumulator);
 
 				updateEnemies(collidedItem.getSpawns());
 
@@ -513,12 +507,7 @@ public abstract class Block extends BasicGameState
 				this.scoreManager.decrease(0);
 				for(Item i : trapCollision.getCollisions()) {
 					this.scoreManager.increase(i.getItemPoints());
-
-					if (i.getID().equals("heart")) {
-						this.scoreManager.setState(States.LifePointsAccumulator);
-					} else {
-						this.scoreManager.setState(States.PointsAccumulator);
-					}
+					this.scoreManager.setState(States.PointsAccumulator);
 
 					updateEnemies(i.getSpawns());
 
