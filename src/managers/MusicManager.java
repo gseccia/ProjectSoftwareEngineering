@@ -14,7 +14,7 @@ import org.newdawn.slick.openal.SoundStore;
 import managers.observers.Observer;
 import managers.observers.Subject;
 
-public class MusicManager extends Observer{
+public class MusicManager extends Observer implements MusicManagerInterface{
 	private static MusicManager instance;
 	private Music menuMusic;
 	private List<Music> gameMusic = new ArrayList<>();
@@ -138,6 +138,9 @@ public class MusicManager extends Observer{
 		this.volume = volume;
 		if (currentMusic.playing()) currentMusic.setVolume(volume);
 	}
-	
 
+	@Override
+	public void updateMusic() {
+		System.out.println("Sei un baro!");
+	}
 }

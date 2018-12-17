@@ -17,8 +17,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.BufferedImageUtil;
 
 import main.Game;
-import main.ResourceManager;
 import managers.MusicManager;
+import managers.ResourceManager;
 import managers.observers.scoreboard.PointsAccumulatorObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 

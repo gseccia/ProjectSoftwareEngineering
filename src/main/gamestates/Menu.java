@@ -9,8 +9,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import main.ResourceManager;
 import managers.MusicManager;
+import managers.ResourceManager;
 
 public class Menu extends BasicGameState {
     private final int id = GameStates.MENU.getState();

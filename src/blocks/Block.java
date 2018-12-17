@@ -29,7 +29,6 @@ import elements.Enemy;
 import elements.Item;
 import elements.Mob;
 import elements.Player;
-import main.ResourceManager;
 import main.gamestates.GameStates;
 import main.gamestates.Pause;
 import main.gamestates.StatesUtils;

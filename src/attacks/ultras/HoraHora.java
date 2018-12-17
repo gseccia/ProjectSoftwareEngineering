@@ -5,7 +5,7 @@ import blocks.Block;
 import configuration.NoSuchElementInConfigurationException;
 import configuration.SpecialAttackConfiguration;
 import elements.*;
-import main.ResourceManager;
+import managers.ResourceManager;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;

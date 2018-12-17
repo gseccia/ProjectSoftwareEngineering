@@ -14,8 +14,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import configuration.PlayerCommands;
-import main.ResourceManager;
 import managers.MusicManager;
+import managers.ResourceManager;
 import managers.command.Broker;
 import managers.command.DecreaseVolumeCommand;
 import managers.command.IncreaseVolumeCommand;

@@ -1,4 +1,4 @@
-package main;
+package managers;
 
 public class ResourceManager extends managers.observers.Subject{
 	private static ResourceManager instance;

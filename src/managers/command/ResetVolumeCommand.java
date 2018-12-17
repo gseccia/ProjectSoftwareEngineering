@@ -1,7 +1,7 @@
 package managers.command;
 
-import main.ResourceManager;
 import managers.MusicManager;
+import managers.ResourceManager;
 
 public class ResetVolumeCommand implements CommandInterface{
 	private static ResetVolumeCommand instance = null;

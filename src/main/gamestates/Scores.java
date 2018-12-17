@@ -13,7 +13,7 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import main.ResourceManager;
+import managers.ResourceManager;
 import managers.observers.scoreboard.Score;
 import managers.observers.scoreboard.ScoreFileObserver;
 

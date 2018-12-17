@@ -1,7 +1,7 @@
 package managers.command;
 
-import main.ResourceManager;
 import managers.MusicManager;
+import managers.ResourceManager;
 
 public class DecreaseVolumeCommand implements CommandInterface {
 	private static DecreaseVolumeCommand instance = null;
