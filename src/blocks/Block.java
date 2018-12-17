@@ -124,7 +124,7 @@ public abstract class Block extends BasicGameState
 		resetCompletedLevelMusic();
 //		Init font
 		StatesUtils.initFont();
-		dead = false;
+//		dead = false;
 	}
 	
 
@@ -142,17 +142,17 @@ public abstract class Block extends BasicGameState
 		for(Item i : item) {
 			y = r.nextInt(map.getHeight());
 			x = r.nextInt(map.getWidth());
-			tempWall.setX(x);
-			tempWall.setY(y);
+			tempWall.setCenterX(x);
+			tempWall.setCenterY(y);
 			while(occupied[x][y]) {
 				y = r.nextInt(map.getHeight());
 				x = r.nextInt(map.getWidth());
-				tempWall.setX(x);
-				tempWall.setY(y);
+				tempWall.setCenterX(x);
+				tempWall.setCenterY(y);
 				for(Item j : item) {
 					if(j.intersects(tempWall)) {
-						tempWall.setX(x+r.nextInt(10));
-						tempWall.setY(y+r.nextInt(10));
+						tempWall.setCenterX(x+r.nextInt(10));
+						tempWall.setCenterY(y+r.nextInt(10));
 					}
 
 				}
