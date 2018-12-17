@@ -35,10 +35,9 @@ public class DemoBlock extends Block{
 	private AStarPathFinder pf;
 	private HashMap<Wall,Integer> doorLabel;
 	private final int UNEXPLORED=0,EXPLORED=1;
-	private Wall lastDoor;
+	private Wall lastDoor,doorSelected;
 	private boolean discovery;
 	private boolean firstTime;
-	private EncapsulateMap tmp;
 	private static int updating = 0;
 	private static int displayMessage = 0;
 	private static boolean blocked = true;
@@ -54,15 +53,16 @@ public class DemoBlock extends Block{
 	{
 		firstTime = true;
 		super.initBlock(player, population, items, graph, missionGenerated, spm);
-		tmp = new EncapsulateMap(getMap(),getHitbox().getDoors());
-		pf = new AStarPathFinder(tmp,5000,false);
+		//tmp = new EncapsulateMap(getMap(),getHitbox().getDoors());
+		pf = new AStarPathFinder(new EncapsulateMap(getMap(),getHitbox().getDoors()),5000,false);
 		currentPath = null;
 		currentStep = 1;
 		doorLabel = new HashMap<>();
 		for(Wall door:getHitbox().getDoors()) {
 			doorLabel.put(door, UNEXPLORED);
-			System.out.println((tmp.blocked(null, tileConversion(door.getX(),true,false), tileConversion(door.getY(),true,false))? "NOT VALID":"VALID"));
+			//System.out.println((tmp.blocked(null, tileConversion(door.getX(),true,false), tileConversion(door.getY(),true,false))? "NOT VALID":"VALID"));
 		}
+		doorSelected = null;
 		lastDoor = null;
 		discovery = true;
 	}
@@ -83,12 +83,12 @@ public class DemoBlock extends Block{
 		playerTileY = tileConversion(player.getY(),false,true);
 		targetTileX = tileConversion(targetElement.getX(),true,align);
 		targetTileY = tileConversion(targetElement.getY(),false,align);
-		System.out.println("TARGET TILE "+targetTileX+" "+targetTileY);
-		if(tmp.blocked(null, targetTileX, targetTileY)){
+		//System.out.println("TARGET TILE "+targetTileX+" "+targetTileY);
+		/*if(tmp.blocked(null, targetTileX, targetTileY)){
 			System.out.println("BLOCKED");
 		}
 		else System.out.println("FREE");
-		// System.out.println("PLAYER TILE "+playerTileX+" "+playerTileY);
+		// System.out.println("PLAYER TILE "+playerTileX+" "+playerTileY);*/
 		currentPath = pf.findPath(player, playerTileX, playerTileY, targetTileX, targetTileY);
 		currentStep = 1;
 	}
@@ -104,37 +104,36 @@ public class DemoBlock extends Block{
 			//System.out.println("BLOCCO " + super.getMapName() + " PORTA DISCOVERY -> "+tileConversion(lastDoor.getX(),true,false)+", "+tileConversion(lastDoor.getY(),false,false)+" <--> "+doorLabel.get(lastDoor));
 			discovery = false;
 		}
-		System.out.println("STATE");
+		/*System.out.println("STATE");
 		for(Wall door:doorLabel.keySet()) {
 			System.out.println("BLOCCO " + super.getMapName() + " PORTA "+((door == lastDoor)?"DISCOVERY":"")+" -> "+tileConversion(door.getX(),true,false)+", "+tileConversion(door.getY(),false,false)+" <--> "+doorLabel.get(door));
 			
-		}
+		}*/
 		firstTime = false;
 	}
 	
 	private void generatePath() {
 		if((item.isEmpty() && enemy.isEmpty())) {
 			// change map
-			Wall doorSelected = null;
 			Iterator<Wall> iter = doorLabel.keySet().iterator();
 			while(iter.hasNext() && doorSelected==null) {
 				Wall door = iter.next();
 				if(doorLabel.get(door)==UNEXPLORED) {
-					System.out.println("PORTA TROVATA");
-					doorLabel.put(door, EXPLORED);					
+					// System.out.println("PORTA TROVATA");
+					//doorLabel.put(door, EXPLORED);					
 					doorSelected = door;
 				}
 			}
 			if(doorSelected == null) {
 				doorSelected = lastDoor;
-			    System.out.println("ASSIGNED LAST DOOR");
+			    // System.out.println("ASSIGNED LAST DOOR");
 			}
 			if(doorSelected != null) {
 				generateTPath(doorSelected,false);
-				if(currentPath==null)System.out.println("NON PATH - "+getMap().getWidth()+" "+getMap().getHeight());
+				// if(currentPath==null)System.out.println("NON PATH - "+getMap().getWidth()+" "+getMap().getHeight());
 			}
 			else {
-				System.out.println("Impossible errore");
+				// System.out.println("Impossible errore");
 			}
 		}
 		else if(enemy.isEmpty()){
@@ -150,6 +149,10 @@ public class DemoBlock extends Block{
 	private int logicMovements() {
 		if(currentPath == null || currentStep > currentPath.getLength() -1) {
 			generatePath();
+		}
+		else if(doorSelected != null &&  currentStep == currentPath.getLength() -1) {
+			doorLabel.put(doorSelected, EXPLORED);
+			doorSelected = null;
 		}
 		
 		int direction;
@@ -221,13 +224,13 @@ public class DemoBlock extends Block{
 		} 
 		renderText(showString,((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-uniFont.getWidth(showString))/2,250);
 		
-		if(currentPath != null) {
+		/*if(currentPath != null) {
 			g.setColor(Color.orange);
 			for(int i=0;i<currentPath.getLength();i++) {
 				g.drawRect((currentPath.getX(i)-getShiftX())*getMap().getTileWidth(),(currentPath.getY(i)-getShiftY())*getMap().getTileHeight(),16,16);
 			}
 			g.setColor(Color.green);
-		}
+		}*/
 	}
 	
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
