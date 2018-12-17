@@ -23,7 +23,11 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
+<<<<<<< HEAD
 import elements.EncapsulateMap;
+=======
+import configuration.PlayerCommands;
+>>>>>>> c520161993af9297e38ce17593f80330814afc0d
 import elements.Enemy;
 import elements.Item;
 import elements.Mob;
@@ -66,6 +70,7 @@ public abstract class Block extends BasicGameState
 	private boolean completedMusicMustBeStarted;//Fonts
 	protected org.newdawn.slick.UnicodeFont uniFont;
 	private String charName;
+	private PlayerCommands pc = PlayerCommands.getPlayerCommandsInstance();
 	
 	protected Block(int state,String mapName)
 	{
@@ -156,10 +161,7 @@ public abstract class Block extends BasicGameState
 						tempWall.setX(x+r.nextInt(10));
 						tempWall.setY(y+r.nextInt(10));
 					}
-//					if(j.getX() == tempWall.getMinX() && j.getY() == tempWall.getMinY()) {
-//						tempWall.setX(x+r.nextInt(10));
-//						tempWall.setY(y+r.nextInt(10));
-//					}
+
 				}
 			}
 			i.setLocation((x)*map.getTileWidth(),y*map.getTileHeight());
@@ -204,14 +206,6 @@ public abstract class Block extends BasicGameState
 	
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) {
-//		if (levelMusicMustBeStarted) {
-//			if (arg1.getCurrentStateID()==this.getID()) {
-//				rs.setState(1);
-//				System.out.println("starting block");
-//				levelMusicMustBeStarted = false;
-//			}
-//		}
-		
 		g.scale(1.5f, 1.5f);
 		map.render(0,0, mapX,mapY,mapX+50,mapY+50);
 		//TESTING ZONE BEGIN
@@ -254,30 +248,21 @@ public abstract class Block extends BasicGameState
 			g.drawImage(player.getUltra().getIcon(), (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-18*7, 50, Color.gray);
 		}
 
-//		if(dead) {
-//			System.out.println("I'm dead");
-//			arg1.enterState(GameStates.GAMEOVER.getState());
-//		}
-
-
 		if(mission.completed()){
 			g.setColor(Color.white);
             try {
             	int width = ((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue()) - uniFont.getWidth("LEVEL COMPLETED!"))/2;
             	int height = ((Long.valueOf(Math.round(gc.getHeight()/1.5)).intValue()))/2;
                 g.fillRect(0, 0, gc.getWidth(), gc.getHeight(), new Image(System.getProperty("user.dir") + "/resource/textures/transitions/background.png"), 0, 0);
-                
+
                 StatesUtils.applyBorder(uniFont, "LEVEL COMPLETED!", width, height-15, new Color(105, 2, 2));
                 uniFont.drawString(width, height-15, "LEVEL COMPLETED!", new Color(201, 2, 2));
-                
-//                g.drawImage(new Image(System.getProperty("user.dir") + "/resource/textures/transitions/toBeCont.png"), player.getX()-85, player.getY()-25);
+
                 width = ((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue()) - uniFont.getWidth("Press Enter to continue"))/2;
-                
+
                 StatesUtils.applyBorder(uniFont, "Press Enter to continue", width, height+15, new Color(105, 2, 2));
 				uniFont.drawString(width, height+15, "Press Enter to continue", new Color(201, 2, 2));
-				
-//				bgMusic.stop();
-//                if(!endLevel.playing()) endLevel.loop(1.0f, SoundStore.get().getMusicVolume() * 0.3f);
+
             	if(completedMusicMustBeStarted) {
             		this.rs.setState(2);
             		completedMusicMustBeStarted = false;
@@ -287,7 +272,6 @@ public abstract class Block extends BasicGameState
                 e.printStackTrace();
             }
             if(gc.getInput().isKeyDown(Input.KEY_ENTER)){
-//            	if(endLevel.playing()) endLevel.stop();
             	this.rs.setState(1);
             	levelMusicMustBeStarted = true;
             	generateNextLevel(gc, arg1);
@@ -296,17 +280,15 @@ public abstract class Block extends BasicGameState
         }
 
 		
-//		g.setColor(new Color(0, 255, 255));
-//		custom font settings
 		uniFont = StatesUtils.changeSizeAndStyle(uniFont, 16f, Font.BOLD);
 		Color fontColor = new Color (255, 0, 255);
 		Color borderColor = new Color(105, 2, 105);
+
 //		LEFT SIDE OF THE SCREEN
 //		Draw Char name and life
 		int xChar = 10;
 		int yChar = 15;
-//		Shape s = new Ellipse(10, 100, 100, 30);
-//		g.draw(s);
+
 		StatesUtils.applyBorder(uniFont, charName, xChar, yChar, borderColor);
 		uniFont.drawString(xChar, yChar, charName, fontColor);
 //		Draw hearts below char name
@@ -317,15 +299,15 @@ public abstract class Block extends BasicGameState
 //		TODO delete in final version
 		StatesUtils.applyBorder(uniFont, String.valueOf(player.getHp()), xHeart + 10, yHeart, borderColor);
 		uniFont.drawString(xHeart + 10, yHeart, String.valueOf(player.getHp()), fontColor);
-		
-		
+
+
 //		CENTER SIDE OF THE SCREEN
 //		Draw level
 		int xLevel = ((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-uniFont.getWidth("Level "+this.levelNumber))/2;
 		int yLevel = 15; //	30(height hearts) - 0(points) / 2
 		StatesUtils.applyBorder(uniFont, "Level "+this.levelNumber, xLevel, yLevel, borderColor);
 		uniFont.drawString(xLevel, yLevel, "Level "+this.levelNumber, fontColor);
-		
+
 //		RIGHT SIDE OF THE SCREEN
 //		Draw points on the screen
 		int xPoints = (Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-uniFont.getWidth(String.valueOf(this.pao.getPoints()))-10;
@@ -390,6 +372,7 @@ public abstract class Block extends BasicGameState
 			Pause.setOriginState(getID());
 			gs.enterState(GameStates.PAUSE.getState());
 		}
+
 		if(dead) {
 			System.out.println("dead variable is " + dead);
 			System.out.println("I'm dead");
@@ -544,12 +527,11 @@ public abstract class Block extends BasicGameState
 				scoreManager.decrease(enemyCollision.getAttackDamage());
 				scoreManager.increase(0);
 				scoreManager.setState(States.LifePointsAccumulator);
-//				lpao.setHp(-enemyCollision.getAttackDamage());
 			}
-			if (attackCollision.detectCollision(mapX, mapY, player)  /*&& (gc.getInput().isKeyPressed(Directions.KEY_M))*/){
+
+			if (attackCollision.detectCollision(mapX, mapY, player)){
 				for (Mob target : attackCollision.getEnemy()) {
 					target.damage(player.getAttackDamage());
-					//System.out.println(target + " "+ target.getHp());
 				}
 			}
 
@@ -559,6 +541,7 @@ public abstract class Block extends BasicGameState
 					toRemove.add(target);
 					mission.check(target);
 					this.scoreManager.decrease(0);
+
 					// in increase() must be passed points associated to enemy kill
 					this.scoreManager.increase(target.getMobPoints());
 					this.scoreManager.setState(States.PointsAccumulator);

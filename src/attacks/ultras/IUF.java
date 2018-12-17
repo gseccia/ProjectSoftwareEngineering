@@ -34,7 +34,6 @@ public class IUF extends AnimatedElement implements SpecialAttack {
     public IUF(Player caster) {
         super();
         this.caster = caster;
-        flames = new HashSet<>();
         try {
             intro = new Intro(SpecialAttackConfiguration.getInstance().getIntro(id));
 
@@ -115,6 +114,7 @@ public class IUF extends AnimatedElement implements SpecialAttack {
             try {
                 SpecialAttackConfiguration conf = SpecialAttackConfiguration.getInstance();
                 active = true;
+                flames = new HashSet<>();
                 for (Enemy e : b.getEnemy()) {
                     AnimatedElement tmp = new Intro(conf.generateAnimation(id, "flame"));
                     tmp.setX(e.getX()-b.getShiftX()*16);
