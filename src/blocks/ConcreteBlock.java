@@ -107,4 +107,9 @@ public class ConcreteBlock extends Block {
             e.printStackTrace();
         }
     }
+
+	@Override
+	protected void reset() {
+		
+	}
 }
