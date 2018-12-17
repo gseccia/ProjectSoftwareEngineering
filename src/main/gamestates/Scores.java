@@ -77,6 +77,7 @@ public class Scores extends BasicGameState {
 		Input input = arg0.getInput();
 		if(input.isKeyPressed(Input.KEY_ESCAPE)){
         	//this.rs.setState(0);
+			uniFont.destroy();
             arg1.enterState(GameStates.MENU.getState());
         }
 	}

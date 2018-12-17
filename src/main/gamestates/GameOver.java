@@ -119,6 +119,7 @@ public class GameOver extends BasicGameState{
 				((Game)arg1).resetDifficulty();
 				this.rs.setState(0);
 				System.out.println("enter pressed");
+				uniFont.destroy();
 				arg1.enterState(GameStates.MENU.getState());
 			}
 			if(arg0.getInput().isKeyPressed(Input.KEY_RIGHT)) {
