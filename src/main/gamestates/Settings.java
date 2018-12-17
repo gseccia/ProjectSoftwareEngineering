@@ -19,6 +19,7 @@ import managers.MusicManager;
 import managers.command.Broker;
 import managers.command.DecreaseVolumeCommand;
 import managers.command.IncreaseVolumeCommand;
+import managers.command.ResetVolumeCommand;
 
 public class Settings extends BasicGameState  {
 	private final int id = 2;
@@ -66,6 +67,7 @@ public class Settings extends BasicGameState  {
     private final Broker broker = new Broker();
     private final IncreaseVolumeCommand increaseVolume = IncreaseVolumeCommand.getInstance();
     private final DecreaseVolumeCommand decreaseVolume = DecreaseVolumeCommand.getInstance();
+    private final ResetVolumeCommand resetVolume = ResetVolumeCommand.getInstance();
     
     private boolean rst = false;
 
@@ -154,15 +156,7 @@ public class Settings extends BasicGameState  {
                 	if (Settings[BACK] == "Back")
                 		stateBasedGame.enterState(0);
                 	else if (Settings[BACK] == reset) {
-                		pc.setUp(true);
-                		pc.setDown(true);
-                		pc.setRight(true);
-                		pc.setLeft(true);
-                		pc.setAttack1(true);
-                		pc.setAttack2(true);
-                		this.defaultVolume();
                 		this.defaultSetting();
-                		
                 	}
                     break;
                 default:
@@ -174,36 +168,27 @@ public class Settings extends BasicGameState  {
 	// reset settings
 	
 	private void defaultSetting() {
+		//reset music
+		broker.takeCommand(resetVolume);
+		broker.executeCommand();
+		//reset commands
+		pc.setUp(true);
+		pc.setDown(true);
+		pc.setRight(true);
+		pc.setLeft(true);
+		pc.setAttack1(true);
+		pc.setAttack2(true);
+		//reset settings menu
 		Settings[0] = "W";
 	    Settings[1] = "A";
 	    Settings[2] = "S";
 	    Settings[3] = "D";
 	    Settings[4] = "M";
 	    Settings[5] = "SPACE";
-	    Settings[6] = String.valueOf(Math.round(MusicManager.getInstance(ResourceManager.getInstance()).getVolume()*100));
+	    Settings[6] = "30";
 	    Settings[7] = "Back";
 	}
 	
-	private void defaultVolume () {
-		int vol = Integer.parseInt(String.valueOf( Math.round(MusicManager.getInstance(ResourceManager.getInstance()).getVolume()*100)));
-		int i;
-		int diff;
-		if (vol > 30) {
-			diff = vol - 30;
-			for (i = 0; i<diff; i++) {
-				broker.takeCommand(decreaseVolume);
-				broker.executeCommand();
-			}
-		}
-		if (vol < 30) {
-			diff = 30 - vol;
-			for (i = 0; i<diff; i++) {
-				broker.takeCommand(increaseVolume);
-				broker.executeCommand();
-			}
-		}
-	}
-
 	// Handle logic of selection
 	
 	private void changeValue(boolean leftKey) {
@@ -291,10 +276,7 @@ public class Settings extends BasicGameState  {
 		}
 	}
 	
-
-	
 	// Handle logic of update
-	
 	
 	@Override
 	public int getID() {
