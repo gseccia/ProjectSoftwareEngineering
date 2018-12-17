@@ -101,7 +101,7 @@ public class GameOver extends BasicGameState{
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 //		Executors.newSingleThreadScheduledExecutor().schedule(() -> System.exit(0) , 5, TimeUnit.SECONDS); 
-		if (arg1.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
+//		if (arg1.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
 			if (!startMusic) {
 				startMusic = true;
 				player = "";
@@ -139,7 +139,10 @@ public class GameOver extends BasicGameState{
 			if(arg0.getInput().isKeyPressed(Input.KEY_UP)) {
 				this.changeValue(false, this.choice);
 			}
-		}
+			else {
+				;
+			}
+//		}
 	}
 
 	@Override
