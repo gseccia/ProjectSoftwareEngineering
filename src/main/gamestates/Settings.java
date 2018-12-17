@@ -66,6 +66,8 @@ public class Settings extends BasicGameState  {
     private final Broker broker = new Broker();
     private final IncreaseVolumeCommand increaseVolume = IncreaseVolumeCommand.getInstance();
     private final DecreaseVolumeCommand decreaseVolume = DecreaseVolumeCommand.getInstance();
+    
+    private boolean rst = false;
 
 	public static Settings getInstance() {
         return ourInstance;
@@ -102,14 +104,11 @@ public class Settings extends BasicGameState  {
 		descriptions[6]="Volume";
 		descriptions[7]="";
 		
-        Settings[0] = "W";
-        Settings[1] = "A";
-        Settings[2] = "S";
-        Settings[3] = "D";
-        Settings[4] = "M";
-        Settings[5] = "SPACE";
-        Settings[6] = String.valueOf(Math.round(MusicManager.getInstance(ResourceManager.getInstance()).getVolume()*100));
-        Settings[7] = "Back";
+		if(!rst) {
+			this.defaultSetting();
+			rst = true;
+		}
+		
 	}
 
 	@Override
@@ -155,13 +154,54 @@ public class Settings extends BasicGameState  {
                 	if (Settings[BACK] == "Back")
                 		stateBasedGame.enterState(0);
                 	else if (Settings[BACK] == reset) {
-                		init(gameContainer, stateBasedGame);
+                		pc.setUp(true);
+                		pc.setDown(true);
+                		pc.setRight(true);
+                		pc.setLeft(true);
+                		pc.setAttack1(true);
+                		pc.setAttack2(true);
+                		this.defaultVolume();
+                		this.defaultSetting();
+                		
                 	}
                     break;
                 default:
                     break;
             }
         }
+	}
+
+	// reset settings
+	
+	private void defaultSetting() {
+		Settings[0] = "W";
+	    Settings[1] = "A";
+	    Settings[2] = "S";
+	    Settings[3] = "D";
+	    Settings[4] = "M";
+	    Settings[5] = "SPACE";
+	    Settings[6] = String.valueOf(Math.round(MusicManager.getInstance(ResourceManager.getInstance()).getVolume()*100));
+	    Settings[7] = "Back";
+	}
+	
+	private void defaultVolume () {
+		int vol = Integer.parseInt(String.valueOf( Math.round(MusicManager.getInstance(ResourceManager.getInstance()).getVolume()*100)));
+		int i;
+		int diff;
+		if (vol > 30) {
+			diff = vol - 30;
+			for (i = 0; i<diff; i++) {
+				broker.takeCommand(decreaseVolume);
+				broker.executeCommand();
+			}
+		}
+		if (vol < 30) {
+			diff = 30 - vol;
+			for (i = 0; i<diff; i++) {
+				broker.takeCommand(increaseVolume);
+				broker.executeCommand();
+			}
+		}
 	}
 
 	// Handle logic of selection
@@ -172,6 +212,7 @@ public class Settings extends BasicGameState  {
 				if (Settings[playerChoice]=="W") {
 					Settings[playerChoice] = up;
 					pc.setUp(false);
+					
 				}
 				else {
 					Settings[playerChoice] = "W";
@@ -192,6 +233,7 @@ public class Settings extends BasicGameState  {
 				if (Settings[playerChoice]=="S") {
 					Settings[playerChoice] = down;
 					pc.setDown(false);
+				
 				}
 				else {
 					Settings[playerChoice] = "S";
@@ -225,7 +267,7 @@ public class Settings extends BasicGameState  {
 				}	
 				else {
 					 Settings[playerChoice] = "SPACE";
-					 pc.setAttack1(true);
+					 pc.setAttack2(true);
 				}
 				break;
 			case 6:
@@ -248,6 +290,8 @@ public class Settings extends BasicGameState  {
 				break;
 		}
 	}
+	
+
 	
 	// Handle logic of update
 	

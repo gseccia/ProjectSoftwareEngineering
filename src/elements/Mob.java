@@ -3,6 +3,7 @@ package elements;
 import attacks.Attack;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
+import configuration.PlayerCommands;
 import managers.Directions;
 import org.newdawn.slick.*;
 import org.newdawn.slick.util.pathfinding.Mover;
@@ -19,7 +20,8 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
      * hp are the current hp, maxHP the total hp
      */
     private int hp, maxHp, attackDamage;
-    private int currentDirection = Directions.DOWN;
+    private PlayerCommands pc = PlayerCommands.getPlayerCommandsInstance();
+    private int currentDirection = pc.getDown();
     private Attack attack;
     private HashMap<String, Animation> faces;
 
@@ -176,7 +178,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     @Override
     public void faceUp() throws NullAnimationException {
         setCurrent(faces.get("up"));
-        setCurrentDirection(Directions.UP);
+        setCurrentDirection(pc.getUp());
     }
 
     /**
@@ -185,7 +187,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     @Override
     public void faceDown() throws NullAnimationException {
         setCurrent(faces.get("down"));
-        setCurrentDirection(Directions.DOWN);
+        setCurrentDirection(pc.getDown());
     }
 
     /**
@@ -194,7 +196,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     @Override
     public void faceRight() throws NullAnimationException {
         setCurrent(faces.get("right"));
-        setCurrentDirection(Directions.RIGHT);
+        setCurrentDirection(pc.getRight());
     }
 
     /**
@@ -203,7 +205,7 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     @Override
     public void faceLeft() throws NullAnimationException {
         setCurrent(faces.get("left"));
-        setCurrentDirection(Directions.LEFT);
+        setCurrentDirection(pc.getLeft());
     }
 
     /**

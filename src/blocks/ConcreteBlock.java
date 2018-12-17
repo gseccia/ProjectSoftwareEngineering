@@ -6,10 +6,11 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import configuration.PlayerCommands;
 import main.gamestates.GameStates;
 
 public class ConcreteBlock extends Block {
-
+	private PlayerCommands pc = PlayerCommands.getPlayerCommandsInstance();
     protected ConcreteBlock(int state, String mapName) {
         super(state, mapName);
     }
@@ -33,7 +34,7 @@ public class ConcreteBlock extends Block {
      */
     @Override
     protected boolean goDown(Input in) {
-        return in.isKeyDown(Directions.DOWN);
+        return in.isKeyDown(pc.getDown());
     }
 
     /**
@@ -44,7 +45,7 @@ public class ConcreteBlock extends Block {
      */
     @Override
     protected boolean goUp(Input in) {
-        return in.isKeyDown(Directions.UP);
+        return in.isKeyDown(pc.getUp());
     }
 
     /**
@@ -55,7 +56,7 @@ public class ConcreteBlock extends Block {
      */
     @Override
     protected boolean goRight(Input in) {
-        return in.isKeyDown(Directions.RIGHT);
+        return in.isKeyDown(pc.getRight());
     }
 
     /**
@@ -66,7 +67,7 @@ public class ConcreteBlock extends Block {
      */
     @Override
     protected boolean goLeft(Input in) {
-        return in.isKeyDown(Directions.LEFT);
+        return in.isKeyDown(pc.getLeft());
     }
 
     /**
@@ -77,7 +78,7 @@ public class ConcreteBlock extends Block {
      */
     @Override
     protected boolean attack(Input in) {
-        return in.isKeyDown(Input.KEY_M);
+        return in.isKeyDown(pc.getAttack1());
     }
 
     /**
@@ -88,7 +89,7 @@ public class ConcreteBlock extends Block {
      */
     @Override
     protected boolean special(Input in) {
-        return in.isKeyDown(Input.KEY_SPACE);
+        return in.isKeyDown(pc.getAttack2());
     }
 
     /**
