@@ -23,11 +23,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
-<<<<<<< HEAD
-import elements.EncapsulateMap;
-=======
 import configuration.PlayerCommands;
->>>>>>> c520161993af9297e38ce17593f80330814afc0d
+
 import elements.Enemy;
 import elements.Item;
 import elements.Mob;
@@ -145,27 +142,17 @@ public abstract class Block extends BasicGameState
 		for(Item i : item) {
 			y = r.nextInt(map.getHeight());
 			x = r.nextInt(map.getWidth());
-<<<<<<< HEAD
-			
-			tempWall.setX(x);
-			tempWall.setY(y);
-			
-=======
+
 			tempWall.setCenterX(x);
 			tempWall.setCenterY(y);
->>>>>>> d9b2f51100c8e8cce93d516a54deb3dcee04ada6
 			while(occupied[x][y]) {
 				
 				y = r.nextInt(map.getHeight());
 				x = r.nextInt(map.getWidth());
-<<<<<<< HEAD
-				tempWall.setX(x);
-				tempWall.setY(y);
-				
-=======
+
 				tempWall.setCenterX(x);
 				tempWall.setCenterY(y);
->>>>>>> d9b2f51100c8e8cce93d516a54deb3dcee04ada6
+
 				for(Item j : item) {
 					if(j.intersects(tempWall)) {
 						tempWall.setCenterX(x+r.nextInt(10));
@@ -272,7 +259,9 @@ public abstract class Block extends BasicGameState
 
                 StatesUtils.applyBorder(uniFont, "Press Enter to continue", width, height+15, new Color(105, 2, 2));
 				uniFont.drawString(width, height+15, "Press Enter to continue", new Color(201, 2, 2));
-
+				
+				uniFont.destroy();
+				
             	if(completedMusicMustBeStarted) {
             		this.rs.setState(2);
             		completedMusicMustBeStarted = false;
@@ -288,8 +277,9 @@ public abstract class Block extends BasicGameState
 			}
 
         }
-
 		
+
+	
 		uniFont = StatesUtils.changeSizeAndStyle(uniFont, 16f, Font.BOLD);
 		Color fontColor = new Color (255, 0, 255);
 		Color borderColor = new Color(105, 2, 105);
@@ -301,7 +291,9 @@ public abstract class Block extends BasicGameState
 
 		StatesUtils.applyBorder(uniFont, charName, xChar, yChar, borderColor);
 		uniFont.drawString(xChar, yChar, charName, fontColor);
-//		Draw hearts below char name
+		
+
+		//		Draw hearts below char name
 		int xHeart = xChar + 90;
 		int yHeart = yChar + uniFont.getHeight(charName)+5;
 		lpao.renderHearts(g, xHeart, yHeart+2);
@@ -324,6 +316,8 @@ public abstract class Block extends BasicGameState
 		int yPoints = 15;
 		StatesUtils.applyBorder(uniFont, String.valueOf(this.pao.getPoints()), xPoints, yPoints, borderColor);
 		uniFont.drawString(xPoints, yPoints, String.valueOf(this.pao.getPoints()), fontColor);
+		
+		uniFont.destroy();
 		
 	}
 

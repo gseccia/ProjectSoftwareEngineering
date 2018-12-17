@@ -54,6 +54,7 @@ public class GameOver extends BasicGameState{
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+		arg0.getInput().clearKeyPressedRecord();
 		try {
 			this.image = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/screens/gameOver.png");
 		} catch (IOException e) {
@@ -79,7 +80,7 @@ public class GameOver extends BasicGameState{
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		if (sbg.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
+//		if (sbg.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
 			g.drawImage(image, 0, 0);
 			
 			this.renderTriangles(g, gc);
@@ -95,20 +96,19 @@ public class GameOver extends BasicGameState{
 					(Long.valueOf(Math.round(gc.getHeight()*8/9)).intValue()), 
 					"Press Enter",
 					new Color(201, 2, 2));
-		}
-		else {
-			;
-		}
+//		}
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 //		Executors.newSingleThreadScheduledExecutor().schedule(() -> System.exit(0) , 5, TimeUnit.SECONDS); 
 //		if (arg1.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
+		
 			if (!startMusic) {
 				startMusic = true;
 				player = "";
 				this.rs.setState(3);
+				arg0.getInput().clearKeyPressedRecord();
 				System.out.println("starting gameover music");
 			}
 			if (arg0.getInput().isKeyPressed(Input.KEY_ENTER)) {
@@ -118,6 +118,7 @@ public class GameOver extends BasicGameState{
 				this.pointsManager.setState(2);
 				((Game)arg1).resetDifficulty();
 				this.rs.setState(0);
+				System.out.println("enter pressed");
 				arg1.enterState(GameStates.MENU.getState());
 			}
 			if(arg0.getInput().isKeyPressed(Input.KEY_RIGHT)) {
@@ -143,7 +144,7 @@ public class GameOver extends BasicGameState{
 				this.changeValue(false, this.choice);
 			}
 			else {
-				;
+				System.out.println("nothing");
 			}
 //		}
 	}
