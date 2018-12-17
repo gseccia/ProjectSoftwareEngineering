@@ -20,6 +20,7 @@ public class MusicManager extends Observer{
 	private List<Music> gameMusic = new ArrayList<>();
 	private Sound levelCompletedSound, ripSound;
 	private Subject subject;
+	public final float DEFAULT_VOLUME = 0.3f;
 	
 	private Music currentMusic;
 	private Sound currentSound;
@@ -51,7 +52,7 @@ public class MusicManager extends Observer{
 		this.currentMusic = menuMusic;
 		this.currentSound = levelCompletedSound;
 		this.indexLevel = 0;
-		this.volume = SoundStore.get().getMusicVolume() * 0.3f;
+		this.volume = SoundStore.get().getMusicVolume() * DEFAULT_VOLUME;
 		loadMusic();
 	}
 	

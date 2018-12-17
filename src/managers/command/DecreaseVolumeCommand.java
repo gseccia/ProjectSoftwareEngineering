@@ -1,7 +1,5 @@
 package managers.command;
 
-import org.newdawn.slick.openal.SoundStore;
-
 import main.ResourceManager;
 import managers.MusicManager;
 
