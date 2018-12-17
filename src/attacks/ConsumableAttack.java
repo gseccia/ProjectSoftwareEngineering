@@ -66,5 +66,6 @@ public class ConsumableAttack implements Attack {
             }
             current = normal;
         }
+        current.attack();
     }
 }

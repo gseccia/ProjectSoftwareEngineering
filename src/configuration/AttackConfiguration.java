@@ -3,6 +3,7 @@ package configuration;
 import com.google.gson.JsonObject;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 public class AttackConfiguration extends Configuration {
 
@@ -43,5 +44,10 @@ public class AttackConfiguration extends Configuration {
 
     public Animation getDownAnimation(String id) throws SlickException, NoSuchElementInConfigurationException {
         return generateAnimation(id,"down");
+    }
+
+    public Sound getAttackSound(String id) throws NoSuchElementInConfigurationException, SlickException {
+        String path = getConfiguration(id).get("sound").getAsString();
+        return new Sound(System.getProperty("user.dir")+"/"+path);
     }
 }
