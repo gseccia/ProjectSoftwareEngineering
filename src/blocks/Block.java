@@ -130,7 +130,7 @@ public abstract class Block extends BasicGameState
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		setCharacterSpawn(1);
-		int x, y;
+		int x, y,w,h;
 		
 		// Enemies spawn from a set of a random spawn points
 		setEnemiesSpawn(enemy);
@@ -139,15 +139,18 @@ public abstract class Block extends BasicGameState
 		boolean[][] occupied = hitbox.getOccupiedTiles();
 		Wall tempWall = new Wall(0, 0, map.getTileWidth(), map.getTileHeight());
 		for(Item i : item) {
-			y = r.nextInt(map.getHeight()-(int)(Math.ceil(i.getWidth()/map.getTileWidth())));
-			x = r.nextInt(map.getWidth()-(int)(Math.ceil(i.getHeight()/map.getTileHeight())));
-
+			w = (int)(Math.ceil(i.getHeight()/map.getTileHeight()));
+			h = (int)(Math.ceil(i.getWidth()/map.getTileWidth()));
+			y = r.nextInt(map.getHeight()- h);
+			x = r.nextInt(map.getWidth()- w);
+			
+			
 			tempWall.setCenterX(x);
 			tempWall.setCenterY(y);
-			while(occupied[x][y] || occupied[x][y+ (int) (Math.ceil( i.getWidth()/map.getTileWidth() ))]) {
+			while(occupied[x][y] || occupied[x][y+h] || occupied[x+w][y] ) {
 				
-				y = r.nextInt(map.getHeight()-(int)(Math.ceil(i.getWidth()/map.getTileWidth())));
-				x = r.nextInt(map.getWidth()-(int)(Math.ceil(i.getHeight()/map.getTileHeight())));
+				y = r.nextInt(map.getHeight()-h);
+				x = r.nextInt(map.getWidth()-w);
 
 				tempWall.setCenterX(x);
 				tempWall.setCenterY(y);
