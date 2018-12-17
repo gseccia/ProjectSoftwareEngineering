@@ -36,9 +36,8 @@ public class Enemy extends Mob implements MissionTarget {
     private int points;
     private Color bossFilter;
     private AStarPathFinder pf;
-    
-    
-    private final int RELOADING_TIME = Constants.framerate;
+    private int RELOADING_TIME;
+
     private final int SPEED = 8;
     private final int SURREND_TIME = 150;
 
@@ -48,6 +47,7 @@ public class Enemy extends Mob implements MissionTarget {
 		this.points = configuration.getMobPoints(id);
     	direction = Directions.LEFT;
     	setAttack(new PointBlankRangeAttack(this));
+    	RELOADING_TIME = Constants.framerate * configuration.getAttackLatency(id);
 	}
     
     public Enemy(EnemyConfiguration configuration, String id, Block map, Player p) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
@@ -58,6 +58,7 @@ public class Enemy extends Mob implements MissionTarget {
 		this.points = configuration.getMobPoints(id);
         direction = Directions.LEFT;     // Suppose initial direction right
 		setAttack(new PointBlankRangeAttack(this));
+		RELOADING_TIME = Constants.framerate * configuration.getAttackLatency(id);
     }
 
     @Override
