@@ -86,7 +86,7 @@ public class Game extends StateBasedGame{
         current_difficulty = 1;
     }
 
-    public void setDemo() {
-        demo = true;
+    public void setDemo(boolean demo) {
+        this.demo = demo;
     }
 }

@@ -103,11 +103,14 @@ public class Menu extends BasicGameState {
                 	stateBasedGame.enterState(GameStates.SCORES.getState());
                     break;
                 case START:
+                	((main.Game)stateBasedGame).resetDifficulty();
+                	((main.Game)stateBasedGame).setDemo(false);
                     stateBasedGame.enterState(GameStates.CHAR_SELECTION.getState());
                     break;
                 case DEMO:
                 	this.rs.setState(1);
-                	((main.Game)stateBasedGame).setDemo();
+                	((main.Game)stateBasedGame).resetDifficulty();
+                	((main.Game)stateBasedGame).setDemo(true);
                 	stateBasedGame.init(gameContainer);
                     stateBasedGame.enterState(GameStates.STARTING_POINT.getState());
                     break;

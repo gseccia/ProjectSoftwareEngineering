@@ -208,7 +208,7 @@ public abstract class Block extends BasicGameState
 		g.scale(1.5f, 1.5f);
 		map.render(0,0, mapX,mapY,mapX+50,mapY+50);
 		//TESTING ZONE BEGIN
-		
+/*		
 		for(Rectangle b: getHitbox().getWalls())
 		{
 			g.drawRect(b.getX()-mapX*map.getTileWidth(),b.getY()-mapY*map.getTileHeight(),b.getWidth(),b.getWidth());
@@ -218,7 +218,7 @@ public abstract class Block extends BasicGameState
 			g.setColor(Color.blue);
 			g.drawRect(b.getX()-mapX*map.getTileWidth(),b.getY()-mapY*map.getTileHeight(),b.getWidth(),b.getHeight());
 		}
-		g.setColor(Color.white);
+		g.setColor(Color.white);*/
 //		for(Rectangle b: mapCollision.getDoors()) {
 //			g.setColor(Color.blue);
 //			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getHeight());
@@ -233,7 +233,7 @@ public abstract class Block extends BasicGameState
 			//g.draw(e.getVision());  //TESTING LINE
 		}
 		player.draw();
-		g.draw(player);
+		// g.draw(player);
 
 		for(Item i: item) 
 		{
