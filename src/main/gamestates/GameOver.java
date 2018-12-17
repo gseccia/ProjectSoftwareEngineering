@@ -96,6 +96,9 @@ public class GameOver extends BasicGameState{
 					"Press Enter",
 					new Color(201, 2, 2));
 		}
+		else {
+			;
+		}
 	}
 
 	@Override
