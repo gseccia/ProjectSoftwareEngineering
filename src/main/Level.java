@@ -134,15 +134,17 @@ public class Level{
 		int numNPC = level_difficulty/3 + 1;
 		int i = 0;
 		RandomCollection<String> NPCNames = new RandomCollection<>(conf.getNPCNames());
+		SoundConfiguration soundConfiguration = SoundConfiguration.getInstance();
 		while(numNPC <= itemCapacity && i < numNPC){
 			PlayerModifier visitor;
+			String NPCId = NPCNames.getRandom();
 			if(new Random().nextInt()%2 == 0){
-				visitor = new SetAttackModifier(new FireSpearAttack(player), level_difficulty*10, level_difficulty+1);
+				visitor = new SetAttackModifier(new FireSpearAttack(player), soundConfiguration.getPowerUpSound(NPCId), level_difficulty*10, level_difficulty+1);
 			}
 			else {
-				visitor = new HealPlayerModifier(player.getMaxHp()*3/4);
+				visitor = new HealPlayerModifier(player.getMaxHp()*3/4, soundConfiguration.getHealSound(NPCId));
 			}
-			Item npc = new Item(conf, NPCNames.getRandom(), visitor, false);
+			Item npc = new Item(conf, NPCId, visitor, false);
 			b = blocks.getRandom();
 			addItemToBlock(b, npc);
 			updateCapacity(b, blocks, itemsRemainingCapacity);
