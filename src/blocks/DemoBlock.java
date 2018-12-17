@@ -55,6 +55,8 @@ public class DemoBlock extends Block{
 		super.initBlock(player, population, items, graph, missionGenerated, spm);
 		//tmp = new EncapsulateMap(getMap(),getHitbox().getDoors());
 		pf = new AStarPathFinder(new EncapsulateMap(getMap(),getHitbox().getDoors()),5000,false);
+		enemy = new HashSet<>();
+		item = new HashSet<>();
 		currentPath = null;
 		currentStep = 1;
 		doorLabel = new HashMap<>();
@@ -113,7 +115,7 @@ public class DemoBlock extends Block{
 	}
 	
 	private void generatePath() {
-		if((item.isEmpty() && enemy.isEmpty())) {
+		if((item.isEmpty() && enemy.isEmpty()) || true) {
 			// change map
 			Iterator<Wall> iter = doorLabel.keySet().iterator();
 			while(iter.hasNext() && doorSelected==null) {
@@ -147,13 +149,14 @@ public class DemoBlock extends Block{
 	}
 	
 	private int logicMovements() {
-		if(currentPath == null || currentStep > currentPath.getLength() -1) {
-			generatePath();
-		}
-		else if(doorSelected != null &&  currentStep == currentPath.getLength() -1) {
+		if(doorSelected != null && currentPath!=null && currentStep >= currentPath.getLength() -2) {
 			doorLabel.put(doorSelected, EXPLORED);
 			doorSelected = null;
 		}
+		else if(currentPath == null || currentStep > currentPath.getLength() -1) {
+			generatePath();
+		}
+		
 		
 		int direction;
 		
@@ -227,13 +230,18 @@ public class DemoBlock extends Block{
 		} 
 		renderText(showString,((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-uniFont.getWidth(showString))/2,250);
 		
-		/*if(currentPath != null) {
+		if(currentPath != null) {
 			g.setColor(Color.orange);
 			for(int i=0;i<currentPath.getLength();i++) {
 				g.drawRect((currentPath.getX(i)-getShiftX())*getMap().getTileWidth(),(currentPath.getY(i)-getShiftY())*getMap().getTileHeight(),16,16);
 			}
-			g.setColor(Color.green);
-		}*/
+		}
+			for(Wall door:doorLabel.keySet()) {
+				if(door==lastDoor)g.setColor(Color.red);
+				else if(doorLabel.get(door) == UNEXPLORED)g.setColor(Color.blue);
+				else g.setColor(Color.green);
+				g.drawRect(door.getX()-getShiftX()*getMap().getTileWidth(),door.getY()-getShiftY()*getMap().getTileHeight(),door.getWidth(),door.getHeight());
+			}
 	}
 	
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
