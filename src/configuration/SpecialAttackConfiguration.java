@@ -9,7 +9,6 @@ public class SpecialAttackConfiguration extends AttackConfiguration {
 
     private static final String filename = System.getProperty("user.dir") + "/resource/configurations/specialattack.conf";
     private static SpecialAttackConfiguration instance = null;
-    private JsonObject configuration;
 
     public SpecialAttackConfiguration(String filename) {
         super(filename);
