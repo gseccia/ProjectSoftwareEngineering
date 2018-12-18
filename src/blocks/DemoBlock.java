@@ -41,7 +41,11 @@ public class DemoBlock extends Block{
 	private static int updating = 0;
 	private static int displayMessage = 0;
 	private static boolean blocked = true;
-	private String showString;
+	private static String[] showString = 
+		{"Your name is at top-left corner","Your life is at left","Your score is at top-right corner",
+				"Your special attack is at right","Your level is at center",
+				"Press ARROWS KEY to move in each direction","Press SPACE to active special attack",
+				"Press SPACE to active special attack","Let's play!",""};
 	
 	protected DemoBlock(int state, String mapName) {
 		super(state, mapName);
@@ -210,37 +214,7 @@ public class DemoBlock extends Block{
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
 		super.render(gc, sbg, g);
-		
-		switch(displayMessage) {
-			case 0:
-				showString = "Your name is at top-left corner";
-				break;
-			case 1:
-				showString = "Your life is at left";
-				break;
-			case 2:
-				showString = "Your score is at top-right corner";
-				break;
-			case 3:
-				showString = "Your special attack is at right";
-				break;
-			case 4:
-				showString = "Your level is at center";
-				break;
-			case 5:
-				showString = "Press direction key to move in each direction";
-				break;
-			case 6:
-				showString = "Press M to active special attack";
-				break;
-			case 7:
-				showString = "Let's play!";
-				break;
-			default:
-				showString = "";
-				break;
-		} 
-		renderText(showString,((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-uniFont.getWidth(showString))/2,250);
+		renderText(showString[displayMessage],((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-uniFont.getWidth(showString[displayMessage]))/2,250);
 		
 		if(currentPath != null) {
 			g.setColor(Color.orange);
@@ -258,11 +232,11 @@ public class DemoBlock extends Block{
 	
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
 		if(!blocked)super.update(gc, gs, delta);
-		if(displayMessage<8 && updating>10) {
+		if(displayMessage < showString.length-1 && updating>10) {
 			displayMessage++;
 			updating = 0;
 		}
-		else if(displayMessage<8) updating++;
+		else if(displayMessage< showString.length-1) updating++;
 		else blocked = false;
 	}
 
