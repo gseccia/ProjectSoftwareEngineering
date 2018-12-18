@@ -5,6 +5,8 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
+import java.util.Set;
+
 public class AttackConfiguration extends Configuration {
 
     private static final String filename = System.getProperty("user.dir") + "/resource/configurations/attack.conf";
@@ -49,5 +51,9 @@ public class AttackConfiguration extends Configuration {
     public Sound getAttackSound(String id) throws NoSuchElementInConfigurationException, SlickException {
         String path = getConfiguration(id).get("sound").getAsString();
         return new Sound(System.getProperty("user.dir")+"/"+path);
+    }
+
+    Set<String> getKeySet() {
+        return configuration.keySet();
     }
 }

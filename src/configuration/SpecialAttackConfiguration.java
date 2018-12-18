@@ -5,6 +5,8 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import java.util.Set;
+
 public class SpecialAttackConfiguration extends AttackConfiguration {
 
     private static final String filename = System.getProperty("user.dir") + "/resource/configurations/specialattack.conf";
@@ -29,5 +31,17 @@ public class SpecialAttackConfiguration extends AttackConfiguration {
         String basepath = getConfiguration(id).get("base_folder").getAsString();
         String iconname = getConfiguration(id).get("icon").getAsString();
         return new Image(basepath+iconname);
+    }
+
+    public Set<String> getSpecialAttackNames(){
+        return getKeySet();
+    }
+
+    public String getSpecialAttackName(String id) throws NoSuchElementInConfigurationException {
+        return getConfiguration(id).get("name").getAsString();
+    }
+
+    public String getSpecialAttackDescription(String id) throws NoSuchElementInConfigurationException {
+        return getConfiguration(id).get("description").getAsString();
     }
 }

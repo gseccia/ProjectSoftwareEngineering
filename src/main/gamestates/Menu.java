@@ -111,6 +111,8 @@ public class Menu extends BasicGameState {
                 	this.rs.setState(1);
                 	((main.Game)stateBasedGame).resetDifficulty();
                 	((main.Game)stateBasedGame).setDemo(true);
+                    ((main.Game)stateBasedGame).setCharacter("rinaldo");
+                    ((main.Game)stateBasedGame).setUltra("iuf");
                 	stateBasedGame.init(gameContainer);
                     stateBasedGame.enterState(GameStates.STARTING_POINT.getState());
                     break;
