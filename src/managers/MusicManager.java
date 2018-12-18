@@ -34,7 +34,7 @@ public class MusicManager extends Observer implements MusicManagerInterface{
 		try {
 			levelCompletedSound = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/levelCompleted.ogg");
 			ripSound = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/dead.ogg");
-			menuMusic = (new Music(System.getProperty("user.dir") + "/resource/audio/menu/HorseSteppin.ogg", true));
+			menuMusic = (new Music(System.getProperty("user.dir") + "/resource/audio/menu/menu.ogg", true));
 //			Files.list(Paths.get(System.getProperty("user.dir") + "/resource/audio/oth/"))
 //	        	.filter(Files::isRegularFile)
 //	        	.forEach(music->{

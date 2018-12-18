@@ -647,6 +647,14 @@ public abstract class Block extends BasicGameState
 	public void setCharName(String charName) {
 		this.charName = charName;
 	}
-	
-	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(state, mapName);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return this.getClass() == obj.getClass() && state == ((Block) obj).getID() && mapName == ((Block) obj).getMapName();
+	}
 }
