@@ -17,7 +17,7 @@ import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
-public class MissionFactoryTest {
+public class ConcreteMissionFactoryTest {
 
     private static final String mob1 = "mob1";
     private static final String item1 = "item1";

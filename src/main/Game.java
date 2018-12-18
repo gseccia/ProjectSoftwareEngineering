@@ -16,7 +16,6 @@ import managers.ResourceManager;
 import managers.observers.scoreboard.ScoreFileObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 import missions.ConcreteMissionFactory;
-import missions.DemoMissionFactory;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -48,7 +47,7 @@ public class Game extends StateBasedGame{
         // Instantiate block only when the level is instantiated
         if (current_difficulty > 0) {
             if(demo) {
-                current = new Level(charname, current_difficulty, new DemoMissionFactory(ItemConfiguration.getInstance(), EnemyConfiguration.getInstance()), new DemoBlockFactory());
+                current = new Level(charname, current_difficulty, new ConcreteMissionFactory(ItemConfiguration.getInstance(), EnemyConfiguration.getInstance()), new DemoBlockFactory());
             }
             else{
                 current = new Level(charname, current_difficulty, new ConcreteMissionFactory(ItemConfiguration.getInstance(), EnemyConfiguration.getInstance()), new ConcreteBlockFactory());
