@@ -25,6 +25,7 @@ hs_err_pid*
 *.iml
 .idea
 out
+.attach_pid*
 
 #maven target
 target
