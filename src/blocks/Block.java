@@ -383,8 +383,6 @@ public abstract class Block extends BasicGameState
 		}
 
 		if(dead) {
-			System.out.println("dead variable is " + dead);
-			System.out.println("I'm dead");
 			reset(gs);
 		}
 

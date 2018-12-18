@@ -2,7 +2,6 @@ package blocks;
 
 import java.awt.Font;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -76,6 +75,7 @@ public class DemoBlock extends Block{
 		updating = 0;
 		displayMessage = 0;
 		blocked = true;
+		managers.ResourceManager.getInstance().setState(0);
 		gs.enterState(GameStates.MENU.getState());
 	}
 	

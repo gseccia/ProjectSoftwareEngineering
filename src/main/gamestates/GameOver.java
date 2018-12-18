@@ -145,7 +145,7 @@ public class GameOver extends BasicGameState{
 				this.changeValue(false, this.choice);
 			}
 			else {
-				System.out.println("nothing");
+//				System.out.println("nothing");
 			}
 //		}
 	}
