@@ -5,11 +5,17 @@ import managers.observers.Subject;
 
 public class PointsAccumulatorObserver extends Observer{
 	private int points;
+	private static PointsAccumulatorObserver instance;
 	
-	public PointsAccumulatorObserver(Subject subject) {
+	private PointsAccumulatorObserver(Subject subject) {
       this.subject = subject;
       this.subject.attach(this);
       this.points = 0;
+	}
+	
+	public static PointsAccumulatorObserver getInstance(Subject s) {
+		if (instance == null) instance = new PointsAccumulatorObserver(s);
+		return instance;
 	}
 
 	public int getPoints() {

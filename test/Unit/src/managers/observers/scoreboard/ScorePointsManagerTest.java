@@ -13,7 +13,7 @@ public class ScorePointsManagerTest {
 	// Subjects
 	private ScorePointsManager pm = ScorePointsManager.getScorePointsManagerInstance();
 	// Observers
-	private PointsAccumulatorObserver pao = new PointsAccumulatorObserver(pm);
+	private PointsAccumulatorObserver pao = PointsAccumulatorObserver.getInstance(pm);
 	private LifePointsAccumulatorObserver lpao = new LifePointsAccumulatorObserver(pm);
 //	private ScoreFileObserver sfo = new ScoreFileObserver(pm);
 	
