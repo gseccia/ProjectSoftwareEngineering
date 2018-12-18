@@ -109,7 +109,7 @@ public class ConcreteBlock extends Block {
     }
 
 	@Override
-	protected void reset() {
-		
+	protected void reset(StateBasedGame gs){
+		gs.enterState(GameStates.GAMEOVER.getState());
 	}
 }

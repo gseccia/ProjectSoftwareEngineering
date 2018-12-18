@@ -374,7 +374,7 @@ public abstract class Block extends BasicGameState
 	 */
 	protected abstract boolean special(Input in);
 
-	protected abstract void reset();
+	protected abstract void reset(StateBasedGame gs);
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
@@ -386,8 +386,7 @@ public abstract class Block extends BasicGameState
 		if(dead) {
 			System.out.println("dead variable is " + dead);
 			System.out.println("I'm dead");
-			reset();
-			gs.enterState(GameStates.GAMEOVER.getState());
+			reset(gs);
 		}
 
 		boolean block = false;

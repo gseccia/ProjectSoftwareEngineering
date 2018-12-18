@@ -67,11 +67,12 @@ public class DemoBlock extends Block{
 		discovery = true;
 	}
 	
-	
-	protected void reset() {
+	@Override
+	protected void reset(StateBasedGame gs) {
 		updating = 0;
 		displayMessage = 0;
 		blocked = true;
+		gs.enterState(GameStates.MENU.getState());
 	}
 	
 	private int tileConversion(float value, boolean xaxis,boolean player) {
@@ -227,6 +228,12 @@ public class DemoBlock extends Block{
 				showString = "Your level is at center";
 				break;
 			case 5:
+				showString = "Press direction key to move in each direction";
+				break;
+			case 6:
+				showString = "Press M to active special attack";
+				break;
+			case 7:
 				showString = "Let's play!";
 				break;
 			default:
@@ -251,11 +258,11 @@ public class DemoBlock extends Block{
 	
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
 		if(!blocked)super.update(gc, gs, delta);
-		if(displayMessage<6 && updating>10) {
+		if(displayMessage<8 && updating>10) {
 			displayMessage++;
 			updating = 0;
 		}
-		else if(displayMessage<6) updating++;
+		else if(displayMessage<8) updating++;
 		else blocked = false;
 	}
 
