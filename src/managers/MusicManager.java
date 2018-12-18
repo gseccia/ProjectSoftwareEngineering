@@ -18,6 +18,7 @@ public class MusicManager extends Observer implements MusicManagerInterface{
 	private static MusicManager instance;
 	private Music menuMusic;
 	private List<Music> gameMusic = new ArrayList<>();
+	private List<String> gameMusicStrings = new ArrayList<>();
 	private Sound levelCompletedSound, ripSound;
 	private Subject subject;
 	public final float DEFAULT_VOLUME = 0.3f;
@@ -53,10 +54,10 @@ public class MusicManager extends Observer implements MusicManagerInterface{
 		this.currentSound = levelCompletedSound;
 		this.indexLevel = 0;
 		this.volume = SoundStore.get().getMusicVolume() * DEFAULT_VOLUME;
-		loadMusic();
+		initMusic();
 	}
 	
-	public void loadMusic() {
+	public void initMusic() {
 		Thread loader = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -64,11 +65,8 @@ public class MusicManager extends Observer implements MusicManagerInterface{
 					Files.list(Paths.get(System.getProperty("user.dir") + "/resource/audio/oth/"))
 					.filter(Files::isRegularFile)
 					.forEach(music->{
-						try {
-							gameMusic.add(new Music(music.toString()));
-						} catch (SlickException e) {
-							e.printStackTrace();
-						}
+						gameMusicStrings.add(music.toString());
+//							gameMusic.add(new Music(music.toString()));
 					});
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -76,6 +74,14 @@ public class MusicManager extends Observer implements MusicManagerInterface{
 			}
 		}); 
 		loader.start();
+	}
+	
+	private void loadMusic() {
+		try {
+			this.currentMusic = new Music(gameMusicStrings.get(indexLevel));
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static MusicManager getInstance(Subject s) {
@@ -109,14 +115,16 @@ public class MusicManager extends Observer implements MusicManagerInterface{
 				break;
 			case 1:
 //				new level
-				this.gameMusic.get(indexLevel).loop(1.0f, this.volume);
-				this.currentMusic = this.gameMusic.get(indexLevel);
+				loadMusic();
+				this.currentMusic.loop(1.0f, this.volume);
+//				this.gameMusic.get(indexLevel).loop(1.0f, this.volume);
+//				this.currentMusic = this.gameMusic.get(indexLevel);
 				break;
 			case 2:
 //				level completed
 				this.levelCompletedSound.loop(1.0f,  this.volume);
 				this.currentSound = this.levelCompletedSound;
-				if (this.indexLevel < gameMusic.size()) this.indexLevel += 1;
+				if (this.indexLevel < gameMusicStrings.size()) this.indexLevel += 1;
 				else this.indexLevel = 0;
 				break;
 			case 3:
