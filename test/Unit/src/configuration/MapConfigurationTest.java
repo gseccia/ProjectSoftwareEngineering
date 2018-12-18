@@ -63,4 +63,25 @@ public class MapConfigurationTest {
     public void testRandomDoorsWithNegativeDoorsNumberReturnsNull() {
         assertNull(this.d.getRandomGivenDoors(-1));
     }
+
+    @Test
+    public void testMobCapacityIsGivenCorrectly() throws NoSuchElementInConfigurationException {
+        assertEquals(2, d.getMobCapacity("Classroom"));
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testMobcapacityThrowsExceptionWithWrongNamePassed() throws NoSuchElementInConfigurationException {
+        d.getMobCapacity("no");
+    }
+
+    @Test
+    public void testItemCapacityIsGivenCorrectly() throws NoSuchElementInConfigurationException {
+        assertEquals(3, d.getItemCapacity("Classroom"));
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testItemcapacityThrowsExceptionWithWrongNamePassed() throws NoSuchElementInConfigurationException {
+        d.getMobCapacity("no");
+    }
 }
+
