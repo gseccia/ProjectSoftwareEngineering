@@ -1,6 +1,6 @@
 package Unit.src.attack.states;
 
-import attacks.states.DamageEnemiesState;
+import attacks.states.KillEnemiesState;
 import attacks.states.SpecialAttackState;
 import elements.Enemy;
 import org.junit.Before;
@@ -14,10 +14,9 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doAnswer;
 
-public class DamageEnemiesStateTest {
+public class KillEnemiesStateTest {
 
     private final int LIFE = 100;
-    private final int DAMAGE = 20;
 
     private Set<Enemy> enemySet, emptySet;
     private int mockLife;
@@ -29,6 +28,7 @@ public class DamageEnemiesStateTest {
             mockLife -= (int)i.getArgument(0);
             return null;
         }).when(tmp).damage(anyInt());
+        doAnswer((i) -> LIFE).when(tmp).getMaxHp();
 
         enemySet = new HashSet<>();
         emptySet = new HashSet<>();
@@ -38,67 +38,66 @@ public class DamageEnemiesStateTest {
     @Test
     public void testDamageIsCalculatedCorrectly() {
         mockLife = LIFE;
-        DamageEnemiesState s = new DamageEnemiesState(enemySet, DAMAGE);
+        KillEnemiesState s = new KillEnemiesState(enemySet);
         s.execute();
-        assertEquals(LIFE-DAMAGE, mockLife);
+        assertEquals(0, mockLife);
     }
 
     @Test
     public void testExecuteWorksWithEmptySet() {
-        DamageEnemiesState s = new DamageEnemiesState(emptySet, DAMAGE);
+        KillEnemiesState s = new KillEnemiesState(enemySet);
         s.execute();
     }
 
     @Test(expected = NullPointerException.class)
     public void testExecuteThrowsExceptionIfSetIsNull() {
-        DamageEnemiesState s = new DamageEnemiesState(null, DAMAGE);
+        KillEnemiesState s = new KillEnemiesState(null);
         s.execute();
     }
 
     @Test
     public void testStateIsNotFinishedBeforeExecute() {
-        DamageEnemiesState s = new DamageEnemiesState(emptySet, DAMAGE);
+        KillEnemiesState s = new KillEnemiesState(enemySet);
         assertFalse(s.finished());
     }
 
     @Test
     public void testStateIsFinishedAfterExecute() {
-        DamageEnemiesState s = new DamageEnemiesState(emptySet, DAMAGE);
+        KillEnemiesState s = new KillEnemiesState(enemySet);
         s.execute();
         assertTrue(s.finished());
     }
 
     @Test
     public void testStateIsNotExecutedBeforeExecute() {
-        DamageEnemiesState s = new DamageEnemiesState(emptySet, DAMAGE);
+        KillEnemiesState s = new KillEnemiesState(enemySet);
         assertFalse(s.executed());
     }
 
     @Test
     public void testStateIsExecutedAfterExecute() {
-        DamageEnemiesState s = new DamageEnemiesState(emptySet, DAMAGE);
+        KillEnemiesState s = new KillEnemiesState(enemySet);
         s.execute();
         assertTrue(s.executed());
     }
 
     @Test
     public void testNextReturnsNullIfNoNextStateIsPassed() {
-        DamageEnemiesState s = new DamageEnemiesState(emptySet, DAMAGE);
+        KillEnemiesState s = new KillEnemiesState(enemySet);
         assertNull(s.next());
     }
 
     @Test
     public void testNextReturnsNullIfNullIsPassed() {
-        DamageEnemiesState s = new DamageEnemiesState(emptySet, DAMAGE, null);
+        KillEnemiesState s = new KillEnemiesState(enemySet, null);
         assertNull(s.next());
     }
 
     @Test
     public void testNextReturnsTheNextStatePassedAsArgument() {
         SpecialAttackState ret = Mockito.mock(SpecialAttackState.class);
-        DamageEnemiesState s = new DamageEnemiesState(emptySet, DAMAGE, ret);
+        KillEnemiesState s = new KillEnemiesState(enemySet, ret);
         assertEquals(ret, s.next());
     }
-
 
 }
