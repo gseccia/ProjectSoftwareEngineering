@@ -24,7 +24,7 @@ public class ScoreFileObserverTest {
 	private ScorePointsManager pm = ScorePointsManager.getScorePointsManagerInstance();
 	// Observer
 	private ScoreFileObserver sfo = ScoreFileObserver.getInstance(pm);
-	private PointsAccumulatorObserver pao = new PointsAccumulatorObserver(pm);
+	private PointsAccumulatorObserver pao = PointsAccumulatorObserver.getInstance(pm);
 		
 	@Test
 	/*

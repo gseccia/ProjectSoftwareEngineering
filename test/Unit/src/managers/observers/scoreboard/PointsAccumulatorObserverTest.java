@@ -12,7 +12,7 @@ class PointsAccumulatorObserverTest {
 	// Subjects
 	private ScorePointsManager pm = ScorePointsManager.getScorePointsManagerInstance();
 	// Observer
-	private PointsAccumulatorObserver pao = new PointsAccumulatorObserver(pm);
+	private PointsAccumulatorObserver pao = PointsAccumulatorObserver.getInstance(pm);
 	
 	@Test
 	public void createPointsAccumulatorObserverTestPointsInit() {

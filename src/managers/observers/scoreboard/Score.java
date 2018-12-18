@@ -64,6 +64,6 @@ public class Score implements Comparable<Score>, Serializable {
 	
 	@Override
 	public String toString() {
-		return id+" "+value+" "+date.get(Calendar.MONTH)+"/"+date.get(Calendar.DAY_OF_MONTH)+"/"+date.get(Calendar.YEAR);
+		return id+" "+value+" "+(date.get(Calendar.MONTH)+1)+"/"+date.get(Calendar.DAY_OF_MONTH)+"/"+date.get(Calendar.YEAR);
 	}
 }
