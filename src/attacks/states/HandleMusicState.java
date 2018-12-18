@@ -1,7 +1,7 @@
 package attacks.states;
 
 
-import main.ResourceManager;
+import managers.ResourceManager;
 
 public class HandleMusicState implements SpecialAttackState {
 

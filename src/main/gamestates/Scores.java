@@ -13,7 +13,7 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import main.ResourceManager;
+import managers.ResourceManager;
 import managers.observers.scoreboard.Score;
 import managers.observers.scoreboard.ScoreFileObserver;
 
@@ -77,6 +77,7 @@ public class Scores extends BasicGameState {
 		Input input = arg0.getInput();
 		if(input.isKeyPressed(Input.KEY_ESCAPE)){
         	//this.rs.setState(0);
+			uniFont.destroy();
             arg1.enterState(GameStates.MENU.getState());
         }
 	}

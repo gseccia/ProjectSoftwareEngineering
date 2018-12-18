@@ -1,7 +1,7 @@
 package main.gamestates;
 
-import main.ResourceManager;
 import managers.MusicManager;
+import managers.ResourceManager;
 import missions.Mission;
 
 import java.io.IOException;

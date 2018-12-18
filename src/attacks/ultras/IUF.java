@@ -5,8 +5,8 @@ import blocks.Block;
 import configuration.NoSuchElementInConfigurationException;
 import configuration.SpecialAttackConfiguration;
 import elements.*;
-import main.ResourceManager;
-import org.newdawn.slick.Image;
+import managers.ResourceManager;
+
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import utils.Constants;
@@ -14,28 +14,22 @@ import utils.Constants;
 import java.util.HashSet;
 import java.util.Set;
 
-public class IUF extends AnimatedElement implements SpecialAttack {
+public class IUF extends StateSpecialAttack {
 
-    private final static String id = "iuf";
+    private final static String ID = "iuf";
+    private final static int RELOADING_TIME = Constants.framerate*10;
+    private final static int DAMAGE = 100;
 
     private Set<AnimatedElement> flames;
-    private final int RELOADING_TIME = Constants.framerate*10;
-    private final int DAMAGE = 100;
-    private int remaining = 0;
-    private Image icon;
     private Intro intro;
-    private boolean active, drawable;
-    private SpecialAttackState current;
     private Player caster;
     private Sound introSound, blaze;
 
     public IUF(Player caster) {
-        super();
+        super(RELOADING_TIME, ID);
         this.caster = caster;
         try {
-            intro = new Intro(SpecialAttackConfiguration.getInstance().getIntro(id));
-
-            icon = SpecialAttackConfiguration.getInstance().getIcon(id);
+            intro = new Intro(SpecialAttackConfiguration.getInstance().getIntro(ID));
 
             introSound = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/iuf/iuf.ogg");
             blaze = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/iuf/burning.ogg");
@@ -60,24 +54,6 @@ public class IUF extends AnimatedElement implements SpecialAttack {
     }
 
     /**
-     * Recharges the attack
-     */
-    @Override
-    public void reload() {
-        if(remaining > 0){
-            remaining--;
-        }
-    }
-
-    /**
-     * @return true if the SpecialAttack is ready to be used
-     */
-    @Override
-    public boolean isReady() {
-        return remaining == 0;
-    }
-
-    /**
      * @return true if the SpecialAttack blocks the normal course of the game
      */
     @Override
@@ -85,23 +61,7 @@ public class IUF extends AnimatedElement implements SpecialAttack {
         return true;
     }
 
-    /**
-     * @return true if the SpecialAttack is currently active
-     */
-    @Override
-    public boolean isActive() {
-        return active;
-    }
-
-    /**
-     * @return the icon of the SpecialAttack
-     */
-    @Override
-    public Image getIcon() {
-        return icon;
-    }
-
-    /**
+     /**
      * Activates the SpecialAttack
      *
      * @param b the current Block
@@ -114,7 +74,7 @@ public class IUF extends AnimatedElement implements SpecialAttack {
                 active = true;
                 flames = new HashSet<>();
                 for (Enemy e : b.getEnemy()) {
-                    AnimatedElement tmp = new Intro(conf.generateAnimation(id, "flame"));
+                    AnimatedElement tmp = new Intro(conf.generateAnimation(ID, "flame"));
                     tmp.setX(e.getX()-b.getShiftX()*16);
                     tmp.setY(e.getY()-b.getShiftY()*16-120);
                     flames.add(tmp);
@@ -129,32 +89,5 @@ public class IUF extends AnimatedElement implements SpecialAttack {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * Executes an iteration step of the move
-     */
-    @Override
-    public void iterationStep() {
-        if(isActive() && current != null) {
-
-            if (!current.executed()) current.execute();
-
-            if (current.executed() && current.finished()) current = current.next();
-        }
-        else{
-            active = false;
-            remaining = RELOADING_TIME;
-        }
-    }
-
-    @Override
-    public void setDrawable(boolean flag) {
-        drawable = flag;
-    }
-
-    @Override
-    public boolean isDrawable() {
-        return drawable;
     }
 }

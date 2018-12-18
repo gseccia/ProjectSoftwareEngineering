@@ -2,14 +2,12 @@ package attacks.ultras;
 
 import attacks.states.DamageEnemiesState;
 import attacks.states.DrawOnCoordinatesWithSoundState;
-import attacks.states.SpecialAttackState;
 import blocks.Block;
 import configuration.NoSuchElementInConfigurationException;
 import configuration.SpecialAttackConfiguration;
 import elements.*;
 import managers.Directions;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Rectangle;
@@ -20,48 +18,33 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Sparagmos extends AnimatedElement implements SpecialAttack {
+public class Sparagmos extends StateSpecialAttack {
 
-    private final static String id = "sparagmos";
+    private final static String ID = "sparagmos";
+    private final static int RELOADING_TIME = Constants.framerate*7;
+    private final static int DAMAGE = 400;
 
-    private final int RELOADING_TIME = Constants.framerate*7;
-    private final int DAMAGE = 400;
-    private int remaining = 0;
-    private Image icon;
-    private boolean active, drawable;
-    private SpecialAttackState current;
     private Player caster;
     private Map<Integer, Animation> animations;
     private Sound laser;
     private float x, y, width, height;
 
     public Sparagmos(Player caster) {
-        super();
+        super(RELOADING_TIME, ID);
         this.caster = caster;
         try {
             SpecialAttackConfiguration conf = SpecialAttackConfiguration.getInstance();
-            icon = conf.getIcon(id);
 
             animations = new HashMap<>();
-            animations.put(Directions.UP, conf.getUpAnimation(id));
-            animations.put(Directions.DOWN, conf.getDownAnimation(id));
-            animations.put(Directions.LEFT, conf.getLeftAnimation(id));
-            animations.put(Directions.RIGHT, conf.getRightAnimation(id));
+            animations.put(Directions.UP, conf.getUpAnimation(ID));
+            animations.put(Directions.DOWN, conf.getDownAnimation(ID));
+            animations.put(Directions.LEFT, conf.getLeftAnimation(ID));
+            animations.put(Directions.RIGHT, conf.getRightAnimation(ID));
 
             laser = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/sparagmos/laser.ogg");
 
         } catch (SlickException | NoSuchElementInConfigurationException e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Recharges the attack
-     */
-    @Override
-    public void reload() {
-        if(remaining > 0){
-            remaining--;
         }
     }
 
@@ -76,35 +59,11 @@ public class Sparagmos extends AnimatedElement implements SpecialAttack {
     }
 
     /**
-     * @return true if the SpecialAttack is ready to be used
-     */
-    @Override
-    public boolean isReady() {
-        return remaining == 0;
-    }
-
-    /**
      * @return true if the SpecialAttack blocks the normal course of the game
      */
     @Override
     public boolean isBlocking() {
         return true;
-    }
-
-    /**
-     * @return true if the SpecialAttack is currently active
-     */
-    @Override
-    public boolean isActive() {
-        return active;
-    }
-
-    /**
-     * @return the icon of the SpecialAttack
-     */
-    @Override
-    public Image getIcon() {
-        return icon;
     }
 
     /**
@@ -175,33 +134,6 @@ public class Sparagmos extends AnimatedElement implements SpecialAttack {
             current = new DrawOnCoordinatesWithSoundState(this, laser, caster.getX()+sx, caster.getY()+sy, new DamageEnemiesState(targets, DAMAGE));
         }
 
-    }
-
-    /**
-     * Executes an iteration step of the move
-     */
-    @Override
-    public void iterationStep() {
-        if(isActive() && current != null) {
-
-            if (!current.executed()) current.execute();
-
-            if (current.executed() && current.finished()) current = current.next();
-        }
-        else{
-            active = false;
-            remaining = RELOADING_TIME;
-        }
-    }
-
-    @Override
-    public void setDrawable(boolean flag) {
-        drawable = flag;
-    }
-
-    @Override
-    public boolean isDrawable() {
-        return drawable;
     }
 
     private boolean isAtRange(Enemy e){

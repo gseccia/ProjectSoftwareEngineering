@@ -12,6 +12,7 @@ import main.gamestates.Scores;
 import main.gamestates.Settings;
 import main.gamestates.SplashScreen;
 import managers.MusicManager;
+import managers.ResourceManager;
 import managers.observers.scoreboard.ScoreFileObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 import missions.ConcreteMissionFactory;

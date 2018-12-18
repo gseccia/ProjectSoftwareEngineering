@@ -11,15 +11,16 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.openal.SoundStore;
 
-import managers.observers.scoreboard.Observer;
-import managers.observers.scoreboard.Subject;
+import managers.observers.Observer;
+import managers.observers.Subject;
 
-public class MusicManager extends Observer{
+public class MusicManager extends Observer implements MusicManagerInterface{
 	private static MusicManager instance;
 	private Music menuMusic;
 	private List<Music> gameMusic = new ArrayList<>();
 	private Sound levelCompletedSound, ripSound;
 	private Subject subject;
+	public final float DEFAULT_VOLUME = 0.3f;
 	
 	private Music currentMusic;
 	private Sound currentSound;
@@ -33,7 +34,7 @@ public class MusicManager extends Observer{
 		try {
 			levelCompletedSound = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/levelCompleted.ogg");
 			ripSound = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/dead.ogg");
-			menuMusic = (new Music(System.getProperty("user.dir") + "/resource/audio/menu/HorseSteppin.ogg", true));
+			menuMusic = (new Music(System.getProperty("user.dir") + "/resource/audio/menu/menu.ogg", true));
 //			Files.list(Paths.get(System.getProperty("user.dir") + "/resource/audio/oth/"))
 //	        	.filter(Files::isRegularFile)
 //	        	.forEach(music->{
@@ -51,7 +52,7 @@ public class MusicManager extends Observer{
 		this.currentMusic = menuMusic;
 		this.currentSound = levelCompletedSound;
 		this.indexLevel = 0;
-		this.volume = SoundStore.get().getMusicVolume() * 0.3f;
+		this.volume = SoundStore.get().getMusicVolume() * DEFAULT_VOLUME;
 		loadMusic();
 	}
 	
@@ -137,6 +138,9 @@ public class MusicManager extends Observer{
 		this.volume = volume;
 		if (currentMusic.playing()) currentMusic.setVolume(volume);
 	}
-	
 
+	@Override
+	public void updateMusic() {
+		System.out.println("Sei un baro!");
+	}
 }

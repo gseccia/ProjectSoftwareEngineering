@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import managers.observers.Observer;
+import managers.observers.Subject;
+
 public class ScoreFileObserver extends Observer implements Serializable {
 	
 	private ArrayList<Score> scores;
@@ -81,7 +84,7 @@ public class ScoreFileObserver extends Observer implements Serializable {
 		   String id = "";
 		   try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
 	    	   // TODO insert here data to print on log
-			   for (Observer e : this.subject.observers) {
+			   for (Observer e : this.subject.getObservers()) {
 				   if (e.getClass() == PointsAccumulatorObserver.class) {
 					   points = ((PointsAccumulatorObserver) e).getPoints();
 					   id = ((PointsAccumulatorObserver) e).getName();
