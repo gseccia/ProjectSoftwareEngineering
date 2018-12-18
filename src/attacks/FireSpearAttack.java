@@ -2,107 +2,24 @@ package attacks;
 
 import configuration.AttackConfiguration;
 import configuration.NoSuchElementInConfigurationException;
-import elements.AnimatedElement;
 import elements.Mob;
-import elements.NotPositiveValueException;
-import managers.Directions;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
-import java.util.HashMap;
-import java.util.Map;
+public class FireSpearAttack extends RangedAttack {
 
-public class FireSpearAttack extends AnimatedElement implements Attack {
+    private final static String ID = "firespear";
 
-    private final static String id = "firespear";
-
-    private Mob caster;
-    private Map<String, Animation> animations;
-    private float drawX, drawY;
     private Sound sfx;
 
     public FireSpearAttack(Mob caster) {
-        animations = new HashMap<>();
+        super(ID, caster);
         AttackConfiguration attackconf = AttackConfiguration.getInstance();
         try {
-            animations.put("right", attackconf.getRightAnimation(id));
-            animations.put("left", attackconf.getLeftAnimation(id));
-            animations.put("down", attackconf.getDownAnimation(id));
-            animations.put("up", attackconf.getUpAnimation(id));
-
-            sfx = attackconf.getAttackSound(id);
+            sfx = attackconf.getAttackSound(ID);
         } catch (SlickException | NoSuchElementInConfigurationException e) {
             e.printStackTrace();
         }
-        this.caster = caster;
-    }
-
-    /**
-     * Draw the current animation at a defined point.
-     */
-    @Override
-    public void draw() {
-        super.draw((int)drawX, (int)drawY);
-    }
-
-    /**
-     * Sets the hitbox of the attack
-     */
-    @Override
-    public void setHitbox() {
-        float x, y, height, width;
-        switch (caster.getCurrentDirection()){
-            case Directions.LEFT:
-                x = caster.getX() - caster.getWidth()*4;
-                y = caster.getY();
-                height = caster.getHeight();
-                width = caster.getWidth() * 5;
-                setCurrent(animations.get("left"));
-                drawX = x;
-                drawY = y;
-                break;
-
-            case Directions.RIGHT:
-                x = caster.getX();
-                y = caster.getY();
-                height = caster.getHeight();
-                width = caster.getWidth() * 5;
-                setCurrent(animations.get("right"));
-                drawX = x + caster.getWidth()*3/4;
-                drawY = y;
-                break;
-
-            case Directions.UP:
-                x = caster.getX();
-                y = caster.getY() - caster.getHeight()*2;
-                height = caster.getHeight() * 3;
-                width = caster.getWidth();
-                setCurrent(animations.get("up"));
-                drawX = x;
-                drawY = y;
-                break;
-
-            case Directions.DOWN:
-                x = caster.getX();
-                y = caster.getY();
-                height = caster.getHeight() * 3;
-                width = caster.getWidth();
-                setCurrent(animations.get("down"));
-                drawX = x;
-                drawY = y + caster.getHeight();
-                break;
-
-            default:
-                x = 0;
-                y = 0;
-                height = 0;
-                width = 0;
-        }
-        setX(x);
-        setY(y);
-        setHeight(height);
-        setWidth(width);
     }
 
     /**
@@ -113,4 +30,103 @@ public class FireSpearAttack extends AnimatedElement implements Attack {
         sfx.play();
     }
 
+    @Override
+    protected float setXUp() {
+        return caster.getX();
+    }
+
+    @Override
+    protected float setXDown() {
+        return caster.getX();
+    }
+
+    @Override
+    protected float setXLeft() {
+        return caster.getX() - caster.getWidth()*4;
+    }
+
+    @Override
+    protected float setXRight() {
+        return caster.getX();
+    }
+
+    @Override
+    protected float setYUp() {
+        return caster.getY() - caster.getHeight()*2;
+    }
+
+    @Override
+    protected float setYDown() {
+        return caster.getY();
+    }
+
+    @Override
+    protected float setYLeft() {
+        return caster.getY();
+    }
+
+    @Override
+    protected float setYRight() {
+        return caster.getY();
+    }
+
+    @Override
+    protected float setHeightHorizontal() {
+        return caster.getHeight();
+    }
+
+    @Override
+    protected float setWidthHorizontal() {
+        return caster.getWidth() * 5;
+    }
+
+    @Override
+    protected float setHeightVertical() {
+        return caster.getHeight() * 3;
+    }
+
+    @Override
+    protected float setWidthVertical() {
+        return caster.getWidth();
+    }
+
+    @Override
+    protected float setXBiasUp() {
+        return 0;
+    }
+
+    @Override
+    protected float setXBiasDown() {
+        return 0;
+    }
+
+    @Override
+    protected float setXBiasLeft() {
+        return 0;
+    }
+
+    @Override
+    protected float setXBiasRight() {
+        return caster.getWidth()*3/4;
+    }
+
+    @Override
+    protected float setYBiasUp() {
+        return 0;
+    }
+
+    @Override
+    protected float setYBiasDown() {
+        return caster.getHeight();
+    }
+
+    @Override
+    protected float setYBiasLeft() {
+        return 0;
+    }
+
+    @Override
+    protected float setYBiasRight() {
+        return 0;
+    }
 }

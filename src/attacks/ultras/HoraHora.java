@@ -15,7 +15,7 @@ import utils.Constants;
 import java.util.HashSet;
 import java.util.Set;
 
-public class HoraHora extends StateSpecialAttack implements SpecialAttack {
+public class HoraHora extends StateSpecialAttack {
 
     private final static String ID = "horahora";
     private final static int RELOADING_TIME = Constants.framerate*15;

@@ -8,7 +8,6 @@ import configuration.SpecialAttackConfiguration;
 import elements.*;
 import managers.Directions;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Rectangle;
@@ -19,7 +18,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Sparagmos extends StateSpecialAttack implements SpecialAttack {
+public class Sparagmos extends StateSpecialAttack {
 
     private final static String ID = "sparagmos";
     private final static int RELOADING_TIME = Constants.framerate*7;

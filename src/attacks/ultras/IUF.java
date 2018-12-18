@@ -14,7 +14,7 @@ import utils.Constants;
 import java.util.HashSet;
 import java.util.Set;
 
-public class IUF extends StateSpecialAttack implements SpecialAttack {
+public class IUF extends StateSpecialAttack {
 
     private final static String ID = "iuf";
     private final static int RELOADING_TIME = Constants.framerate*10;
