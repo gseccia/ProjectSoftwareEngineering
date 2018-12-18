@@ -10,11 +10,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TiledMap;
-
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
-import blocks.Block;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,8 +25,6 @@ public class PlayerTest {
     @Before
     public void setUp() {
         this.playerconf = Mockito.mock(MobConfiguration.class);
-        Block block = Mockito.mock(Block.class);
-        TiledMap map = Mockito.mock(TiledMap.class);
         try {
             String id = "test";
             Mockito.when(this.playerconf.getAttack(id)).thenReturn(100);
@@ -37,15 +32,9 @@ public class PlayerTest {
             Mockito.when(this.playerconf.getWidth(id)).thenReturn(17);
             Mockito.when(this.playerconf.getHp(id)).thenReturn(100);
             Mockito.when(this.playerconf.getFaceDown(id)).thenReturn(new Animation());
-            //Mockito.when(this.playerconf.getFaceStill(id)).thenReturn(new Animation());
             Mockito.when(this.playerconf.getFaceUp(id)).thenReturn(new Animation());
             Mockito.when(this.playerconf.getFaceLeft(id)).thenReturn(new Animation());
             Mockito.when(this.playerconf.getFaceRight(id)).thenReturn(new Animation());
-            //Mockito.when(block.getMap()).thenReturn(map);
-            //Mockito.when(block.getShiftX()).thenReturn(0);
-            //Mockito.when(block.getShiftY()).thenReturn(0);
-            //Mockito.when(map.getTileHeight()).thenReturn(16);
-            //Mockito.when(map.getTileWidth()).thenReturn(16);
 
 
             this.player = new Player(this.playerconf,id);
@@ -60,26 +49,26 @@ public class PlayerTest {
 
     /**********************/
     @Test
-    public void testHpIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testHpIsReadCorrectly() {
         Assert.assertEquals(this.player.getHp(), 100);
     }
 
     @Test
-    public void testHpIsSetCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testHpIsSetCorrectly()  {
         int change = 10;
         this.player.setHp(change);
         Assert.assertEquals(this.player.getHp(), change);
     }
 
     @Test
-    public void testHpValueCannotBeLessThanZero() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testHpValueCannotBeLessThanZero()  {
         int change = -1;
         this.player.setHp(change);
         Assert.assertEquals(this.player.getHp(), 0);
     }
 
     @Test
-    public void testHpValueCanBeZero() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testHpValueCanBeZero() {
         int change = 0;
         this.player.setHp(change);
         Assert.assertEquals(this.player.getHp(), 0);
@@ -88,25 +77,25 @@ public class PlayerTest {
     //MAX HP TESTS
 
     @Test
-    public void testMaxHpIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testMaxHpIsReadCorrectly()  {
         Assert.assertEquals(this.player.getMaxHp(), 100);
     }
 
     @Test
-    public void testMaxHpIsSetCorrectly() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
+    public void testMaxHpIsSetCorrectly() throws NotPositiveValueException {
         int change = 10;
         this.player.setMaxHp(change);
         Assert.assertEquals(this.player.getMaxHp(), change);
     }
 
     @Test(expected = NotPositiveValueException.class)
-    public void testMaxHpCannotBeLessThanZero() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
+    public void testMaxHpCannotBeLessThanZero() throws NotPositiveValueException {
         int change = -1;
         this.player.setMaxHp(change);
     }
 
     @Test(expected = NotPositiveValueException.class)
-    public void testMaxHpCannotBeEqualToZero() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
+    public void testMaxHpCannotBeEqualToZero() throws NotPositiveValueException{
         int change = 0;
         this.player.setMaxHp(change);
     }
@@ -114,25 +103,25 @@ public class PlayerTest {
     //ATTACK DAMAGE TESTS
 
     @Test
-    public void testAttackDamageIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testAttackDamageIsReadCorrectly() {
         Assert.assertEquals(this.player.getAttackDamage(), 100);
     }
 
     @Test
-    public void testAttackDamageIsSetCorrectly() throws NullAnimationException, NotPositiveValueException, NoSuchElementInConfigurationException {
+    public void testAttackDamageIsSetCorrectly() throws NotPositiveValueException {
         int change = 10;
         this.player.setAttackDamage(change);
         Assert.assertEquals(this.player.getAttackDamage(), change);
     }
 
     @Test(expected = NotPositiveValueException.class)
-    public void testAttackDamageCannotBeLessThanZero() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
+    public void testAttackDamageCannotBeLessThanZero() throws NotPositiveValueException {
         int change = -1;
         this.player.setAttackDamage(change);
     }
 
     @Test
-    public void testAttackDamageCanBeZero() throws NotPositiveValueException, NullAnimationException, NoSuchElementInConfigurationException {
+    public void testAttackDamageCanBeZero() throws NotPositiveValueException {
         int change = 0;
         this.player.setAttackDamage(change);
         Assert.assertEquals(this.player.getAttackDamage(), 0);
@@ -141,7 +130,7 @@ public class PlayerTest {
     //DAMAGE CALCULATION TESTS
 
     @Test
-    public void testDamageIsCalculatedCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testDamageIsCalculatedCorrectly() {
         int life = this.player.getHp();
         int damage = 10;
         this.player.damage(damage);
@@ -149,14 +138,14 @@ public class PlayerTest {
     }
 
     @Test
-    public void testDamageDoesNotAffectMaxHp() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testDamageDoesNotAffectMaxHp() {
         int startingLife = this.player.getMaxHp();
         this.player.damage(10);
         Assert.assertEquals(this.player.getMaxHp(), startingLife);
     }
 
     @Test
-    public void testIfDamageExceedsHpThenHpEqualsZero() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testIfDamageExceedsHpThenHpEqualsZero() {
         int damage = this.player.getMaxHp() + 10;
         this.player.damage(damage);
         Assert.assertEquals(this.player.getHp(), 0);
@@ -165,21 +154,21 @@ public class PlayerTest {
     //HEIGHT TESTS
 
     @Test
-    public void testHeightIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testHeightIsReadCorrectly() {
         Assert.assertEquals((int) this.player.getHeight(), 42);
     }
 
     //WIDTH TEST
 
     @Test
-    public void testWidthIsReadCorrectly() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testWidthIsReadCorrectly() {
         Assert.assertEquals((int) this.player.getWidth(), 17);
     }
 
     //REPOSITIONING TESTS
 
     @Test
-    public void testPlayerIsRepositionedCorrectlyWithPositiveXAndPositiveY() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testPlayerIsRepositionedCorrectlyWithPositiveXAndPositiveY() {
         int x = 22;
         int y = 33;
         this.player.setLocation(x, y);
@@ -188,7 +177,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void testPlayerIsRepositionedCorrectlyWithPositiveXAndNegativeY() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testPlayerIsRepositionedCorrectlyWithPositiveXAndNegativeY() {
         int x = 22;
         int y = -33;
         this.player.setLocation(x, y);
@@ -197,7 +186,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void testPlayerIsRepositionedCorrectlyWithNegativeXAndNegativeY() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testPlayerIsRepositionedCorrectlyWithNegativeXAndNegativeY() {
         int x = -22;
         int y = -33;
         this.player.setLocation(x, y);
@@ -206,7 +195,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void testPlayerIsRepositionedCorrectlyWithNegativeXAndPositiveY() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testPlayerIsRepositionedCorrectlyWithNegativeXAndPositiveY() {
         int x = -22;
         int y = 33;
         this.player.setLocation(x, y);
@@ -215,7 +204,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void testPlayerIsRepositionedCorrectlyAtOrigin() throws NullAnimationException, NoSuchElementInConfigurationException {
+    public void testPlayerIsRepositionedCorrectlyAtOrigin() {
         int x = 0;
         int y = 0;
         this.player.setLocation(x, y);
@@ -227,27 +216,24 @@ public class PlayerTest {
     //X MOVEMENT TESTING
 
     @Test
-    public void testPlayerCanMoveOnXAxisWithPositiveDelta() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
+    public void testPlayerCanMoveOnXAxisWithPositiveDelta() {
         int x = 0;
-        int y = 0;
         int dx = 22;
         this.player.moveX(dx);
         Assert.assertEquals((int) this.player.getX(), x + dx);
     }
 
     @Test
-    public void testPlayerCanMoveOnXAxisWithNegativeDelta() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
+    public void testPlayerCanMoveOnXAxisWithNegativeDelta() {
         int x = 0;
-        int y = 0;
         int dx = -22;
         this.player.moveX(dx);
         Assert.assertEquals((int) this.player.getX(), x + dx);
     }
 
     @Test
-    public void testPlayerCanMoveOnXAxisWithZeroDelta() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
+    public void testPlayerCanMoveOnXAxisWithZeroDelta() {
         int x = 0;
-        int y = 0;
         int dx = 0;
         this.player.moveX(dx);
         Assert.assertEquals((int) this.player.getX(), x + dx);
@@ -256,8 +242,7 @@ public class PlayerTest {
     //Y-AXIS MOVEMENT TESTING
 
     @Test
-    public void testPlayerCanMoveOnYAxisWithPositiveDelta() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
-        int x = 0;
+    public void testPlayerCanMoveOnYAxisWithPositiveDelta() {
         int y = 0;
         int dy = 22;
         this.player.moveY(dy);
@@ -265,8 +250,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void testPlayerCanMoveOnYAxisWithNegativeDelta() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
-        int x = 0;
+    public void testPlayerCanMoveOnYAxisWithNegativeDelta() {
         int y = 0;
         int dy = -22;
         this.player.moveY(dy);
@@ -274,8 +258,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void testPlayerCanMoveOnYAxisWithZeroDelta() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
-        int x = 0;
+    public void testPlayerCanMoveOnYAxisWithZeroDelta() {
         int y = 0;
         int dy = 0;
         this.player.moveY(dy);

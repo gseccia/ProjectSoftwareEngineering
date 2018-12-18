@@ -11,14 +11,14 @@ import org.newdawn.slick.SlickException;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class RangedAttack extends AnimatedElement implements Attack {
+public abstract class DirectionalAttack extends AnimatedElement implements Attack {
 
     private Map<String, Animation> animations;
     private float drawX, drawY;
 
-    protected Mob caster;
+    Mob caster;
 
-    public RangedAttack(String id, Mob caster){
+    DirectionalAttack(String id, Mob caster){
         animations = new HashMap<>();
         AttackConfiguration attackconf = AttackConfiguration.getInstance();
         try {

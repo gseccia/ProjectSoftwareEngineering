@@ -6,7 +6,7 @@ import elements.Mob;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
-public class ShortRangeAttack extends RangedAttack {
+public class ShortRangeAttack extends DirectionalAttack {
 
     private final static String ID = "shortrange";
 
