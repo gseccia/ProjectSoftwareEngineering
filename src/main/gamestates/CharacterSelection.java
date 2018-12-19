@@ -28,14 +28,12 @@ public class CharacterSelection extends BasicGameState {
 	private String char1Descr, char2Descr, char3Descr;
 	private String charname1, charname2, charname3, selectedChar;
 	private Image background, char1Img, char2Img, char3Img;
-	private ResourceManager rs;
 	private Rectangle char1, char2, char3, char1Border, char2Border, char3Border;
 	
 	private Color selectedBorder = new Color(0, 255, 255);
 	private Color selectedText = new Color(0, 0, 0);
 	
 	public CharacterSelection(ResourceManager rs) {
-		this.rs = rs;
 		this.char1 = new Rectangle(50, 153, 200, 400);
 		this.char2 = new Rectangle(300, 153, 200, 400);
 		this.char3 = new Rectangle(550, 153, 200, 400);
