@@ -22,6 +22,9 @@ More will be added...
 The IDs are internal to this class (not defined anywhere else)
  */
 
+/**
+ * A factory that instantiate a certain number of random missions
+ */
 public class ConcreteMissionFactory implements MissionFactory{
 
     private int itemCapacity, mobCapacity, difficulty, recallDifficulty;

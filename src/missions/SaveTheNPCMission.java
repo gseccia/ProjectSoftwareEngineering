@@ -12,16 +12,24 @@ import utils.RandomCollection;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * A class that implements a mission that requires you to find and save a NPC, that will spawn some zombies
+ * It's a leaf of the composite pattern
+ */
 public class SaveTheNPCMission extends Mission {
 
     private String id;
     private Item npc = null;
-    private Set<Enemy> spawns;
 
-    public SaveTheNPCMission(String targetId, int numSpawn) {
+    /**
+     * Constructor
+     * @param targetId the NPC id
+     * @param numSpawn the number of enemies to spawn
+     */
+    SaveTheNPCMission(String targetId, int numSpawn) {
         super(targetId);
         this.id = targetId;
-        spawns = new HashSet<>();
+        Set<Enemy> spawns = new HashSet<>();
 
         RandomCollection<String> mobNames = new RandomCollection<>(EnemyConfiguration.getInstance().getMobNames());
         String spawnId = mobNames.getRandom();
@@ -69,7 +77,7 @@ public class SaveTheNPCMission extends Mission {
 
     /**
      * Check if an item contributes to a mission
-     *
+     * Only the item creates by this mission is valid
      * @param item the item to check
      */
     @Override
@@ -79,6 +87,10 @@ public class SaveTheNPCMission extends Mission {
         }
     }
 
+    /**
+     * Produces the items needed for the mission
+     * @param acceptor a StorageRoom object
+     */
     @Override
     public void produceTargets(StorageRoom acceptor) {
         acceptor.collectItem(npc);

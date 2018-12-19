@@ -10,6 +10,10 @@ import org.newdawn.slick.SlickException;
 
 import java.util.Random;
 
+/**
+ * A class that implements a mission that requires you to kill a boss
+ * It's a leaf of the composite pattern
+ */
 public class KillTheBossMission extends Mission {
 
     private Enemy boss;
@@ -26,7 +30,7 @@ public class KillTheBossMission extends Mission {
         int blue = red/2;
         try {
             boss = new Enemy(EnemyConfiguration.getInstance(), targetId);
-            boss.makeBoss(powerUp, new Color(red, green, blue));
+            boss.makeBoss(powerUp/2 + 1, new Color(red, green, blue));
         } catch (NoSuchElementInConfigurationException | SlickException | NullAnimationException | NotPositiveValueException e) {
             e.printStackTrace();
         }
@@ -62,7 +66,7 @@ public class KillTheBossMission extends Mission {
 
     /**
      * Check if an item contributes to a mission
-     *
+     * Only the boss created by this mission is valid
      * @param item the item to check
      */
     @Override
@@ -70,6 +74,10 @@ public class KillTheBossMission extends Mission {
         if(item.equals(boss)) boss = null;
     }
 
+    /**
+     * Produces the enemy needed for the mission
+     * @param acceptor a StorageRoom object
+     */
     @Override
     public void produceTargets(StorageRoom acceptor) {
         acceptor.collectEnemy(boss);

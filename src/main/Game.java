@@ -34,9 +34,9 @@ public class Game extends StateBasedGame{
     private ResourceManager rs;
     private MusicManager mm;
 
-    public Game(String name, String charname) {
+    public Game(String name) {
         super(name);
-        this.charname = charname;
+        this.charname = "rinaldo";
         current_difficulty = 0;
         this.rs = ResourceManager.getInstance();
         mm = MusicManager.getInstance(this.rs);

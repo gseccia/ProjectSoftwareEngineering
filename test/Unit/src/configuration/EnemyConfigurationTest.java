@@ -257,7 +257,7 @@ public class EnemyConfigurationTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void testAttacjSoundThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+    public void testAttackSoundThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
         this.conf.getAttackSound("test_error");
     }
 

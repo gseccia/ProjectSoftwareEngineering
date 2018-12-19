@@ -2,7 +2,9 @@ package missions;
 
 import java.util.*;
 
-
+/**
+ * The abstract class that defines the behaviour of the missions, based on the Composite pattern
+ */
 public abstract class Mission {
 
     private String targetId;
@@ -51,6 +53,11 @@ public abstract class Mission {
      */
     public abstract void check(MissionTarget item);
 
+
+    /**
+     * Produces the items/enemies needed for the mission
+     * @param acceptor a StorageRoom object
+     */
     public abstract void produceTargets(StorageRoom acceptor);
 
     /**

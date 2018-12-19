@@ -79,6 +79,7 @@ public class HoraHora extends StateSpecialAttack {
     @Override
     public void activate(Block b) {
     	if(isReady()){
+    	    getCurrent().restart();
     		active = true;
     		Set<Enemy> targets = new HashSet<>();
     		SpecialAttackState prev = new KillEnemiesState(targets);
