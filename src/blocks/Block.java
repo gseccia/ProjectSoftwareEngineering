@@ -69,7 +69,7 @@ public abstract class Block extends BasicGameState
 	private PlayerCommands pc = PlayerCommands.getPlayerCommandsInstance();
 	private boolean doorEntered;
 
-	
+
 	protected Block(int state,String mapName)
 	{
 		this.state = state;
@@ -77,12 +77,12 @@ public abstract class Block extends BasicGameState
 		this.rs = ResourceManager.getInstance();
 		this.mm = MusicManager.getInstance(this.rs);
 	}
-	
-	
+
+
 	public void resetCompletedLevelMusic() {
 		completedMusicMustBeStarted = true;
 	}
-	
+
 	/**
 	 *  This function initializes the block
 	 * @param player is the user character
@@ -99,11 +99,11 @@ public abstract class Block extends BasicGameState
 		item = items.get(this);
 		mission = missionGenerated;
 		this.player = player;
-		
+
 		hitbox = new HitboxMaker(map, new LinkedList<>(enemy));
 		hitbox.initiateHitbox();
 		hitbox.setItems(new ArrayList<>(item));
-		
+
 		wallCollision = new CollisionDetectionWall(hitbox);
 		doorCollision = new CollisionDetectionDoor(hitbox);
 		itemCollision = new CollisionDetectionItem(hitbox);
@@ -111,20 +111,20 @@ public abstract class Block extends BasicGameState
 		attackCollision = new CollisionDetectionPlayerAttacksEnemy(hitbox);
 		trapCollision = new CollisionDetectionTrap(hitbox);
 
-		
+
 		// initialize score manager and observers
 		this.scoreManager = spm;
 		sfo = ScoreFileObserver.getInstance(this.scoreManager);
 		pao = PointsAccumulatorObserver.getInstance(this.scoreManager);
 		lpao = new LifePointsAccumulatorObserver(this.scoreManager);
 		this.scoreManager.setNamePlayer("Armando");
-		
+
 //		Initialize Music completed level
 		resetCompletedLevelMusic();
 //		Init font
 		StatesUtils.initFont();
 	}
-	
+
 	@Override
 	/**
 	 * The block is initialized. Items and enemies are placed into the map
@@ -133,7 +133,7 @@ public abstract class Block extends BasicGameState
 		setCharacterSpawn(1);
 		doorEntered = false;
 		int x, y,w,h;
-		
+
 		// Enemies spawn from a set of a random spawn points
 		setEnemiesSpawn(enemy);
 
@@ -145,12 +145,12 @@ public abstract class Block extends BasicGameState
 			h = (int)(Math.ceil(i.getWidth()/map.getTileWidth()));
 			y = r.nextInt(map.getHeight()- h);
 			x = r.nextInt(map.getWidth()- w);
-			
-			
+
+
 			tempWall.setCenterX(x);
 			tempWall.setCenterY(y);
 			while(occupied[x][y] || occupied[x][y+h] || occupied[x+w][y] ) {
-				
+
 				y = r.nextInt(map.getHeight()-h);
 				x = r.nextInt(map.getWidth()-w);
 
@@ -167,7 +167,7 @@ public abstract class Block extends BasicGameState
 			}
 			i.setLocation((x)*map.getTileWidth(),y*map.getTileHeight());
 		}
-		
+
 		prevMapX = 0;
 		prevMapY = 0;
 		uniFont = StatesUtils.initFont();
@@ -186,7 +186,7 @@ public abstract class Block extends BasicGameState
 		setEnemiesSpawn(newSpawns);
 		hitbox.updateMobs(new LinkedList<>(newSpawns));
 	}
-	
+
 	/**
 	 * Place enemies into the spawn points of the map
 	 * @param enemies Enemies to be placed
@@ -212,7 +212,7 @@ public abstract class Block extends BasicGameState
 	 * @param currentGame the current game
 	 */
 	public abstract void generateNextLevel(GameContainer gc, StateBasedGame currentGame);
-	
+
 	@Override
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) {
 		g.scale(1.5f, 1.5f);
@@ -222,7 +222,7 @@ public abstract class Block extends BasicGameState
 			e.draw();
 		}
 		player.draw();
-		for(Item i: item) 
+		for(Item i: item)
 		{
 			i.draw();
 		}
@@ -238,7 +238,7 @@ public abstract class Block extends BasicGameState
 			g.setColor(Color.white);
             try {
             	uniFont = StatesUtils.changeSizeAndStyle(uniFont, 16f, Font.BOLD);
-            	
+
             	int width = ((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue()) - uniFont.getWidth("LEVEL COMPLETED!"))/2;
             	int height = ((Long.valueOf(Math.round(gc.getHeight()/1.5)).intValue()))/2;
                 g.fillRect(0, 0, gc.getWidth(), gc.getHeight(), new Image(System.getProperty("user.dir") + "/resource/textures/transitions/background.png"), 0, 0);
@@ -250,24 +250,24 @@ public abstract class Block extends BasicGameState
 
                 StatesUtils.applyBorder(uniFont, continueString, width, height+15, new Color(105, 2, 2));
 				uniFont.drawString(width, height+15, continueString, new Color(201, 2, 2));
-				
+
 				uniFont.destroy();
-				
+
             	if(completedMusicMustBeStarted) {
             		this.rs.setState(2);
             		completedMusicMustBeStarted = false;
             	}
-				
+
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            
+
             generateNextLevel(gc, arg1);
 
         }
-		
 
-	
+
+
 		uniFont = StatesUtils.changeSizeAndStyle(uniFont, 16f, Font.BOLD);
 		Color fontColor = new Color (255, 0, 255);
 		Color borderColor = new Color(105, 2, 105);
@@ -279,7 +279,7 @@ public abstract class Block extends BasicGameState
 
 		StatesUtils.applyBorder(uniFont, charName, xChar, yChar, borderColor);
 		uniFont.drawString(xChar, yChar, charName, fontColor);
-		
+
 
 		//		Draw hearts below char name
 		int xHeart = xChar + 90;
@@ -304,9 +304,9 @@ public abstract class Block extends BasicGameState
 		int yPoints = 15;
 		StatesUtils.applyBorder(uniFont, String.valueOf(this.pao.getPoints()), xPoints, yPoints, borderColor);
 		uniFont.drawString(xPoints, yPoints, String.valueOf(this.pao.getPoints()), fontColor);
-		
+
 		uniFont.destroy();
-		
+
 	}
 
 	/**
@@ -381,7 +381,7 @@ public abstract class Block extends BasicGameState
 			block = player.getUltra().isBlocking();
 			player.getUltra().iterationStep();
 		}
-		
+
 		if(!dead && !mission.completed() && !block) {
 		try {
 
@@ -392,7 +392,6 @@ public abstract class Block extends BasicGameState
 				if(wallCollision.detectCollision(mapX, mapY, player)) {
 					mapX += 1;
 					key = Directions.RIGHT;
-					player.setCurrentDirection(Directions.RIGHT);
 					pressed =true;
 				}
 			}
@@ -402,7 +401,6 @@ public abstract class Block extends BasicGameState
 				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapX -= 1;
 					key = Directions.LEFT;
-					player.setCurrentDirection(Directions.LEFT);
 					pressed =true;
 				}
 			}
@@ -412,7 +410,6 @@ public abstract class Block extends BasicGameState
 				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapY += 1;
 					key = Directions.DOWN;
-					player.setCurrentDirection(Directions.DOWN);
 					pressed =true;
 				}
 			}
@@ -422,7 +419,6 @@ public abstract class Block extends BasicGameState
 				if(wallCollision.detectCollision(mapX, mapY, player)){
 					mapY -= 1;
 					key = Directions.UP;
-					player.setCurrentDirection(Directions.UP);
 					pressed =true;
 				}
 			}
@@ -465,7 +461,7 @@ public abstract class Block extends BasicGameState
 				else if(key == Directions.RIGHT) {
 					player.faceStillRight();
 				}
-				
+
 			}
 
 			if (!doorEntered){
@@ -569,12 +565,12 @@ public abstract class Block extends BasicGameState
 		prevMapY = mapY;
 		}
 	}
-	
+
 	@Override
 	public int getID() {
 		return state;
 	}
-	
+
 	/**
 	 * Place the player in front of door identified as d
 	 * @param d identifier of a door
@@ -582,7 +578,7 @@ public abstract class Block extends BasicGameState
 	public void setCharacterSpawn(int d) {
 //		Sto in una porta
 		doorEntered = true;
-		
+
 		int x,y,width,height;
 		x = Integer.parseInt(map.getMapProperty("charXDoor"+d,"0"));
 		y = Integer.parseInt(map.getMapProperty("charYDoor"+d,"0"));
@@ -607,21 +603,21 @@ public abstract class Block extends BasicGameState
 				mapX -= 1;
 			}
 		}
-		
+
 	}
-	
+
 	public HitboxMaker getHitbox() {
 		return hitbox;
 	}
-	
+
 	public int getShiftY() {
 		return mapY;
 	}
-	
+
 	public int getShiftX() {
 		return mapX;
 	}
-	
+
 	public TiledMap getMap() {
 		return map;
 	}
@@ -633,7 +629,7 @@ public abstract class Block extends BasicGameState
 	public Set<Enemy> getEnemy() {
 		return enemy;
 	}
-	
+
 	public int getLevelNumber() {
 		return levelNumber;
 	}

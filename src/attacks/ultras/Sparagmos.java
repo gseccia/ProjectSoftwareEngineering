@@ -4,6 +4,7 @@ import attacks.states.DamageEnemiesState;
 import attacks.states.DrawOnCoordinatesWithSoundState;
 import blocks.Block;
 import configuration.NoSuchElementInConfigurationException;
+import configuration.PlayerCommands;
 import configuration.SpecialAttackConfiguration;
 import elements.*;
 import managers.Directions;
@@ -28,7 +29,7 @@ public class Sparagmos extends StateSpecialAttack {
     private final static int DAMAGE = 400;
 
     private Player caster;
-    private Map<Integer, Animation> animations;
+    private Map<String, Animation> animations;
     private Sound laser;
     private float x, y, width, height;
 
@@ -43,10 +44,10 @@ public class Sparagmos extends StateSpecialAttack {
             SpecialAttackConfiguration conf = SpecialAttackConfiguration.getInstance();
 
             animations = new HashMap<>();
-            animations.put(Directions.UP, conf.getUpAnimation(ID));
-            animations.put(Directions.DOWN, conf.getDownAnimation(ID));
-            animations.put(Directions.LEFT, conf.getLeftAnimation(ID));
-            animations.put(Directions.RIGHT, conf.getRightAnimation(ID));
+            animations.put("up", conf.getUpAnimation(ID));
+            animations.put("down", conf.getDownAnimation(ID));
+            animations.put("left", conf.getLeftAnimation(ID));
+            animations.put("right", conf.getRightAnimation(ID));
 
             laser = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/sparagmos/laser.ogg");
 
@@ -86,52 +87,58 @@ public class Sparagmos extends StateSpecialAttack {
             float shiftX = b.getShiftX()*16;
             float shiftY = b.getShiftY()*16;
             int sx, sy;
-            switch (direction){
-                case Directions.UP:
-                    sx = 4;
-                    sy = -1000;
-                    x = caster.getX() + shiftX;
-                    y = caster.getY() - 1000 + shiftY;
-                    width = 14;
-                    height = 1000;
-                    break;
-
-                case Directions.DOWN:
-                    sx = 4;
-                    sy = 32;
-                    x = caster.getX() + shiftX;
-                    y = caster.getY() + shiftY;
-                    width = 14;
-                    height = 1000;
-                    break;
-
-                case Directions.RIGHT:
-                    sx = 17;
-                    sy = 8;
-                    x = caster.getX() + shiftX;
-                    y = caster.getY() + shiftY;
-                    width = 1000;
-                    height = 14;
-                    break;
-
-                case Directions.LEFT:
-                    sx = -999;
-                    sy = 8;
-                    x = caster.getX() - 1000 + shiftX;
-                    y = caster.getY() + shiftY;
-                    width = 1000;
-                    height = 14;
-                    break;
-
-                default:
-                    sx = 0;
-                    sy = 0;
-                    x = 0;
-                    y = 0;
-                    width = 0;
-                    height = 0;
+            String dir = "";
+            PlayerCommands c = PlayerCommands.getPlayerCommandsInstance();
+            if(direction == c.getUp()) {
+                sx = 4;
+                sy = -1000;
+                x = caster.getX() + shiftX;
+                y = caster.getY() - 1000 + shiftY;
+                width = 14;
+                height = 1000;
+                dir = "up";
             }
-            setCurrent(animations.get(caster.getCurrentDirection()));
+
+            else if(direction == c.getDown()) {
+                sx = 4;
+                sy = 32;
+                x = caster.getX() + shiftX;
+                y = caster.getY() + shiftY;
+                width = 14;
+                height = 1000;
+                dir = "down";
+            }
+
+            else if(direction == c.getRight()) {
+                sx = 17;
+                sy = 8;
+                x = caster.getX() + shiftX;
+                y = caster.getY() + shiftY;
+                width = 1000;
+                height = 14;
+                dir = "right";
+            }
+
+            else if(direction == c.getLeft()) {
+                sx = -999;
+                sy = 8;
+                x = caster.getX() - 1000 + shiftX;
+                y = caster.getY() + shiftY;
+                width = 1000;
+                height = 14;
+                dir = "left";
+            }
+
+            else {
+                sx = 0;
+                sy = 0;
+                x = 0;
+                y = 0;
+                width = 0;
+                height = 0;
+                dir = "down";
+            }
+            setCurrent(animations.get(dir));
             Set<Enemy> targets = new HashSet<>();
             for(Enemy e : b.getEnemy()){
                 if(isAtRange(e)){

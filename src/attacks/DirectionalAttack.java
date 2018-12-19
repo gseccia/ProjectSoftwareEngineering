@@ -179,6 +179,7 @@ public abstract class DirectionalAttack extends AnimatedElement implements Attac
         float x, y, height, width;
         PlayerCommands c = PlayerCommands.getPlayerCommandsInstance();
         int current = caster.getCurrentDirection();
+        System.out.println(current);
         if(current == c.getLeft()) {
             x = setXLeft();
             y = setYLeft();
