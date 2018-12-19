@@ -3,11 +3,7 @@ package elements;
 import org.newdawn.slick.Animation;
 
 /**
-<<<<<<< HEAD
- * Boh
-=======
  * Intro object for the special attacks.
->>>>>>> 25d09a7719b52c8355f39e5bc91e454398e7b4ca
  */
 public class Intro extends AnimatedElement {
 
