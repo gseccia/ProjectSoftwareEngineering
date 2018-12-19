@@ -4,6 +4,9 @@ import attacks.ultras.SpecialAttack;
 import elements.Enemy;
 import org.newdawn.slick.Sound;
 
+/**
+ * This state draws the SpecialAttack on a certain enemy playing a sound
+ */
 public class DrawOnTargetWithSoundState implements SpecialAttackState {
 
     private SpecialAttack animation;
@@ -13,7 +16,15 @@ public class DrawOnTargetWithSoundState implements SpecialAttackState {
     private boolean executed = false;
     private int shiftX, shiftY;
 
-
+    /**
+     * Constructor
+     * @param animation the SpecialAttack object
+     * @param target the target Enemy
+     * @param shiftX the x shift of the map
+     * @param shiftY the y shift of the map
+     * @param sfx the Sound to play
+     * @param next the following SpecialAttackState
+     */
     public DrawOnTargetWithSoundState(SpecialAttack animation, Enemy target, int shiftX, int shiftY, Sound sfx, SpecialAttackState next) {
         this.animation = animation;
         this.target = target;

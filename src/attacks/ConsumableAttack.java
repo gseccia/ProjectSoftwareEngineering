@@ -2,15 +2,27 @@ package attacks;
 
 import elements.NotPositiveValueException;
 import elements.Player;
+import org.jetbrains.annotations.NotNull;
 import org.newdawn.slick.geom.Shape;
 
+/**
+ * The object of this class buff the player attack, allowing it to use a different attack for a limited number of uses
+ */
 public class ConsumableAttack implements Attack {
 
     private Player caster;
     private Attack normal, current;
     private int uses, damage, baseDamage;
 
-    public ConsumableAttack(Player caster, Attack special, Attack normal, int uses, int multiplier) {
+    /**
+     * Constructor
+     * @param caster the Player object that casts the attack
+     * @param special the limited-uses attack object
+     * @param normal the default attack object
+     * @param uses the number of uses
+     * @param multiplier the attack multiplier
+     */
+    public ConsumableAttack(@NotNull Player caster, Attack special, Attack normal, int uses, int multiplier) {
         this.caster = caster;
         this.current = special;
         this.normal = normal;
@@ -22,7 +34,7 @@ public class ConsumableAttack implements Attack {
     /**
      * The attack must have an intersection method to interact with the other objects
      *
-     * @param s
+     * @param s the shape object to test
      */
     @Override
     public boolean intersects(Shape s) {

@@ -1,10 +1,11 @@
 package attacks.ultras;
 
 import blocks.Block;
-import elements.Intro;
 import org.newdawn.slick.Image;
 
-
+/**
+ * An interface that defines all the basic operations of a special attack
+ */
 public interface SpecialAttack {
 
     /**
@@ -48,9 +49,21 @@ public interface SpecialAttack {
      */
     void draw();
 
+    /**
+     * Defines if the special attack has to be drawable or not
+     * @param flag true if drawable
+     */
     void setDrawable(boolean flag);
 
+    /**
+     * @return true if the attack is drawable
+     */
     boolean isDrawable();
 
+    /**
+     * Sets the location of the special attack animation
+     * @param x the x coordinate
+     * @param y the y coordinate
+     */
     void setLocation(float x, float y);
 }

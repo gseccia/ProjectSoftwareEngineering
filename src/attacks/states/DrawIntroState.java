@@ -3,6 +3,9 @@ package attacks.states;
 import elements.Intro;
 import org.newdawn.slick.Sound;
 
+/**
+ * A state that set an Intro as drawable, set it's position and plays a sound
+ */
 public class DrawIntroState implements SpecialAttackState {
 
     private Intro intro;
@@ -11,6 +14,14 @@ public class DrawIntroState implements SpecialAttackState {
     private float x, y;
     private SpecialAttackState next;
 
+    /**
+     * Constructor
+     * @param intro the Intro object
+     * @param sfx the sound
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param next the next SpecialAttackState
+     */
     public DrawIntroState(Intro intro, Sound sfx, float x, float y, SpecialAttackState next) {
         this.intro = intro;
         this.sfx = sfx;

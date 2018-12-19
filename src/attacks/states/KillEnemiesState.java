@@ -4,17 +4,29 @@ import elements.Enemy;
 
 import java.util.Set;
 
+/**
+ * This state set to 0 the HP of the enemies passed as parameter
+ */
 public class KillEnemiesState implements SpecialAttackState {
 
     private Set<Enemy> targets;
     private boolean finished = false;
     private SpecialAttackState next;
 
+    /**
+     * Constructor
+     * @param targets a Set containing the enemies to kill
+     */
     public KillEnemiesState(Set<Enemy> targets) {
         this.targets = targets;
         this.next = null;
     }
 
+    /**
+     * Constructor
+     * @param targets a Set containing the enemies to kill
+     * @param next the following SpecialAttackState
+     */
     public KillEnemiesState(Set<Enemy> targets, SpecialAttackState next) {
         this.targets = targets;
         this.next = next;

@@ -11,6 +11,10 @@ import org.newdawn.slick.SlickException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * An abstract class for the attack that are to be drawn differently based on the caster's direction.
+ * Implemented as a Template Method
+ */
 public abstract class DirectionalAttack extends AnimatedElement implements Attack {
 
     private Map<String, Animation> animations;
@@ -18,6 +22,11 @@ public abstract class DirectionalAttack extends AnimatedElement implements Attac
 
     Mob caster;
 
+    /**
+     * Constructor
+     * @param id the attack's id
+     * @param caster the Player object that casts the attack
+     */
     DirectionalAttack(String id, Mob caster){
         animations = new HashMap<>();
         AttackConfiguration attackconf = AttackConfiguration.getInstance();
@@ -41,44 +50,124 @@ public abstract class DirectionalAttack extends AnimatedElement implements Attac
         super.draw((int)drawX, (int)drawY);
     }
 
+    /**
+     * Hook method to set the x coordinate when the direction is UP
+     * @return the x coordinate
+     */
     protected abstract float setXUp();
 
+    /**
+     * Hook method to set the x coordinate when the direction is DOWN
+     * @return the x coordinate
+     */
     protected abstract float setXDown();
 
+    /**
+     * Hook method to set the x coordinate when the direction is LEFT
+     * @return the x coordinate
+     */
     protected abstract float setXLeft();
 
+    /**
+     * Hook method to set the x coordinate when the direction is RIGHT
+     * @return the x coordinate
+     */
     protected abstract float setXRight();
 
+    /**
+     * Hook method to set the y coordinate when the direction is UP
+     * @return the y coordinate
+     */
     protected abstract float setYUp();
 
+    /**
+     * Hook method to set the y coordinate when the direction is DOWN
+     * @return the y coordinate
+     */
     protected abstract float setYDown();
 
+    /**
+     * Hook method to set the y coordinate when the direction is LEFT
+     * @return the y coordinate
+     */
     protected abstract float setYLeft();
 
+    /**
+     * Hook method to set the y coordinate when the direction is RIGHT
+     * @return the y coordinate
+     */
     protected abstract float setYRight();
 
+    /**
+     * Hook method to set the height when the direction is horizontal
+     * @return the height
+     */
     protected abstract float setHeightHorizontal();
 
+    /**
+     * Hook method to set the width when the direction is horizontal
+     * @return the width
+     */
     protected abstract float setWidthHorizontal();
 
+    /**
+     * Hook method to set the height when the direction is vertical
+     * @return the height
+     */
     protected abstract float setHeightVertical();
 
+    /**
+     * Hook method to set the width when the direction is vertical
+     * @return the width
+     */
     protected abstract float setWidthVertical();
 
+    /**
+     * Hook method to set an x bias when the direction is UP
+     * @return the x bias
+     */
     protected abstract float setXBiasUp();
 
+    /**
+     * Hook method to set an x bias when the direction is DOWN
+     * @return the x bias
+     */
     protected abstract float setXBiasDown();
 
+    /**
+     * Hook method to set an x bias when the direction is LEFT
+     * @return the x bias
+     */
     protected abstract float setXBiasLeft();
 
+    /**
+     * Hook method to set an x bias when the direction is RIGHT
+     * @return the x bias
+     */
     protected abstract float setXBiasRight();
 
+    /**
+     * Hook method to set an y bias when the direction is UP
+     * @return the y bias
+     */
     protected abstract float setYBiasUp();
 
+    /**
+     * Hook method to set an y bias when the direction is DOWN
+     * @return the y bias
+     */
     protected abstract float setYBiasDown();
 
+    /**
+     * Hook method to set an y bias when the direction is LEFT
+     * @return the y bias
+     */
     protected abstract float setYBiasLeft();
 
+    /**
+     * Hook method to set an y bias when the direction is RIGHT
+     * @return the y bias
+     */
     protected abstract float setYBiasRight();
 
     /**

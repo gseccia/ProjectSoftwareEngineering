@@ -2,12 +2,20 @@ package attacks.states;
 
 import org.newdawn.slick.Sound;
 
+/**
+ * This state plays a sound
+ */
 public class SoundState implements SpecialAttackState{
 
     private Sound sound;
     private boolean executed = false;
     private SpecialAttackState next;
 
+    /**
+     * Constructor
+     * @param sound the Sound to play
+     * @param next the following SpecialAttackState
+     */
     public SoundState(Sound sound, SpecialAttackState next) {
         this.sound = sound;
         this.next = next;
