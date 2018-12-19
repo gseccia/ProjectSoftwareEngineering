@@ -30,6 +30,7 @@ public class HealPlayerModifier implements PlayerModifier {
             sfx.play();
         }
         ScorePointsManager.getScorePointsManagerInstance().increase(amount);
+        ScorePointsManager.getScorePointsManagerInstance().decrease(0);
         ScorePointsManager.getScorePointsManagerInstance().setState(States.LifePointsAccumulator);
         player.heal(amount);
     }

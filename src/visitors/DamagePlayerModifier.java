@@ -20,6 +20,7 @@ public class DamagePlayerModifier implements PlayerModifier{
     @Override
     public void accept(Player player) {
     	ScorePointsManager.getScorePointsManagerInstance().decrease(amount);
+        ScorePointsManager.getScorePointsManagerInstance().increase(0);
         ScorePointsManager.getScorePointsManagerInstance().setState(States.LifePointsAccumulator);
         player.damage(amount);
     }

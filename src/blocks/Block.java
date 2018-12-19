@@ -563,6 +563,7 @@ public abstract class Block extends BasicGameState
 			for(Item i:item) {
 				i.setLocation((int)(i.getX())+(prevMapX-mapX)*map.getTileWidth(),(int)(i.getY())+(prevMapY-mapY)*map.getTileHeight());
 			}
+
 //			Sto camminando non prendo porte
 			doorEntered = false;
 
