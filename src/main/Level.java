@@ -33,7 +33,7 @@ public class Level{
 	/**
 	 * This class is the manager of a level
 	*/
-	Level(String charname, int level_difficulty, MissionFactory missions, BlockFactory blockFactory) {
+	Level(Player player, String charname, int level_difficulty, MissionFactory missions, BlockFactory blockFactory) {
 
 		itemsRemainingCapacity = new HashMap<>();
 		mobsRemainingCapacity = new HashMap<>();
@@ -72,8 +72,6 @@ public class Level{
 
 		try {
 			ScorePointsManager spm = ScorePointsManager.getScorePointsManagerInstance();
-
-			Player player = new Player(PlayerConfiguration.getInstance(), charname);
 
 			Mission mission_generated = missions.generateMissions(itemCapacity/2, mobCapacity/2, level_difficulty);
 

@@ -40,6 +40,10 @@ public class Player extends Mob {
         return ultra;
     }
 
+    public void setUltra(SpecialAttack ultra) {
+        this.ultra = ultra;
+    }
+
     @Override
     public boolean isReadyToAttack(){
         return !isAttacking;

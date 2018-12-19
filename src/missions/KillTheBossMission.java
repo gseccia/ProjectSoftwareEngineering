@@ -19,7 +19,7 @@ public class KillTheBossMission extends Mission {
      * @param targetId the mob
      * @param powerUp the strengthening factor
      */
-    KillTheBossMission(String targetId, int powerUp) {
+    public KillTheBossMission(String targetId, int powerUp) {
         super(targetId);
         int red = new Random().nextInt(255);
         int green = 255 - red;

@@ -28,7 +28,7 @@ public class Item extends AnimatedElement implements MissionTarget, PlayerModifi
                 configuration.getHeight(id),
                 0, 0);
         this.id = id;
-        this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
+        this.itemPoints = configuration.getItemPoints(id);
         this.filter = null;
         trap = false;
     }
@@ -40,7 +40,7 @@ public class Item extends AnimatedElement implements MissionTarget, PlayerModifi
                 0, 0);
         this.id = id;
         this.visitor = visitor;
-        this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
+        this.itemPoints = configuration.getItemPoints(id);
         this.filter = filter;
         this.trap = trap;
     }
@@ -52,7 +52,7 @@ public class Item extends AnimatedElement implements MissionTarget, PlayerModifi
                 0, 0);
         this.id = id;
         this.visitor = visitor;
-        this.itemPoints = ItemConfiguration.getInstance().getItemPoints(this.id);
+        this.itemPoints = configuration.getItemPoints(id);
         this.filter = null;
         this.trap = trap;
     }

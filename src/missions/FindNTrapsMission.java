@@ -42,7 +42,7 @@ public class FindNTrapsMission extends Mission {
      */
     @Override
     public int numMissions() {
-        return 1;
+        return 0;
     }
 
     /**

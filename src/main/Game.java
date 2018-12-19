@@ -1,23 +1,23 @@
 package main;
 
+import attacks.ultras.HoraHora;
+import attacks.ultras.IUF;
+import attacks.ultras.Sparagmos;
 import blocks.*;
 import configuration.EnemyConfiguration;
 import configuration.ItemConfiguration;
-import main.gamestates.CharacterSelection;
-import main.gamestates.GameOver;
-import main.gamestates.GameStates;
-import main.gamestates.Menu;
-import main.gamestates.Pause;
-import main.gamestates.Scores;
-import main.gamestates.Settings;
-import main.gamestates.SplashScreen;
+import configuration.NoSuchElementInConfigurationException;
+import configuration.PlayerConfiguration;
+import elements.NullAnimationException;
+import elements.Player;
+import main.gamestates.*;
 import managers.MusicManager;
 import managers.ResourceManager;
 import managers.observers.scoreboard.ScoreFileObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 import missions.ConcreteMissionFactory;
-import missions.DemoMissionFactory;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class Game extends StateBasedGame{
     private boolean demo = false;
     private Level current;
     private int current_difficulty;
-    private String charname;
+    private String charname, ultra;
     private ResourceManager rs;
     private MusicManager mm;
 
@@ -43,20 +43,39 @@ public class Game extends StateBasedGame{
     	this.charname = charname;
     }
 
+    public void setUltra(String ultra) {
+        this.ultra = ultra;
+    }
+
+    private void attachUltra(Player player){
+        if(ultra.equals("horahora")) player.setUltra(new HoraHora(player));
+        else if(ultra.equals("sparagmos")) player.setUltra(new Sparagmos(player));
+        else if(ultra.equals("iuf")) player.setUltra(new IUF(player));
+        else player.setUltra(new IUF(player));
+    }
+
     @Override
     public void initStatesList(GameContainer gameContainer){
         // Instantiate block only when the level is instantiated
         if (current_difficulty > 0) {
-            if(demo) {
-                current = new Level(charname, current_difficulty, new DemoMissionFactory(ItemConfiguration.getInstance(), EnemyConfiguration.getInstance()), new DemoBlockFactory());
+            try {
+                Player player = new Player(PlayerConfiguration.getInstance(), charname);
+                attachUltra(player);
+
+                if(demo) {
+                    current = new Level(player, charname, current_difficulty, new ConcreteMissionFactory(ItemConfiguration.getInstance(), EnemyConfiguration.getInstance()), new DemoBlockFactory());
+                }
+                else{
+                    current = new Level(player, charname, current_difficulty, new ConcreteMissionFactory(ItemConfiguration.getInstance(), EnemyConfiguration.getInstance()), new ConcreteBlockFactory());
+                }
+                List<Block> blocks = current.getBlocks();
+                for(Block block: blocks) {
+                    this.addState(block);
+                }
+
+            } catch (NoSuchElementInConfigurationException | SlickException | NullAnimationException e) {
+                e.printStackTrace();
             }
-            else{
-                current = new Level(charname, current_difficulty, new ConcreteMissionFactory(ItemConfiguration.getInstance(), EnemyConfiguration.getInstance()), new ConcreteBlockFactory());
-            }
-        	List<Block> blocks = current.getBlocks();
-        	for(Block block: blocks) {
-        		this.addState(block);
-        	}
 
             // for pause
             this.addState(Pause.getInstance());
@@ -76,6 +95,8 @@ public class Game extends StateBasedGame{
 		this.addState(Settings.getInstance());
 		// for character selection page
 		this.addState(new CharacterSelection(rs));
+        // for skill selection page
+        this.addState(new SkillSelection(rs));
 //        this.rs.setState(0);
         this.enterState(GameStates.SPLASHSCREEN.getState()); //always enter in splash screen state
     }

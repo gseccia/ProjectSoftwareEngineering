@@ -111,9 +111,8 @@ public abstract class Block extends BasicGameState
 		// initialize score manager and observers
 		this.scoreManager = spm;
 		sfo = ScoreFileObserver.getInstance(this.scoreManager);
-		pao = new PointsAccumulatorObserver(this.scoreManager);
+		pao = PointsAccumulatorObserver.getInstance(this.scoreManager);
 		lpao = new LifePointsAccumulatorObserver(this.scoreManager);
-//				ScoreFileObserver sfo = new ScoreFileObserver(this.scoreManager);
 		this.scoreManager.setNamePlayer("Armando");
 		
 //		Initialize Music completed level

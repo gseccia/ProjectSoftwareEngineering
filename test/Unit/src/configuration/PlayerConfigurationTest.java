@@ -105,6 +105,46 @@ public class PlayerConfigurationTest {
         this.conf.getFaceStill("test_error");
     }
 
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testFaceStillUpThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getFaceStillUp("test_error");
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testFaceStillDownThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getFaceStillDown("test_error");
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testFaceStillLeftThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getFaceStillLeft("test_error");
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testFaceStillRightThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getFaceStillRight("test_error");
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testFaceAttackUpThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getAttackUp("test_error");
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testAttackDownThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getAttackDown("test_error");
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testAttackLeftThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getAttackLeft("test_error");
+    }
+
+    @Test(expected = NoSuchElementInConfigurationException.class)
+    public void testAttackRightThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getAttackRight("test_error");
+    }
+
     @Test(expected = RuntimeException.class)
     public void testFaceUpThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
         this.conf.getFaceUp("test_not_found");
@@ -123,5 +163,45 @@ public class PlayerConfigurationTest {
     @Test(expected = RuntimeException.class)
     public void testFaceDownThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
         this.conf.getFaceDown("test_not_found");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testFaceStillUpThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getFaceStillUp("test_not_found");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testFaceStillDownThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getFaceStillDown("test_not_found");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testFaceStillLeftThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getFaceStillLeft("test_not_found");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testFaceStillRightThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getFaceStillRight("test_not_found");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testFaceAttackUpThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getAttackUp("test_not_found");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testAttackDownThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getAttackDown("test_not_found");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testAttackLeftThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getAttackLeft("test_not_found");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testAttackRightThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getAttackRight("test_not_found");
     }
 }

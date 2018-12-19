@@ -8,7 +8,8 @@ public enum GameStates {
 	SPLASHSCREEN(4),
 	PAUSE(5),
 	CHAR_SELECTION(6),
-	STARTING_POINT(7)
+	SKILL_SELECTION(7),
+	STARTING_POINT(8)
 	;
 	
 	

@@ -14,6 +14,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import managers.observers.Observer;
 import managers.observers.Subject;
@@ -90,7 +92,7 @@ public class ScoreFileObserver extends Observer implements Serializable {
 					   id = ((PointsAccumulatorObserver) e).getName();
 				   }
 			   }
-			   Score toAdd = new Score(points, id, Calendar.getInstance());
+			   Score toAdd = new Score(points, id, Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"),Locale.ITALY));
 			   if(scores.size() == 0) {
 				   scores.add(toAdd);
 			   }

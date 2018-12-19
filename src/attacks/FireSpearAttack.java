@@ -6,7 +6,7 @@ import elements.Mob;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
-public class FireSpearAttack extends RangedAttack {
+public class FireSpearAttack extends DirectionalAttack {
 
     private final static String ID = "firespear";
 
