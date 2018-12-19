@@ -7,7 +7,6 @@ import org.newdawn.slick.util.pathfinding.*;
 import configuration.NoSuchElementInConfigurationException;
 import blocks.Block;
 import managers.CollisionDetectionDoor;
-import managers.CollisionDetectionMob;
 import managers.CollisionDetectionWall;
 import managers.Directions;
 import missions.MissionTarget;
