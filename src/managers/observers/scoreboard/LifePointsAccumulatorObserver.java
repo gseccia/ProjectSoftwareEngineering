@@ -74,7 +74,7 @@ public class LifePointsAccumulatorObserver extends Observer{
 		// Lo stato cambia quando ci sono collisioni con nemici/item/muri
 		// e aggiorna il livello di hp
 		if (this.subject.getState() == 1) {
-			setHp(this.subject.getIncreaseValue() - this.subject.getDecreaseValue());
+			setHp(((ScorePointsManager)this.subject).getIncreaseValue() - ((ScorePointsManager)this.subject).getDecreaseValue());
 		}
 	}
 

@@ -5,6 +5,8 @@ import managers.observers.Observer;
 
 public class ScorePointsManager extends Subject{
 	private static ScorePointsManager instance = null;
+	private int increaseValue, decreaseValue;
+	private String namePlayer;
 	
 	private ScorePointsManager() {
 	}
@@ -15,18 +17,14 @@ public class ScorePointsManager extends Subject{
 		}
 		return instance;
 	}
-		
-	public void setState(int state) {
-		/* Salva lo stato corrente e notifica il cambiamento agli observer
-		* Lo stato corrisponde a:
-		*	0 punti
-		*	1 vita
-		*	2 rip update scoreboard
-		*/
-		
-		this.state = state;
-		notifyAllObservers();
-	}
+
+	/* Salva lo stato corrente e notifica il cambiamento agli observer
+	 * Lo stato corrisponde a:
+	 *	0 punti
+	 *	1 vita
+	 *	2 rip update scoreboard
+	 */
+
 
 	public void increase(int v) {
 		setIncreaseValue(v);
@@ -56,5 +54,30 @@ public class ScorePointsManager extends Subject{
 		   }
 	   }
 	return null;
+	}
+	
+
+	protected void setIncreaseValue(int increaseValue) {
+	this.increaseValue = increaseValue;
+}
+
+	protected void setDecreaseValue(int decreaseValue) {
+		this.decreaseValue = decreaseValue;
+	}
+
+	public int getIncreaseValue() {
+		return increaseValue;
+	}
+
+	public int getDecreaseValue() {
+		return decreaseValue;
+	}
+	
+	public String getNamePlayer() {
+		return namePlayer;
+	}
+
+	public void setNamePlayer(String namePlayer) {
+		this.namePlayer = namePlayer;
 	}
 }

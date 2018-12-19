@@ -27,7 +27,7 @@ public class PointsAccumulatorObserver extends Observer{
 	}
 	
 	public String getName() {
-		return this.subject.getNamePlayer();
+		return ((ScorePointsManager)this.subject).getNamePlayer();
 	}
 
 	@Override
@@ -36,8 +36,8 @@ public class PointsAccumulatorObserver extends Observer{
 		// Lo stato cambia quando ci sono collisioni con nemici/item/muri
 		// e aggiorna il punteggio accordingly
 		if (this.subject.getState() == 0) {
-			setPoints(this.subject.getIncreaseValue() 
-					- this.subject.getDecreaseValue()
+			setPoints(((ScorePointsManager)this.subject).getIncreaseValue() 
+					- ((ScorePointsManager)this.subject).getDecreaseValue()
 					);
 		}
 	}
