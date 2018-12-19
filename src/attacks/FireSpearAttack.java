@@ -5,6 +5,7 @@ import configuration.NoSuchElementInConfigurationException;
 import elements.Mob;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.SoundStore;
 
 /**
  * The class that implements the FireSpear attack
@@ -34,7 +35,7 @@ public class FireSpearAttack extends DirectionalAttack {
      */
     @Override
     public void attack() {
-        sfx.play();
+        sfx.play(1, SoundStore.get().getMusicVolume());
     }
 
     @Override

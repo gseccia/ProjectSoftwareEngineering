@@ -1,6 +1,7 @@
 package attacks.states;
 
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.SoundStore;
 
 /**
  * This state plays a sound
@@ -27,7 +28,7 @@ public class SoundState implements SpecialAttackState{
     @Override
     public void execute() {
         if(!sound.playing()){
-            sound.play();
+            sound.play(1, SoundStore.get().getMusicVolume());
             executed = true;
         }
     }

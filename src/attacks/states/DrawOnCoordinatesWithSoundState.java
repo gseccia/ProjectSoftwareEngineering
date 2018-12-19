@@ -2,6 +2,7 @@ package attacks.states;
 
 import attacks.ultras.SpecialAttack;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.SoundStore;
 
 /**
  * This state draws the special attack at the passed coordinates and plays a sound
@@ -38,7 +39,7 @@ public class DrawOnCoordinatesWithSoundState implements SpecialAttackState {
         if(!sfx.playing()){
             animation.setLocation(x, y);
             animation.setDrawable(true);
-            sfx.play();
+            sfx.play(1, SoundStore.get().getMusicVolume());
             executed = true;
         }
     }

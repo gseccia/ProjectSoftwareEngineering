@@ -2,6 +2,8 @@ package attacks;
 
 import elements.AnimatedElement;
 import elements.Mob;
+import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.SoundStore;
 
 /**
  * A class that implements the point blank range attack
@@ -9,6 +11,7 @@ import elements.Mob;
 public class PointBlankRangeAttack extends AnimatedElement implements Attack {
 
     private Mob caster;
+    private Sound sfx;
 
     /**
      * Constructor
@@ -17,6 +20,17 @@ public class PointBlankRangeAttack extends AnimatedElement implements Attack {
     public PointBlankRangeAttack(Mob caster) {
         super();
         this.caster = caster;
+    }
+
+    /**
+     * Constructor
+     * @param caster the Mob object that casts the attack
+     * @param sfx the sound to play
+     */
+    public PointBlankRangeAttack(Mob caster, Sound sfx) {
+        super();
+        this.caster = caster;
+        this.sfx = sfx;
     }
 
     /**
@@ -35,7 +49,7 @@ public class PointBlankRangeAttack extends AnimatedElement implements Attack {
      */
     @Override
     public void attack() {
-
+        if(sfx != null) sfx.play(1, SoundStore.get().getMusicVolume());
     }
 
 }

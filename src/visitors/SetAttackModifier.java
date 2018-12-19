@@ -4,6 +4,7 @@ import attacks.Attack;
 import attacks.ConsumableAttack;
 import elements.Player;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.SoundStore;
 
 public class SetAttackModifier implements PlayerModifier {
 
@@ -32,7 +33,7 @@ public class SetAttackModifier implements PlayerModifier {
     @Override
     public void accept(Player player) {
         if(sfx != null){
-            sfx.play();
+            sfx.play(1, SoundStore.get().getMusicVolume()*1.5f);
         }
         Attack consumable = new ConsumableAttack(player, special, player.getAttack(), uses, multiplier);
         player.setAttack(consumable);

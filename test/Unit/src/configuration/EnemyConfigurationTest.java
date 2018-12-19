@@ -33,6 +33,8 @@ public class EnemyConfigurationTest {
         mobNames.add("test");
         mobNames.add("test_error");
         mobNames.add("test_not_found");
+        mobNames.add("test_mission");
+        mobNames.add("test_npc");
     }
 
     @Test
@@ -238,5 +240,26 @@ public class EnemyConfigurationTest {
     public void testMobNamesAreReadCorrectly() {
         assertEquals(mobNames, conf.getMobNames());
     }
+
+    @Test(expected = NullPointerException.class)
+    public void testActiveSoundThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getActiveSound("test_error");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testActiveSoundThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getActiveSound("test_error");
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testAttackSoundThrowsExceptionIfNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getAttackSound("test_error");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testAttacjSoundThrowsExceptionIfImageNotPresent() throws SlickException, NoSuchElementInConfigurationException {
+        this.conf.getAttackSound("test_error");
+    }
+
 
 }

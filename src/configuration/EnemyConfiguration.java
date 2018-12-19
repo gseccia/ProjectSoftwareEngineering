@@ -1,5 +1,8 @@
 package configuration;
 
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+
 import java.util.Set;
 
 /**
@@ -48,6 +51,26 @@ public class EnemyConfiguration extends MobConfiguration {
      */
     public int getAttackLatency(String id) throws NoSuchElementInConfigurationException {
         return getConfiguration(id).get("delay").getAsInt();
+    }
+
+    /**
+     * @param id the mob id
+     * @return an active sound
+     * @throws NoSuchElementInConfigurationException if there isn't this id in the configuration
+     * @throws SlickException a slick exception
+     */
+    public Sound getActiveSound(String id ) throws NoSuchElementInConfigurationException, SlickException {
+        return new Sound(System.getProperty("user.dir")+"/"+getConfiguration(id).get("active_sound").getAsString());
+    }
+
+    /**
+     * @param id the mob id
+     * @return an attack sound
+     * @throws NoSuchElementInConfigurationException if there isn't this id in the configuration
+     * @throws SlickException a slick exception
+     */
+    public Sound getAttackSound(String id ) throws NoSuchElementInConfigurationException, SlickException {
+        return new Sound(System.getProperty("user.dir")+"/"+getConfiguration(id).get("attack_sound").getAsString());
     }
 
     /**

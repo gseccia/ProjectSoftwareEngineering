@@ -2,6 +2,7 @@ package attacks.states;
 
 import attacks.ultras.SpecialAttack;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.SoundStore;
 
 /**
  * This state set the SpecialAttack to drawable while playing a sound
@@ -32,7 +33,7 @@ public class DrawWithSoundState implements SpecialAttackState {
     public void execute() {
         if(!sfx.playing()){
             attack.setDrawable(true);
-            sfx.play();
+            sfx.play(1, SoundStore.get().getMusicVolume());
             executed = true;
         }
     }

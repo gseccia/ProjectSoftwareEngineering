@@ -4,6 +4,7 @@ import elements.Player;
 import managers.observers.scoreboard.ScorePointsManager;
 import managers.observers.scoreboard.States;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.SoundStore;
 
 public class HealPlayerModifier implements PlayerModifier {
 
@@ -27,7 +28,7 @@ public class HealPlayerModifier implements PlayerModifier {
     @Override
     public void accept(Player player) {
         if(sfx != null){
-            sfx.play();
+            sfx.play(1, SoundStore.get().getMusicVolume()*1.5f);
         }
         ScorePointsManager.getScorePointsManagerInstance().increase(amount);
         ScorePointsManager.getScorePointsManagerInstance().decrease(0);

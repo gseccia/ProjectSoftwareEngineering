@@ -3,6 +3,7 @@ package attacks.states;
 import attacks.ultras.SpecialAttack;
 import elements.Enemy;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.SoundStore;
 
 /**
  * This state draws the SpecialAttack on a certain enemy playing a sound
@@ -42,7 +43,7 @@ public class DrawOnTargetWithSoundState implements SpecialAttackState {
         if(!sfx.playing()){
             animation.setLocation(target.getX()-shiftX*16-56, target.getY()-shiftY*16);
             animation.setDrawable(true);
-            sfx.play();
+            sfx.play(1, SoundStore.get().getMusicVolume());
             executed = true;
         }
     }

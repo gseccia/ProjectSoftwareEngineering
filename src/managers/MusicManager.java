@@ -40,16 +40,6 @@ public class MusicManager extends Observer implements MusicManagerInterface{
 			levelCompletedSound = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/levelCompleted.ogg");
 			ripSound = new Sound(System.getProperty("user.dir") + "/resource/audio/transitions/dead.ogg");
 			menuMusic = (new Music(System.getProperty("user.dir") + "/resource/audio/menu/menu.ogg", true));
-//			Files.list(Paths.get(System.getProperty("user.dir") + "/resource/audio/oth/"))
-//	        	.filter(Files::isRegularFile)
-//	        	.forEach(music->{
-//					try {
-//						gameMusic.add(new Music(music.toString()));
-//					} catch (SlickException e) {
-//						e.printStackTrace();
-//					}
-//				});
-//			gameMusic.add(new Music(System.getProperty("user.dir") + "/resource/audio/menu/HorseSteppin.ogg", true));
 		} catch (SlickException  e) {
 			e.printStackTrace();
 		}
@@ -62,21 +52,17 @@ public class MusicManager extends Observer implements MusicManagerInterface{
 	}
 	
 	public void initMusic() {
-		Thread loader = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Files.list(Paths.get(System.getProperty("user.dir") + "/resource/audio/oth/"))
-					.filter(Files::isRegularFile)
-					.forEach(music->{
-						gameMusicStrings.add(music.toString());
-//							gameMusic.add(new Music(music.toString()));
-					});
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		Thread loader = new Thread(() -> {
+			try {
+				Files.list(Paths.get(System.getProperty("user.dir") + "/resource/audio/oth/"))
+				.filter(Files::isRegularFile)
+				.forEach(music->{
+					gameMusicStrings.add(music.toString());
+				});
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		}); 
+		});
 		loader.start();
 	}
 	
