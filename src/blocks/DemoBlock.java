@@ -49,10 +49,17 @@ public class DemoBlock extends Block{
 				"Press "+ ((PlayerCommands.getPlayerCommandsInstance().getUp() == Input.KEY_W)? "WASD":"ARROWs") +" to move in each direction","Press "+((PlayerCommands.getPlayerCommandsInstance().getAttack1() == Input.KEY_M)? "M":"Z")+" to attack",
 				"Press "+((PlayerCommands.getPlayerCommandsInstance().getAttack2() == Input.KEY_SPACE)? "SPACE":"X")+" to active special attack","Let's play!",""};
 	
+	
+	/**
+	 * Costructor of the demo block
+	 * @param identifier of block as state of the game
+	 * @param mapName name of map associated to this block
+	 */
 	protected DemoBlock(int state, String mapName) {
 		super(state, mapName);
 	}
-	
+
+
 	@Override
 	public void initBlock(Player player,Map<Block,Set<Enemy>> population,Map<Block,Set<Item>> items,
 			MapGraph graph, Mission missionGenerated, ScorePointsManager spm) throws SlickException
@@ -80,10 +87,18 @@ public class DemoBlock extends Block{
 		updating = 0;
 		displayMessage = 0;
 		blocked = true;
-		managers.ResourceManager.getInstance().setState(0);
+		//managers.ResourceManager.getInstance().setState(0);
 		gs.enterState(GameStates.GAMEOVER.getState());
 	}
 	
+	/**
+	 * Convert value from pixels in tiles
+	 * 
+	 * @param value value to be converted
+	 * @param xaxis Asserted if value is on x-axis
+	 * @param player Asserted if it needs to execute the alignment
+	 * @return tile value associated to the input parameter value
+	 */
 	private int tileConversion(float value, boolean xaxis,boolean player) {
 		int shiftX = (player)? getShiftX():0;
 		int shiftY = (player)? getShiftY():0;
@@ -94,6 +109,12 @@ public class DemoBlock extends Block{
 		return tile;
 	}
 	
+	/**
+	 * Generate a new path from player position to target element position
+	 * 
+	 * @param targetElement Element to reach
+	 * @param align Asserted if it needs to execute the alignment of the target element
+	 */
 	private void generateTPath(Shape targetElement,boolean align) {
 		int playerTileX, playerTileY, targetTileX, targetTileY;
 		playerTileX = tileConversion(player.getX(),true,true);
@@ -129,6 +150,9 @@ public class DemoBlock extends Block{
 		firstTime = false;
 	}
 	
+	/**
+	 * Generate the next path
+	 */
 	private void generatePath() {
 		if((item.isEmpty() && enemy.isEmpty())) {
 			// change map
@@ -160,6 +184,10 @@ public class DemoBlock extends Block{
 		}
 	}
 	
+	/**
+	 * Provides next action to execute
+	 * @return action to execute
+	 */
 	private int logicMovements() {
 		if(doorSelected != null && currentPath!=null && currentStep >= currentPath.getLength() -2) {
 			doorLabel.put(doorSelected, EXPLORED);
@@ -208,6 +236,13 @@ public class DemoBlock extends Block{
 		nextLevel++;
 	}
 	
+	/**
+	 * Display text on screen
+	 * 
+	 * @param showString Text to display
+	 * @param x x-value where diplays text
+	 * @param y y-value where diplays text
+	 */
 	private void renderText(String showString,int x,int y) {
 		// custom font settings
 			uniFont = StatesUtils.changeSizeAndStyle(uniFont, 16f, Font.BOLD);
@@ -237,6 +272,7 @@ public class DemoBlock extends Block{
 			}*/
 	}
 	
+	@Override
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
 		if(!blocked)super.update(gc, gs, delta);
 		if(displayMessage < showString.length-1 && updating>50) {
@@ -252,8 +288,14 @@ public class DemoBlock extends Block{
 		return in.isKeyPressed(in.KEY_P);
 	}
 	
-	private boolean check(int direction) {
-		boolean result = logicMovements() == direction;
+	/**
+	 * Check if next action is the expected one and eventually update the current step
+	 * 
+	 * @param action action expected
+	 * @return Asserted if next action is the expected one
+	 */
+	private boolean check(int action) {
+		boolean result = logicMovements() == action;
 		if(result) {
 			currentStep ++;
 		}

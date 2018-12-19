@@ -107,6 +107,13 @@ public class GameOver extends BasicGameState{
 			}
 //		}
 	}
+	
+	private void resetPoints() {
+		// reset points
+		pointsManager.increase(0);
+		pointsManager.decrease(points.getPoints());
+		pointsManager.setState(0);
+	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
@@ -124,6 +131,9 @@ public class GameOver extends BasicGameState{
 				((Game)arg1).resetDifficulty();
 				this.rs.setState(0);
 				wait++;
+				
+				resetPoints();
+				
 				if (wait > 50) arg1.enterState(GameStates.MENU.getState());
 			}
 			else {
@@ -136,11 +146,9 @@ public class GameOver extends BasicGameState{
 				this.rs.setState(0);
 				System.out.println("enter pressed");
 				uniFont.destroy();
-				
-//				reset points
-				points.setPoints(-points.getPoints());
-				pointsManager.setState(0);
 //				
+				resetPoints();
+				
 				arg1.enterState(GameStates.MENU.getState());
 			}
 			if(arg0.getInput().isKeyPressed(Input.KEY_RIGHT)) {
