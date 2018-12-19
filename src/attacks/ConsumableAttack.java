@@ -2,7 +2,6 @@ package attacks;
 
 import elements.NotPositiveValueException;
 import elements.Player;
-import org.jetbrains.annotations.NotNull;
 import org.newdawn.slick.geom.Shape;
 
 /**
@@ -22,7 +21,7 @@ public class ConsumableAttack implements Attack {
      * @param uses the number of uses
      * @param multiplier the attack multiplier
      */
-    public ConsumableAttack(@NotNull Player caster, Attack special, Attack normal, int uses, int multiplier) {
+    public ConsumableAttack(Player caster, Attack special, Attack normal, int uses, int multiplier) {
         this.caster = caster;
         this.current = special;
         this.normal = normal;
