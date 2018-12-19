@@ -90,7 +90,7 @@ public class Game extends StateBasedGame{
         // for splash
         this.addState(new SplashScreen());
         // for game over page
-		this.addState(new GameOver());
+		this.addState(new GameOver(demo));
 		// for options page
 		this.addState(Settings.getInstance());
 		// for character selection page

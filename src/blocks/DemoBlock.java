@@ -15,13 +15,16 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.pathfinding.*;
 
+import configuration.PlayerCommands;
 import elements.EncapsulateMap;
 import elements.Enemy;
 import elements.Item;
 import elements.Player;
 import managers.Directions;
+import managers.ResourceManager;
 import managers.Wall;
 import main.gamestates.GameStates;
+import main.gamestates.Settings;
 import main.gamestates.StatesUtils;
 import managers.observers.scoreboard.ScorePointsManager;
 import map.MapGraph;
@@ -30,7 +33,7 @@ import missions.Mission;
 public class DemoBlock extends Block{
 	
 	private Path currentPath;
-	private int currentStep;
+	private int currentStep,nextLevel;
 	private AStarPathFinder pf;
 	private HashMap<Wall,Integer> doorLabel;
 	private final int UNEXPLORED=0,EXPLORED=1;
@@ -43,8 +46,8 @@ public class DemoBlock extends Block{
 	private static String[] showString = 
 		{"Your name is at top-left corner","Your life is at left","Your score is at top-right corner",
 				"Your special attack is at right","Your level is at center",
-				"Press ARROWS KEY to move in each direction","Press SPACE to active special attack",
-				"Press SPACE to active special attack","Let's play!",""};
+				"Press "+ ((PlayerCommands.getPlayerCommandsInstance().getUp() == Input.KEY_W)? "WASD":"ARROWs") +" to move in each direction","Press "+((PlayerCommands.getPlayerCommandsInstance().getAttack1() == Input.KEY_M)? "M":"Z")+" to attack",
+				"Press "+((PlayerCommands.getPlayerCommandsInstance().getAttack2() == Input.KEY_SPACE)? "SPACE":"X")+" to active special attack","Let's play!",""};
 	
 	protected DemoBlock(int state, String mapName) {
 		super(state, mapName);
@@ -65,9 +68,11 @@ public class DemoBlock extends Block{
 			doorLabel.put(door, UNEXPLORED);
 			//System.out.println((tmp.blocked(null, tileConversion(door.getX(),true,false), tileConversion(door.getY(),true,false))? "NOT VALID":"VALID"));
 		}
+		continueString = "";
 		doorSelected = null;
 		lastDoor = null;
 		discovery = true;
+		nextLevel = 0;
 	}
 	
 	@Override
@@ -76,7 +81,7 @@ public class DemoBlock extends Block{
 		displayMessage = 0;
 		blocked = true;
 		managers.ResourceManager.getInstance().setState(0);
-		gs.enterState(GameStates.MENU.getState());
+		gs.enterState(GameStates.GAMEOVER.getState());
 	}
 	
 	private int tileConversion(float value, boolean xaxis,boolean player) {
@@ -144,9 +149,6 @@ public class DemoBlock extends Block{
 				generateTPath(doorSelected,false);
 				// if(currentPath==null)System.out.println("NON PATH - "+getMap().getWidth()+" "+getMap().getHeight());
 			}
-			else {
-				// System.out.println("Impossible errore");
-			}
 		}
 		else if(enemy.isEmpty()){
 			// item collecting
@@ -193,12 +195,17 @@ public class DemoBlock extends Block{
 
 	@Override
 	public void generateNextLevel(GameContainer gc, StateBasedGame currentGame) {
-		try {
-            currentGame.init(gc);
-            currentGame.enterState(GameStates.STARTING_POINT.getState());
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
+		if(nextLevel > 50) {
+    		ResourceManager.getInstance().setState(1);
+        	levelMusicMustBeStarted = true;
+        	try {
+                currentGame.init(gc);
+                currentGame.enterState(GameStates.STARTING_POINT.getState());
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+		}
+		nextLevel++;
 	}
 	
 	private void renderText(String showString,int x,int y) {
@@ -216,7 +223,7 @@ public class DemoBlock extends Block{
 		super.render(gc, sbg, g);
 		renderText(showString[displayMessage],((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-uniFont.getWidth(showString[displayMessage]))/2,250);
 		
-		if(currentPath != null) {
+		/*if(currentPath != null) {
 			g.setColor(Color.orange);
 			for(int i=0;i<currentPath.getLength();i++) {
 				g.drawRect((currentPath.getX(i)-getShiftX())*getMap().getTileWidth(),(currentPath.getY(i)-getShiftY())*getMap().getTileHeight(),16,16);
@@ -227,12 +234,12 @@ public class DemoBlock extends Block{
 				else if(doorLabel.get(door) == UNEXPLORED)g.setColor(Color.blue);
 				else g.setColor(Color.green);
 				g.drawRect(door.getX()-getShiftX()*getMap().getTileWidth(),door.getY()-getShiftY()*getMap().getTileHeight(),door.getWidth(),door.getHeight());
-			}
+			}*/
 	}
 	
 	public void update(GameContainer gc, StateBasedGame gs, int delta) {
 		if(!blocked)super.update(gc, gs, delta);
-		if(displayMessage < showString.length-1 && updating>10) {
+		if(displayMessage < showString.length-1 && updating>50) {
 			displayMessage++;
 			updating = 0;
 		}
@@ -275,7 +282,7 @@ public class DemoBlock extends Block{
 
 	@Override
 	protected boolean attack(Input in) {
-		return check(Directions.KEY_M);
+		return check(Directions.KEY_M) && enemy.size() > 0;
 	}
 
 	/**
@@ -286,6 +293,6 @@ public class DemoBlock extends Block{
 	 */
 	@Override
 	protected boolean special(Input in) { 
-		return check(Directions.KEY_M);
+		return check(Directions.KEY_M) && enemy.size() > 0;
 	}
 }
