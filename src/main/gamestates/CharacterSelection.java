@@ -15,6 +15,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import managers.ResourceManager;
 
+/**
+ * Character selection state
+ */
 public class CharacterSelection extends BasicGameState {
 	private final int id = GameStates.CHAR_SELECTION.getState();
 	private int playersChoice = 0;

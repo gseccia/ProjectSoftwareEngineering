@@ -19,7 +19,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import utils.Constants;
 
-
+/**
+ * This class represents an enemy
+ */
 public class Enemy extends Mob implements MissionTarget {
 
     private String id;
@@ -56,7 +58,7 @@ public class Enemy extends Mob implements MissionTarget {
         this.map = map;
         this.player = p;
 		this.points = configuration.getMobPoints(id);
-        direction = Directions.LEFT;     // Suppose initial direction right
+        direction = Directions.LEFT;
 		setAttack(new PointBlankRangeAttack(this));
 		RELOADING_TIME = Constants.framerate * configuration.getAttackLatency(id);
     }
@@ -66,6 +68,11 @@ public class Enemy extends Mob implements MissionTarget {
         return id;
     }
     
+    /**
+     * Initialize the object in the map where is placed
+     * @param x tile position on x-axis
+     * @param y tile position on y-axis
+     */
     public void init(int x,int y) {
     	setLocation(x*map.getMap().getTileWidth(),y*map.getMap().getTileHeight());
     	directVision = 8*map.getMap().getTileWidth();
@@ -80,6 +87,10 @@ public class Enemy extends Mob implements MissionTarget {
 		
     }
     
+    /**
+     * Allows to draw the enemy
+     */
+    @Override
     public void draw() {
     	int x,y,px,py;
     	if(getHp()>0) {
@@ -92,7 +103,13 @@ public class Enemy extends Mob implements MissionTarget {
     		setLocation(px,py);
     	}
     }
-
+    
+    /**
+     * Allows to make this object a boss
+     * @param powerUp A positive multiplier that improves the statistics of the enemy
+     * @param filter Color to apply on this object
+     * @throws NotPositiveValueException powerUP must be positive
+     */
     public void makeBoss(int powerUp, Color filter) throws NotPositiveValueException {
     	points *= powerUp;
     	setMaxHp(getMaxHp()*powerUp);
@@ -105,6 +122,9 @@ public class Enemy extends Mob implements MissionTarget {
 		return this.points;
 	}
 	
+	/**
+	 * Update the vision rectangle of an enemy
+	 */
 	public void visionUpdate() {
 			switch(direction) {
 			case Directions.LEFT:
@@ -122,6 +142,12 @@ public class Enemy extends Mob implements MissionTarget {
 		}
 	}
     
+	/**
+	 * Convert x from pixels in tiles
+	 * @param x pixel value
+	 * @param xaxis if Asserted indicates that x is on x-axis
+	 * @return tile value corresponding to x pixel
+	 */
 	private int toTile(float x,boolean xaxis) {
 		int value = (int)(x/map.getMap().getTileWidth());
 		value = (value<0)?0:value;
@@ -132,6 +158,11 @@ public class Enemy extends Mob implements MissionTarget {
 		return value;
 	}
 	
+	/**
+	 * Define the attack mode behaviour
+	 * @return Next action to perform
+	 * @throws NullAnimationException
+	 */
 	private int attackMode() throws NullAnimationException {
 		float x,mx,y,my;
 		int dir;
@@ -161,6 +192,10 @@ public class Enemy extends Mob implements MissionTarget {
 		return dir;
 	}
 	
+	/**
+	 * Define the behaviour of this object and updates it
+	 * @throws NullAnimationException
+	 */
 	public void update() throws NullAnimationException{
 		float x,y;
 		if(getHp()>0) {
@@ -282,15 +317,24 @@ public class Enemy extends Mob implements MissionTarget {
     }
 
     @Override
+    /**
+	 * Check if this object it is ready to attack
+	 */
     public boolean isReadyToAttack(){
 		return untilNextAttack == 0;
 	}
 
 	@Override
+	/**
+	 * Reset loading time to attack
+	 */
 	public void hasAttacked() {
     	untilNextAttack = RELOADING_TIME;
 	}
-
+	
+	/**
+	 * Update loading time to attack
+	 */
 	public void reloadAttack() {
     	if(untilNextAttack > 0) {
 			untilNextAttack--;

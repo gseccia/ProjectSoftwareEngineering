@@ -1,5 +1,8 @@
 package elements;
 
+/**
+ * Provide an interface to move an object
+ */
 public interface Movable {
 
     /**

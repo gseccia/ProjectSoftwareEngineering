@@ -7,6 +7,9 @@ import org.newdawn.slick.tiled.TiledMap;
 import elements.Item;
 import elements.Mob;
 
+/**
+ * Collision detector strategy
+ */
 public abstract class CollisionDetectionStrategy implements Directions {
 	protected TiledMap map;
 	protected float px, py;

@@ -2,6 +2,10 @@ package managers;
 
 import org.newdawn.slick.Input;
 
+
+/**
+ * Provide an interface between command and keys
+ */
 public interface Directions {
 
     int UP = Input.KEY_W;

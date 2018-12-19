@@ -21,6 +21,9 @@ import managers.command.DecreaseVolumeCommand;
 import managers.command.IncreaseVolumeCommand;
 import managers.command.ResetVolumeCommand;
 
+/**
+ * State state
+ */
 public class Settings extends BasicGameState  {
 	private final int id = 2;
 	private static Settings ourInstance = new Settings();

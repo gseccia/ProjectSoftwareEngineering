@@ -133,7 +133,11 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
         }
         this.maxHp = maxHp;
     }
-
+    
+    /**
+     * Allows to gain or lose Hp
+     * @param amount Amoung of Hp to add/remove
+     */
     public void heal(int amount){
         hp += amount;
         if(hp > maxHp){

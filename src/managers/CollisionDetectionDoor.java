@@ -2,6 +2,9 @@ package managers;
 
 import elements.Mob;
 
+/**
+ * Collision detector for the doors
+ */
 public class CollisionDetectionDoor extends CollisionDetectionStrategy {
 	private int doorID;
 	

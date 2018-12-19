@@ -2,6 +2,9 @@ package elements;
 
 import org.newdawn.slick.Animation;
 
+/**
+ * Boh
+ */
 public class Intro extends AnimatedElement {
 
     private boolean playing;

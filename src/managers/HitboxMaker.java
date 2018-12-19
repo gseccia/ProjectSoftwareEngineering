@@ -9,6 +9,10 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import elements.Item;
 
+
+/**
+ * This class builds all necessary hitbox to check the collisions
+ */
 public class HitboxMaker {
 	private TiledMap map;
 	private List<Wall> walls;

@@ -12,6 +12,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import managers.MusicManager;
 import managers.ResourceManager;
 
+/**
+ * Main menu state
+ */
 public class Menu extends BasicGameState {
     private final int id = GameStates.MENU.getState();
     private static Menu ourInstance = new Menu();

@@ -12,6 +12,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import managers.MusicManager;
 import managers.ResourceManager;
 
+/**
+ * Loading screen state
+ */
 public class SplashScreen extends BasicGameState{
 
     private final int id = GameStates.SPLASHSCREEN.getState();

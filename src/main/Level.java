@@ -20,6 +20,9 @@ import visitors.HealPlayerModifier;
 import visitors.PlayerModifier;
 import visitors.SetAttackModifier;
 
+/**
+ * This class is the manager of a level
+*/
 public class Level{
 
 	private int level_difficulty, itemCapacity = 0;
@@ -30,9 +33,7 @@ public class Level{
 	private Map<Block,Set<Item>> items;
 	private MissionFactory missions;
 
-	/**
-	 * This class is the manager of a level
-	*/
+	
 	Level(Player player, String charname, int level_difficulty, MissionFactory missions, BlockFactory blockFactory) {
 
 		itemsRemainingCapacity = new HashMap<>();

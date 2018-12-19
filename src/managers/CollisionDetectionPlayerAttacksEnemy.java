@@ -5,6 +5,9 @@ import elements.Mob;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Attack detector for player with the enemies
+ */
 public class CollisionDetectionPlayerAttacksEnemy extends CollisionDetectionStrategy{
     private List<Mob> mobs;
     private List<Mob> enemy;

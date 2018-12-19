@@ -30,6 +30,9 @@ import main.gamestates.Pause;
 import main.gamestates.StatesUtils;
 import elements.NullAnimationException;
 
+/**
+ * This class allows to play in a single block of the map
+ */
 public abstract class Block extends BasicGameState
 {
 	private CollisionDetectionWall wallCollision;

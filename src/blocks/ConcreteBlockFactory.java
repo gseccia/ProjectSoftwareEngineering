@@ -1,5 +1,9 @@
 package blocks;
 
+
+/**
+ * This class allows to create ConcreteBlock
+ */
 public class ConcreteBlockFactory implements BlockFactory {
 
     /**

@@ -30,6 +30,10 @@ import managers.observers.scoreboard.ScorePointsManager;
 import map.MapGraph;
 import missions.Mission;
 
+
+/**
+ * This class allows the demo execution of the game
+ */
 public class DemoBlock extends Block{
 	
 	private Path currentPath;

@@ -17,6 +17,9 @@ import managers.ResourceManager;
 import managers.observers.scoreboard.Score;
 import managers.observers.scoreboard.ScoreFileObserver;
 
+/**
+ * Scoreboard state
+ */
 public class Scores extends BasicGameState {
 
 	private final int id = 1;

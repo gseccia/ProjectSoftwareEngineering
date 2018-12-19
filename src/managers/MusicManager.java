@@ -14,6 +14,10 @@ import org.newdawn.slick.openal.SoundStore;
 import managers.observers.Observer;
 import managers.observers.Subject;
 
+
+/**
+ * This class is a manager for the music
+ */
 public class MusicManager extends Observer implements MusicManagerInterface{
 	private static MusicManager instance;
 	private Music menuMusic;

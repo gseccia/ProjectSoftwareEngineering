@@ -22,6 +22,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.List;
 
+/**
+ * This class is the state manager of all game
+ */
 public class Game extends StateBasedGame{
 
     private boolean demo = false;
