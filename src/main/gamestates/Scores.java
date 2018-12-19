@@ -46,29 +46,18 @@ public class Scores extends BasicGameState {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		uniFont = StatesUtils.initFont();
+//		uniFont = StatesUtils.initFont();
 		uniFont = StatesUtils.changeSizeAndStyle(uniFont, 40f, java.awt.Font.ITALIC);
 	}
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-    	int i = 0;
-		if(arg1.getCurrentStateID() == id) {
-			background.draw(0, 0);
-			ArrayList<Score> scores = scoreboard.getScores();
-			for(Score s : scores) {
-//				CENTER ALIGNMENT
-//				StatesUtils.applyBorder(uniFont, s.toString(), arg0.getWidth()/2 - uniFont.getWidth(s.toString())/2, 150+i*100, 
-//						borderColor);
-//				uniFont.drawString(arg0.getWidth()/2 - uniFont.getWidth(s.toString())/2, 150+i*100, s.toString(), fontColor);
-//				LEFT ALIGNMENT
-				StatesUtils.applyBorder(uniFont, s.toString(), 60, 200+i*50, 
-						borderColor);
-				uniFont.drawString(60, 200+i*50, s.toString(), fontColor);
-				i++;
-			}
-			StatesUtils.applyBorder(uniFont, "Press esc to go back", 44, 600, new Color(105, 2, 2));
-			uniFont.drawString(44, 600, "Press esc to go back", new Color(201, 2, 2));
+
+		if(arg1.getCurrentStateID() == GameStates.SCORES.getState()) {
+	    	formatScores();
+		}
+		else {
+			uniFont.destroy();
 		}
 	}
 
@@ -77,9 +66,27 @@ public class Scores extends BasicGameState {
 		Input input = arg0.getInput();
 		if(input.isKeyPressed(Input.KEY_ESCAPE)){
         	//this.rs.setState(0);
-			uniFont.destroy();
             arg1.enterState(GameStates.MENU.getState());
         }
+	}
+	
+	private void formatScores() {
+		int i = 0;
+		background.draw(0, 0);
+		ArrayList<Score> scores = scoreboard.getScores();
+		for(Score s : scores) {
+//			CENTER ALIGNMENT
+//			StatesUtils.applyBorder(uniFont, s.toString(), arg0.getWidth()/2 - uniFont.getWidth(s.toString())/2, 150+i*100, 
+//					borderColor);
+//			uniFont.drawString(arg0.getWidth()/2 - uniFont.getWidth(s.toString())/2, 150+i*100, s.toString(), fontColor);
+//			LEFT ALIGNMENT
+			StatesUtils.applyBorder(uniFont, s.toString(), 60, 200+i*50, 
+					borderColor);
+			uniFont.drawString(60, 200+i*50, s.toString(), fontColor);
+			i++;
+		}
+		StatesUtils.applyBorder(uniFont, "Press esc to go back", 44, 600, new Color(105, 2, 2));
+		uniFont.drawString(44, 600, "Press esc to go back", new Color(201, 2, 2));
 	}
 
 	@Override

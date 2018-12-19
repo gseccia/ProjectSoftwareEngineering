@@ -57,11 +57,11 @@ public class ScorePointsManager extends Subject{
 	}
 	
 
-	protected void setIncreaseValue(int increaseValue) {
+	private void setIncreaseValue(int increaseValue) {
 	this.increaseValue = increaseValue;
 }
 
-	protected void setDecreaseValue(int decreaseValue) {
+	private void setDecreaseValue(int decreaseValue) {
 		this.decreaseValue = decreaseValue;
 	}
 
