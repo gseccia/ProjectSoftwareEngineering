@@ -15,6 +15,7 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.pathfinding.*;
 
+import configuration.PlayerCommands;
 import elements.EncapsulateMap;
 import elements.Enemy;
 import elements.Item;
@@ -23,6 +24,7 @@ import managers.Directions;
 import managers.ResourceManager;
 import managers.Wall;
 import main.gamestates.GameStates;
+import main.gamestates.Settings;
 import main.gamestates.StatesUtils;
 import managers.observers.scoreboard.ScorePointsManager;
 import map.MapGraph;
@@ -44,8 +46,8 @@ public class DemoBlock extends Block{
 	private static String[] showString = 
 		{"Your name is at top-left corner","Your life is at left","Your score is at top-right corner",
 				"Your special attack is at right","Your level is at center",
-				"Press ARROWS KEY to move in each direction","Press M to attack",
-				"Press SPACE to active special attack","Let's play!",""};
+				"Press "+ ((PlayerCommands.getPlayerCommandsInstance().getUp() == Input.KEY_W)? "WASD":"ARROWs") +" to move in each direction","Press "+((PlayerCommands.getPlayerCommandsInstance().getAttack1() == Input.KEY_M)? "M":"Z")+" to attack",
+				"Press "+((PlayerCommands.getPlayerCommandsInstance().getAttack2() == Input.KEY_SPACE)? "SPACE":"X")+" to active special attack","Let's play!",""};
 	
 	protected DemoBlock(int state, String mapName) {
 		super(state, mapName);
