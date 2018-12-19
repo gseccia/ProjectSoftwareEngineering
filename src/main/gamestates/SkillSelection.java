@@ -1,116 +1,172 @@
 package main.gamestates;
 
-import configuration.NoSuchElementInConfigurationException;
-import configuration.SpecialAttackConfiguration;
 import managers.ResourceManager;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.geom.Rectangle;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SkillSelection extends BasicGameState {
-
-    private final int ID = GameStates.SKILL_SELECTION.getState();
-    private final String TITLE = "Choose your skill";
-
-    private int index = 0;
-    private List<Image> icons = new ArrayList<>();
-    private List<String> titles = new ArrayList<>(), descriptions = new ArrayList<>(), IDs = new ArrayList<>();
-    private List<Color> filters = new ArrayList<>();
-    private Image background;
+	private final int ID = GameStates.SKILL_SELECTION.getState();
+    
+	private static final int NOCHOICES = 3;
+    private int playersChoice = 0;
+    private UnicodeFont uniFont;
+    private String utly1Desc, utly2Desc, utly3Desc;
+    private String name1, name2 , name3;
+    private Image background, ulty1Img, ulty2Img, ulty3Img;
     private ResourceManager rs;
-    private String currentTitle;
-    private String currentDesc;
-    private UnicodeFont uniFont, titleFont, descFont;
-
-    private Color titleBorder = new Color(0, 255, 255);
-    private Color color = new Color(0, 0, 0);
-    private Color border = new Color(0, 255, 128);
-
+    private Rectangle ulty1, ulty1Border;
+    private Rectangle ulty2, ulty2Border;
+    private Rectangle ulty3, ulty3Border;
+    private Rectangle description, descriptionBorder;
+    private boolean start;
+    private Color selectedBorder;
+	private Color selectedText;
+	
+    
     public SkillSelection(ResourceManager rs) {
         this.rs = rs;
-        SpecialAttackConfiguration conf = SpecialAttackConfiguration.getInstance();
-        try{
-            for(String s : conf.getSpecialAttackNames()){
-                icons.add(conf.getIcon(s));
-                titles.add(conf.getSpecialAttackName(s));
-                descriptions.add(conf.getSpecialAttackDescription(s));
-                filters.add(Color.gray);
-                IDs.add(s);
-            }
-            filters.set(0, Color.white);
-            currentTitle = titles.get(0);
-            currentDesc = descriptions.get(0);
-
-        } catch (NoSuchElementInConfigurationException | SlickException e) {
-            e.printStackTrace();
-        }
+        this.ulty1 = new Rectangle(50, 153, 200, 100);
+        this.ulty2 = new Rectangle(300, 153, 200, 100);
+        this.ulty3 = new Rectangle(550, 153, 200, 100);
+        this.ulty1Border = new Rectangle(47, 150, 206, 106);
+        this.ulty2Border = new Rectangle(297, 150, 206, 106);
+        this.ulty3Border = new Rectangle(547, 150, 206, 106);
+        this.description = new Rectangle(50, 303, 700, 350);
+        this.descriptionBorder = new Rectangle(47, 300, 706, 356);
+        this.utly1Desc = "Summon a warrior spirit \nthat will defeat all the \nenemies near you.\n\n\nRange: short\nDamage: exteme\nCooldown: 15 s";
+        this.utly2Desc = "Fire a powerful laser \nthat annihilates \neverything in it's way.\n\n\nRange: linear\nDamage: 300\nCooldown : 10 s";
+        this.utly3Desc = "INFINITY UNLIMITED FLAME!\nOpen the gates of hell \nand burn anything that\nstands in your way.\n\nRange: total\nDamage: 100\nCooldown: 7 s";
+        this.name1 = "horahora";
+        this.name2 = "sparagmos";
+        this.name3 = "iuf";
+        this.selectedBorder = new Color(0, 255, 255);
+        this.selectedText = new Color(0, 0, 0);
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) {
         try {
-            background = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/screens/charSelect.png");
+            this.background = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/screens/ultySelect.png");
+            this.ulty1Img = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/attack/horahora/icon.png");
+            this.ulty2Img = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/attack/sparagmos/icon.png");
+            this.ulty3Img = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/attack/iuf/icon.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        uniFont = StatesUtils.initFont();
-        uniFont = StatesUtils.changeSizeAndStyle(uniFont, 45f, java.awt.Font.PLAIN);
-
-        titleFont = StatesUtils.initFont();
-        titleFont = StatesUtils.changeSizeAndStyle(uniFont, 60f, java.awt.Font.PLAIN);
-
-        descFont = StatesUtils.initFont();
-        descFont = StatesUtils.changeSizeAndStyle(uniFont, 30f, java.awt.Font.PLAIN);
+        start = false;
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        StatesUtils.applyBorder(uniFont, TITLE, 10, 10, titleBorder);
-        uniFont.drawString(10, 10, TITLE, color);
-        float baseX = 10, baseY = 80;
-        for(int i = 0; i<icons.size(); i++){
-            icons.get(i).draw(baseX, baseY, filters.get(i));
-            baseX += icons.get(i).getWidth() + 15;
+        if(stateBasedGame.getCurrentStateID() == this.ID) {
+        	background.draw(0,0);
+        	graphics.setColor(new Color(105,2,2));
+        	graphics.draw(ulty1Border);
+        	graphics.fillRect(ulty1Border.getX(), ulty1Border.getY(), ulty1Border.getWidth(), ulty1Border.getHeight());
+        	graphics.draw(ulty2Border);
+        	graphics.fillRect(ulty2Border.getX(), ulty2Border.getY(), ulty2Border.getWidth(), ulty2Border.getHeight());
+        	graphics.draw(ulty3Border);
+        	graphics.fillRect(ulty3Border.getX(), ulty3Border.getY(), ulty3Border.getWidth(), ulty3Border.getHeight());
+			graphics.draw(descriptionBorder);
+        	graphics.fillRect(descriptionBorder.getX(), descriptionBorder.getY(), descriptionBorder.getWidth(), descriptionBorder.getHeight());
+        	graphics.setColor(new Color(201, 2, 2));
+        	graphics.draw(ulty1);
+        	graphics.fillRect(ulty1.getX(), ulty1.getY(), ulty1.getWidth(), ulty1.getHeight());
+        	graphics.draw(ulty2);
+        	graphics.fillRect(ulty2.getX(), ulty2.getY(), ulty2.getWidth(), ulty2.getHeight());
+        	graphics.draw(ulty3);
+        	graphics.fillRect(ulty3.getX(), ulty3.getY(), ulty3.getWidth(), ulty3.getHeight());
+			graphics.draw(description);
+        	graphics.fillRect(description.getX(), description.getY(), description.getWidth(), description.getHeight());
+        	this.ulty1Img.draw(this.ulty1.getX() + this.ulty1.getWidth()/2 -this.ulty1Img.getWidth()/2,183);
+        	this.ulty2Img.draw(this.ulty2.getX() + this.ulty2.getWidth()/2 -this.ulty2Img.getWidth()/2,183);
+        	this.ulty3Img.draw(this.ulty3.getX() + this.ulty3.getWidth()/2 -this.ulty3Img.getWidth()/2,183);
+        	renderultySelected(gameContainer, graphics);
         }
-
-        StatesUtils.applyBorder(titleFont, currentTitle, 10, 130, border);
-        titleFont.drawString(10, 130, currentTitle, color);
-
-        StatesUtils.applyBorder(descFont, currentDesc, 10, 230, border);
-        descFont.drawString(10, 230, currentDesc, color);
+        else {
+        	uniFont.destroy();
+        }
     }
-
+    
+    private void renderultySelected(GameContainer gc, Graphics g) {
+    	if (playersChoice == 0) {
+    		g.setColor(selectedBorder);
+    		g.draw(ulty1Border);
+    		g.fillRect(ulty1Border.getX(), ulty1Border.getY(), ulty1Border.getWidth(), ulty1Border.getHeight());
+    		g.setColor(Color.black);
+    		g.draw(ulty1);
+    		g.fillRect(ulty1.getX(), ulty1.getY(), ulty1.getWidth(), ulty1.getHeight());
+    		this.ulty1Img.draw(this.ulty1.getX() + this.ulty1.getWidth()/2 -this.ulty1Img.getWidth()/2, this.ulty1.getY() + this.ulty1.getHeight()/2 -this.ulty1Img.getHeight()/2);
+    		uniFont.drawString(50, 303, utly1Desc, selectedText);
+    	}else if (playersChoice == 1) {
+    		g.setColor(selectedBorder);
+    		g.draw(ulty2Border);
+    		g.fillRect(ulty2Border.getX(), ulty2Border.getY(), ulty2Border.getWidth(), ulty2Border.getHeight());
+    		g.setColor(Color.black);
+    		g.draw(ulty2);
+    		g.fillRect(ulty2.getX(), ulty2.getY(), ulty2.getWidth(), ulty2.getHeight());
+    		this.ulty2Img.draw(this.ulty2.getX() + this.ulty2.getWidth()/2 -this.ulty2Img.getWidth()/2, this.ulty1.getY() + this.ulty1.getHeight()/2 -this.ulty1Img.getHeight()/2);
+    		uniFont.drawString(50, 303, utly2Desc, selectedText);
+    	}else {
+    		g.setColor(selectedBorder);
+    		g.draw(ulty3Border);
+    		g.fillRect(ulty3Border.getX(), ulty3Border.getY(), ulty3Border.getWidth(), ulty3Border.getHeight());
+    		g.setColor(Color.black);
+    		g.draw(ulty3);
+    		g.fillRect(ulty3.getX(), ulty3.getY(), ulty3.getWidth(), ulty3.getHeight());
+    		this.ulty3Img.draw(this.ulty3.getX() + this.ulty3.getWidth()/2 -this.ulty3Img.getWidth()/2, this.ulty1.getY() + this.ulty1.getHeight()/2 -this.ulty1Img.getHeight()/2);
+    		uniFont.drawString(50, 303, utly3Desc, selectedText);
+    	}
+    }
+    
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-        Input in = gameContainer.getInput();
-        if(in.isKeyPressed(Input.KEY_LEFT) && index > 0){
-            filters.set(index, Color.gray);
-            index--;
-            filters.set(index, Color.white);
-            currentTitle = titles.get(index);
-            currentDesc = descriptions.get(index);
+		Input input = gameContainer.getInput();
+		if (!start) {
+			start = true;
+			uniFont = StatesUtils.initFont();
+	        uniFont = StatesUtils.changeSizeAndStyle(uniFont, 34f, java.awt.Font.PLAIN);
+		}
+		if (input.isKeyPressed(Input.KEY_RIGHT)) {
+        	if (playersChoice == (NOCHOICES - 1)){
+				playersChoice = 0;
+			}else{
+				playersChoice++;
+			}
         }
-        else if(in.isKeyPressed(Input.KEY_RIGHT) && index < icons.size()-1){
-            filters.set(index, Color.gray);
-            index++;
-            filters.set(index, Color.white);
-            currentTitle = titles.get(index);
-            currentDesc = descriptions.get(index);
+        if (input.isKeyPressed(Input.KEY_LEFT)) {
+        	if (playersChoice == 0){
+				playersChoice = NOCHOICES - 1;
+			}else{
+				playersChoice--;
+			}
         }
-        else if(in.isKeyPressed(Input.KEY_ENTER)) {
-            rs.setState(1);
-            ((main.Game)stateBasedGame).setUltra(IDs.get(index));
+        if (input.isKeyPressed(Input.KEY_ENTER)) {
+        	rs.setState(1);
+            ((main.Game)stateBasedGame).setUltra(getUlty(playersChoice));
             ((main.Game)stateBasedGame).resetDifficulty();
             stateBasedGame.init(gameContainer);
+            uniFont.destroy();
+			start = false;
             stateBasedGame.enterState(GameStates.STARTING_POINT.getState());
         }
-        else if(in.isKeyPressed(Input.KEY_ESCAPE)) {
-            stateBasedGame.enterState(GameStates.CHAR_SELECTION.getState());
+        if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+        	stateBasedGame.enterState(GameStates.CHAR_SELECTION.getState());
         }
+    }
+
+    private String getUlty(int playersChoice) {
+    	if (playersChoice == 0) {
+    		return this.name1;
+    	}else if (playersChoice == 1) {
+    		return this.name2;
+    	}else {
+    		return this.name3;
+    	}
     }
 
     @Override

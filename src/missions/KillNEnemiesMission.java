@@ -40,7 +40,7 @@ public class KillNEnemiesMission extends SimpleInteractionMission {
 
     @Override
     public String toString(){
-        String ret = "You have to kill " + getTotal() + " " + getTargetId() + " [" + (getTotal()-getNumInteractions()) + "/" + getTotal() + "]";
+        String ret = "Kill " + getTotal() + " " + getTargetId() + " [" + (getTotal()-getNumInteractions()) + "/" + getTotal() + "]";
         if(completed()){
             return ret + "\n- COMPLETED!";
         }

@@ -107,7 +107,7 @@ public class FindNTrapsMission extends Mission {
 
     @Override
     public String toString(){
-        String ret = "You have to find " + numTraps + " traps [" + (numTraps-targets.size()) + "/" + numTraps +"]";
+        String ret = "Find " + numTraps + " traps [" + (numTraps-targets.size()) + "/" + numTraps +"]";
         if(completed()){
             return ret + "\n- COMPLETED!";
         }
