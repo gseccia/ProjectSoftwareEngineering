@@ -67,6 +67,8 @@ public abstract class Block extends BasicGameState
 	protected org.newdawn.slick.UnicodeFont uniFont;
 	private String charName;
 	private PlayerCommands pc = PlayerCommands.getPlayerCommandsInstance();
+	private boolean doorEntered;
+
 	
 	protected Block(int state,String mapName)
 	{
@@ -128,6 +130,7 @@ public abstract class Block extends BasicGameState
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		setCharacterSpawn(1);
+		doorEntered = false;
 		int x, y,w,h;
 		
 		// Enemies spawn from a set of a random spawn points
@@ -478,12 +481,14 @@ public abstract class Block extends BasicGameState
 				
 			}
 
-			if(doorCollision.detectCollision(mapX, mapY, player)) {
-				if(doorCollision.getCollidedDoor() != -1 && pressed) {
-					for(Edge e:graph.getEdges(this)) {
-						if(e.getPortSource(vertex) == doorCollision.getCollidedDoor()) {
-							e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));
-							gs.enterState(e.opposite(vertex).getId());
+			if (!doorEntered){
+				if(doorCollision.detectCollision(mapX, mapY, player)) {
+					if(doorCollision.getCollidedDoor() != -1 && pressed) {
+						for(Edge e:graph.getEdges(this)) {
+							if(e.getPortSource(vertex) == doorCollision.getCollidedDoor()) {
+								e.opposite(vertex).getBlock().setCharacterSpawn(e.getPortDestination(vertex));
+								gs.enterState(e.opposite(vertex).getId());
+							}
 						}
 					}
 				}
@@ -564,6 +569,8 @@ public abstract class Block extends BasicGameState
 			for(Item i:item) {
 				i.setLocation((int)(i.getX())+(prevMapX-mapX)*map.getTileWidth(),(int)(i.getY())+(prevMapY-mapY)*map.getTileHeight());
 			}
+//			Sto camminando non prendo porte
+			doorEntered = false;
 
 
 		} catch (NullAnimationException e1) {
@@ -581,6 +588,10 @@ public abstract class Block extends BasicGameState
 	}
 	
 	public void setCharacterSpawn(int d) {
+
+//		Sto in una porta
+		doorEntered = true;
+		
 		int x,y,width,height;
 		x = Integer.parseInt(map.getMapProperty("charXDoor"+d,"0"));
 		y = Integer.parseInt(map.getMapProperty("charYDoor"+d,"0"));
