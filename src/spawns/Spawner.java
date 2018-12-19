@@ -4,6 +4,9 @@ import elements.Enemy;
 
 import java.util.Set;
 
+/**
+ * An interface that defines the behaviour of all the objects that have to spawn enemies
+ */
 public interface Spawner {
 
     /**

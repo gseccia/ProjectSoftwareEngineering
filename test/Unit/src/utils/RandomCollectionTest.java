@@ -23,7 +23,7 @@ public class RandomCollectionTest {
 
     @Test
     public void testObjectsOfTheSetAreReturnedPseudoRandomly(){
-        int[] res = new int[]{0,3,2,4,1};
+        int[] res = new int[]{0,4,3,1,2};
         int i = 0;
         Iterator it = rhs.iterator();
         while(it.hasNext() && i<res.length){
@@ -31,6 +31,11 @@ public class RandomCollectionTest {
             i++;
         }
         assertFalse(it.hasNext());
+    }
+
+    @Test
+    public void testNextRandomReturnsObjectPseudoRandomly() {
+        assertEquals(0, (int)rhs.getRandom());
     }
 
 }

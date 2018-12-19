@@ -48,6 +48,7 @@ public class Pause extends BasicGameState {
 			e.printStackTrace();
 		}
         uniFont = StatesUtils.initFont();
+        uniFont = StatesUtils.changeSizeAndStyle(uniFont, 28f, java.awt.Font.PLAIN);
         isPaused = false;
     }
 

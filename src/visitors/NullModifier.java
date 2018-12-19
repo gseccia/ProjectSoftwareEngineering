@@ -2,10 +2,13 @@ package visitors;
 
 import elements.Player;
 
+/**
+ * A visitor that does absolutely nothing
+ */
 public class NullModifier implements PlayerModifier {
 
     /**
-     * Does something to the player
+     * Does nothing to the player
      *
      * @param player the player
      */

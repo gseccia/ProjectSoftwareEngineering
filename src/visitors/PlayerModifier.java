@@ -2,6 +2,9 @@ package visitors;
 
 import elements.Player;
 
+/**
+ * An interface that specifies the behaviour of the visitors that modify the player
+ */
 public interface PlayerModifier {
 
     /**

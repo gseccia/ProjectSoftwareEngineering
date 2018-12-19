@@ -6,18 +6,22 @@ import elements.Player;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.openal.SoundStore;
 
+/**
+ * A visitor that sets the attack of the player
+ */
 public class SetAttackModifier implements PlayerModifier {
 
     private Attack special;
     private Sound sfx;
     int uses, multiplier;
 
-    public SetAttackModifier(Attack special, int uses, int multiplier) {
-        this.special = special;
-        this.uses = uses;
-        this.multiplier = multiplier;
-    }
-
+    /**
+     * Constructor
+     * @param special the special attack to set
+     * @param sfx a sound effect
+     * @param uses the number of uses of the special attack
+     * @param multiplier a multiplier of the base attack of the player
+     */
     public SetAttackModifier(Attack special, Sound sfx, int uses, int multiplier) {
         this.special = special;
         this.sfx = sfx;
@@ -26,8 +30,7 @@ public class SetAttackModifier implements PlayerModifier {
     }
 
     /**
-     * Does something to the player
-     *
+     * Assigns the new temporary attack to the player and plays a sound
      * @param player the player
      */
     @Override

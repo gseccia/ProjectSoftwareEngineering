@@ -4,10 +4,17 @@ import elements.Player;
 import managers.observers.scoreboard.ScorePointsManager;
 import managers.observers.scoreboard.States;
 
+/**
+ * A visitor that damage the player
+ */
 public class DamagePlayerModifier implements PlayerModifier{
 
     private int amount;
 
+    /**
+     * Constructor
+     * @param amount the damage to deal
+     */
     public DamagePlayerModifier(int amount) {
         this.amount = amount;
     }
