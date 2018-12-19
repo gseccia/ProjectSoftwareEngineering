@@ -27,6 +27,7 @@ public class Scores extends BasicGameState {
     private ResourceManager rs;
     private Color fontColor = new Color (255, 0, 255);
 	private Color borderColor = new Color(105, 2, 105);
+	private boolean start;
     
     public static Scores getInstance(ScoreFileObserver scoreboard, ResourceManager rs) {
     	if(instance == null)
@@ -47,7 +48,8 @@ public class Scores extends BasicGameState {
 			e.printStackTrace();
 		}
 //		uniFont = StatesUtils.initFont();
-		uniFont = StatesUtils.changeSizeAndStyle(uniFont, 40f, java.awt.Font.ITALIC);
+//		uniFont = StatesUtils.changeSizeAndStyle(uniFont, 40f, java.awt.Font.ITALIC);
+		start = false;
 	}
 
 	@Override
@@ -56,16 +58,18 @@ public class Scores extends BasicGameState {
 		if(arg1.getCurrentStateID() == GameStates.SCORES.getState()) {
 	    	formatScores();
 		}
-		else {
-			uniFont.destroy();
-		}
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		Input input = arg0.getInput();
-		if(input.isKeyPressed(Input.KEY_ESCAPE)){
-        	//this.rs.setState(0);
+		if (!start) {
+			start = true;
+			uniFont = StatesUtils.changeSizeAndStyle(uniFont, 40f, java.awt.Font.ITALIC);
+		}
+		else if(input.isKeyPressed(Input.KEY_ESCAPE)){
+			uniFont.destroy();
+			start = false;
             arg1.enterState(GameStates.MENU.getState());
         }
 	}
