@@ -73,7 +73,7 @@ public class Pause extends BasicGameState {
 //          HANDLING PAUSE MUSIC
             stateBasedGame.enterState(originState);
         }
-        if(input.isKeyPressed(Input.KEY_ESCAPE)){
+        if(input.isKeyDown(Input.KEY_ESCAPE)){
         	this.rs.setState(0);
             stateBasedGame.enterState(GameStates.MENU.getState());
         }
