@@ -44,12 +44,15 @@ public class GameOver extends BasicGameState{
 	private Color notChosen = new Color(201, 2, 2);
     private Color chosen = new Color(0,0,0);
     private String player = "";
+    private boolean demo;
+    private int wait;
 	
-	public GameOver() {
+	public GameOver(boolean demo) {
 		this.pointsManager = ScorePointsManager.getScorePointsManagerInstance();
         this.rs = ResourceManager.getInstance();
         this.mm = MusicManager.getInstance(this.rs);
         points = pointsManager.getPointsAccumulatorObserver();
+        this.demo=demo;
 	}
 	
 	@Override
@@ -75,6 +78,7 @@ public class GameOver extends BasicGameState{
 		playerName[2] = 'A';
 		
 		startMusic = false;
+		wait=0;
 		uniFont = StatesUtils.initFont();
 	}
 
@@ -83,9 +87,11 @@ public class GameOver extends BasicGameState{
 //		if (sbg.getCurrentStateID() == GameStates.GAMEOVER.getState()) {
 			g.drawImage(image, 0, 0);
 			
+			if(!demo) {
 			this.renderTriangles(g, gc);
 			this.renderPlayerName(g, gc);
 			this.renderPoints(g, gc);
+			
 			
 			StatesUtils.applyBorder(uniFont, "Press Enter", 
 					(gc.getWidth()-uniFont.getWidth("Press Enter"))/2, 
@@ -96,6 +102,9 @@ public class GameOver extends BasicGameState{
 					(Long.valueOf(Math.round(gc.getHeight()*8/9)).intValue()), 
 					"Press Enter",
 					new Color(201, 2, 2));
+			}
+			else {
+			}
 //		}
 	}
 
@@ -111,6 +120,13 @@ public class GameOver extends BasicGameState{
 				arg0.getInput().clearKeyPressedRecord();
 				System.out.println("starting gameover music");
 			}
+			if(demo) {
+				((Game)arg1).resetDifficulty();
+				this.rs.setState(0);
+				wait++;
+				if (wait > 50) arg1.enterState(GameStates.MENU.getState());
+			}
+			else {
 			if (arg0.getInput().isKeyPressed(Input.KEY_ENTER)) {
 				startMusic = false;
 				player = new String(playerName);
@@ -146,6 +162,7 @@ public class GameOver extends BasicGameState{
 			}
 			else {
 //				System.out.println("nothing");
+			}
 			}
 //		}
 	}

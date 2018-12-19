@@ -26,7 +26,7 @@ public class Player extends Mob {
         super(configuration, id);
         setAttack(new ShortRangeAttack(this));
         step = new Sound(System.getProperty("user.dir") + "/resource/audio/sfx/step.ogg");
-        ultra = new HoraHora(this);
+        ultra = new IUF(this);
     }
 
     @Override

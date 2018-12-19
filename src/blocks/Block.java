@@ -15,10 +15,6 @@ import managers.observers.scoreboard.ScorePointsManager;
 import managers.observers.scoreboard.States;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.geom.Ellipse;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
@@ -62,9 +58,10 @@ public abstract class Block extends BasicGameState
 	private LifePointsAccumulatorObserver lpao;
 	private ResourceManager rs;
 	private MusicManager mm;
-	private boolean levelMusicMustBeStarted;
+	protected boolean levelMusicMustBeStarted;
 	private boolean completedMusicMustBeStarted;//Fonts
 	protected org.newdawn.slick.UnicodeFont uniFont;
+	protected String continueString;
 	private String charName;
 	private PlayerCommands pc = PlayerCommands.getPlayerCommandsInstance();
 	
@@ -258,10 +255,10 @@ public abstract class Block extends BasicGameState
                 StatesUtils.applyBorder(uniFont, "LEVEL COMPLETED!", width, height-15, new Color(105, 2, 2));
                 uniFont.drawString(width, height-15, "LEVEL COMPLETED!", new Color(201, 2, 2));
 
-                width = ((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue()) - uniFont.getWidth("Press Enter to continue"))/2;
+                width = ((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue()) - uniFont.getWidth(continueString))/2;
 
-                StatesUtils.applyBorder(uniFont, "Press Enter to continue", width, height+15, new Color(105, 2, 2));
-				uniFont.drawString(width, height+15, "Press Enter to continue", new Color(201, 2, 2));
+                StatesUtils.applyBorder(uniFont, continueString, width, height+15, new Color(105, 2, 2));
+				uniFont.drawString(width, height+15, continueString, new Color(201, 2, 2));
 				
 				uniFont.destroy();
 				
@@ -273,11 +270,8 @@ public abstract class Block extends BasicGameState
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            if(gc.getInput().isKeyDown(Input.KEY_ENTER)){
-            	this.rs.setState(1);
-            	levelMusicMustBeStarted = true;
-            	generateNextLevel(gc, arg1);
-			}
+            
+            generateNextLevel(gc, arg1);
 
         }
 		

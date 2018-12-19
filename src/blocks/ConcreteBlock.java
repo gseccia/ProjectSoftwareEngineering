@@ -7,11 +7,13 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import configuration.PlayerCommands;
 import main.gamestates.GameStates;
+import managers.ResourceManager;
 
 public class ConcreteBlock extends Block {
 	private PlayerCommands pc = PlayerCommands.getPlayerCommandsInstance();
     protected ConcreteBlock(int state, String mapName) {
         super(state, mapName);
+        continueString = "Press ENTER to continue";
     }
 
     /**
@@ -99,12 +101,16 @@ public class ConcreteBlock extends Block {
      */
     @Override
     public void generateNextLevel(GameContainer gc, StateBasedGame currentGame) {
-        try {
-            currentGame.init(gc);
-            currentGame.enterState(GameStates.STARTING_POINT.getState());
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
+    	if(gc.getInput().isKeyDown(Input.KEY_ENTER)){
+    		ResourceManager.getInstance().setState(1);
+        	levelMusicMustBeStarted = true;
+	        try {
+	            currentGame.init(gc);
+	            currentGame.enterState(GameStates.STARTING_POINT.getState());
+	        } catch (SlickException e) {
+	            e.printStackTrace();
+	        }
+    	}
     }
 
 	@Override
