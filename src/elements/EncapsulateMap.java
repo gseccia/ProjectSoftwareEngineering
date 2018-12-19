@@ -14,6 +14,12 @@ public class EncapsulateMap implements TileBasedMap{
 	private int wallIndex;
 	private List<Wall> doors;
 	
+	/**
+	 * Construct an element that encapsulate all
+	 * 
+	 * @param map TiledMap associated to this object
+	 * @param doors List of doors contained in this map
+	 */
 	public EncapsulateMap(TiledMap map, List<Wall> doors) {
 		this.map=map;
 		wallIndex=map.getLayerIndex("Mask");
@@ -36,7 +42,7 @@ public class EncapsulateMap implements TileBasedMap{
 
 	@Override
 	public float getCost(PathFindingContext arg0, int arg1, int arg2) {
-		return 0; // No cost for now
+		return 0;
 	}
 
 	@Override
