@@ -22,7 +22,7 @@ public class SkillSelection extends BasicGameState {
     private Rectangle ulty2, ulty2Border;
     private Rectangle ulty3, ulty3Border;
     private Rectangle description, descriptionBorder;
-    
+    private boolean start;
     private Color selectedBorder;
 	private Color selectedText;
 	
@@ -57,8 +57,7 @@ public class SkillSelection extends BasicGameState {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        uniFont = StatesUtils.initFont();
-        uniFont = StatesUtils.changeSizeAndStyle(uniFont, 34f, java.awt.Font.PLAIN);
+        start = false;
     }
 
     @Override
@@ -127,6 +126,11 @@ public class SkillSelection extends BasicGameState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
 		Input input = gameContainer.getInput();
+		if (!start) {
+			start = true;
+			uniFont = StatesUtils.initFont();
+	        uniFont = StatesUtils.changeSizeAndStyle(uniFont, 34f, java.awt.Font.PLAIN);
+		}
 		if (input.isKeyPressed(Input.KEY_RIGHT)) {
         	if (playersChoice == (NOCHOICES - 1)){
 				playersChoice = 0;
@@ -146,6 +150,8 @@ public class SkillSelection extends BasicGameState {
             ((main.Game)stateBasedGame).setUltra(getUlty(playersChoice));
             ((main.Game)stateBasedGame).resetDifficulty();
             stateBasedGame.init(gameContainer);
+            uniFont.destroy();
+			start = false;
             stateBasedGame.enterState(GameStates.STARTING_POINT.getState());
         }
         if (input.isKeyPressed(Input.KEY_ESCAPE)) {

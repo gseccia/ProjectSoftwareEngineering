@@ -29,7 +29,7 @@ public class CharacterSelection extends BasicGameState {
 	private String charname1, charname2, charname3, selectedChar;
 	private Image background, char1Img, char2Img, char3Img;
 	private Rectangle char1, char2, char3, char1Border, char2Border, char3Border;
-	
+	private ResourceManager rs;
 	private Color selectedBorder = new Color(0, 255, 255);
 	private Color selectedText = new Color(0, 0, 0);
 	
@@ -46,6 +46,7 @@ public class CharacterSelection extends BasicGameState {
 		this.charname1 = "vegeta";
 		this.charname2 = "fumiko";
 		this.charname3 = "rinaldo";
+		this.rs = rs;
 	}
 
 	@Override
