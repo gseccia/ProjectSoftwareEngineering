@@ -13,7 +13,7 @@ import static org.mockito.Mockito.doAnswer;
 
 public class HealPlayerModifierTest {
 
-    private final int DAMAGE = 20;
+    private final int HEAL = 20;
     private final int LIFE = 100;
 
     @Mock
@@ -24,19 +24,19 @@ public class HealPlayerModifierTest {
 
     @Before
     public void setUp() {
-        visitor = new HealPlayerModifier(DAMAGE);
+        visitor = new HealPlayerModifier(HEAL);
 
         mockPlayer = Mockito.mock(Player.class);
         doAnswer((i) -> {
-            life -= (int)i.getArgument(0);
+            life += (int)i.getArgument(0);
             return null;
-        }).when(mockPlayer).damage(anyInt());
+        }).when(mockPlayer).heal(anyInt());
     }
 
     @Test
     public void testHealingIsCalculatedCorrectly(){
         visitor.accept(mockPlayer);
-        assertEquals(LIFE+DAMAGE, life);
+        assertEquals(LIFE+HEAL, life);
     }
 
     @Test(expected = NullPointerException.class)

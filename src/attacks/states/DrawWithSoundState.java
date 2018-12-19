@@ -3,6 +3,9 @@ package attacks.states;
 import attacks.ultras.SpecialAttack;
 import org.newdawn.slick.Sound;
 
+/**
+ * This state set the SpecialAttack to drawable while playing a sound
+ */
 public class DrawWithSoundState implements SpecialAttackState {
 
     private SpecialAttack attack;
@@ -10,6 +13,12 @@ public class DrawWithSoundState implements SpecialAttackState {
     private SpecialAttackState next;
     private boolean executed = false;
 
+    /**
+     * Constructor
+     * @param attack the SpecialAttack object
+     * @param sfx the Sound to play
+     * @param next the following SpecialAttackState
+     */
     public DrawWithSoundState(SpecialAttack attack, Sound sfx, SpecialAttackState next) {
         this.attack = attack;
         this.sfx = sfx;

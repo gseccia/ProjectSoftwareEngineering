@@ -2,6 +2,9 @@ package attacks;
 
 import org.newdawn.slick.geom.Shape;
 
+/**
+ * An interface that defines all the common methods of an attack object
+ */
 public interface Attack {
 
     /**

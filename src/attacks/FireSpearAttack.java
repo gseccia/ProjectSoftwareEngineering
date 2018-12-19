@@ -6,12 +6,19 @@ import elements.Mob;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
+/**
+ * The class that implements the FireSpear attack
+ */
 public class FireSpearAttack extends DirectionalAttack {
 
     private final static String ID = "firespear";
 
     private Sound sfx;
 
+    /**
+     * Constructor
+     * @param caster the Player object that casts the attack
+     */
     public FireSpearAttack(Mob caster) {
         super(ID, caster);
         AttackConfiguration attackconf = AttackConfiguration.getInstance();
@@ -23,7 +30,7 @@ public class FireSpearAttack extends DirectionalAttack {
     }
 
     /**
-     * Signal that the attack was used
+     * Signal that the attack was used, plays the sound
      */
     @Override
     public void attack() {

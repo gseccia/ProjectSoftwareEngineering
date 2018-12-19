@@ -3,6 +3,9 @@ package attacks.states;
 import attacks.ultras.SpecialAttack;
 import org.newdawn.slick.Sound;
 
+/**
+ * This state draws the special attack at the passed coordinates and plays a sound
+ */
 public class DrawOnCoordinatesWithSoundState implements SpecialAttackState {
 
     private SpecialAttack animation;
@@ -11,6 +14,14 @@ public class DrawOnCoordinatesWithSoundState implements SpecialAttackState {
     private float x, y;
     private SpecialAttackState next;
 
+    /**
+     * Constructor
+     * @param animation the SpecialAttack object
+     * @param sfx the Sound to play
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param next the following state
+     */
     public DrawOnCoordinatesWithSoundState(SpecialAttack animation, Sound sfx, float x, float y, SpecialAttackState next) {
         this.animation = animation;
         this.sfx = sfx;

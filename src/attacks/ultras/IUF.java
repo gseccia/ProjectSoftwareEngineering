@@ -14,6 +14,9 @@ import utils.Constants;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The class that implements the INFINITY UNLIMITED FRAME special attack
+ */
 public class IUF extends StateSpecialAttack {
 
     private final static String ID = "iuf";
@@ -25,6 +28,10 @@ public class IUF extends StateSpecialAttack {
     private Player caster;
     private Sound introSound, blaze;
 
+    /**
+     * Constructor
+     * @param caster the Player object that casts the attack
+     */
     public IUF(Player caster) {
         super(RELOADING_TIME, ID);
         this.caster = caster;

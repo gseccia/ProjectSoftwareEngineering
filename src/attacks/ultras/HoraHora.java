@@ -15,6 +15,9 @@ import utils.Constants;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The class that implements the Hora! special attack
+ */
 public class HoraHora extends StateSpecialAttack {
 
     private final static String ID = "horahora";
@@ -25,6 +28,10 @@ public class HoraHora extends StateSpecialAttack {
     private Sound starting, firstHora, horaHora, ending;
     private Intro intro;
 
+    /**
+     * Constructor
+     * @param caster the Player object that casts the attack
+     */
     public HoraHora(Player caster) {
         super(RELOADING_TIME, ID);
         this.caster = caster;
@@ -67,7 +74,6 @@ public class HoraHora extends StateSpecialAttack {
 
     /**
      * Activates the SpecialAttack
-     *
      * @param b the current Block
      */
     @Override
@@ -90,6 +96,14 @@ public class HoraHora extends StateSpecialAttack {
     	}
     }
 
+    /**
+     * Check if the enemy at the x2, y2 coordinates is in the range of the ultra
+     * @param x1 the caster's x
+     * @param x2 the enemy's x
+     * @param y1 the caster's y
+     * @param y2 the enemy's y
+     * @return true if the enemy is at range
+     */
     private boolean enemyIsAtRange(float x1, float x2, float y1, float y2){
         return Math.abs(x1-x2) < MAXIMUM_DISTANCE && Math.abs(y1-y2) < MAXIMUM_DISTANCE;
     }

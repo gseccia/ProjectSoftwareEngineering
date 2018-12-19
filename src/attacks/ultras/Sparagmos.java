@@ -18,6 +18,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The class that implements the Sparagmos special attack
+ */
 public class Sparagmos extends StateSpecialAttack {
 
     private final static String ID = "sparagmos";
@@ -29,6 +32,10 @@ public class Sparagmos extends StateSpecialAttack {
     private Sound laser;
     private float x, y, width, height;
 
+    /**
+     * Constructor
+     * @param caster the Player object that casts the attack
+     */
     public Sparagmos(Player caster) {
         super(RELOADING_TIME, ID);
         this.caster = caster;
@@ -136,6 +143,11 @@ public class Sparagmos extends StateSpecialAttack {
 
     }
 
+    /**
+     * Check if an enemy collides with the beam
+     * @param e the Enemy to check
+     * @return true if collides
+     */
     private boolean isAtRange(Enemy e){
         Rectangle hitbox = new Rectangle(x, y, width, height);
         return hitbox.intersects(e);
