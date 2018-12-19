@@ -2,6 +2,7 @@ package attacks;
 
 import configuration.AttackConfiguration;
 import configuration.NoSuchElementInConfigurationException;
+import configuration.PlayerCommands;
 import elements.AnimatedElement;
 import elements.Mob;
 import managers.Directions;
@@ -176,53 +177,51 @@ public abstract class DirectionalAttack extends AnimatedElement implements Attac
     @Override
     public void setHitbox() {
         float x, y, height, width;
-        switch (caster.getCurrentDirection()){
-            case Directions.LEFT:
-                x = setXLeft();
-                y = setYLeft();
-                height = setHeightHorizontal();
-                width = setWidthHorizontal();
-                setCurrent(animations.get("left"));
-                drawX = x + setXBiasLeft();
-                drawY = y + setYBiasLeft();
-                break;
-
-            case Directions.RIGHT:
-                x = setXRight();
-                y = setYRight();
-                height = setHeightHorizontal();
-                width = setWidthHorizontal();
-                setCurrent(animations.get("right"));
-                drawX = x + setXBiasRight();
-                drawY = y + setYBiasRight();
-                break;
-
-            case Directions.UP:
-                x = setXUp();
-                y = setYUp();
-                height = setHeightVertical();
-                width = setWidthVertical();
-                setCurrent(animations.get("up"));
-                drawX = x + setXBiasUp();
-                drawY = y + setYBiasUp();
-                break;
-
-            case Directions.DOWN:
-                x = setXDown();
-                y = setYDown();
-                height = setHeightVertical();
-                width = setWidthVertical();
-                setCurrent(animations.get("down"));
-                drawX = x + setXBiasDown();
-                drawY = y + setYBiasDown();
-                break;
-
-            default:
+        PlayerCommands c = PlayerCommands.getPlayerCommandsInstance();
+        int current = caster.getCurrentDirection();
+        if(current == c.getLeft()) {
+            x = setXLeft();
+            y = setYLeft();
+            height = setHeightHorizontal();
+            width = setWidthHorizontal();
+            setCurrent(animations.get("left"));
+            drawX = x + setXBiasLeft();
+            drawY = y + setYBiasLeft();
+        }
+        else if(current == c.getRight()) {
+            x = setXRight();
+            y = setYRight();
+            height = setHeightHorizontal();
+            width = setWidthHorizontal();
+            setCurrent(animations.get("right"));
+            drawX = x + setXBiasRight();
+            drawY = y + setYBiasRight();
+        }
+        else if(current == c.getUp()) {
+            x = setXUp();
+            y = setYUp();
+            height = setHeightVertical();
+            width = setWidthVertical();
+            setCurrent(animations.get("up"));
+            drawX = x + setXBiasUp();
+            drawY = y + setYBiasUp();
+        }
+        else if(current == c.getDown()) {
+            x = setXDown();
+            y = setYDown();
+            height = setHeightVertical();
+            width = setWidthVertical();
+            setCurrent(animations.get("down"));
+            drawX = x + setXBiasDown();
+            drawY = y + setYBiasDown();
+        }
+        else {
                 x = 0;
                 y = 0;
                 height = 0;
                 width = 0;
         }
+
         setX(x);
         setY(y);
         setHeight(height);
