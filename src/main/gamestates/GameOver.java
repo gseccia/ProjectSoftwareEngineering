@@ -103,8 +103,6 @@ public class GameOver extends BasicGameState{
 					"Press Enter",
 					new Color(201, 2, 2));
 			}
-			else {
-			}
 //		}
 	}
 	
@@ -128,13 +126,15 @@ public class GameOver extends BasicGameState{
 				System.out.println("starting gameover music");
 			}
 			if(demo) {
-				((Game)arg1).resetDifficulty();
-				this.rs.setState(0);
 				wait++;
 				
-				resetPoints();
-				
-				if (wait > 50) arg1.enterState(GameStates.MENU.getState());
+				if (wait > 50) {
+					((Game)arg1).resetDifficulty();
+					startMusic = false;
+					resetPoints();
+					this.rs.setState(0);
+					arg1.enterState(GameStates.MENU.getState());
+				}
 			}
 			else {
 			if (arg0.getInput().isKeyPressed(Input.KEY_ENTER)) {

@@ -75,9 +75,8 @@ public abstract class Block extends BasicGameState
 		this.mm = MusicManager.getInstance(this.rs);
 	}
 	
+	
 	public void resetCompletedLevelMusic() {
-//		System.out.println("Started music manager");
-//		levelMusicMustBeStarted = true;
 		completedMusicMustBeStarted = true;
 	}
 	
@@ -121,10 +120,12 @@ public abstract class Block extends BasicGameState
 		resetCompletedLevelMusic();
 //		Init font
 		StatesUtils.initFont();
-//		dead = false;
 	}
 	
 	@Override
+	/**
+	 * The block is initialized. Items and enemies are placed into the map
+	 */
 	public void init(GameContainer gc, StateBasedGame arg1) {
 		setCharacterSpawn(1);
 		doorEntered = false;
@@ -169,6 +170,10 @@ public abstract class Block extends BasicGameState
 		uniFont = StatesUtils.initFont();
 	}
 
+	/**
+	 * Insert new enemies into the map
+	 * @param newSpawns Enemies spawned
+	 */
 	private void updateEnemies(Set<Enemy> newSpawns){
 		for(Enemy e : newSpawns){
 			e.setPlayer(player);
@@ -178,7 +183,11 @@ public abstract class Block extends BasicGameState
 		setEnemiesSpawn(newSpawns);
 		hitbox.updateMobs(new LinkedList<>(newSpawns));
 	}
-
+	
+	/**
+	 * Place enemies into the spawn points of the map
+	 * @param enemies Enemies to be placed
+	 */
 	private void setEnemiesSpawn(Iterable<Enemy> enemies){
 		int x, y, n = 1;
 		for(Enemy e : enemies) {
@@ -205,34 +214,11 @@ public abstract class Block extends BasicGameState
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g) {
 		g.scale(1.5f, 1.5f);
 		map.render(0,0, mapX,mapY,mapX+50,mapY+50);
-		//TESTING ZONE BEGIN
-/*		
-		for(Rectangle b: getHitbox().getWalls())
-		{
-			g.drawRect(b.getX()-mapX*map.getTileWidth(),b.getY()-mapY*map.getTileHeight(),b.getWidth(),b.getWidth());
-		}
-		List<Wall> doors = doorCollision.getDoors();
-		for(Rectangle b: doors) {
-			g.setColor(Color.blue);
-			g.drawRect(b.getX()-mapX*map.getTileWidth(),b.getY()-mapY*map.getTileHeight(),b.getWidth(),b.getHeight());
-		}
-		g.setColor(Color.white);*/
-//		for(Rectangle b: mapCollision.getDoors()) {
-//			g.setColor(Color.blue);
-//			g.drawRect(b.getX()-map_x*map.getTileWidth(),b.getY()-map_y*map.getTileHeight(),b.getWidth(),b.getHeight());
-//		}
-//		g.setColor(Color.white);
-		//TESTING ZONE END
-
 		for(Enemy e : enemy)
 		{
 			e.draw();
-			//System.out.println(e.getID() + " " + e.getX() + " "+e.getY());
-			//g.draw(e.getVision());  //TESTING LINE
 		}
 		player.draw();
-		// g.draw(player);
-
 		for(Item i: item) 
 		{
 			i.draw();
@@ -369,6 +355,10 @@ public abstract class Block extends BasicGameState
 	 */
 	protected abstract boolean special(Input in);
 
+	/**
+	 * Enter in gameover state and eventually reset the game
+	 * @param gs game
+	 */
 	protected abstract void reset(StateBasedGame gs);
 
 	@Override
@@ -582,8 +572,11 @@ public abstract class Block extends BasicGameState
 		return state;
 	}
 	
+	/**
+	 * Place the player in front of door identified as d
+	 * @param d identifier of a door
+	 */
 	public void setCharacterSpawn(int d) {
-
 //		Sto in una porta
 		doorEntered = true;
 		

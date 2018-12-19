@@ -66,14 +66,12 @@ public class DemoBlock extends Block{
 	{
 		firstTime = true;
 		super.initBlock(player, population, items, graph, missionGenerated, spm);
-		//tmp = new EncapsulateMap(getMap(),getHitbox().getDoors());
 		pf = new AStarPathFinder(new EncapsulateMap(getMap(),getHitbox().getDoors()),5000,false);
 		currentPath = null;
 		currentStep = 1;
 		doorLabel = new HashMap<>();
 		for(Wall door:getHitbox().getDoors()) {
 			doorLabel.put(door, UNEXPLORED);
-			//System.out.println((tmp.blocked(null, tileConversion(door.getX(),true,false), tileConversion(door.getY(),true,false))? "NOT VALID":"VALID"));
 		}
 		continueString = "";
 		doorSelected = null;
@@ -87,7 +85,6 @@ public class DemoBlock extends Block{
 		updating = 0;
 		displayMessage = 0;
 		blocked = true;
-		//managers.ResourceManager.getInstance().setState(0);
 		gs.enterState(GameStates.GAMEOVER.getState());
 	}
 	
@@ -121,12 +118,6 @@ public class DemoBlock extends Block{
 		playerTileY = tileConversion(player.getY(),false,true);
 		targetTileX = tileConversion(targetElement.getX(),true,align);
 		targetTileY = tileConversion(targetElement.getY(),false,align);
-		//System.out.println("TARGET TILE "+targetTileX+" "+targetTileY);
-		/*if(tmp.blocked(null, targetTileX, targetTileY)){
-			System.out.println("BLOCKED");
-		}
-		else System.out.println("FREE");
-		// System.out.println("PLAYER TILE "+playerTileX+" "+playerTileY);*/
 		currentPath = pf.findPath(player, playerTileX, playerTileY, targetTileX, targetTileY);
 		currentStep = 1;
 	}
@@ -139,14 +130,8 @@ public class DemoBlock extends Block{
 		if(discovery && !firstTime) {
 			lastDoor = getHitbox().getDoors().get(d-1);
 			doorLabel.put(lastDoor, EXPLORED);
-			//System.out.println("BLOCCO " + super.getMapName() + " PORTA DISCOVERY -> "+tileConversion(lastDoor.getX(),true,false)+", "+tileConversion(lastDoor.getY(),false,false)+" <--> "+doorLabel.get(lastDoor));
 			discovery = false;
 		}
-		/*System.out.println("STATE");
-		for(Wall door:doorLabel.keySet()) {
-			System.out.println("BLOCCO " + super.getMapName() + " PORTA "+((door == lastDoor)?"DISCOVERY":"")+" -> "+tileConversion(door.getX(),true,false)+", "+tileConversion(door.getY(),false,false)+" <--> "+doorLabel.get(door));
-			
-		}*/
 		firstTime = false;
 	}
 	
@@ -159,19 +144,15 @@ public class DemoBlock extends Block{
 			Iterator<Wall> iter = doorLabel.keySet().iterator();
 			while(iter.hasNext() && doorSelected==null) {
 				Wall door = iter.next();
-				if(doorLabel.get(door)==UNEXPLORED) {
-					// System.out.println("PORTA TROVATA");
-					//doorLabel.put(door, EXPLORED);					
+				if(doorLabel.get(door)==UNEXPLORED) {					
 					doorSelected = door;
 				}
 			}
 			if(doorSelected == null) {
 				doorSelected = lastDoor;
-			    // System.out.println("ASSIGNED LAST DOOR");
 			}
 			if(doorSelected != null) {
 				generateTPath(doorSelected,false);
-				// if(currentPath==null)System.out.println("NON PATH - "+getMap().getWidth()+" "+getMap().getHeight());
 			}
 		}
 		else if(enemy.isEmpty()){
@@ -216,7 +197,6 @@ public class DemoBlock extends Block{
 		}
 		else {
 			direction = Directions.KEY_M;
-			System.out.println("Attacca a caso");
 		}
 		return direction;
 	}
@@ -257,19 +237,6 @@ public class DemoBlock extends Block{
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
 		super.render(gc, sbg, g);
 		renderText(showString[displayMessage],((Long.valueOf(Math.round(gc.getWidth()/1.5)).intValue())-uniFont.getWidth(showString[displayMessage]))/2,250);
-		
-		/*if(currentPath != null) {
-			g.setColor(Color.orange);
-			for(int i=0;i<currentPath.getLength();i++) {
-				g.drawRect((currentPath.getX(i)-getShiftX())*getMap().getTileWidth(),(currentPath.getY(i)-getShiftY())*getMap().getTileHeight(),16,16);
-			}
-		}
-			for(Wall door:doorLabel.keySet()) {
-				if(door==lastDoor)g.setColor(Color.red);
-				else if(doorLabel.get(door) == UNEXPLORED)g.setColor(Color.blue);
-				else g.setColor(Color.green);
-				g.drawRect(door.getX()-getShiftX()*getMap().getTileWidth(),door.getY()-getShiftY()*getMap().getTileHeight(),door.getWidth(),door.getHeight());
-			}*/
 	}
 	
 	@Override
@@ -327,12 +294,6 @@ public class DemoBlock extends Block{
 		return check(Directions.KEY_M) && enemy.size() > 0;
 	}
 
-	/**
-	 * Check if the user wants to perform the special attack
-	 *
-	 * @param in the Input object
-	 * @return true if the player wants to perform the special attack
-	 */
 	@Override
 	protected boolean special(Input in) { 
 		return check(Directions.KEY_M) && enemy.size() > 0;

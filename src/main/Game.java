@@ -108,6 +108,10 @@ public class Game extends StateBasedGame{
         current_difficulty = 1;
     }
 
+    /**
+     * Sets the modality
+     * @param demo if asserted indicates demo mode
+     */
     public void setDemo(boolean demo) {
         this.demo = demo;
     }

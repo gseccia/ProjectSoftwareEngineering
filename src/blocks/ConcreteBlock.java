@@ -112,7 +112,12 @@ public class ConcreteBlock extends Block {
 	        }
     	}
     }
-
+    
+    /**
+     * Enter in gameover status
+     *
+     * @param gc state based game
+     */
 	@Override
 	protected void reset(StateBasedGame gs){
 		gs.enterState(GameStates.GAMEOVER.getState());

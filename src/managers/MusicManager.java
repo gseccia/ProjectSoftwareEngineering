@@ -124,8 +124,7 @@ public class MusicManager extends Observer implements MusicManagerInterface{
 //				level completed
 				this.levelCompletedSound.loop(1.0f,  this.volume);
 				this.currentSound = this.levelCompletedSound;
-				if (this.indexLevel < gameMusicStrings.size()) this.indexLevel += 1;
-				else this.indexLevel = 0;
+				this.indexLevel = (this.indexLevel+1) % gameMusicStrings.size();
 				break;
 			case 3:
 //				rip
