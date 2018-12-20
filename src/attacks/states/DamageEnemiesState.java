@@ -4,6 +4,9 @@ import elements.Enemy;
 
 import java.util.Set;
 
+/**
+ * A state that damages the enemies passed as parameter
+ */
 public class DamageEnemiesState implements SpecialAttackState {
 
     private Set<Enemy> targets;
@@ -11,12 +14,23 @@ public class DamageEnemiesState implements SpecialAttackState {
     private int damage;
     private SpecialAttackState next;
 
+    /**
+     * Constructor
+     * @param targets a set containing the enemies
+     * @param damage the amount of damage to deal
+     */
     public DamageEnemiesState(Set<Enemy> targets, int damage) {
         this.targets = targets;
         this.damage = damage;
         this.next = null;
     }
 
+    /**
+     * Constructor
+     * @param targets a set containing the enemies
+     * @param damage the amount of damage to deal
+     * @param next the following SpecialAttackState
+     */
     public DamageEnemiesState(Set<Enemy> targets, int damage, SpecialAttackState next) {
         this.damage = damage;
         this.targets = targets;

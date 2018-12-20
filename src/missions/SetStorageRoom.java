@@ -6,6 +6,9 @@ import elements.Item;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * An implementation of StorageRoom, that collects items and enemies
+ */
 public class SetStorageRoom implements StorageRoom {
 
     private Set<Enemy> enemySet;

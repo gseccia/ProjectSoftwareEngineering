@@ -9,6 +9,9 @@ import configuration.PlayerCommands;
 import main.gamestates.GameStates;
 import managers.ResourceManager;
 
+/**
+ * This class allows the normal execution of the game
+ */
 public class ConcreteBlock extends Block {
 	private PlayerCommands pc = PlayerCommands.getPlayerCommandsInstance();
     protected ConcreteBlock(int state, String mapName) {
@@ -112,7 +115,12 @@ public class ConcreteBlock extends Block {
 	        }
     	}
     }
-
+    
+    /**
+     * Enter in gameover status
+     *
+     * @param gc state based game
+     */
 	@Override
 	protected void reset(StateBasedGame gs){
 		gs.enterState(GameStates.GAMEOVER.getState());

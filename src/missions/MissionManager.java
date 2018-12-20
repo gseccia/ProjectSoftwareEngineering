@@ -3,10 +3,16 @@ package missions;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The composite element of the pattern, that handles all the instantiated missions
+ */
 public class MissionManager extends Mission {
 
     private Set<Mission> missions;
 
+    /**
+     * Constructor
+     */
     public MissionManager(){
         this.missions = new HashSet<>();
     }
@@ -23,7 +29,7 @@ public class MissionManager extends Mission {
     }
 
     /**
-     * @return the number of missions in the component
+     * @return the number of missions in the composite
      */
     @Override
     public int numMissions() {
@@ -31,7 +37,7 @@ public class MissionManager extends Mission {
     }
 
     /**
-     * @return true if the mission was completed, false otherwise
+     * @return true if all the missions are completed
      */
     @Override
     public boolean completed() {
@@ -43,7 +49,7 @@ public class MissionManager extends Mission {
     }
 
     /**
-     * Check if an item contributes to a mission
+     * Check if an item contributes to a mission, passing it to all the missions of the composite
      *
      * @param item the item to check
      */
@@ -54,6 +60,10 @@ public class MissionManager extends Mission {
         }
     }
 
+    /**
+     * Produces the items and enemies needed for the mission, passing to each leaf the acceptor
+     * @param acceptor a StorageRoom object
+     */
     @Override
     public void produceTargets(StorageRoom acceptor) {
         for(Mission m : missions){

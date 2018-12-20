@@ -8,6 +8,9 @@ import org.newdawn.slick.util.pathfinding.*;
 
 import managers.Wall;
 
+/**
+ * This class allows to represent the tile format of the map
+ */
 public class EncapsulateMap implements TileBasedMap{
 	
 	private TiledMap map;

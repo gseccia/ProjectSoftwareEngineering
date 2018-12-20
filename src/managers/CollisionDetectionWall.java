@@ -2,6 +2,10 @@ package managers;
 
 import elements.Mob;
 
+
+/**
+ * Collision detector for walls
+ */
 public class CollisionDetectionWall extends CollisionDetectionStrategy {
 	
 	public CollisionDetectionWall(HitboxMaker hitbox) {

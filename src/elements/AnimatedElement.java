@@ -17,16 +17,10 @@ public abstract class AnimatedElement extends Rectangle{
 
     protected AnimatedElement(Animation a, int width, int height, int x, int y) throws NullAnimationException{
         super(x, y, width, height);
-        //if(a == null){
-        //    throw new NullAnimationException("Animation can't be null!");
-        //}   MAKES TEST IMPOSSIBLE
         this.current = a;
     }
 
     protected void setCurrent(Animation current){
-        //if(current == null){
-        //    throw new NullAnimationException("Current animation can't be null!");
-        //} MAKES TEST IMPOSSIBLE
         this.current = current;
     }
 

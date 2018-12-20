@@ -13,6 +13,9 @@ import visitors.Visitor;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class reprensents an item (collectable object).
+ */
 public class Item extends AnimatedElement implements MissionTarget, Visitor, Spawner {
 
     private String id;
@@ -58,7 +61,7 @@ public class Item extends AnimatedElement implements MissionTarget, Visitor, Spa
     }
     
     /**
-     * Overrides (?) the original intersects method to avoid annoying collisions due to rubbing
+     * Check if the object intersects with the rectangle r without considering the rubbing cases.
      * @param r colliding element
      * @return true if intersection is verified, otherwise false
      */

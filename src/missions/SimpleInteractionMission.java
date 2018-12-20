@@ -1,9 +1,18 @@
 package missions;
 
+/**
+ * An abstract class, subclass of all the missions that requires you to interact with a generic type of object
+ * It's concrete subclasses are leaf of the composite
+ */
 public abstract class SimpleInteractionMission extends Mission{
 
     private int numInteractions, total;
 
+    /**
+     * Constructor
+     * @param targetId the target id
+     * @param numInteractions the number of interactions needed to complete the mission
+     */
     SimpleInteractionMission(String targetId, int numInteractions) {
         super(targetId);
         this.numInteractions = numInteractions;
@@ -31,7 +40,7 @@ public abstract class SimpleInteractionMission extends Mission{
 
     /**
      * Check if an item contributes to a mission
-     *
+     * All the items with the correct ID are valid
      * @param item the item to check
      */
     @Override

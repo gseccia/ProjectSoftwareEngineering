@@ -6,12 +6,19 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * Configuration class for the maps.
+ * Implemented as Singleton
+ */
 public class MapConfiguration extends Configuration {
 
     private static final String filename = System.getProperty("user.dir") + "/resource/configurations/maps.conf";
     private static MapConfiguration instance = null;
     private JsonObject configuration;
 
+    /**
+     * @return the instance of MapConfiguration
+     */
     public static MapConfiguration getInstance(){
         if(instance == null){
             instance = new MapConfiguration();
@@ -19,6 +26,9 @@ public class MapConfiguration extends Configuration {
         return instance;
     }
 
+    /**
+     * Constructor
+     */
     private MapConfiguration(){
         configuration = super.uploadConfiguration(filename);
     }

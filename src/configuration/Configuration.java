@@ -12,11 +12,27 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Abstract class that reads the configurations file in a JSON format
+ */
 abstract class Configuration {
 
+    /**
+     * Returns all the options related to a certain id
+     * @param id the id of the option
+     * @return a JSON object containing the data
+     * @throws NoSuchElementInConfigurationException if the id isn't in the configuration
+     */
     protected abstract JsonObject getConfiguration(String id) throws NoSuchElementInConfigurationException;
 
-    protected JsonObject uploadConfiguration(String filename){
+    /**
+     * Reads a JSON configuration from file. The configuration must be made up of a single JSON object whose keys are the
+     * different ids of the configuration. The value associated to each id is a JSON object that contains the various options
+     * in any format
+     * @param filename the configuration's filename
+     * @return a JSON object containing the configuration
+     */
+    JsonObject uploadConfiguration(String filename){
         try(JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(filename)))){
             JsonParser parser = new JsonParser();
             return parser.parse(reader).getAsJsonObject();
@@ -26,6 +42,15 @@ abstract class Configuration {
         return null;
     }
 
+    /**
+     * Generate an animation. In the configuration must be a single object with an array for the animation images and an
+     * array for the images' durations.
+     * @param id the id of the element
+     * @param animation the id of the animation
+     * @return an Animation object
+     * @throws SlickException a Slick exception
+     * @throws NoSuchElementInConfigurationException if there is no id or animation id in the configuration
+     */
     public Animation generateAnimation(String id, String animation) throws SlickException, NoSuchElementInConfigurationException {
         // load configuration from id
         JsonObject conf = this.getConfiguration(id);

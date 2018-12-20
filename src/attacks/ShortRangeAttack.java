@@ -5,13 +5,21 @@ import configuration.NoSuchElementInConfigurationException;
 import elements.Mob;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.SoundStore;
 
+/**
+ * The class that implements the short range attack
+ */
 public class ShortRangeAttack extends DirectionalAttack {
 
     private final static String ID = "shortrange";
 
     private Sound sfx;
 
+    /**
+     * Constructor
+     * @param caster the Mob that casts the attack
+     */
     public ShortRangeAttack(Mob caster) {
         super(ID, caster);
         AttackConfiguration attackconf = AttackConfiguration.getInstance();
@@ -28,7 +36,7 @@ public class ShortRangeAttack extends DirectionalAttack {
      */
     @Override
     public void attack() {
-        sfx.play();
+        sfx.play(1, SoundStore.get().getMusicVolume());
     }
 
     @Override

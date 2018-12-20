@@ -1,5 +1,8 @@
 package main.gamestates;
 
+/**
+ * States of the game
+ */
 public enum GameStates {
 	MENU(0),
 	SCORES(1),

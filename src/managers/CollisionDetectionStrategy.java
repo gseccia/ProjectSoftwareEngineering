@@ -7,6 +7,9 @@ import org.newdawn.slick.tiled.TiledMap;
 import elements.Item;
 import elements.Mob;
 
+/**
+ * Collision detector strategy
+ */
 public abstract class CollisionDetectionStrategy implements Directions {
 	protected TiledMap map;
 	protected float px, py;
@@ -34,6 +37,14 @@ public abstract class CollisionDetectionStrategy implements Directions {
 
 	public abstract boolean detectCollision(int shiftX, int shiftY, Mob player);
 	
+	/**
+	 * Align the player with the map
+	 * 
+	 * @param shiftX Shift on x-axis of the map
+	 * @param shiftY Shift on y-axis of the map
+	 * @param player Player mob
+	 * @param patch Asserted if should be considered next step
+	 */
 	protected void aligner(int shiftX, int shiftY, Mob player, boolean patch) {
 		px = player.getX();
 		py = player.getY();

@@ -2,6 +2,9 @@ package managers;
 
 import elements.Mob;
 
+/**
+ * Attack detector for an enemy against the player
+ */
 public class CollisionDetectionEnemyAttacksPlayer extends CollisionDetectionStrategy {
     private int attackDamage;
 

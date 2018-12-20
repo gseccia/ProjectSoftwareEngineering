@@ -20,6 +20,9 @@ import visitors.HealPlayerModifier;
 import visitors.SetAttackModifier;
 import visitors.Visitor;
 
+/**
+ * This class is the manager of a level
+*/
 public class Level{
 
 	private int level_difficulty, itemCapacity = 0;
@@ -30,9 +33,7 @@ public class Level{
 	private Map<Block,Set<Item>> items;
 	private MissionFactory missions;
 
-	/**
-	 * This class is the manager of a level
-	*/
+	
 	Level(Player player, String charname, int level_difficulty, MissionFactory missions, BlockFactory blockFactory) {
 
 		itemsRemainingCapacity = new HashMap<>();
@@ -94,7 +95,11 @@ public class Level{
 		
 
 	}
-
+	
+	/**
+	 * Distribute mobs into blocks
+	 * @param player Player object
+	 */
 	private void distributeMobs(Player player) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
 		RandomCollection<Block> blocks = new RandomCollection<>(block_list);
 		Block b;
@@ -116,7 +121,11 @@ public class Level{
 			updateCapacity(b, blocks, mobsRemainingCapacity);
 		}
 	}
-
+	
+	/**
+	 * Distribute items into the blocks
+	 * @param player Player object
+	 */
 	private void distributeItems(Player player) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
 		ItemConfiguration conf = ItemConfiguration.getInstance();
 
@@ -166,7 +175,13 @@ public class Level{
 			updateCapacity(b, blocks, itemsRemainingCapacity);
 		}
 	}
-
+	
+	/**
+	 * Updated the remaining capacity of a block
+	 * @param b Block which remaining capacity has to be updated
+	 * @param blocks List of blocks
+	 * @param remainingCapacity Mapping block with their remaing capacity
+	 */
 	private void updateCapacity(Block b, List<Block> blocks, Map<Block, Integer> remainingCapacity){
 		int remaining = remainingCapacity.get(b);
 		if(remaining <= 1){
@@ -177,7 +192,12 @@ public class Level{
 			remainingCapacity.put(b, remaining);
 		}
 	}
-
+	
+	/**
+	 * Add an item into a block
+	 * @param b Block where is inserted the item
+	 * @param i Item to add
+	 */
 	private void addItemToBlock(Block b, Item i){
 		if(items.get(b) == null){
 			Set<Item> tmp = new HashSet<>();
@@ -190,7 +210,12 @@ public class Level{
 		}
 
 	}
-
+	
+	/**
+	 * Add an enemy into a block
+	 * @param b Block where is inserted the item
+	 * @param e Enemy to add
+	 */
 	private void addEnemyToBlock(Block b, Enemy e){
 		if(population.get(b) == null){
 			Set<Enemy> tmp = new HashSet<>();

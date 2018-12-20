@@ -3,6 +3,10 @@ package managers;
 import elements.Item;
 import elements.Mob;
 
+
+/**
+ * Collsion detector for player with the items
+ */
 public class CollisionDetectionItem extends CollisionDetectionStrategy {
 	private String itemID = "";
 	private Item itemFound;

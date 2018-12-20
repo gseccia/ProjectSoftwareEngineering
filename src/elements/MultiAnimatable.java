@@ -1,5 +1,8 @@
 package elements;
 
+/**
+ * Provides interfaces for set the animation for object with multiple animations
+ */
 public interface MultiAnimatable {
 
     /**

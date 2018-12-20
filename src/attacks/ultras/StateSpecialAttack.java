@@ -7,6 +7,9 @@ import elements.AnimatedElement;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+/**
+ * An abstraction to to define a state-based special attack
+ */
 public abstract class StateSpecialAttack extends AnimatedElement implements SpecialAttack{
 
     private int RELOADING_TIME;
@@ -15,9 +18,14 @@ public abstract class StateSpecialAttack extends AnimatedElement implements Spec
     private boolean drawable;
 
     protected SpecialAttackState current;
-    protected boolean active;
+    boolean active;
 
-    public StateSpecialAttack(int RELOADING_TIME, String id) {
+    /**
+     * Constructor
+     * @param RELOADING_TIME the cooldown time (in fps)
+     * @param id the special attack id
+     */
+    StateSpecialAttack(int RELOADING_TIME, String id) {
         this.RELOADING_TIME = RELOADING_TIME;
         try {
             icon = SpecialAttackConfiguration.getInstance().getIcon(id);

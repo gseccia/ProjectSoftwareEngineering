@@ -6,6 +6,9 @@ package missions;
  */
 public interface MissionTarget {
 
+    /**
+     * @return the ID of the target
+     */
     String getID();
 
 }

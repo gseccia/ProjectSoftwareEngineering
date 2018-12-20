@@ -12,7 +12,9 @@ import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-
+/**
+ * Pause state
+ */
 public class Pause extends BasicGameState {
 
     private final int id = GameStates.PAUSE.getState();
@@ -46,6 +48,7 @@ public class Pause extends BasicGameState {
 			e.printStackTrace();
 		}
         uniFont = StatesUtils.initFont();
+        uniFont = StatesUtils.changeSizeAndStyle(uniFont, 28f, java.awt.Font.PLAIN);
         isPaused = false;
     }
 

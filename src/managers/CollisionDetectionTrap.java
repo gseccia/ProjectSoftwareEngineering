@@ -6,6 +6,9 @@ import elements.Mob;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Collision detector for traps
+ */
 public class CollisionDetectionTrap extends CollisionDetectionStrategy {
 
     private List<Item> targets;

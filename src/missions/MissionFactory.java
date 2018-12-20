@@ -5,6 +5,9 @@ import elements.Item;
 
 import java.util.Set;
 
+/**
+ * An interface that specifies the behaviour of a mission factory
+ */
 public interface MissionFactory {
 
     /**

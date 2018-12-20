@@ -9,7 +9,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -21,6 +20,9 @@ import managers.command.DecreaseVolumeCommand;
 import managers.command.IncreaseVolumeCommand;
 import managers.command.ResetVolumeCommand;
 
+/**
+ * State state
+ */
 public class Settings extends BasicGameState  {
 	private final int id = 2;
 	private static Settings ourInstance = new Settings(

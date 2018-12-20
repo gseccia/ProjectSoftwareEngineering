@@ -22,6 +22,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.List;
 
+/**
+ * This class is the state manager of all game
+ */
 public class Game extends StateBasedGame{
 
     private boolean demo = false;
@@ -31,9 +34,9 @@ public class Game extends StateBasedGame{
     private ResourceManager rs;
     private MusicManager mm;
 
-    public Game(String name, String charname) {
+    public Game(String name) {
         super(name);
-        this.charname = charname;
+        this.charname = "rinaldo";
         current_difficulty = 0;
         this.rs = ResourceManager.getInstance();
         mm = MusicManager.getInstance(this.rs);
@@ -108,6 +111,10 @@ public class Game extends StateBasedGame{
         current_difficulty = 1;
     }
 
+    /**
+     * Sets the modality
+     * @param demo if asserted indicates demo mode
+     */
     public void setDemo(boolean demo) {
         this.demo = demo;
     }

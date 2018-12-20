@@ -1,9 +1,7 @@
 package elements;
 
 import attacks.*;
-import attacks.ultras.HoraHora;
 import attacks.ultras.IUF;
-import attacks.ultras.Sparagmos;
 import attacks.ultras.SpecialAttack;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
@@ -12,8 +10,10 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.openal.SoundStore;
 
 import utils.Constants;
-import visitors.Visitor;
 
+/**
+ * This class represents the player into the map.
+ */
 public class Player extends Mob{
 
     private boolean isAttacking = false;
@@ -44,18 +44,27 @@ public class Player extends Mob{
     public void setUltra(SpecialAttack ultra) {
         this.ultra = ultra;
     }
-
+    
+    /**
+     * Check if it ready to attack
+     */
     @Override
     public boolean isReadyToAttack(){
         return !isAttacking;
     }
-
+    
+    /**
+     * Reset reloading time
+     */
     @Override
     public void hasAttacked() {
         isAttacking = true;
         attackDuration = RELOADING_TIME;
     }
-
+    
+    /**
+     * Reload an attack
+     */
     public void reloadAttack() {
         if(attackDuration > 0) {
             attackDuration--;
@@ -64,7 +73,10 @@ public class Player extends Mob{
         }
         ultra.reload();
     }
-
+    
+    /**
+     * Play the music associated to a step
+     */
     private void playStep(){
         if(!step.playing()){
             step.play(1.0f, SoundStore.get().getMusicVolume() * 0.2f);
@@ -152,14 +164,20 @@ public class Player extends Mob{
     public void faceStillLeft() throws NullAnimationException {
         super.faceStillLeft();
     }
-
+    
+    /**
+     * Attack at right
+     */
     @Override
     public void attackRight() throws NullAnimationException {
         getAttack().attack();
         this.hasAttacked();
         super.attackRight();
     }
-
+    
+    /**
+     * Attack down
+     */
     @Override
     public void attackDown() throws NullAnimationException {
         getAttack().attack();
@@ -167,14 +185,20 @@ public class Player extends Mob{
         super.attackDown();
 
     }
-
+    
+    /**
+     * Attack up
+     */
     @Override
     public void attackUp() throws NullAnimationException {
         getAttack().attack();
         this.hasAttacked();
         super.attackUp();
     }
-
+    
+    /**
+     * Attack at left
+     */
     @Override
     public void attackLeft() throws NullAnimationException {
         getAttack().attack();

@@ -3,6 +3,9 @@ package missions;
 import elements.Enemy;
 import elements.Item;
 
+/**
+ * An interface to defines the visitor that collects the items or enemies from the mission
+ */
 public interface StorageRoom {
 
     /**

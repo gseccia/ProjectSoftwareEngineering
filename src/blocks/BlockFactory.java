@@ -1,5 +1,9 @@
 package blocks;
 
+
+/**
+ * Provides an interface to generate a Block object
+ */
 public interface BlockFactory {
 
     /**

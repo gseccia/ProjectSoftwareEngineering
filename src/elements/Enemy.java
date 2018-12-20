@@ -3,11 +3,12 @@ package elements;
 import attacks.Attack;
 import attacks.PointBlankRangeAttack;
 import configuration.EnemyConfiguration;
+import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.util.pathfinding.*;
 import configuration.NoSuchElementInConfigurationException;
 import blocks.Block;
 import managers.CollisionDetectionDoor;
-import managers.CollisionDetectionMob;
 import managers.CollisionDetectionWall;
 import managers.Directions;
 import missions.MissionTarget;
@@ -19,7 +20,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import utils.Constants;
 
-
+/**
+ * This class represents an enemy
+ */
 public class Enemy extends Mob implements MissionTarget {
 
     private String id;
@@ -37,6 +40,7 @@ public class Enemy extends Mob implements MissionTarget {
     private Color bossFilter;
     private AStarPathFinder pf;
     private int RELOADING_TIME;
+	private Sound activeSound;
 
     private final int SPEED = 8;
     private final int SURREND_TIME = 150;
@@ -46,8 +50,9 @@ public class Enemy extends Mob implements MissionTarget {
     	this.id = id;
 		this.points = configuration.getMobPoints(id);
     	direction = Directions.LEFT;
-    	setAttack(new PointBlankRangeAttack(this));
     	RELOADING_TIME = Constants.framerate * configuration.getAttackLatency(id);
+    	activeSound = configuration.getActiveSound(id);
+		setAttack(new PointBlankRangeAttack(this, configuration.getAttackSound(id)));
 	}
     
     public Enemy(EnemyConfiguration configuration, String id, Block map, Player p) throws NoSuchElementInConfigurationException, SlickException, NullAnimationException {
@@ -56,9 +61,10 @@ public class Enemy extends Mob implements MissionTarget {
         this.map = map;
         this.player = p;
 		this.points = configuration.getMobPoints(id);
-        direction = Directions.LEFT;     // Suppose initial direction right
-		setAttack(new PointBlankRangeAttack(this));
+        direction = Directions.LEFT;
 		RELOADING_TIME = Constants.framerate * configuration.getAttackLatency(id);
+		activeSound = configuration.getActiveSound(id);
+		setAttack(new PointBlankRangeAttack(this, configuration.getAttackSound(id)));
     }
 
     @Override
@@ -66,6 +72,11 @@ public class Enemy extends Mob implements MissionTarget {
         return id;
     }
     
+    /**
+     * Initialize the object in the map where is placed
+     * @param x tile position on x-axis
+     * @param y tile position on y-axis
+     */
     public void init(int x,int y) {
     	setLocation(x*map.getMap().getTileWidth(),y*map.getMap().getTileHeight());
     	directVision = 8*map.getMap().getTileWidth();
@@ -80,6 +91,10 @@ public class Enemy extends Mob implements MissionTarget {
 		
     }
     
+    /**
+     * Allows to draw the enemy
+     */
+    @Override
     public void draw() {
     	int x,y,px,py;
     	if(getHp()>0) {
@@ -92,7 +107,13 @@ public class Enemy extends Mob implements MissionTarget {
     		setLocation(px,py);
     	}
     }
-
+    
+    /**
+     * Allows to make this object a boss
+     * @param powerUp A positive multiplier that improves the statistics of the enemy
+     * @param filter Color to apply on this object
+     * @throws NotPositiveValueException powerUP must be positive
+     */
     public void makeBoss(int powerUp, Color filter) throws NotPositiveValueException {
     	points *= powerUp;
     	setMaxHp(getMaxHp()*powerUp);
@@ -105,7 +126,10 @@ public class Enemy extends Mob implements MissionTarget {
 		return this.points;
 	}
 	
-	public void visionUpdate() {
+	/**
+	 * Update the vision rectangle of an enemy
+	 */
+	private void visionUpdate() {
 			switch(direction) {
 			case Directions.LEFT:
 				vision.setBounds(getX()-directVision + getWidth(), getY(),directVision,lateralVision);
@@ -122,6 +146,12 @@ public class Enemy extends Mob implements MissionTarget {
 		}
 	}
     
+	/**
+	 * Convert x from pixels in tiles
+	 * @param x pixel value
+	 * @param xaxis if Asserted indicates that x is on x-axis
+	 * @return tile value corresponding to x pixel
+	 */
 	private int toTile(float x,boolean xaxis) {
 		int value = (int)(x/map.getMap().getTileWidth());
 		value = (value<0)?0:value;
@@ -132,7 +162,11 @@ public class Enemy extends Mob implements MissionTarget {
 		return value;
 	}
 	
-	private int attackMode() throws NullAnimationException {
+	/**
+	 * Define the attack mode behaviour
+	 * @return Next action to perform
+	 */
+	private int attackMode() {
 		float x,mx,y,my;
 		int dir;
 		x = player.getX();
@@ -161,6 +195,10 @@ public class Enemy extends Mob implements MissionTarget {
 		return dir;
 	}
 	
+	/**
+	 * Define the behaviour of this object and updates it
+	 * @throws NullAnimationException if the Animation is null
+	 */
 	public void update() throws NullAnimationException{
 		float x,y;
 		if(getHp()>0) {
@@ -182,36 +220,41 @@ public class Enemy extends Mob implements MissionTarget {
 				surrendTime--;
 			}
 			
-			int choosen;	
+			int chosen;
 			if(attack) {
-				choosen = attackMode();
+				chosen = attackMode();
 				if(surrendTime <= 0) attack = false;
 			}
 			else {
-				choosen = direction;
+				chosen = direction;
 				wallCollision.setKey(direction);
 				if(!wallCollision.detectCollision(map.getShiftX(), map.getShiftY(), this) || doorCollision.detectCollision(map.getShiftX(), map.getShiftY(), this)) {
-						//  Choose a random free direction 
+
+					if(!activeSound.playing()){
+						activeSound.play(1, SoundStore.get().getMusicVolume()*0.5f);
+					}
+
+					//  Choose a random free direction
 						Random r = new Random();
-						while(choosen == direction) {
+						while(chosen == direction) {
 							switch(r.nextInt(4)) {
 									case 0:
-										choosen = Directions.UP;
+										chosen = Directions.UP;
 										break;
 									case 1:
-										choosen = Directions.RIGHT;
+										chosen = Directions.RIGHT;
 										break;
 									case 2:
-										choosen = Directions.DOWN;
+										chosen = Directions.DOWN;
 										break;
 									case 3:
-										choosen = Directions.LEFT;
+										chosen = Directions.LEFT;
 										break;
 							}
 						}
 				}
 			}
-			direction = choosen;
+			direction = chosen;
 			setLocation(x,y); // Restore Correct Position
 				
 			// Movements Action!
@@ -258,19 +301,11 @@ public class Enemy extends Mob implements MissionTarget {
 		}
 	}
 	
-    public Rectangle getVision() {
-    	return vision;
-    }
-
     @Override
 	public Attack getAttack(){
     	Attack tmp = super.getAttack();
     	tmp.setHitbox();
     	return tmp;
-	}
-
-	public int getDirection() {
-		return direction;
 	}
 
     public void setPlayer(Player player) {
@@ -281,16 +316,26 @@ public class Enemy extends Mob implements MissionTarget {
     	this.map = map;
     }
 
+	/**
+	 * Check if this object it is ready to attack
+	 */
     @Override
     public boolean isReadyToAttack(){
 		return untilNextAttack == 0;
 	}
 
+	/**
+	 * Reset loading time to attack
+	 */
 	@Override
 	public void hasAttacked() {
-    	untilNextAttack = RELOADING_TIME;
+    	getAttack().attack();
+		untilNextAttack = RELOADING_TIME;
 	}
-
+	
+	/**
+	 * Update loading time to attack
+	 */
 	public void reloadAttack() {
     	if(untilNextAttack > 0) {
 			untilNextAttack--;

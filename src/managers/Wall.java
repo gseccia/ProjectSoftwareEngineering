@@ -2,6 +2,9 @@ package managers;
 
 import org.newdawn.slick.geom.Rectangle;
 
+/**
+ * Gives a represntation of a wall
+ */
 public class Wall extends Rectangle {
 
     public Wall(float x, float y, float width, float height) {

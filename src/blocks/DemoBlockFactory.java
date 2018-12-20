@@ -1,5 +1,9 @@
 package blocks;
 
+
+/**
+ * This class allows to create DemoBlock objects
+ */
 public class DemoBlockFactory implements BlockFactory{
 
 	/**
