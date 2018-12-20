@@ -261,8 +261,11 @@ public abstract class Block extends BasicGameState
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-
-            generateNextLevel(gc, arg1);
+            if(gc.getInput().isKeyDown(Input.KEY_ENTER)){
+            	this.rs.setState(1);
+            	levelMusicMustBeStarted = true;
+            	generateNextLevel(gc, arg1);
+			}
 
         }
 
