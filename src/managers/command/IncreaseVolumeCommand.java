@@ -31,7 +31,6 @@ public class IncreaseVolumeCommand implements CommandInterface{
 		float updatedValue = musicManager.getVolume() + 0.01f;
 		if (updatedValue >= 1.0f) musicManager.setVolume(1f);
 		else musicManager.setVolume(updatedValue);
-//		System.out.println(updatedValue);
 	}
 
 }

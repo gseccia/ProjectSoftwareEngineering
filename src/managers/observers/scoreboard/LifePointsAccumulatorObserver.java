@@ -87,9 +87,6 @@ public class LifePointsAccumulatorObserver extends Observer{
 
 	@Override
 	public void update() {
-		// Questo metodo e' richiamato dal PointsManager per cambiamento di stato
-		// Lo stato cambia quando ci sono collisioni con nemici/item/muri
-		// e aggiorna il livello di hp
 		if (this.subject.getState() == States.LifePointsAccumulator) {
 			setHp(((ScorePointsManager)this.subject).getIncreaseValue() - ((ScorePointsManager)this.subject).getDecreaseValue());
 		}

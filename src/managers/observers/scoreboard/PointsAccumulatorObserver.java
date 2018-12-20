@@ -44,9 +44,6 @@ public class PointsAccumulatorObserver extends Observer{
 
 	@Override
 	public void update() {
-		// Questo metodo e' richiamato dal PointsManager per cambiamento di stato
-		// Lo stato cambia quando ci sono collisioni con nemici/item/muri
-		// e aggiorna il punteggio accordingly
 		if (this.subject.getState() == States.PointsAccumulator) {
 			setPoints(((ScorePointsManager)this.subject).getIncreaseValue() 
 					- ((ScorePointsManager)this.subject).getDecreaseValue()
