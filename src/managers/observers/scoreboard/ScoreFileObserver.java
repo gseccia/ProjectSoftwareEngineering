@@ -20,6 +20,17 @@ import java.util.TimeZone;
 import managers.observers.Observer;
 import managers.observers.Subject;
 
+/**
+ * Concrete Observer
+ * Maintains a reference to ScorePointsManager as a concrete subject
+ * Store state consistently with the one of the subject, that is score points
+ * updates during the game saved when the game ends and shown in a custom page.
+ * Observer fits like a glove because allows to detach objects different in behavior
+ * but dependent in the logic, thus the other objects do not need to know who the 
+ * notified object is so that they are not coupled.
+ * 
+ * @author Ilaria, JBFourierous
+ */
 public class ScoreFileObserver extends Observer implements Serializable {
 	
 	private ArrayList<Score> scores;
@@ -82,7 +93,7 @@ public class ScoreFileObserver extends Observer implements Serializable {
     *  keeps only five results, causing a deletion of the worst score during insertions with full scoreboard.
     */
    public void update() {
-	   if (this.subject.getState() == 2) {
+	   if (this.subject.getState() == States.ScoreFile) {
 		   int points = 0;
 		   String id = "";
 		   try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {

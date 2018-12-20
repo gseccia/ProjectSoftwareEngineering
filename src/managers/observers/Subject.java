@@ -3,6 +3,12 @@ package managers.observers;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Knows its observers. Any number of Observer objects may observe a subject.
+ * Provides an abstract class for attaching and detaching Observer objects.
+ * 
+ * @author Ilaria
+ */
 public abstract class Subject implements SubjectInterface{
 	
    protected List<Observer> observers = new ArrayList<Observer>();

@@ -3,6 +3,12 @@ package managers.observers.scoreboard;
 import java.io.Serializable;
 import java.util.Calendar;
 
+/**
+ * Utility class to implement the serialization of the scoreboard
+ * 
+ * @author Ilaria, JBFourierous
+ *
+ */
 public class Score implements Comparable<Score>, Serializable {
 	private int value;
 	private String id;

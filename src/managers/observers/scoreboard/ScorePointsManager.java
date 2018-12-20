@@ -3,6 +3,16 @@ package managers.observers.scoreboard;
 import managers.observers.Subject;
 import managers.observers.Observer;
 
+/**
+ * Concrete Subject
+ * Singleton because one and only one instance of a manager of the score must exist in the game.
+ * Stores state of interest to ConcreteObserver objects and sends a notification to its observers 
+ * when its state changes.
+ * The subject fulfills the need of a manager for the logic of points accumulation.
+ * Provides utility method to exchange data with the observer supplied by external clients.
+ * 
+ * @author Ilaria
+ */
 public class ScorePointsManager extends Subject{
 	private static ScorePointsManager instance = null;
 	private int increaseValue, decreaseValue;
@@ -18,13 +28,12 @@ public class ScorePointsManager extends Subject{
 		return instance;
 	}
 
-	/* Salva lo stato corrente e notifica il cambiamento agli observer
-	 * Lo stato corrisponde a:
-	 *	0 punti
-	 *	1 vita
+	/*
+	 * States are
+	 *	0 points
+	 *	1 hp
 	 *	2 rip update scoreboard
 	 */
-
 
 	public void increase(int v) {
 		setIncreaseValue(v);

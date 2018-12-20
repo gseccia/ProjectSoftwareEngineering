@@ -3,9 +3,11 @@ package managers.command;
 import managers.MusicManager;
 import managers.ResourceManager;
 
-/*
+/**
  * Concrete Command
  * Performs the reset of the volume to the default value
+ * 
+ * @author Ilaria
  */
 public class ResetVolumeCommand implements CommandInterface{
 	private static ResetVolumeCommand instance = null;

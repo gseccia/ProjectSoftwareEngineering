@@ -3,8 +3,10 @@ package managers.command;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
  * Asks the command to carry out the request.
+ * 
+ * @author Ilaria
  */
 public class Broker {
 

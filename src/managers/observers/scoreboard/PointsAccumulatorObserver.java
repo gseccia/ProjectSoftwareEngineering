@@ -3,6 +3,17 @@ package managers.observers.scoreboard;
 import managers.observers.Observer;
 import managers.observers.Subject;
 
+/**
+ * Concrete Observer
+ * Maintains a reference to ScorePointsManager as a concrete subject
+ * Store state consistently with the one of the subject, that is item and enemy points
+ * updates during the game step by step.
+ * Observer fits like a glove because allows to detach objects different in behavior
+ * but dependent in the logic, thus the other objects do not need to know who the 
+ * notified object is so that they are not coupled.
+ * 
+ * @author Ilaria
+ */
 public class PointsAccumulatorObserver extends Observer{
 	private int points;
 	private static PointsAccumulatorObserver instance;
@@ -36,7 +47,7 @@ public class PointsAccumulatorObserver extends Observer{
 		// Questo metodo e' richiamato dal PointsManager per cambiamento di stato
 		// Lo stato cambia quando ci sono collisioni con nemici/item/muri
 		// e aggiorna il punteggio accordingly
-		if (this.subject.getState() == 0) {
+		if (this.subject.getState() == States.PointsAccumulator) {
 			setPoints(((ScorePointsManager)this.subject).getIncreaseValue() 
 					- ((ScorePointsManager)this.subject).getDecreaseValue()
 					);
