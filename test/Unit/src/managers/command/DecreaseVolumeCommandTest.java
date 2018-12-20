@@ -34,4 +34,11 @@ public class DecreaseVolumeCommandTest {
 		b.executeCommand();
 		assertEquals(0.41f, musicManager.getVolume(), 0.0002);
 	}
+	
+	@Test(expected = NullPointerException.class)
+    public void testVisitorThrowsExceptionIfPlayerIsNull(){
+        b.takeCommand(null);
+        b.executeCommand();
+    }
+	
 }

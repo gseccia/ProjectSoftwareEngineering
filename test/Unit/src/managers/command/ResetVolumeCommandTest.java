@@ -35,4 +35,9 @@ public class ResetVolumeCommandTest {
 		assertEquals(musicManager.DEFAULT_VOLUME, musicManager.getVolume(), 0.0002);
 	}
 
+	@Test(expected = NullPointerException.class)
+    public void testVisitorThrowsExceptionIfPlayerIsNull(){
+        b.takeCommand(null);
+        b.executeCommand();
+    }
 }

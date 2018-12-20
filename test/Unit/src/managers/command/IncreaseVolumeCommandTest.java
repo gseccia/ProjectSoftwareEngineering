@@ -35,4 +35,10 @@ public class IncreaseVolumeCommandTest {
 		b.executeCommand();
 		assertEquals(0.43f, musicManager.getVolume(), 0.0002);
 	}
+	
+	@Test(expected = NullPointerException.class)
+    public void testVisitorThrowsExceptionIfPlayerIsNull(){
+        b.takeCommand(null);
+        b.executeCommand();
+    }
 }
