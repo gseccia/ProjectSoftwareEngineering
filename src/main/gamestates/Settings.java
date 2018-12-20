@@ -23,7 +23,10 @@ import managers.command.ResetVolumeCommand;
 
 public class Settings extends BasicGameState  {
 	private final int id = 2;
-	private static Settings ourInstance = new Settings();
+	private static Settings ourInstance = new Settings(
+			IncreaseVolumeCommand.getInstance(),
+			DecreaseVolumeCommand.getInstance(),
+			ResetVolumeCommand.getInstance());
 	private UnicodeFont uniFont;
 	
 	private int playerChoice = 0;
@@ -64,10 +67,10 @@ public class Settings extends BasicGameState  {
     private Image background;
     
 //    Command design pattern usage
-    private final Broker broker = new Broker();
-    private final IncreaseVolumeCommand increaseVolume = IncreaseVolumeCommand.getInstance();
-    private final DecreaseVolumeCommand decreaseVolume = DecreaseVolumeCommand.getInstance();
-    private final ResetVolumeCommand resetVolume = ResetVolumeCommand.getInstance();
+    private Broker broker = new Broker();
+    private IncreaseVolumeCommand increaseVolume;
+    private DecreaseVolumeCommand decreaseVolume;
+    private ResetVolumeCommand resetVolume;
     
     private boolean rst = false;
 
@@ -75,7 +78,11 @@ public class Settings extends BasicGameState  {
         return ourInstance;
     }
 
-    private Settings() {
+    public Settings(IncreaseVolumeCommand i, DecreaseVolumeCommand d, ResetVolumeCommand r) {
+        this.broker = new Broker();
+        this.increaseVolume = i;
+        this.decreaseVolume = d;
+        this.resetVolume = r;
     }
 	
 	@Override
@@ -319,5 +326,17 @@ public class Settings extends BasicGameState  {
             }
         }
     }
+
+	public IncreaseVolumeCommand getIncreaseVolume() {
+		return increaseVolume;
+	}
+
+	public DecreaseVolumeCommand getDecreaseVolume() {
+		return decreaseVolume;
+	}
+
+	public ResetVolumeCommand getResetVolume() {
+		return resetVolume;
+	}
 	
 }

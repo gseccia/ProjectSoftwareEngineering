@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="visitors.HealPlayerModifier" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/visitors/HealPlayerModifier.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="237" y="352"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="visitors.NullModifier" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/visitors/NullModifier.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="247" y="243"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="visitors.SetAttackModifier" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/visitors/SetAttackModifier.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="395" y="240"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="visitors.DamagePlayerModifier" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/visitors/DamagePlayerModifier.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="411" y="352"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="elements.Item" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/elements/Item.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="321" y="449"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false" static="true"/>    
+    <operations public="false" package="false" protected="false" private="false" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

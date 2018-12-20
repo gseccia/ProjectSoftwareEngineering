@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="blocks.DemoBlock" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/blocks/DemoBlock.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="115" y="277"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="blocks.ConcreteBlock" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/blocks/ConcreteBlock.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="276" y="281"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="blocks.Block" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/blocks/Block.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="192" y="386"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="4" language="java" name="blocks.BlockFactory" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/blocks/BlockFactory.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="194" y="60"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="5" language="java" name="blocks.DemoBlockFactory" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/blocks/DemoBlockFactory.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="115" y="166"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="blocks.ConcreteBlockFactory" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/blocks/ConcreteBlockFactory.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="276" y="166"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <dependency id="7">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="8">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <generalization id="9">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <realization id="10">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="4"/>  
+  </realization>  
+  <generalization id="11">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <realization id="12">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="4"/>  
+  </realization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false" static="true"/>    
+    <operations public="false" package="false" protected="false" private="false" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

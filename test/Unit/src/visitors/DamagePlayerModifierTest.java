@@ -34,13 +34,13 @@ public class DamagePlayerModifierTest {
 
     @Test
     public void testDamageIsCalculatedCorrectly(){
-        visitor.accept(mockPlayer);
+        visitor.visit(mockPlayer);
         assertEquals(LIFE-DAMAGE, life);
     }
 
     @Test(expected = NullPointerException.class)
     public void testVisitorThrowsExceptionIfPlayerIsNull(){
-        visitor.accept(null);
+        visitor.visit(null);
     }
 
 

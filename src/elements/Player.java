@@ -12,8 +12,9 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.openal.SoundStore;
 
 import utils.Constants;
+import visitors.Visitor;
 
-public class Player extends Mob {
+public class Player extends Mob{
 
     private boolean isAttacking = false;
 
@@ -180,4 +181,5 @@ public class Player extends Mob {
         this.hasAttacked();
         super.attackLeft();
     }
+
 }

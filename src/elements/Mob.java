@@ -5,6 +5,8 @@ import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import configuration.PlayerCommands;
 import managers.Directions;
+import visitors.Visitor;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.util.pathfinding.Mover;
 
@@ -283,4 +285,9 @@ public abstract class Mob extends AnimatedElement implements MultiAnimatable, Mo
     public abstract boolean isReadyToAttack();
 
     public abstract void hasAttacked();
+    
+    public void accept(Visitor v) {
+    	v.visit(this);
+    }
+    
 }

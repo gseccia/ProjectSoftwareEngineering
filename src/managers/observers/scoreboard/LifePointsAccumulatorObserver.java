@@ -13,10 +13,11 @@ import managers.observers.Subject;
 public class LifePointsAccumulatorObserver extends Observer{
 	private int hp = 100;
 	ItemConfiguration lifeConf = ItemConfiguration.getInstance();
+	private ScorePointsManager subject;
 	Item heart;
 	
 	public LifePointsAccumulatorObserver(Subject s) {
-		this.subject = s;
+		this.subject = (ScorePointsManager)s;
 		this.subject.attach(this);
 	}
 	

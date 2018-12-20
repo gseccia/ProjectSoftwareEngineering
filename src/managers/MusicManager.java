@@ -93,7 +93,6 @@ public class MusicManager extends Observer implements MusicManagerInterface{
 	float pos;
 	@Override
 	public void update() {
-		// TODO PEZZA PAUSA
 		if(this.subject.getState()==-1) {
 			if (currentMusic.playing()) {
 				pos = currentMusic.getPosition();
@@ -124,8 +123,9 @@ public class MusicManager extends Observer implements MusicManagerInterface{
 //				level completed
 				this.levelCompletedSound.loop(1.0f,  this.volume);
 				this.currentSound = this.levelCompletedSound;
-				if (this.indexLevel < gameMusicStrings.size()) this.indexLevel += 1;
-				else this.indexLevel = 0;
+				this.indexLevel = (indexLevel+1) % gameMusicStrings.size();
+//				if (this.indexLevel < gameMusicStrings.size()) this.indexLevel += 1;
+//				else this.indexLevel = 0;
 				break;
 			case 3:
 //				rip

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="configuration.EnemyConfiguration" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/configuration/EnemyConfiguration.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="125" y="176"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="configuration.MapConfiguration" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/configuration/MapConfiguration.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="122" y="246"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="configuration.PlayerConfiguration" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/configuration/PlayerConfiguration.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="124" y="103"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="managers.ResourceManager" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/managers/ResourceManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="125" y="314"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="managers.MusicManager" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/managers/MusicManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="315" y="111"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="managers.observers.scoreboard.ScorePointsManager" 
+    project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/managers/observers/scoreboard/ScorePointsManager.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="127" y="381"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="main.gamestates.Menu" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/main/gamestates/Menu.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="312" y="192"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="main.gamestates.Pause" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/main/gamestates/Pause.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="312" y="274"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="main.gamestates.Settings" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/main/gamestates/Settings.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="315" y="360"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <association id="10">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="11" name="instance">        
+        <position height="0" width="0" x="-8" y="-38"/>      
+      </attribute>      
+      <multiplicity id="12" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-8" y="-38"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="13">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="14" name="instance">        
+        <position height="0" width="0" x="-41" y="-55"/>      
+      </attribute>      
+      <multiplicity id="15" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-41" y="-55"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="16">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="17" name="instance">        
+        <position height="0" width="0" x="-232" y="224"/>      
+      </attribute>      
+      <multiplicity id="18" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-232" y="224"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="19">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="20" name="instance">        
+        <position height="0" width="0" x="-268" y="-31"/>      
+      </attribute>      
+      <multiplicity id="21" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-268" y="-31"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="22">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="23" name="instance">        
+        <position height="0" width="0" x="-14" y="-105"/>      
+      </attribute>      
+      <multiplicity id="24" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-14" y="-105"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="25">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="26" name="instance">        
+        <position height="0" width="0" x="-8" y="-45"/>      
+      </attribute>      
+      <multiplicity id="27" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-8" y="-45"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="28">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="29" name="ourInstance">        
+        <position height="0" width="0" x="-270" y="1"/>      
+      </attribute>      
+      <multiplicity id="30" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-270" y="1"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="31">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="32" name="instance">        
+        <position height="0" width="0" x="-256" y="86"/>      
+      </attribute>      
+      <multiplicity id="33" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-256" y="86"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="34">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="35" name="ourInstance"/>      
+      <multiplicity id="36" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="false" package="false" protected="false" private="true" static="true"/>    
+    <operations public="false" package="false" protected="false" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

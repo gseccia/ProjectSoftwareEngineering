@@ -495,7 +495,7 @@ public abstract class Block extends BasicGameState
 
 				updateEnemies(collidedItem.getSpawns());
 
-				collidedItem.accept(player);
+				player.accept(collidedItem);
 				mission.check(collidedItem);
 				item.remove(collidedItem);
 			}
@@ -509,7 +509,7 @@ public abstract class Block extends BasicGameState
 					updateEnemies(i.getSpawns());
 
 					if(!i.isTrap()) {
-						i.accept(player);
+						player.accept(i);;
 					}
 					mission.check(i);
 					item.remove(i);

@@ -26,6 +26,7 @@ public class ScoreFileObserver extends Observer implements Serializable {
 	private String filename = System.getProperty("user.dir") + File.separator+"resource"+File.separator+"log"+
 			File.separator+"scoreboard.log";
 	public static ScoreFileObserver instance;
+	private ScorePointsManager subject;
 	
 	public static ScoreFileObserver getInstance(Subject subject) {
 		if(instance == null) 
@@ -34,7 +35,7 @@ public class ScoreFileObserver extends Observer implements Serializable {
 	}
 	
 	private ScoreFileObserver(Subject subject){
-      this.subject = subject;
+      this.subject = (ScorePointsManager) subject;
       this.subject.attach(this);
       this.scores = new ArrayList<>();
       initScore();

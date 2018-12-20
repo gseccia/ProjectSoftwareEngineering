@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="managers.observers.scoreboard.LifePointsAccumulatorObserver" 
+    project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/managers/observers/scoreboard/LifePointsAccumulatorObserver.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="369" y="341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="managers.observers.Subject" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/managers/observers/Subject.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="695" y="203"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="true" protected="true" private="false" static="true"/>      
+      <operations public="false" package="false" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="managers.observers.Observer" project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/managers/observers/Observer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="382" y="172"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="true" protected="true" private="false" static="true"/>      
+      <operations public="false" package="false" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="managers.observers.scoreboard.ScoreFileObserver" 
+    project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/managers/observers/scoreboard/ScoreFileObserver.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="551" y="343"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="true" protected="true" private="false" static="true"/>      
+      <operations public="false" package="false" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="managers.observers.scoreboard.PointsAccumulatorObserver" 
+    project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/managers/observers/scoreboard/PointsAccumulatorObserver.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="738" y="347"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="true" protected="true" private="false" static="true"/>      
+      <operations public="false" package="false" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="managers.observers.scoreboard.ScorePointsManager" 
+    project="ProjectSoftwareEngineering" 
+    file="/ProjectSoftwareEngineering/src/managers/observers/scoreboard/ScorePointsManager.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="695" y="88"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="true" protected="true" private="false" static="true"/>      
+      <operations public="false" package="false" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <association id="7">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="8" name="subject">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="9" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="10">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="11" name="instance">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="12" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="13">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="14">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="15">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="16">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="17">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="18" name="observers">        
+        <position height="0" width="0" x="-123" y="-25"/>      
+      </attribute>      
+      <multiplicity id="19" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-123" y="-25"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="20">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="21" name="instance">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="22" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="23">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="24" name="instance">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="false" package="true" protected="true" private="false" static="true"/>    
+    <operations public="false" package="false" protected="true" private="false" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

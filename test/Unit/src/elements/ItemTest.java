@@ -85,7 +85,7 @@ public class ItemTest {
 
     @Test
     public void testAcceptDoesNotThrowExceptionIfNotSet() {
-        item.accept(mockPlayer);
+        item.visit(mockPlayer);
     }
 
     @Test

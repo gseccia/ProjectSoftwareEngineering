@@ -6,9 +6,10 @@ import managers.observers.Subject;
 public class PointsAccumulatorObserver extends Observer{
 	private int points;
 	private static PointsAccumulatorObserver instance;
+	private ScorePointsManager subject;
 	
 	private PointsAccumulatorObserver(Subject subject) {
-      this.subject = subject;
+      this.subject = (ScorePointsManager) subject;
       this.subject.attach(this);
       this.points = 0;
 	}

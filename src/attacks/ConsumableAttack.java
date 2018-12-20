@@ -1,16 +1,17 @@
 package attacks;
 
+import elements.Mob;
 import elements.NotPositiveValueException;
 import elements.Player;
 import org.newdawn.slick.geom.Shape;
 
 public class ConsumableAttack implements Attack {
 
-    private Player caster;
+    private Mob caster;
     private Attack normal, current;
     private int uses, damage, baseDamage;
 
-    public ConsumableAttack(Player caster, Attack special, Attack normal, int uses, int multiplier) {
+    public ConsumableAttack(Mob caster, Attack special, Attack normal, int uses, int multiplier) {
         this.caster = caster;
         this.current = special;
         this.normal = normal;

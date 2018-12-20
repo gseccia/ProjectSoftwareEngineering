@@ -8,16 +8,16 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import spawns.Spawner;
 import visitors.NullModifier;
-import visitors.PlayerModifier;
+import visitors.Visitor;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Item extends AnimatedElement implements MissionTarget, PlayerModifier, Spawner {
+public class Item extends AnimatedElement implements MissionTarget, Visitor, Spawner {
 
     private String id;
     private int itemPoints;
-    private PlayerModifier visitor = new NullModifier();
+    private Visitor visitor = new NullModifier();
     private Color filter;
     private boolean trap;
     private Set<Enemy> spawns = new HashSet<>();
@@ -33,7 +33,7 @@ public class Item extends AnimatedElement implements MissionTarget, PlayerModifi
         trap = false;
     }
 
-    public Item(ItemConfiguration configuration, String id, PlayerModifier visitor, Color filter, boolean trap) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
+    public Item(ItemConfiguration configuration, String id, Visitor visitor, Color filter, boolean trap) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
         super(configuration.getItemAnimation(id),
                 configuration.getWidth(id),
                 configuration.getHeight(id),
@@ -45,7 +45,7 @@ public class Item extends AnimatedElement implements MissionTarget, PlayerModifi
         this.trap = trap;
     }
 
-    public Item(ItemConfiguration configuration, String id, PlayerModifier visitor, boolean trap) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
+    public Item(ItemConfiguration configuration, String id, Visitor visitor, boolean trap) throws NullAnimationException, SlickException, NoSuchElementInConfigurationException {
         super(configuration.getItemAnimation(id),
                 configuration.getWidth(id),
                 configuration.getHeight(id),
@@ -98,8 +98,8 @@ public class Item extends AnimatedElement implements MissionTarget, PlayerModifi
      * @param player the player
      */
     @Override
-    public void accept(Player player) {
-        visitor.accept(player);
+    public void visit(Mob mob) {
+        visitor.visit(mob);
     }
 
     /**

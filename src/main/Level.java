@@ -17,8 +17,8 @@ import java.util.*;
 import org.newdawn.slick.SlickException;
 import utils.RandomCollection;
 import visitors.HealPlayerModifier;
-import visitors.PlayerModifier;
 import visitors.SetAttackModifier;
+import visitors.Visitor;
 
 public class Level{
 
@@ -134,7 +134,7 @@ public class Level{
 		RandomCollection<String> NPCNames = new RandomCollection<>(conf.getNPCNames());
 		SoundConfiguration soundConfiguration = SoundConfiguration.getInstance();
 		while(numNPC <= itemCapacity && i < numNPC){
-			PlayerModifier visitor;
+			Visitor visitor;
 			String NPCId = NPCNames.getRandom();
 			if(new Random().nextInt()%2 == 0){
 				visitor = new SetAttackModifier(new FireSpearAttack(player), soundConfiguration.getPowerUpSound(NPCId), level_difficulty*10, level_difficulty+1);

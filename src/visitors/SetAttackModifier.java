@@ -2,10 +2,11 @@ package visitors;
 
 import attacks.Attack;
 import attacks.ConsumableAttack;
+import elements.Mob;
 import elements.Player;
 import org.newdawn.slick.Sound;
 
-public class SetAttackModifier implements PlayerModifier {
+public class SetAttackModifier implements Visitor {
 
     private Attack special;
     private Sound sfx;
@@ -30,11 +31,11 @@ public class SetAttackModifier implements PlayerModifier {
      * @param player the player
      */
     @Override
-    public void accept(Player player) {
+    public void visit(Mob mob) {
         if(sfx != null){
             sfx.play();
         }
-        Attack consumable = new ConsumableAttack(player, special, player.getAttack(), uses, multiplier);
-        player.setAttack(consumable);
+        Attack consumable = new ConsumableAttack(mob, special, mob.getAttack(), uses, multiplier);
+        mob.setAttack(consumable);
     }
 }
