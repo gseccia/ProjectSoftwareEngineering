@@ -8,7 +8,7 @@ import managers.observers.scoreboard.LifePointsAccumulatorObserver;
 import managers.observers.scoreboard.ScorePointsManager;
 import org.junit.Test;
 
-class LifePointsAccumulatorObserverTest {
+public class LifePointsAccumulatorObserverTest {
 
 	// Subjects
 	private ScorePointsManager pm = ScorePointsManager.getScorePointsManagerInstance();

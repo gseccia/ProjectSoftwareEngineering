@@ -7,7 +7,6 @@ import java.util.List;
 
 import elements.Player;
 import managers.Wall;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.newdawn.slick.Animation;
