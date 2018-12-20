@@ -51,7 +51,7 @@ public class DemoBlock extends Block{
 		{"Your name is at top-left corner","Your life is at left","Your score is at top-right corner",
 				"Your special attack is at right","Your level is at center",
 				"Press "+ ((PlayerCommands.getPlayerCommandsInstance().getUp() == Input.KEY_W)? "WASD":"ARROWs") +" to move in each direction","Press "+((PlayerCommands.getPlayerCommandsInstance().getAttack1() == Input.KEY_M)? "M":"Z")+" to attack",
-				"Press "+((PlayerCommands.getPlayerCommandsInstance().getAttack2() == Input.KEY_SPACE)? "SPACE":"X")+" to active special attack","Let's play!",""};
+				"Press "+((PlayerCommands.getPlayerCommandsInstance().getAttack2() == Input.KEY_SPACE)? "SPACE":"X")+" to use the special attack","Let's play!",""};
 	
 	
 	/**
@@ -302,4 +302,5 @@ public class DemoBlock extends Block{
 	protected boolean special(Input in) { 
 		return check(Directions.KEY_M) && enemy.size() > 0;
 	}
+
 }
