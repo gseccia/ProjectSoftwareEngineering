@@ -3,8 +3,8 @@
  <properties>
   <property name="charHeightDoor1" type="int" value="7"/>
   <property name="charHeightDoor2" type="int" value="7"/>
-  <property name="charWidthDoor1" type="int" value="2"/>
-  <property name="charWidthDoor3" type="int" value="2"/>
+  <property name="charWidthDoor1" type="int" value="1"/>
+  <property name="charWidthDoor3" type="int" value="1"/>
   <property name="charXDoor1" type="int" value="2"/>
   <property name="charXDoor2" type="int" value="53"/>
   <property name="charXDoor3" type="int" value="36"/>
@@ -27,7 +27,7 @@
  <tileset firstgid="15337" name="base_out_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
   <image source="../CompleteHall/base_out_atlas.png" width="1024" height="1024"/>
  </tileset>
- <layer id="33" name="Mask" width="56" height="15">
+ <layer id="33" name="Mask" width="56" height="15" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACltgx8BgwzB88YJh7D+Q32D+YzIhjIk1lxizaI3J8d9QwqP+GxgMA9T2H60AKX6iJqCX/wYKjPpvaINR/w1tMNL8NxzxcPYbzH8AsK4FVyANAAA=
   </data>
@@ -62,7 +62,7 @@
    H4sIAAAAAAAACmNgGAXDDUxUYGAQNMGOCQFi1Q0k2KiA6a9uDQaGHg38fkVWAwOa4gwMWkCsDcQ64rjF0M3AB4hRgw9cxOK/00DzzhDwH0wNMsgEuj8LiLOBOEcctxg+M4ixhxTwUQHTf9yaDAw8mvjTHkwNMlgJdP8qIF4NxGvEcYvhM4MYe8gB1MhLL4HufwXEr4H4jThusYEApJQrQxEMZf8VKhKnbrj7bxSMglEwCsgFALKxgHEgDQAA
   </data>
  </layer>
- <layer id="40" name="Dirt" width="56" height="15">
+ <layer id="40" name="Dirt" width="56" height="15" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2TS04CQRCG+waKeoCZuYCKLLiEQKILH2cQTWABwobHCcCdbnicQLgA6EXgJH6LMek41ek200MI8CWVqtT8qap/JqPUgV2iEyjVDZK1To9e36Ix9W07s7hFZ8TzcZCsr8mluJ6Qp4KmTK4IfRu69oh8LMww7THdYmLB82WQrJ/I1bj+In8Lmmfyi9C3oWvPyRfCDNMe0y1ZcBopdRZlN39T5PBwIvi4oldw9NcJ+VdCu26BZqnp7qjviQfiMTTfkoZL5uVTzhxx29jB3wrNWtM1qJvEK9EK/dyybczwMyduiNvY29/ahVZRqXbRz0093nXf4Xv9Z28NH/VIrl14Z8eHJ38TvE0d/fnc+8uA3UPizfEGCZ/f2zef+JoR8xT+snjvB/abHzb3R8ggDQAA
   </data>
