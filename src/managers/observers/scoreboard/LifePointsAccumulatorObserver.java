@@ -31,6 +31,10 @@ public class LifePointsAccumulatorObserver extends Observer{
 		else if(this.hp < 0) this.hp = 0;
 	}
 	
+	public void resetHp() {
+		this.hp = 100;
+	}
+	
 	private int getNumberOfHearts() {
 		if (this.hp > 80) {
 			return 5;

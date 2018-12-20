@@ -3,10 +3,18 @@ package managers.command;
 import managers.MusicManager;
 import managers.ResourceManager;
 
+/*
+ * Concrete Command
+ * Implements the command to decrease the volume of the game of a unit
+ * that is 0.01 on a scale from 0 to 1
+ */
 public class DecreaseVolumeCommand implements CommandInterface {
 	private static DecreaseVolumeCommand instance = null;
 	private MusicManager musicManager;
 	
+	/*
+	 * Singleton since the command must be unique for the game
+	 */
 	private DecreaseVolumeCommand() {
 		musicManager = MusicManager.getInstance(ResourceManager.getInstance());
 	}

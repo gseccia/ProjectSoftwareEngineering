@@ -13,10 +13,6 @@ public class CollisionDetectionWall extends CollisionDetectionStrategy {
 		this.map = hitbox.getMap();
 	}
 	
-	public void setKey(int key) {
-		this.key = key;
-	}
-	
 	@Override
 	public boolean detectCollision(int shiftX, int shiftY, Mob player) {
 		//CAUTION! AT THIS POINT KEY MUST BE PROPERLY SET
@@ -32,4 +28,11 @@ public class CollisionDetectionWall extends CollisionDetectionStrategy {
 		return !collision;
 	}
 
+	public void setKey(int key) {
+		this.key = key;
+	}
+
+	public int getKey() {
+		return this.key;
+	}
 }
