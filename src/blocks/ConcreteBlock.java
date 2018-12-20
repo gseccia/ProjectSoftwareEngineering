@@ -125,4 +125,5 @@ public class ConcreteBlock extends Block {
 	protected void reset(StateBasedGame gs){
 		gs.enterState(GameStates.GAMEOVER.getState());
 	}
+	
 }

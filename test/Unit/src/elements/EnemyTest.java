@@ -61,22 +61,6 @@ public class EnemyTest {
         Assert.assertEquals("test", this.enemy.getID());
     }
 
-  //POSITIONING TESTS
-    /* HOW CAN I ACCESS THE WALL ???
-    @Test
-    public void testEnemyIsPositionedAtOrigin() throws NullAnimationException, NoSuchElementInConfigurationException {
-    	this.enemy.init(42, 42);
-        Assert.assertEquals((int) this.enemy.getX(), 42);
-        Assert.assertEquals((int) this.enemy.getY(), 42);
-    }
-
-    @Test
-    public void testEnemyInitialDirection() throws NullAnimationException, NoSuchElementInConfigurationException, SlickException {
-        this.enemy.init(0, 0);
-        Assert.assertEquals((int) this.enemy.getDirection(), Directions.LEFT);
-    }*/
-
-    /**********************/
     @Test
     public void testHpIsReadCorrectly() {
         Assert.assertEquals(this.enemy.getHp(), 100);

@@ -257,15 +257,13 @@ public abstract class Block extends BasicGameState
             		this.rs.setState(2);
             		completedMusicMustBeStarted = false;
             	}
+            	 generateNextLevel(gc, arg1);
 
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            if(gc.getInput().isKeyDown(Input.KEY_ENTER)){
-            	this.rs.setState(1);
-            	levelMusicMustBeStarted = true;
-            	generateNextLevel(gc, arg1);
-			}
+            
+           
 
         }
 
@@ -311,7 +309,7 @@ public abstract class Block extends BasicGameState
 		uniFont.destroy();
 
 	}
-
+	
 	/**
 	 * Check if the game is to be paused
 	 * @param in the Input object
