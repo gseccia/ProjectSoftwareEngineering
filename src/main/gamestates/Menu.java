@@ -61,7 +61,6 @@ public class Menu extends BasicGameState {
         playersOptions[2] = "Scores";
         playersOptions[3] = "Options";
         playersOptions[4] = "Quit";
-        
         try {
 			this.image = StatesUtils.loadImage(System.getProperty("user.dir") + "/resource/textures/screens/mainMenu.png");
 		} catch (IOException e) {
@@ -71,8 +70,9 @@ public class Menu extends BasicGameState {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-    	if (stateBasedGame.getCurrentStateID() == this.id) {
+    	if (stateBasedGame.getCurrentStateID() == GameStates.MENU.getState()) {
     		graphics.drawImage(image, 0, 0);
+			gameContainer.getInput().clearKeyPressedRecord();
         this.renderPlayersOptions(gameContainer);
         if (exit) {
             gameContainer.exit();
@@ -98,6 +98,7 @@ public class Menu extends BasicGameState {
             }
         }
         if (input.isKeyPressed(Input.KEY_ENTER)) {
+			input.clearKeyPressedRecord();
             switch (playersChoice) {
                 case QUIT:
                     exit = true;

@@ -59,6 +59,7 @@ public class Scores extends BasicGameState {
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 
 		if(arg1.getCurrentStateID() == GameStates.SCORES.getState()) {
+			arg0.getInput().clearKeyPressedRecord();
 	    	formatScores();
 		}
 	}
@@ -71,6 +72,7 @@ public class Scores extends BasicGameState {
 			uniFont = StatesUtils.changeSizeAndStyle(uniFont, 40f, java.awt.Font.ITALIC);
 		}
 		else if(input.isKeyPressed(Input.KEY_ESCAPE)){
+			input.clearKeyPressedRecord();
 			uniFont.destroy();
 			start = false;
             arg1.enterState(GameStates.MENU.getState());
