@@ -1,4 +1,4 @@
-package managers;
+package managers.strategy;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import elements.Item;
 import elements.Mob;
+import elements.Wall;
 
 /**
  * Collision detector strategy

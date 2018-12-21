@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 import org.newdawn.slick.tiled.TiledMap;
 
 import elements.EncapsulateMap;
-import managers.Wall;
+import elements.Wall;
 
 public class EncapsulateMapTest {
 

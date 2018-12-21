@@ -20,13 +20,13 @@ import elements.EncapsulateMap;
 import elements.Enemy;
 import elements.Item;
 import elements.Player;
-import managers.Directions;
+import elements.Wall;
 import managers.ResourceManager;
-import managers.Wall;
 import main.gamestates.GameStates;
 import main.gamestates.Settings;
 import main.gamestates.StatesUtils;
 import managers.observers.scoreboard.ScorePointsManager;
+import managers.strategy.Directions;
 import map.MapGraph;
 import missions.Mission;
 

@@ -13,10 +13,10 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import elements.Item;
 import elements.Mob;
-import managers.CollisionDetectionItem;
-import managers.CollisionDetectionWall;
-import managers.HitboxMaker;
-import managers.Wall;
+import elements.Wall;
+import managers.strategy.CollisionDetectionItem;
+import managers.strategy.CollisionDetectionWall;
+import managers.strategy.HitboxMaker;
 
 public class CollisionDetectionItemTest {
 

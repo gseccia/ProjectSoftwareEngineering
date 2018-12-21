@@ -1,10 +1,12 @@
-package managers;
+package managers.strategy;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import elements.Mob;
+import elements.Wall;
+
 import org.newdawn.slick.tiled.TiledMap;
 
 import elements.Item;

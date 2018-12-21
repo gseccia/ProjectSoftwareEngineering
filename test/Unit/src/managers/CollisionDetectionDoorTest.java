@@ -12,9 +12,9 @@ import org.mockito.Mockito;
 import org.newdawn.slick.tiled.TiledMap;
 
 import elements.Mob;
-import managers.CollisionDetectionDoor;
-import managers.HitboxMaker;
-import managers.Wall;
+import elements.Wall;
+import managers.strategy.CollisionDetectionDoor;
+import managers.strategy.HitboxMaker;
 
 public class CollisionDetectionDoorTest {
 

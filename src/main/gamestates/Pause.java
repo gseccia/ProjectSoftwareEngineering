@@ -2,6 +2,7 @@ package main.gamestates;
 
 import managers.MusicManager;
 import managers.ResourceManager;
+import managers.observers.scoreboard.ScorePointsManager;
 import missions.Mission;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class Pause extends BasicGameState {
     private ResourceManager rs;
 	private MusicManager mm;
 	private boolean isPaused;
+	private ScorePointsManager pointsManager = ScorePointsManager.getScorePointsManagerInstance();
 
     public static Pause getInstance(){
         if(instance == null){
@@ -39,6 +41,13 @@ public class Pause extends BasicGameState {
         this.rs = ResourceManager.getInstance();
         this.mm = MusicManager.getInstance(this.rs);
     }
+    
+    private void resetPoints() {
+		// reset points
+		pointsManager.increase(0);
+		pointsManager.decrease(pointsManager.getPointsAccumulatorObserver().getPoints());
+		pointsManager.setState(0);
+	}
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -77,6 +86,7 @@ public class Pause extends BasicGameState {
             stateBasedGame.enterState(originState);
         }
         if(input.isKeyDown(Input.KEY_ESCAPE)){
+        	resetPoints();
         	this.rs.setState(0);
             stateBasedGame.enterState(GameStates.MENU.getState());
         }

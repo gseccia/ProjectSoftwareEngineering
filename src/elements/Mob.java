@@ -4,7 +4,7 @@ import attacks.Attack;
 import configuration.MobConfiguration;
 import configuration.NoSuchElementInConfigurationException;
 import configuration.PlayerCommands;
-import managers.Directions;
+import managers.strategy.Directions;
 import visitors.Visitor;
 
 import org.newdawn.slick.*;
