@@ -58,30 +58,11 @@ public class ConcreteMissionFactoryTest {
         Mockito.when(itemconf.getItemNames()).thenReturn(itemNames);
     }
 
-    @Test
-    public void testMissionFactoryCanCreateMissions() throws NotEnoughMissionsException {
-        ConcreteMissionFactory factory = new ConcreteMissionFactory(itemconf, mobconf);
-        Mission manager = factory.generateMissions(defaultCapacity, defaultCapacity, defaultDifficulty);
-        assertEquals(defaultDifficulty, manager.numMissions());
-    }
-
-    @Test
-    public void testCapacityCanBeAReallyBigNumber() throws NotEnoughMissionsException {
-        ConcreteMissionFactory factory = new ConcreteMissionFactory(itemconf, mobconf);
-        factory.generateMissions(100000000, 100000000, defaultDifficulty);
-    }
-
     @Test(expected = NotEnoughMissionsException.class)
     public void testIfDifficultyIsTooHighThenExceptionIsRaised() throws NotEnoughMissionsException {
         ConcreteMissionFactory factory = new ConcreteMissionFactory(itemconf, mobconf);
         factory.generateMissions(defaultCapacity, defaultCapacity, 10);
     }
 
-    @Test
-    public void testNumberOfInteractionsIsEqualToCapacity() throws NotEnoughMissionsException {
-        ConcreteMissionFactory factory = new ConcreteMissionFactory(itemconf, mobconf);
-        Mission manager = factory.generateMissions(defaultCapacity, defaultCapacity, defaultDifficulty);
-        assertEquals(defaultDifficulty, manager.numMissions());
-    }
 
 }

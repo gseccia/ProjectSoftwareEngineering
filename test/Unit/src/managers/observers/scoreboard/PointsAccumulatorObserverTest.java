@@ -25,6 +25,7 @@ public class PointsAccumulatorObserverTest {
 	
 	@Test
 	public void createPointsAccumulatorObserverTestPointsInit() {
+		pao.setPoints(-pao.getPoints());		
 //		If the PointsAccumulatorObserver is correctly initialized, sets points to zero
 		assertEquals(pao.getPoints(), 0);
 	}
@@ -43,6 +44,7 @@ public class PointsAccumulatorObserverTest {
 	}
 	@Test
 	public void updateTest() {
+		pao.setPoints(-pao.getPoints());
 //		State associated is 0
 		pm.increase(42);
 		pm.decrease(0);
