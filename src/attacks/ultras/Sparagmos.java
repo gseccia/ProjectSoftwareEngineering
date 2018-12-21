@@ -7,7 +7,8 @@ import configuration.NoSuchElementInConfigurationException;
 import configuration.PlayerCommands;
 import configuration.SpecialAttackConfiguration;
 import elements.*;
-import managers.Directions;
+import managers.strategy.Directions;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;

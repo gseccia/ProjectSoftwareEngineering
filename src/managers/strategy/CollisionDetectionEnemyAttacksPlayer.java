@@ -1,4 +1,4 @@
-package managers;
+package managers.strategy;
 
 import elements.Mob;
 

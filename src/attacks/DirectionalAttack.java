@@ -5,7 +5,8 @@ import configuration.NoSuchElementInConfigurationException;
 import configuration.PlayerCommands;
 import elements.AnimatedElement;
 import elements.Mob;
-import managers.Directions;
+import managers.strategy.Directions;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 

@@ -13,10 +13,10 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import attacks.Attack;
 import elements.Mob;
-import managers.CollisionDetectionDoor;
-import managers.CollisionDetectionEnemyAttacksPlayer;
-import managers.HitboxMaker;
-import managers.Wall;
+import elements.Wall;
+import managers.strategy.CollisionDetectionDoor;
+import managers.strategy.CollisionDetectionEnemyAttacksPlayer;
+import managers.strategy.HitboxMaker;
 
 public class CollisionDetectionEnemyAttacksPlayerTest {
 

@@ -1,6 +1,5 @@
 package main.gamestates;
 
-import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +11,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.font.effects.ShadowEffect;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.util.BufferedImageUtil;
 
@@ -31,7 +29,7 @@ public class StatesUtils {
     	try{
     		UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
     				org.newdawn.slick.util.ResourceLoader.getResourceAsStream(
-    						System.getProperty("user.dir") + "/resource/font/joystix_monospace.ttf"
+    						System.getProperty("user.dir") + "\\resource\\font\\joystix_monospace.ttf"
     						));
     		UIFont1 = UIFont1.deriveFont(java.awt.Font.PLAIN, 30.f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 30.f is the size of your font
 

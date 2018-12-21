@@ -6,8 +6,6 @@ import java.util.List;
 import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.pathfinding.*;
 
-import managers.Wall;
-
 /**
  * This class allows to represent the tile format of the map
  */

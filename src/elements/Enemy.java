@@ -7,10 +7,10 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.util.pathfinding.*;
 import configuration.NoSuchElementInConfigurationException;
+import managers.strategy.CollisionDetectionDoor;
+import managers.strategy.CollisionDetectionWall;
+import managers.strategy.Directions;
 import blocks.Block;
-import managers.CollisionDetectionDoor;
-import managers.CollisionDetectionWall;
-import managers.Directions;
 import missions.MissionTarget;
 
 import java.util.Random;

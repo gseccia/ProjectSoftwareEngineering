@@ -12,10 +12,10 @@ import org.mockito.Mockito;
 import org.newdawn.slick.tiled.TiledMap;
 
 import elements.Mob;
-import managers.CollisionDetectionStrategy;
-import managers.CollisionDetectionWall;
-import managers.HitboxMaker;
-import managers.Wall;
+import elements.Wall;
+import managers.strategy.CollisionDetectionStrategy;
+import managers.strategy.CollisionDetectionWall;
+import managers.strategy.HitboxMaker;
 
 public class CollisionDetectionWallTest {
 

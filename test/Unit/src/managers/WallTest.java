@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.newdawn.slick.geom.Rectangle;
 
-import managers.Wall;
+import elements.Wall;
 
 public class WallTest {
 

@@ -15,8 +15,8 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import attacks.Attack;
 import elements.Mob;
-import managers.CollisionDetectionPlayerAttacksEnemy;
-import managers.HitboxMaker;
+import managers.strategy.CollisionDetectionPlayerAttacksEnemy;
+import managers.strategy.HitboxMaker;
 
 public class CollisionDetectionPlayerAttacksEnemyTest {
 	

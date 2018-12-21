@@ -1,6 +1,6 @@
 package configuration;
 
-import managers.Directions;
+import managers.strategy.Directions;
 
 public class PlayerCommands {
 	
