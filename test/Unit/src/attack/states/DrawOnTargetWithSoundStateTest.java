@@ -125,12 +125,6 @@ public class DrawOnTargetWithSoundStateTest {
         assertFalse(s.finished());
     }
 
-    @Test
-    public void testStateIsNotFinishedImmediatelyAfterExecute() {
-        DrawOnTargetWithSoundState s = new DrawOnTargetWithSoundState(mockAttack, mockEnemy, SHIFT_X, SHIFT_Y, mockSound, null);
-        s.execute();
-        assertFalse(s.finished());
-    }
 
     @Test
     public void testStateIsFinishedImmediatelyAfterExecuteFinished() {

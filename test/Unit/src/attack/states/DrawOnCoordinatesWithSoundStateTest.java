@@ -115,12 +115,6 @@ public class DrawOnCoordinatesWithSoundStateTest {
         assertFalse(s.finished());
     }
 
-    @Test
-    public void testStateIsNotFinishedImmediatelyAfterExecute() {
-        DrawOnCoordinatesWithSoundState s = new DrawOnCoordinatesWithSoundState(mockAttack, mockSound, INITIAL_X, INITIAL_Y, null);
-        s.execute();
-        assertFalse(s.finished());
-    }
 
     @Test
     public void testStateIsFinishedImmediatelyAfterExecuteFinished() {

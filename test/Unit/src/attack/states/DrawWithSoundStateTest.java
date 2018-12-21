@@ -90,13 +90,6 @@ public class DrawWithSoundStateTest {
     }
 
     @Test
-    public void testStateIsNotFinishedImmediatelyAfterExecute() {
-        DrawWithSoundState s = new DrawWithSoundState(mockAttack, mockSound, null);
-        s.execute();
-        assertFalse(s.finished());
-    }
-
-    @Test
     public void testStateIsFinishedImmediatelyAfterExecuteFinished() {
         DrawWithSoundState s = new DrawWithSoundState(mockAttack, mockSound, null);
         s.execute();

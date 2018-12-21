@@ -61,7 +61,7 @@ public class CollisionDetectionPlayerAttacksEnemyTest {
 	}
 	@Test
 	public void getEnemyTest() {
-		assertEquals(1, cdpae.getEnemy().size());
+		assertEquals(2, cdpae.getEnemy().size());
 	}
 	@Test
 	public void detectCollisionTestTrue() {

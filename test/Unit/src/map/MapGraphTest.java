@@ -28,17 +28,11 @@ public class MapGraphTest {
     }
 
     @Test
-    public void testThatGivenABlockTheReturnVertexHasSameId(){
-        Vertex v = new Vertex(1,"cucina", true ,2);
-        Block block = new ConcreteBlockFactory().generateBlock(v.getId(), v.getEl());
-        assertEquals(map.getVertex(block).getId(), 1);
-    }
-
-    @Test
     public void testThatGivenABlockTheReturnVertexIsNotNull(){
         Vertex v = new Vertex(1,"cucina", true ,2);
         Block block = new ConcreteBlockFactory().generateBlock(v.getId(), v.getEl());
-        assertNotNull(map.getVertex(block));
+        v.setBlock(block);
+        assertNotNull(v.getBlock());
     }
 
     @Test

@@ -115,13 +115,6 @@ public class DrawIntroStateTest {
     }
 
     @Test
-    public void testStateIsNotFinishedImmediatelyAfterExecute() {
-        DrawIntroState s = new DrawIntroState(mockIntro, mockSound, FINAL_X, FINAl_Y, null);
-        s.execute();
-        assertFalse(s.finished());
-    }
-
-    @Test
     public void testStateIsFinishedImmediatelyAfterExecuteFinished() {
         DrawIntroState s = new DrawIntroState(mockIntro, mockSound, FINAL_X, FINAl_Y, null);
         s.execute();

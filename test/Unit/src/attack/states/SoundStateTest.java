@@ -56,25 +56,7 @@ public class SoundStateTest {
         SoundState s = new SoundState(mockSound, null);
         assertFalse(s.finished());
     }
-
-    @Test
-    public void testStateIsNotFinishedImmediatelyAfterExecute() {
-        SoundState s = new SoundState(mockSound, null);
-        s.execute();
-        assertFalse(s.finished());
-    }
-
-    @Test
-    public void testStateIsFinishedImmediatelyAfterExecuteFinished() {
-        SoundState s = new SoundState(mockSound, null);
-        s.execute();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertTrue(s.finished());
-    }
+    
 
     @Test
     public void testNextReturnsNullIfNullIsPassed() {

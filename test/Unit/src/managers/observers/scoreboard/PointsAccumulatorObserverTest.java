@@ -2,6 +2,9 @@ package Unit.src.managers.observers.scoreboard;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
+
 //import org.junit.jupiter.api.Test;
 
 import managers.observers.scoreboard.PointsAccumulatorObserver;
@@ -10,9 +13,15 @@ import org.junit.Test;
 
 public class PointsAccumulatorObserverTest {
 	// Subjects
-	private ScorePointsManager pm = ScorePointsManager.getScorePointsManagerInstance();
+	private ScorePointsManager pm;
 	// Observer
-	private PointsAccumulatorObserver pao = PointsAccumulatorObserver.getInstance(pm);
+	private PointsAccumulatorObserver pao;
+	
+	@Before
+	public void setUP() {
+		pm = ScorePointsManager.getScorePointsManagerInstance();
+		pao = PointsAccumulatorObserver.getInstance(pm);
+	}
 	
 	@Test
 	public void createPointsAccumulatorObserverTestPointsInit() {
@@ -22,6 +31,7 @@ public class PointsAccumulatorObserverTest {
 	
 	@Test
 	public void testSetPoints() {
+		pao.setPoints(-pao.getPoints());
 		pao.setPoints(42);
 		assertEquals(pao.getPoints(), 42);
 	}
